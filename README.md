@@ -1,16 +1,22 @@
-# for_sale
+Obada :
 
-A new Flutter project.
+Sign in ==> Anas
+verify account ==> Anas
+my account ==> Anas
+more ==> Anas
+Privacy and terms ==> Anas
+Setting ==> Anas 
+-----------------------------
+Home ==> yahea
+Category page ==> yahea
+-----------------------------
 
-## Getting Started
+Adds Page ==> MHD
+ad details ==> MHD
+favourite adds ==> MHD
+my adds ==> MHD
+-----------------------------
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+add ad ==> Obada
+Chat with Admin ==> Obada 
+------------------------------
