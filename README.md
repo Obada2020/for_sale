@@ -1,22 +1,22 @@
 Obada :
 
-Sign in ==> Anas \n
-verify account ==> Anas
-my account ==> Anas
-more ==> Anas
-Privacy and terms ==> Anas
-Setting ==> Anas 
------------------------------
-Home ==> yahea
-Category page ==> yahea
------------------------------
+Sign in ==> Anas <br />
+verify account ==> Anas <br />
+my account ==> Anas <br />
+more ==> Anas <br />
+Privacy and terms ==> Anas <br />
+Setting ==> Anas  <br />
+----------------------------- <br />
+Home ==> yahea <br />
+Category page ==> yahea <br />
+----------------------------- <br />
 
-Adds Page ==> MHD
-ad details ==> MHD
-favourite adds ==> MHD
-my adds ==> MHD
------------------------------
+Adds Page ==> MHD <br />
+ad details ==> MHD <br />
+favourite adds ==> MHD <br />
+my adds ==> MHD <br />
+----------------------------- <br />
 
-add ad ==> Obada
-Chat with Admin ==> Obada 
-------------------------------
+add ad ==> Obada <br />
+Chat with Admin ==> Obada  <br />
+------------------------------ <br />
