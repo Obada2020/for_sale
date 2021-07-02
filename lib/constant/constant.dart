@@ -13,8 +13,9 @@ final kGColor = LinearGradient(
 final kLabelBodyStyle = TextStyle(fontFamily: 'FairuzBlack', fontSize: 14);
 final klabelAppbarStyle = TextStyle(fontFamily: 'FairuzBlack', fontSize: 12);
 
+
 final klabelStyleBold11 = TextStyle(
-    fontFamily: 'FairuzBold', fontSize: 11); // sign in , Verify account
+    fontFamily: 'FairuzBold', fontSize: 11,); // sign in , Verify account
 
 final klabelStyleBold12 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 12); // Add Ad , Settings
@@ -31,4 +32,13 @@ final kBottonSubmitStyleBold13 = TextStyle(
 
 final kBottonStyleBold11 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 11); // Add Ad
+//==============================================================================
+
+//=====================================Mhd-=====================================
+final klabelStyleBold11dark = TextStyle(
+    fontFamily: 'FairuzBold', fontSize: 11,color: Color(0xff333333)); // ads page
+final klabelStyleBold11light = TextStyle(
+    fontFamily: 'FairuzBold', fontSize: 11,color: Colors.white); // ads page
+final kbodyColor=Color(0xffF2F2F2);
+
 //==============================================================================
