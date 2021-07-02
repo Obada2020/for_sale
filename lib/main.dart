@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 // import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:for_sale/Favorite-ads/view.dart';
 
+import 'My-ads/view.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,17 +15,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Ads(),
+      home: MyAds(),
       debugShowCheckedModeBanner: false,
-     localizationsDelegates: [
-    GlobalMaterialLocalizations.delegate,
-    GlobalWidgetsLocalizations.delegate,
-    GlobalCupertinoLocalizations.delegate,
-  ],
-  supportedLocales: [
-    const Locale('ar', 'AE'), // English, no country code
-  ],
-  locale: Locale("ar","AE"),
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        const Locale('ar', 'AE'), // English, no country code
+      ],
+      locale: Locale("ar", "AE"),
     );
   }
 }

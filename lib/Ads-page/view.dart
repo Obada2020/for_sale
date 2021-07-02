@@ -24,7 +24,6 @@ class _AdsState extends State<Ads> {
               color: Colors.white,
             ),
           ),
-          elevation: 0,
           title: Center(
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
