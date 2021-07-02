@@ -4,8 +4,9 @@ class Ads extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      //mhdaz
+    return Scaffold(
+    appBar: AppBar(),
+    body: Container(),
     );
   }
 }
