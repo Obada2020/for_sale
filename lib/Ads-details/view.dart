@@ -63,7 +63,7 @@ class _AdsdetailsState extends State<Adsdetails> {
       body: ListView(
         children: [
           Container(
-            height: size.height * 0.43,
+            height: size.height * 0.446,
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
               children: [
