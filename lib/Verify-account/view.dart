@@ -10,20 +10,30 @@ class VerifyAccount extends StatelessWidget {
     TextEditingController Num = TextEditingController();
     return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+            onPressed: null,
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: Colors.white,
+            ),
+          ),
           flexibleSpace: Container(
             decoration: BoxDecoration(gradient: kGColor),
           ),
           title: Center(
-            child: Text(
-              'تفعيل الحساب',
-              style: klabelAppbarStyle,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 60),
+              child: Text(
+                'تفعيل الحساب',
+                style: klabelAppbarStyle,
+              ),
             ),
           ),
         ),
         body: Container(
-          margin: EdgeInsets.fromLTRB(16, 16, 16, 0),
+          margin: EdgeInsets.fromLTRB(12, 17, 12, 0),
           width: size.width,
-          height: size.height * 0.3718662953,
+          height: size.height * 0.38,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(4)),
           child: Padding(
@@ -35,14 +45,14 @@ class VerifyAccount extends StatelessWidget {
                   'تفعيل الحساب',
                   style: klabelStyleBlack14,
                 ),
-                padding: EdgeInsets.only(bottom: 11),
+                padding: EdgeInsets.only(bottom: 8),
               ),
               Padding(
                 child: Text(
                   'لقد أرسلنا رمز إلى رقم جوالك 0592036504 يحتوي على رمز تفعيل من 6 خانات',
                   style: klabelStyleBold11,
                 ),
-                padding: EdgeInsets.only(bottom: 23),
+                padding: EdgeInsets.only(bottom: 30),
               ),
               Padding(
                 child: Container(
@@ -59,10 +69,11 @@ class VerifyAccount extends StatelessWidget {
                     ),
                   ),
                 ),
-                padding: EdgeInsets.only(bottom: 8),
+                padding: EdgeInsets.only(bottom: 10),
               ),
               Padding(
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       'لم تستلم رمز؟',
@@ -76,7 +87,7 @@ class VerifyAccount extends StatelessWidget {
                     )
                   ],
                 ),
-                padding: EdgeInsets.only(bottom: 20),
+                padding: EdgeInsets.only(bottom: 15),
               ),
               Container(
                 width: MediaQuery.of(context).size.width,
@@ -84,7 +95,7 @@ class VerifyAccount extends StatelessWidget {
                   gradient: kGColor,
                   borderRadius: BorderRadius.circular(4),
                 ),
-                height: 41,
+                //height: 41,
                 child: TextButton(
                     onPressed: () {},
                     child: Text(
