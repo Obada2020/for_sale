@@ -44,5 +44,17 @@ final klabelStyleBold11light = TextStyle(
     fontFamily: 'FairuzBold', fontSize: 11, color: Colors.white); // ads page
 final kbodyColor = Color(0xffF2F2F2);
 final klabelStyleBlack16 =
-    TextStyle(fontFamily: 'FairuzBlack', fontSize: 16);// ad detials
+    TextStyle(fontFamily: 'FairuzBlack', fontSize: 16); // ad detials
+//==============================================================================
+//==============================yahea===========================================
+// home page
+
+final klabelStyleTitle =
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 14); // title
+
+final klabelStyleShowAll = TextStyle(
+    fontFamily: 'FairuzBold', fontSize: 10, color: Colors.blue); // icon;
+
+final klabelStyleTitleCategory =
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 13); // title category
 //==============================================================================
