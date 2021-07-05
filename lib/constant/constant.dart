@@ -29,7 +29,8 @@ final klabelStyleBlack14 =
 
 final kBottonSubmitStyleBold13 = TextStyle(
     fontFamily: 'FairuzBold',
-    fontSize: 13); // sign in , Verify account , Add Ad
+    fontSize: 13,
+    color: Colors.white); // sign in , Verify account , Add Ad
 
 final kBottonStyleBold11 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 11); // Add Ad
