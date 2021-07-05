@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:for_sale/Add-ad/view.dart';
-import 'package:for_sale/My-account/view.dart';
-import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/constant/constant.dart';
 
 class Home extends StatefulWidget {
@@ -12,106 +9,56 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-  final _widgetOptions = [
-    Home(),
-    AddUI(),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      // start app bar
-      appBar: AppBar(
-        title: Center(child: Text("الصفحة الرئيسة", style: klabelAppbarStyle)),
-        flexibleSpace: Container(
-          decoration: BoxDecoration(gradient: kGColor),
-        ),
-      ),
-      // end app bar
-      body: SingleChildScrollView(
-        child: Padding(
-            padding: const EdgeInsetsDirectional.only(
-                start: 16, end: 16, top: 20, bottom: 13),
-            child: Column(
-              children: [
-                //start title category
-                Container(
-                  child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: 2,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            //title
-                            containerTitle(),
-                            //category
-                            Container(
-                              height: 150,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) =>
-                                    containerCategory(),
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(width: 10),
-                                itemCount: 5,
-                              ),
+    return SingleChildScrollView(
+      child: Padding(
+          padding: const EdgeInsetsDirectional.only(
+              start: 16, end: 16, top: 20, bottom: 13),
+          child: Column(
+            children: [
+              //start title category
+              Container(
+                child: ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: 2,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          //title
+                          containerTitle(),
+                          //category
+                          Container(
+                            height: 150,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) =>
+                                  containerCategory(),
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(width: 10),
+                              itemCount: 5,
                             ),
-                            //offer
-                            Container(
-                              height: 275,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) =>
-                                    containerOffer(context, size),
-                                itemCount: 5,
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(width: 10),
-                              ),
-                            )
-                          ],
-                        );
-                      }),
-                ),
-              ],
-            )),
-      ),
-      //start BottomNavigationBar
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
-        currentIndex: _selectedIndex,
-        type:BottomNavigationBarType.fixed ,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'الرئيسية',
-            backgroundColor: Color(0x667590)
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.add),
-            label: 'اضافة اعلان',
-            backgroundColor: Color(0x667590)
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'حسابي',
-            backgroundColor: Color(0x667590)
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'المزيد',
-            backgroundColor: Color(0x667590)
-          ),
-        ],
-        onTap: _onItemTapped,
-      ),
+                          ),
+                          //offer
+                          Container(
+                            height: 275,
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) =>
+                                  containerOffer(context, size),
+                              itemCount: 5,
+                              separatorBuilder: (context, index) =>
+                                  SizedBox(width: 10),
+                            ),
+                          )
+                        ],
+                      );
+                    }),
+              ),
+            ],
+          )),
     );
   }
 
