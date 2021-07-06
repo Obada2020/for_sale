@@ -61,15 +61,14 @@ class VerifyAccount extends StatelessWidget {
               Padding(
                 child: Container(
                   height: 50,
-                  width: MediaQuery.of(context).size.width,
+                  width: size.width,
                   child: OTPTextField(
                     length: 6,
                     textFieldAlignment: MainAxisAlignment.spaceAround,
                     fieldStyle: FieldStyle.underline,
                     keyboardType: TextInputType.number,
                     outlineBorderRadius: 4,
-                    fieldWidth:
-                        MediaQuery.of(context).size.width * 0.1256684492,
+                    fieldWidth: size.width * 0.1256684492,
                     otpFieldStyle: OtpFieldStyle(
                       backgroundColor: Colors.grey.shade200,
                       disabledBorderColor: Colors.white,
@@ -105,7 +104,7 @@ class VerifyAccount extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 15),
               ),
               Container(
-                width: MediaQuery.of(context).size.width,
+                width: size.width,
                 decoration: BoxDecoration(
                   gradient: kGColor,
                   borderRadius: BorderRadius.circular(4),
