@@ -32,30 +32,43 @@ class MyAccount extends StatelessWidget {
                   width: double.infinity,
                   height: 96,
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.only(right: 12),
+                        padding: const EdgeInsets.only(right: 16),
                         child: Column(
                           children: [
-                            Row(
-                              children: [
-                                Text(
-                                  'أنت مسجل معنا برقم هاتف : ',
-                                  style: klabelStyleBold12,
-                                ),
-                                Text(
-                                  '0592036504',
-                                  style: klabelStyleBold12,
-                                ),
-                              ],
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 17),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    'أنت مسجل معنا برقم هاتف   :   ',
+                                    style: klabelStyleBold14,
+                                  ),
+                                  Text(
+                                    '0592036504',
+                                    style: klabelStyleBold14,
+                                  ),
+                                ],
+                              ),
                             ),
                             Row(
                               children: [
-                                TextButton(
-                                    onPressed: () {},
-                                    child: Text(
-                                      'تسجيل الخروج',
-                                      style: klabelStyleBold12,
+                                InkWell(
+                                    onTap: () {},
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.logout),
+                                        SizedBox(
+                                          width: 15,
+                                        ),
+                                        Text(
+                                          'تسجيل الخروج',
+                                          style: klabelStyleBold14.copyWith(
+                                              color: Colors.red),
+                                        ),
+                                      ],
                                     ))
                               ],
                             ),
@@ -71,10 +84,23 @@ class MyAccount extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4)),
                   width: double.infinity,
                   height: 48,
-                  child: Row(
-                    children: [
-                      Text('إعلاناتي المفضلة'),
-                    ],
+                  child: InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.only(right: 16),
+                      child: Row(
+                        children: [
+                          Icon(Icons.favorite),
+                          SizedBox(
+                            width: 15,
+                          ),
+                          Text(
+                            'إعلاناتي المفضلة',
+                            style: klabelStyleBold14,
+                          )
+                        ],
+                      ),
+                    ),
                   )),
               Container(
                   margin: EdgeInsets.only(bottom: 12),
@@ -83,10 +109,26 @@ class MyAccount extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4)),
                   width: double.infinity,
                   height: 48,
-                  child: Row(
-                    children: [
-                      Text('إعلاناتي'),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: Row(
+                      children: [
+                        InkWell(
+                            onTap: () {},
+                            child: Row(
+                              children: [
+                                Icon(Icons.list),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  'إعلاناتي',
+                                  style: klabelStyleBold14,
+                                ),
+                              ],
+                            ))
+                      ],
+                    ),
                   )),
               Container(
                   margin: EdgeInsets.only(bottom: 12),
@@ -95,10 +137,22 @@ class MyAccount extends StatelessWidget {
                       borderRadius: BorderRadius.circular(4)),
                   width: double.infinity,
                   height: 48,
-                  child: Row(
-                    children: [
-                      Text('المراسلة المباشرة مع الإدارة'),
-                    ],
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16),
+                    child: InkWell(
+                        onTap: () {},
+                        child: Row(
+                          children: [
+                            Icon(Icons.people_alt),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              'المراسلة المباشرة مع الإدارة',
+                              style: klabelStyleBold14,
+                            ),
+                          ],
+                        )),
                   )),
             ],
           ),
