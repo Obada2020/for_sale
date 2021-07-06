@@ -43,13 +43,13 @@ class _AdsdetailsState extends State<Adsdetails> {
             ),
           ),
         ],
-        leading: IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-          ),
-        ),
+        // leading: IconButton(
+        //   onPressed: null,
+        //   icon: Icon(
+        //     Icons.arrow_back_rounded,
+        //     color: Colors.white,
+        //   ),
+        // ),
         title: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 20),

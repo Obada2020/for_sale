@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
 
 class Ads extends StatefulWidget {
   @override
@@ -128,7 +130,9 @@ class _AdsState extends State<Ads> {
                 ),
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: null,
+                    onTap: () {
+                      Get.to(Adsdetails());
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         boxShadow: [

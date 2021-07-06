@@ -12,53 +12,55 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-              start: 16, end: 16, top: 20, bottom: 13),
-          child: Column(
-            children: [
-              //start title category
-              Container(
-                child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          //title
-                          containerTitle(),
-                          //category
-                          Container(
-                            height: 150,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
-                                  containerCategory(),
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(width: 10),
-                              itemCount: 5,
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+            padding: const EdgeInsetsDirectional.only(
+                start: 16, end: 16, top: 20, bottom: 13),
+            child: Column(
+              children: [
+                //start title category
+                Container(
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: 2,
+                      itemBuilder: (context, index) {
+                        return Column(
+                          children: [
+                            //title
+                            containerTitle(),
+                            //category
+                            Container(
+                              height: 150,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) =>
+                                    containerCategory(),
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(width: 10),
+                                itemCount: 5,
+                              ),
                             ),
-                          ),
-                          //offer
-                          Container(
-                            height: 275,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
-                                  containerOffer(context, size),
-                              itemCount: 5,
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(width: 10),
-                            ),
-                          )
-                        ],
-                      );
-                    }),
-              ),
-            ],
-          )),
+                            //offer
+                            Container(
+                              height: 275,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) =>
+                                    containerOffer(context, size),
+                                itemCount: 5,
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(width: 10),
+                              ),
+                            )
+                          ],
+                        );
+                      }),
+                ),
+              ],
+            )),
+      ),
     );
   }
 

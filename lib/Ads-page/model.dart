@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-List<Ads> adsFromJson(String str) =>
-    List<Ads>.from(json.decode(str).map((x) => Ads.fromJson(x)));
+List<AdsModel> adsFromJson(String str) =>
+    List<AdsModel>.from(json.decode(str).map((x) => AdsModel.fromJson(x)));
 
-String adsToJson(List<Ads> data) =>
+String adsToJson(List<AdsModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Ads {
-  Ads({
+class AdsModel {
+  AdsModel({
     this.adId,
     this.adName,
     this.adPhoneNumber,
@@ -41,7 +41,7 @@ class Ads {
   String? createdAt;
   String? updatedAt;
 
-  factory Ads.fromJson(Map<String, dynamic> json) => Ads(
+  factory AdsModel.fromJson(Map<String, dynamic> json) => AdsModel(
         adId: json["ad_id"],
         adName: json["ad_name"],
         adPhoneNumber: json["ad_phone_number"],

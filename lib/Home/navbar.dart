@@ -20,12 +20,7 @@ class _NavbarState extends State<Navbar> {
     });
   }
 
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    AddUI(),
-    MyAccount(),
-    More()
-  ];
+  List<Widget> _widgetOptions = <Widget>[Home(), AddUI(), MyAccount(), More()];
 
   @override
   Widget build(BuildContext context) {
@@ -48,19 +43,20 @@ class _NavbarState extends State<Navbar> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'الرئيسية',
-                backgroundColor: Color(0x667590)),
+                backgroundColor: Color(0xff667590)),
             BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                label: 'اضافة اعلان',
-                backgroundColor: Color(0x667590)),
+              icon: Icon(Icons.add),
+              label: 'اضافة اعلان',
+              backgroundColor: Color(0xff667590),
+            ),
             BottomNavigationBarItem(
                 icon: Icon(Icons.person),
                 label: 'حسابي',
-                backgroundColor: Color(0x667590)),
+                backgroundColor: Color(0xff667590)),
             BottomNavigationBarItem(
                 icon: Icon(Icons.settings),
                 label: 'المزيد',
-                backgroundColor: Color(0x667590)),
+                backgroundColor: Color(0xff667590)),
           ],
           onTap: _onItemTapped,
         ),
