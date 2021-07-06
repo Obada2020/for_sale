@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:otp_text_field/otp_field.dart';
+import 'package:otp_text_field/otp_field_style.dart';
+import 'package:otp_text_field/style.dart';
 import '../constant/constant.dart';
+
+String? x = "";
 
 class VerifyAccount extends StatelessWidget {
   const VerifyAccount({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -57,16 +61,27 @@ class VerifyAccount extends StatelessWidget {
               Padding(
                 child: Container(
                   height: 50,
-                  child: TextFormField(
+                  width: MediaQuery.of(context).size.width,
+                  child: OTPTextField(
+                    length: 6,
+                    textFieldAlignment: MainAxisAlignment.spaceAround,
+                    fieldStyle: FieldStyle.underline,
                     keyboardType: TextInputType.number,
-                    decoration: InputDecoration(
-                      border: new OutlineInputBorder(
-                          borderSide: new BorderSide(color: Color(0xFF231F1F)),
-                          borderRadius: BorderRadius.circular(4)),
-                      hintText: "789 456 123",
-                      hintStyle:
-                          TextStyle(fontSize: 12, color: Color(0xFF333333)),
+                    outlineBorderRadius: 4,
+                    fieldWidth:
+                        MediaQuery.of(context).size.width * 0.1256684492,
+                    otpFieldStyle: OtpFieldStyle(
+                      backgroundColor: Colors.grey.shade200,
+                      disabledBorderColor: Colors.white,
+                      enabledBorderColor: Colors.white,
                     ),
+                    onChanged: (k) {
+                      if (k != null) {}
+                    },
+                    onCompleted: (n) {
+                      // print("Completed: " + pin);
+                      // print(n);
+                    },
                   ),
                 ),
                 padding: EdgeInsets.only(bottom: 10),
