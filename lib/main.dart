@@ -4,6 +4,7 @@ import 'package:for_sale/Ads-page/view.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Favorite-ads/view.dart';
 import 'package:for_sale/Home/view.dart';
+import 'package:for_sale/My-account/view.dart';
 import 'package:for_sale/Pages/privacy_and_terms.dart';
 import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/Sign-in/view.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Navbar(),
+      home: MyAccount(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
