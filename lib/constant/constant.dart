@@ -22,7 +22,7 @@ final klabelStyleBold12 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 12); // Add Ad , Settings
 
 final klabelStyleBold14 =
-    TextStyle(fontFamily: 'FairuzBold', fontSize: 12); // more , My Account
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 14); // more , My Account
 
 final klabelStyleBlack14 =
     TextStyle(fontFamily: 'FairuzBlack', fontSize: 14); // more , My Account
