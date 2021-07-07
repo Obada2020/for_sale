@@ -1,8 +1,6 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'dart:ui';
-import '';
 
 class AddUI extends StatelessWidget {
   @override

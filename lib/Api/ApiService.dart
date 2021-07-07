@@ -1,7 +1,7 @@
 import 'dart:convert';
-
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:http/http.dart' as http;
+
 
 class ApiService {
   static String url = "https://forsale-test.000webhostapp.com/public/api/";

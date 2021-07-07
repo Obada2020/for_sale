@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:get/get.dart';
-import 'Verify-account/view.dart';
 
 void main() {
   runApp(MyApp());
