@@ -119,7 +119,6 @@ class _HomeState extends State<Home> {
   }
 
   Widget containerOffer(context, size) {
-    final Size size = MediaQuery.of(context).size;
     return Container(
       width: 210,
       height: 218,

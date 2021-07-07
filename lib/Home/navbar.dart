@@ -3,7 +3,6 @@ import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Home/view.dart';
 import 'package:for_sale/My-account/view.dart';
 import 'package:for_sale/Pages/more.dart';
-import 'package:for_sale/constant/constant.dart';
 
 class Navbar extends StatefulWidget {
   Navbar({Key? key}) : super(key: key);
@@ -20,12 +19,12 @@ class _NavbarState extends State<Navbar> {
     });
   }
 
-  // List<Widget> _widgetOptions = <Widget>[
-  //   Home(),
-  //   AddUI(),
-  //   MyAccount(),
-  //   More()
-  // ];
+  List<Widget> _widgetOptions = <Widget>[
+    Home(),
+    AddUI(),
+    MyAccount(),
+    More()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +56,6 @@ class _NavbarState extends State<Navbar> {
       ),
 
       //start body
-      // body: _widgetOptions[_selectedIndex]);
-    );
+      body: _widgetOptions[_selectedIndex]);
   }
 }
