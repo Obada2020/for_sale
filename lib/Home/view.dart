@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Category-page/view.dart';
 import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
   Home({Key? key}) : super(key: key);
@@ -12,53 +14,60 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-              start: 16, end: 16, top: 20, bottom: 13),
-          child: Column(
-            children: [
-              //start title category
-              Container(
-                child: ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: 2,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          //title
-                          containerTitle(),
-                          //category
-                          Container(
-                            height: 150,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
-                                  containerCategory(),
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(width: 10),
-                              itemCount: 5,
-                            ),
-                          ),
-                          //offer
-                          Container(
-                            height: 275,
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) =>
-                                  containerOffer(context, size),
-                              itemCount: 5,
-                              separatorBuilder: (context, index) =>
-                                  SizedBox(width: 10),
-                            ),
-                          )
-                        ],
-                      );
-                    }),
-              ),
-            ],
-          )),
+    return Scaffold(
+      //start appbar
+      appBar: AppBar(
+        title: Center(child: Text("الصفحة الرئيسة", style: klabelAppbarStyle)),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(gradient: kGColor),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            //start title category
+            ListView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: 2,
+                itemBuilder: (context, index) {
+                  return Column(
+                    children: [
+                      //title
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(
+                            start: 16, end: 16, top: 20),
+                        child: containerTitle(),
+                      ),
+                      //category
+                      Container(
+                        height: 140,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => containerCategory(),
+                          separatorBuilder: (context, index) =>
+                              SizedBox(width: 5),
+                          itemCount: 5,
+                        ),
+                      ),
+                      //offer
+                      Container(
+                        height: 270.0,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) =>
+                              containerOffer(context, size),
+                          itemCount: 5,
+                          separatorBuilder: (context, index) =>
+                              SizedBox(width: 12),
+                        ),
+                      )
+                    ],
+                  );
+                }),
+          ],
+        ),
+      ),
     );
   }
 
@@ -78,32 +87,42 @@ class _HomeState extends State<Home> {
   }
 
   Widget containerCategory() {
-    return Container(
-      margin: EdgeInsetsDirectional.only(bottom: 20),
-      height: 120.0,
-      width: 105.83,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(5)),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Column(
-            children: [
-              Image.asset("img/5321.jpg"),
-              Text("منازل للبيع", style: klabelStyleTitleCategory)
-            ],
+    return TextButton(
+      child: Container(
+        height: 140.0,
+        width: 110.0,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+        child: Padding(
+          padding:
+              const EdgeInsetsDirectional.only(start: 20, end: 20, top: 15.1),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset("img/5321.jpg"),
+                SizedBox(height: 11.2),
+                Text(
+                  "منازل للبيع",
+                  style: klabelStyleTitleCategory,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                )
+              ],
+            ),
           ),
         ),
       ),
+      onPressed: () {
+        Get.to(CategoryPage());
+      },
     );
   }
 
   Widget containerOffer(context, size) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      width: 200,
-      height: 275,
-      margin: EdgeInsetsDirectional.only(bottom: 20),
+      width: 210,
+      height: 218,
       clipBehavior: Clip.antiAliasWithSaveLayer,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(5)),
@@ -126,12 +145,13 @@ class _HomeState extends State<Home> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                SizedBox(height: 20),
+                SizedBox(height: 23),
                 //button and timer
                 Row(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(right: 5, bottom: 5, left: 10),
+                        margin: EdgeInsetsDirectional.only(
+                            start: 5, bottom: 13, end: 10),
                         padding: EdgeInsets.only(
                           left: 5,
                           right: 6,

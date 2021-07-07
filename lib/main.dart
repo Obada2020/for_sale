@@ -8,6 +8,7 @@ import 'package:for_sale/Pages/privacy_and_terms.dart';
 import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/Sign-in/view.dart';
 import 'package:for_sale/Verify-account/view.dart';
+import 'package:get/get.dart';
 
 import 'Ads-details/view.dart';
 import 'Home/navbar.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       home: Navbar(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [

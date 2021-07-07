@@ -20,52 +20,44 @@ class _NavbarState extends State<Navbar> {
     });
   }
 
-  List<Widget> _widgetOptions = <Widget>[
-    Home(),
-    AddUI(),
-    MyAccount(),
-    More()
-  ];
+  // List<Widget> _widgetOptions = <Widget>[
+  //   Home(),
+  //   AddUI(),
+  //   MyAccount(),
+  //   More()
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        //start appbar
-        appBar: AppBar(
-          title:
-              Center(child: Text("الصفحة الرئيسة", style: klabelAppbarStyle)),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(gradient: kGColor),
-          ),
-        ),
+      //start BottomNavigationBar
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.white,
+        currentIndex: _selectedIndex,
+        type: BottomNavigationBarType.fixed,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home),
+              label: 'الرئيسية',
+              backgroundColor: Color(0x667590)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.add),
+              label: 'اضافة اعلان',
+              backgroundColor: Color(0x667590)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person),
+              label: 'حسابي',
+              backgroundColor: Color(0x667590)),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings),
+              label: 'المزيد',
+              backgroundColor: Color(0x667590)),
+        ],
+        onTap: _onItemTapped,
+      ),
 
-        //start BottomNavigationBar
-        bottomNavigationBar: BottomNavigationBar(
-          backgroundColor: Colors.white,
-          currentIndex: _selectedIndex,
-          type: BottomNavigationBarType.fixed,
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: 'الرئيسية',
-                backgroundColor: Color(0x667590)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.add),
-                label: 'اضافة اعلان',
-                backgroundColor: Color(0x667590)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: 'حسابي',
-                backgroundColor: Color(0x667590)),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.settings),
-                label: 'المزيد',
-                backgroundColor: Color(0x667590)),
-          ],
-          onTap: _onItemTapped,
-        ),
-
-        //start body
-        body: _widgetOptions[_selectedIndex]);
+      //start body
+      // body: _widgetOptions[_selectedIndex]);
+    );
   }
 }
