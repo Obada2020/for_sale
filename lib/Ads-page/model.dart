@@ -1,7 +1,3 @@
-// To parse this JSON data, do
-//
-//     final ads = adsFromJson(jsonString);
-
 import 'dart:convert';
 
 List<AdsModel> adsFromJson(String str) =>
