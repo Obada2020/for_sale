@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:for_sale/Ads-page/view.dart';
+import 'package:get/get.dart';
 import 'Verify-account/view.dart';
 
 void main() {
@@ -10,8 +12,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: VerifyAccount(),
+    return GetMaterialApp(
+      home: Ads(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

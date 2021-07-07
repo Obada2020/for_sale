@@ -449,7 +449,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 14, right: 16),
-                  height: size.height * 0.268,
+                  height: size.height * 0.25,
                   child: GridView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:for_sale/style.dart';
+import 'package:for_sale/constant/constant.dart';
 import 'dart:ui';
 import '';
 
@@ -13,7 +13,7 @@ class AddUI extends StatelessWidget {
         appBar: AppBar(
           title: Text("إضافة إعلان"),
           centerTitle: true,
-          backgroundColor: gg,
+          backgroundColor: kbodyColor,
           actions: [
             Icon(Icons.arrow_forward),
             SizedBox(width: 15),
