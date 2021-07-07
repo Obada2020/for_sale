@@ -43,13 +43,6 @@ class _AdsdetailsState extends State<Adsdetails> {
             ),
           ),
         ],
-        // leading: IconButton(
-        //   onPressed: null,
-        //   icon: Icon(
-        //     Icons.arrow_back_rounded,
-        //     color: Colors.white,
-        //   ),
-        // ),
         title: Center(
           child: Padding(
             padding: const EdgeInsets.only(left: 20),
@@ -63,7 +56,7 @@ class _AdsdetailsState extends State<Adsdetails> {
       body: ListView(
         children: [
           Container(
-            height: size.height * 0.5,
+            // height: size.height * 0.5,
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
               children: [
@@ -76,7 +69,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                               _current = index;
                             });
                           },
-                          height: size.height * 0.33333,
+                          // height: size.height * 0.33333,
                           enlargeCenterPage: true,
                           enableInfiniteScroll: false,
                           autoPlay: false,
@@ -187,7 +180,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                       Container(
                         color: Colors.white,
                         padding: EdgeInsets.only(top: 20),
-                        height: size.height * 0.35,
+                        // height: size.height * 0.35,
                         child: GridView.builder(
                             shrinkWrap: true,
                             itemCount: 20,
@@ -242,8 +235,9 @@ class _AdsdetailsState extends State<Adsdetails> {
           Container(
             margin: EdgeInsets.only(bottom: 14, top: 14),
             color: Colors.white,
-            height: size.height * 0.34196,
+            // height: size.height * 0.34196,
             child: Container(
+              padding: EdgeInsets.only(right: 16, bottom: 69, left: 16),
               margin: EdgeInsets.only(right: 16, top: 13),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -266,7 +260,7 @@ class _AdsdetailsState extends State<Adsdetails> {
           Container(
             margin: EdgeInsets.only(bottom: 14, top: 14),
             color: Colors.white,
-            height: size.height * 0.1798,
+            // height: size.height * 0.1798,
             child: Container(
               margin: EdgeInsets.only(right: 16, top: 15),
               child: Column(
@@ -277,13 +271,11 @@ class _AdsdetailsState extends State<Adsdetails> {
                       GestureDetector(
                         onTap: null,
                         child: Container(
-                          height: size.height * 0.0654,
+                          // height: size.height * 0.0654,
                           width: size.width * 0.447,
                           margin: EdgeInsets.only(bottom: 7, left: 7),
-                          padding: EdgeInsets.only(
-                            right: 15,
-                            top: 13,
-                          ),
+                          padding:
+                              EdgeInsets.only(right: 15, top: 13, bottom: 9),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               gradient: kGColor),
@@ -311,16 +303,14 @@ class _AdsdetailsState extends State<Adsdetails> {
                       GestureDetector(
                         onTap: null,
                         child: Container(
-                          height: size.height * 0.0654,
+                          // height: size.height * 0.0654,
                           width: size.width * 0.447,
                           margin: EdgeInsets.only(
                             right: 7,
                             bottom: 7,
                           ),
-                          padding: EdgeInsets.only(
-                            right: 15,
-                            top: 13,
-                          ),
+                          padding:
+                              EdgeInsets.only(right: 15, top: 13, bottom: 9),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               color: Color(0xff25D366)),
@@ -352,13 +342,11 @@ class _AdsdetailsState extends State<Adsdetails> {
                       GestureDetector(
                         onTap: null,
                         child: Container(
-                          height: size.height * 0.0654,
+                          // height: size.height * 0.0654,
                           width: size.width * 0.447,
                           margin: EdgeInsets.only(bottom: 10, left: 7),
-                          padding: EdgeInsets.only(
-                            right: 15,
-                            top: 13,
-                          ),
+                          padding:
+                              EdgeInsets.only(right: 15, top: 13, bottom: 9),
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(4),
                               color: Color(0xff333333)),
@@ -386,13 +374,11 @@ class _AdsdetailsState extends State<Adsdetails> {
                       GestureDetector(
                         onTap: null,
                         child: Container(
-                          height: size.height * 0.0654,
+                          // height: size.height * 0.0654,
                           width: size.width * 0.447,
                           margin: EdgeInsets.only(right: 7, bottom: 10),
-                          padding: EdgeInsets.only(
-                            right: 15,
-                            top: 13,
-                          ),
+                          padding:
+                              EdgeInsets.only(right: 15, top: 13, bottom: 9),
                           decoration: BoxDecoration(
                               border: Border.all(color: Color(0xff333333)),
                               color: Color(0xffF2F2F2),
@@ -427,20 +413,10 @@ class _AdsdetailsState extends State<Adsdetails> {
           Container(
             margin: EdgeInsets.only(bottom: 14, top: 14),
             color: Colors.white,
-            height: size.height * 0.35,
+            // height: size.height * 0.35,
             // height: size.height * 0.,
 
-            child:
-                // Container(
-                //   margin: EdgeInsets.only(right: 16, top: 13),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                // Text(
-                //   'إعلانات مقترحة',
-                //   style: klabelStyleBlack16,
-                // ),
-                Column(
+            child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
@@ -452,7 +428,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                 ),
                 Container(
                   margin: EdgeInsets.only(top: 14, right: 16),
-                  height: size.height * 0.25,
+                  height: 200,
                   child: GridView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -479,13 +455,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                               color: Colors.white,
                               borderRadius: BorderRadius.circular(4),
                             ),
-                            child:
-                                //  Container(
-                                //   color: Colors.red,
-                                //   width: 50,
-                                //   height: 50,
-                                // ),
-                                Column(
+                            child: Column(
                               children: [
                                 //----------card grid-----------
                                 Column(
