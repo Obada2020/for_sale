@@ -63,7 +63,7 @@ class _AdsdetailsState extends State<Adsdetails> {
       body: ListView(
         children: [
           Container(
-            height: size.height * 0.446,
+            height: size.height * 0.5,
             decoration: BoxDecoration(color: Colors.white),
             child: Column(
               children: [
@@ -125,7 +125,10 @@ class _AdsdetailsState extends State<Adsdetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('سيارة الماني BMW'),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text('سيارة الماني BMW'),
+                      ),
                       Row(
                         children: [
                           Container(
