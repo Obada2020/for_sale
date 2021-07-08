@@ -22,14 +22,15 @@ final klabelStyleBold12 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 12); // Add Ad , Settings
 
 final klabelStyleBold14 =
-    TextStyle(fontFamily: 'FairuzBold', fontSize: 12); // more , My Account
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 14); // more , My Account
 
 final klabelStyleBlack14 =
     TextStyle(fontFamily: 'FairuzBlack', fontSize: 14); // more , My Account
 
 final kBottonSubmitStyleBold13 = TextStyle(
     fontFamily: 'FairuzBold',
-    fontSize: 13); // sign in , Verify account , Add Ad
+    fontSize: 13,
+    color: Colors.white); // sign in , Verify account , Add Ad
 
 final kBottonStyleBold11 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 11); // Add Ad
@@ -44,5 +45,17 @@ final klabelStyleBold11light = TextStyle(
     fontFamily: 'FairuzBold', fontSize: 11, color: Colors.white); // ads page
 final kbodyColor = Color(0xffF2F2F2);
 final klabelStyleBlack16 =
-    TextStyle(fontFamily: 'FairuzBlack', fontSize: 16);// ad detials
+    TextStyle(fontFamily: 'FairuzBlack', fontSize: 16); // ad detials
+//==============================================================================
+//==============================yahea===========================================
+// home page
+
+final klabelStyleTitle =
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 14); // title
+
+final klabelStyleShowAll = TextStyle(
+    fontFamily: 'FairuzBold', fontSize: 10, color: Colors.blue); // icon;
+
+final klabelStyleTitleCategory =
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 13); // title category
 //==============================================================================

@@ -1,8 +1,14 @@
+<<<<<<< HEAD
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:for_sale/style.dart';
+=======
+import 'package:flutter/material.dart';
+import 'package:for_sale/constant/constant.dart';
+import 'dart:ui';
+>>>>>>> 8bc73247ad22a6982a8e8a89af6bf16f4a37f56b
 
 class AddUI extends StatefulWidget {
   @override
@@ -23,8 +29,16 @@ class _AddUIState extends State<AddUI> {
         appBar: AppBar(
           title: Text("إضافة إعلان"),
           centerTitle: true,
+<<<<<<< HEAD
           backgroundColor: gg,
           leading: Icon(Icons.arrow_back_rounded),
+=======
+          backgroundColor: kbodyColor,
+          actions: [
+            Icon(Icons.arrow_forward),
+            SizedBox(width: 15),
+          ],
+>>>>>>> 8bc73247ad22a6982a8e8a89af6bf16f4a37f56b
         ),
         backgroundColor: Color(0xFFF2F2F2),
         body: SingleChildScrollView(
