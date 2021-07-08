@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Ads-page/view.dart';
+import 'package:for_sale/Favorite-ads/view.dart';
+import 'package:for_sale/My-ads/view.dart';
 import 'package:get/get.dart';
 
 void main() {

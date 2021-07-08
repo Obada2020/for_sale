@@ -3,15 +3,10 @@ import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
+import 'listhorizonal.dart';
 
-class Ads extends StatefulWidget {
-  @override
-  _AdsState createState() => _AdsState();
-}
-
-class _AdsState extends State<Ads> {
-  int selectindex = 0;
-  //AdsController adsController = Get.put(AdsController());
+class Ads extends StatelessWidget {
+  AdsController adsController = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -53,6 +48,9 @@ class _AdsState extends State<Ads> {
                   color: Color(0xffF2F2F2),
                 ),
                 child: TextField(
+                  onChanged: (txt) {
+                    adsController.fileserch(txt);
+                  },
                   decoration: InputDecoration(
                     hintText: " ابحث عن  سيارات",
                     hintStyle: TextStyle(
@@ -75,7 +73,7 @@ class _AdsState extends State<Ads> {
           Container(
             margin:
                 EdgeInsets.only(top: size.height * 0.083, right: 16, left: 16),
-            child: GetX<AdsController>(
+            child: GetBuilder<AdsController>(
               init: AdsController(),
               builder: (controller) {
                 if (controller.ads != null) {
@@ -92,7 +90,7 @@ class _AdsState extends State<Ads> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Get.to(Adsdetails());
+                            Get.to(Adsdetails(), arguments: index);
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -109,6 +107,7 @@ class _AdsState extends State<Ads> {
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 //----------card grid-----------
                                 Container(
@@ -127,7 +126,7 @@ class _AdsState extends State<Ads> {
                                 Padding(
                                   padding: EdgeInsets.only(
                                     left: 5,
-                                    right: 5,
+                                    right: 7,
                                     top: 3,
                                   ),
                                   child: Text(
@@ -168,16 +167,14 @@ class _AdsState extends State<Ads> {
                                                 .substring(8, 10)),
                                             int.parse(controller
                                                 .ads[index].createdAt!
-                                                .substring(5, 7)),
-                                          )).inHours.days)} يوم و  ساعة'),
+                                                .substring(11, 13)),
+                                          )).inDays)}  يوم  '),
                                       maxLines: 2,
                                       style: TextStyle(
                                           fontFamily: 'FairuzBold',
                                           fontSize: 10,
                                           color: Color(0xFF5E5E5E)),
                                     ),
-                                    // Text(controller.ads[index].createdAt!
-                                    //     .substring(11, 13))
                                   ],
                                 ),
                               ],
@@ -196,50 +193,7 @@ class _AdsState extends State<Ads> {
           ),
           //================================list horisental=========================
           Positioned(
-            child: Container(
-              color: kbodyColor,
-              width: size.width,
-              height: 60,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                itemBuilder: (BuildContext ctx, int index) {
-                  return RawMaterialButton(
-                    onPressed: () {
-                      setState(() {
-                        selectindex = index;
-                      });
-                    },
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(13, 10, 13, 14),
-                      padding: EdgeInsets.fromLTRB(18, 5, 18, 5),
-                      height: 30,
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xff333333)),
-                          gradient: selectindex == index
-                              ? kGColor
-                              : LinearGradient(
-                                  begin: Alignment.topCenter,
-                                  end: Alignment.bottomCenter,
-                                  colors: [
-                                    Color(0xffF2F2F2),
-                                    Color(0xffF2F2F2),
-                                  ],
-                                ),
-                          color: Color(0xffF2F2F2),
-                          borderRadius: BorderRadius.circular(4)),
-                      child: Text(
-                        'data data',
-                        style: selectindex == index
-                            ? klabelStyleBold11light
-                            : klabelStyleBold11dark,
-                      ),
-                    ),
-                  );
-                },
-                itemCount: 20,
-              ),
-            ),
+            child: ListHorizantol(),
           ),
         ],
       ),

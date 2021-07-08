@@ -1,6 +1,8 @@
-import 'package:flutter/material.dart';
-import 'package:for_sale/constant/constant.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
 
 class Adsdetails extends StatefulWidget {
   @override
@@ -23,6 +25,8 @@ class _AdsdetailsState extends State<Adsdetails> {
     }
     return result;
   }
+
+  final AdsController adctrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +124,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('سيارة الماني BMW'),
+                        child: Text('${adctrl.ads[Get.arguments].adName}'),
                       ),
                       Row(
                         children: [
@@ -137,7 +141,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                                 borderRadius: BorderRadius.circular(4),
                                 gradient: kGColor),
                             child: Text(
-                              '500  د.ك ',
+                              '${adctrl.ads[Get.arguments].adPrice}',
                               style: klabelStyleBold11light,
                             ),
                           ),
@@ -149,7 +153,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                             width: 10,
                           ),
                           Text(
-                            'قبل 2 يوم و 4 ساعة',
+                            '${adctrl.ads[Get.arguments].createdAt}',
                             style: TextStyle(
                                 fontFamily: 'FairuzBold',
                                 fontSize: 10,
@@ -247,7 +251,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                     style: klabelStyleBlack16,
                   ),
                   Text(
-                    'هذا النص هو مثال لنص يمكن أن يستبدل في نفس المساحة، لقد تم توليد هذا النص من مولد النص العربى، حيث يمكنك أن تولد مثل هذا النص أو العديد من النصوص الأخرى إضافة إلى زيادة عدد الحروف التى ',
+                    '${adctrl.ads[Get.arguments].adDescription}',
                     style: TextStyle(
                         fontFamily: 'FairuzBlack',
                         fontSize: 12,
@@ -429,97 +433,129 @@ class _AdsdetailsState extends State<Adsdetails> {
                 Container(
                   margin: EdgeInsets.only(top: 14, right: 16),
                   height: 200,
-                  child: GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: 10,
-                      gridDelegate:
-                          new SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 2 / 2,
-                        crossAxisSpacing: 9,
-                        mainAxisSpacing: 5,
-                      ),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: null,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  color: Colors.grey.withOpacity(0.2),
-                                )
-                              ],
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(4),
+                  child: GetX<AdsController>(
+                    init: AdsController(),
+                    builder: (controller) {
+                      if (controller.ads != null) {
+                        return GridView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: controller.ads.length,
+                            gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 1,
+                              childAspectRatio: 2 / 2,
+                              crossAxisSpacing: 9,
+                              mainAxisSpacing: 9,
                             ),
-                            child: Column(
-                              children: [
-                                //----------card grid-----------
-                                Column(
-                                  children: [
-                                    Container(
-                                      height: size.height * 0.125,
-                                      width: 180,
-                                      child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(4),
-                                            topLeft: Radius.circular(4),
-                                          ),
-                                          child: Image.asset(
-                                            'img/image.jpg',
-                                            fit: BoxFit.cover,
-                                          )),
-                                    ),
-                                  ],
-                                ),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.to(Adsdetails(), arguments: index);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        spreadRadius: 1,
+                                        blurRadius: 5,
+                                        color: Colors.grey.withOpacity(0.2),
+                                      )
+                                    ],
+                                    color: controller.ads[index].adTypeId == '2'
+                                        ? Color(0x79667590)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(4),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      //----------card grid-----------
+                                      Container(
+                                        child: ClipRRect(
+                                            borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(4),
+                                              topLeft: Radius.circular(4),
+                                            ),
+                                            child: Image.network(
+                                              controller.ads[index].adPicture
+                                                  .toString(),
+                                              fit: BoxFit.cover,
+                                            )),
+                                      ),
 
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 5,
-                                    right: 5,
-                                    top: 3,
-                                  ),
-                                  child: Text(
-                                    'سيارة Bmw اخت الجديدة مطلية ذهب',
-                                    style: klabelStyleBold12,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, bottom: 5, left: 10),
+                                      Padding(
                                         padding: EdgeInsets.only(
                                           left: 5,
-                                          right: 6,
+                                          right: 7,
                                           top: 3,
-                                          bottom: 4,
                                         ),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            gradient: kGColor),
                                         child: Text(
-                                          '500  د.ك ',
-                                          style: klabelStyleBold11light,
-                                        )),
-                                    Text(
-                                      'قبل 2 يوم و 4 ساعة',
-                                      style: TextStyle(
-                                          fontFamily: 'FairuzBold',
-                                          fontSize: 10,
-                                          color: Color(0xFF5E5E5E)),
-                                    ),
-                                  ],
+                                          controller.ads[index].adName!,
+                                          style: klabelStyleBold12,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                              margin: EdgeInsets.only(
+                                                  right: 5,
+                                                  bottom: 5,
+                                                  left: 10),
+                                              padding: EdgeInsets.only(
+                                                left: 5,
+                                                right: 6,
+                                                top: 3,
+                                                bottom: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                  gradient: kGColor),
+                                              child: Text(
+                                                controller.ads[index].adPrice
+                                                    .toString(),
+                                                style: klabelStyleBold11light,
+                                              )),
+                                          Text(
+                                            ('قبل : ${(DateTime.now().difference(DateTime(
+                                                  int.parse(controller
+                                                      .ads[index].createdAt!
+                                                      .substring(0, 4)),
+                                                  int.parse(controller
+                                                      .ads[index].createdAt!
+                                                      .substring(5, 7)),
+                                                  int.parse(controller
+                                                      .ads[index].createdAt!
+                                                      .substring(8, 10)),
+                                                  int.parse(controller
+                                                      .ads[index].createdAt!
+                                                      .substring(11, 13)),
+                                                )).inDays)}  يوم  '),
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontFamily: 'FairuzBold',
+                                                fontSize: 10,
+                                                color: Color(0xFF5E5E5E)),
+                                          ),
+                                          // Text(controller.ads[index].createdAt!
+                                          //     .substring(11, 13))
+                                        ],
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ],
-                            ),
-                          ),
-                        );
-                      }),
+                              );
+                            });
+                      } else {
+                        return Center(
+                            child: Container(
+                          child: CircularProgressIndicator(),
+                        ));
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
