@@ -8,7 +8,9 @@ class AdsController extends GetxController {
   var ads = <AdsModel>[].obs;
   var myads = <MyAdsModel>[].obs;
   var favad = <FavoriteModel>[].obs;
+  List<AdsModel>? dummysearch;
 
+  bool isFirst = true;
   var accountID;
   @override
   void onInit() {
@@ -20,6 +22,10 @@ class AdsController extends GetxController {
   fdatads() async {
     List<AdsModel> ad = await ApiService.fdataAds();
     ads.value = ad;
+    print("Here APIIIIIIIIIIIIIIIIIIII"); 
+    dummysearch = ads.toList();
+  //******************************************************************** */
+    update();
   }
 
   fdatamyad() async {
@@ -34,10 +40,9 @@ class AdsController extends GetxController {
   //==================================search========================
 
   fileserch(String query) async {
-    List<AdsModel> dummysearch = ads;
-    if (query.isNotEmpty) {
-      List<AdsModel> dummylistdata = <AdsModel>[];
-      dummysearch.forEach((item) {
+    List<AdsModel> dummylistdata = <AdsModel>[];
+    if (query.isNotEmpty && dummysearch!.isNotEmpty) {
+      dummysearch!.forEach((item) {
         var service = item;
         print("Here");
         if (service.adName!.toLowerCase().contains(query.toLowerCase())) {
@@ -48,13 +53,11 @@ class AdsController extends GetxController {
       ads.clear();
       ads.addAll(dummylistdata);
       update();
-      return;
     } else {
+      print(dummysearch!.length);
       ads.clear();
-      // ads.addAll(dummysearch);
-      fdatads();
+      ads.addAll(dummysearch!);
       update();
-      return;
     }
   }
 }

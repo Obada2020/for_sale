@@ -9,6 +9,16 @@ class ChatUI extends StatefulWidget {
 }
 
 class _ChatUIState extends State<ChatUI> {
+  var text = TextEditingController();
+  List<Widget> messages = <Widget>[
+    Message(true, "السلام عليكم ورحمة الله", DateTime.now()),
+    SizedBox(height: 24),
+    Message(false, "السلام عليكم ورحمة الله", DateTime.now()),
+    SizedBox(height: 24),
+    Message(true, "السلام عليكم ورحمة الله", DateTime.now()),
+    SizedBox(height: 24),
+    Message(false, "السلام عليكم ورحمة الله", DateTime.now()),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,17 +38,7 @@ class _ChatUIState extends State<ChatUI> {
             SizedBox(height: 25),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Message(true, "السلام عليكم ورحمة الله", DateTime.now()),
-                    SizedBox(height: 24),
-                    Message(false, "السلام عليكم ورحمة الله", DateTime.now()),
-                    SizedBox(height: 24),
-                    Message(true, "السلام عليكم ورحمة الله", DateTime.now()),
-                    SizedBox(height: 24),
-                    Message(false, "السلام عليكم ورحمة الله", DateTime.now()),
-                  ],
-                ),
+                child: Column(children: messages),
               ),
             ),
             Container(
@@ -47,7 +47,13 @@ class _ChatUIState extends State<ChatUI> {
               child: Row(
                 children: [
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        setState(() {
+                          messages.add(
+                            Message(false, text.text, DateTime.now()),
+                          );
+                        });
+                      },
                       icon: Icon(
                         Icons.send,
                         textDirection: TextDirection.ltr,
@@ -57,6 +63,7 @@ class _ChatUIState extends State<ChatUI> {
                       padding: EdgeInsets.only(
                           left: 14, top: 18, bottom: 18, right: 24),
                       child: TextFormField(
+                        controller: text,
                         decoration: InputDecoration(
                             // hintText: "اكتب رسالة",
                             labelText: "اكتب رسالة",
