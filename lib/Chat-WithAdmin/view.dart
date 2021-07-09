@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:for_sale/style.dart';
+import 'package:for_sale/constant/constant.dart';
 
 class ChatUI extends StatefulWidget {
   ChatUI({Key? key}) : super(key: key);
@@ -15,7 +15,9 @@ class _ChatUIState extends State<ChatUI> {
       appBar: AppBar(
         title: Text("التواصل المباشر مع الإدارة"),
         centerTitle: true,
-        backgroundColor: gg,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(gradient: kGColor),
+        ),
         leading: Icon(Icons.arrow_back_rounded),
       ),
       body: Container(
@@ -114,7 +116,15 @@ class Message extends StatelessWidget {
                     color: isAdmin! ? Colors.white : Color(0xFF626C75)),
               ),
               decoration: BoxDecoration(
-                color: isAdmin! ? gg : Colors.white,
+                gradient: isAdmin!
+                    ? kGColor
+                    : LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xfffffffff),
+                        ],
+                      ),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
