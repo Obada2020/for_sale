@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'Add-ad/view.dart';
-import 'Chat-WithAdmin/view.dart';
-
 import 'package:for_sale/Ads-page/view.dart';
-import 'package:for_sale/Favorite-ads/view.dart';
-import 'package:for_sale/My-ads/view.dart';
 import 'package:get/get.dart';
+
+import 'Chat-WithAdmin/view.dart';
 
 
 void main() {
@@ -26,7 +23,7 @@ class _MyAppState extends State<MyApp> {
     
 
     return GetMaterialApp(
-      home: Ads(),
+      home: ChatUI(),
 
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
