@@ -1,7 +1,8 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:for_sale/constant/constant.dart';
+import 'package:for_sale/constant/constant.dart';
 
 class AddUI extends StatefulWidget {
   @override
@@ -22,8 +23,14 @@ class _AddUIState extends State<AddUI> {
         appBar: AppBar(
           title: Text("إضافة إعلان"),
           centerTitle: true,
-          backgroundColor: Color(0xFF586682),
           leading: Icon(Icons.arrow_back_rounded),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(gradient: kGColor),
+          ),
+          actions: [
+            Icon(Icons.arrow_forward),
+            SizedBox(width: 15),
+          ],
         ),
         backgroundColor: Color(0xFFF2F2F2),
         body: SingleChildScrollView(
@@ -84,21 +91,25 @@ class _AddUIState extends State<AddUI> {
               SizedBox(height: 18),
               Padding(
                 padding: const EdgeInsets.all(18),
-                child: ElevatedButton(
-                    style: ButtonStyle(
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                                RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        )),
-                        padding: MaterialStateProperty.all(EdgeInsets.symmetric(
-                            vertical: 13, horizontal: 140)),
-                        backgroundColor:
-                            MaterialStateProperty.all(Color(0xFF586682))),
-                    onPressed: () {},
-                    child: Center(
-                      child: Text("نشر الإعلان"),
-                    )),
+                child: Container(
+                  decoration: BoxDecoration(gradient: kGColor),
+                  child: ElevatedButton(
+                      style: ButtonStyle(
+                          shape:
+                              MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          )),
+                          padding: MaterialStateProperty.all(
+                              EdgeInsets.symmetric(
+                                  vertical: 13, horizontal: 140)),
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.transparent)),
+                      onPressed: () {},
+                      child: Center(
+                        child: Text("نشر الإعلان"),
+                      )),
+                ),
               ),
               SizedBox(height: 18),
             ],
@@ -330,8 +341,15 @@ class _TypesTypesState extends State<TypesTypes> {
 
               decoration: BoxDecoration(
                   border: Border.all(color: Colors.black),
-                  color:
-                      selectedIndex == index ? Color(0xFF586682) : Colors.white,
+                  gradient: selectedIndex == index
+                      ? kGColor
+                      : LinearGradient(
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                          colors: [
+                            Color(0xffffffff),
+                          ],
+                        ),
                   borderRadius: BorderRadius.all(Radius.circular(4))),
               // width: 56,
               // height: 28,

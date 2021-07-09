@@ -25,7 +25,9 @@ class _ChatUIState extends State<ChatUI> {
       appBar: AppBar(
         title: Text("التواصل المباشر مع الإدارة"),
         centerTitle: true,
-        backgroundColor: Color(0xFF586682),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(gradient: kGColor),
+        ),
         leading: Icon(Icons.arrow_back_rounded),
       ),
       body: Container(
@@ -121,7 +123,15 @@ class Message extends StatelessWidget {
                     color: isAdmin! ? Colors.white : Color(0xFF626C75)),
               ),
               decoration: BoxDecoration(
-                color: isAdmin! ? Color(0xFF586682) : Colors.white,
+                gradient: isAdmin!
+                    ? kGColor
+                    : LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xfffffffff),
+                        ],
+                      ),
                 borderRadius: BorderRadius.circular(6),
               ),
             ),

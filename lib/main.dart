@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:get/get.dart';
-
-import 'Chat-WithAdmin/view.dart';
-
 
 void main() {
   runApp(MyApp());
@@ -19,12 +17,8 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-
-    
-
     return GetMaterialApp(
-      home: ChatUI(),
-
+      home: AddUI(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
