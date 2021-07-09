@@ -22,9 +22,9 @@ class AdsController extends GetxController {
   fdatads() async {
     List<AdsModel> ad = await ApiService.fdataAds();
     ads.value = ad;
-    print("Here APIIIIIIIIIIIIIIIIIIII");
+    print("Here APIIIIIIIIIIIIIIIIIIII"); 
     dummysearch = ads.toList();
-
+  //******************************************************************** */
     update();
   }
 
