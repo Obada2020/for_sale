@@ -107,7 +107,7 @@ class Message extends StatelessWidget {
         SizedBox(width: 6),
         CircleAvatar(
           backgroundColor: Colors.red,
-          backgroundImage: AssetImage("img/mario.jpg"),
+          backgroundImage: AssetImage("img/batman.png"),
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
