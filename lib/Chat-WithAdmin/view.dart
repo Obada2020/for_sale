@@ -106,7 +106,7 @@ class Message extends StatelessWidget {
       children: [
         SizedBox(width: 6),
         CircleAvatar(
-          backgroundColor: Colors.red,
+          backgroundColor: Colors.white,
           backgroundImage: AssetImage("img/batman.png"),
         ),
         Column(
