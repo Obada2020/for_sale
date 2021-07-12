@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
+import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
 import 'package:http/http.dart' as http;
 
@@ -107,6 +108,24 @@ class ApiService {
       print('statuscode=${res.statusCode}');
     }
   }
-  //==============================================================
 
+  //==============================================================
+  //============================== Home ===========================
+  static Future fdataHome() async {
+    var homeList = <HomeModel>[];
+    http.Response res = await http.get(Uri.parse(url + "MobileAppHomePage"));
+    print("here the res $res");
+    print(res.statusCode);
+
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+      print(body);
+      for (var item in body) {
+        homeList.add(HomeModel.fromJson(item));
+      }
+      return homeList;
+    } else {
+      print('statuscode=${res.statusCode}');
+    }
+  }
 }

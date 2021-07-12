@@ -4,6 +4,7 @@ import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:for_sale/Favorite-ads/view.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -20,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Ads(),
+      home: Navbar(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
