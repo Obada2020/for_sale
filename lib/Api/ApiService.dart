@@ -9,7 +9,34 @@ class ApiService {
   //==============================Ads Api=======================
   static Future fdataAds() async {
     List<AdsModel> ads = [];
-    http.Response res = await http.get(Uri.parse(url + "ad"));
+    http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
+      'ad_catogary_id': '1',
+      'catogary_details_id': '1',
+      'ad_descriptions_id': '1'
+    });
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+
+      for (var item in body) {
+        ads.add(AdsModel.fromJson(item));
+      }
+      return ads;
+    } else {
+      print('statuscode=${res.statusCode}');
+    }
+  }
+
+  //==============================================================
+  //==============================AdsByNameScroll Api=======================
+  static Future fdataAdsNameScrl() async {
+    List<AdsModel> ads = [];
+    http.Response res =
+        await http.post(Uri.parse(url + "BringAdsInName"), body: {
+      'ad_catogary_id': '1',
+      'catogary_details_id': '1',
+      'ad_descriptions_id': '1',
+      'ad_type_name_id': '1'
+    });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
@@ -53,6 +80,29 @@ class ApiService {
         myads.add(FavoriteModel.fromJson(item));
       }
       return myads;
+    } else {
+      print('statuscode=${res.statusCode}');
+    }
+  }
+
+  //==============================================================
+  //==============================scrollhor Api=======================
+  static Future fdataScrlho() async {
+    List<ScrlHorModel> scrl = [];
+    http.Response res = await http.post(Uri.parse(url + "ScrollOfViewAds"),
+        body: {
+          'ad_catogary_id': "1",
+          'catogary_details_id': "1",
+          'ad_descriptions_id': "1"
+        });
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+
+      for (var item in body) {
+        scrl.add(ScrlHorModel.fromJson(item));
+        print(item);
+      }
+      return scrl;
     } else {
       print('statuscode=${res.statusCode}');
     }
