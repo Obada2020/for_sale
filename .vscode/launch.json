@@ -5,11 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "chrome",
+            "name": "for_sale",
             "request": "launch",
-            "name": "Launch Chrome against localhost",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "type": "dart"
+        },
+        {
+            "name": "for_sale (profile mode)",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "profile"
         }
     ]
 }

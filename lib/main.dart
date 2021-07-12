@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Ads-page/view.dart';
+import 'package:for_sale/Home/navbar.dart';
+import 'package:for_sale/Home/view.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Ads(),
+      home: Navbar(),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
