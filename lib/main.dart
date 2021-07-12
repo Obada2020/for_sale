@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Ads-page/view.dart';
+import 'package:for_sale/Pages/setting.dart';
+import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 
 void main() {
@@ -18,8 +20,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: AddUI(),
+      home: Settings(),
       debugShowCheckedModeBanner: false,
+      theme: Themes().lightTheme,
+      darkTheme: Themes().darkTheme,
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

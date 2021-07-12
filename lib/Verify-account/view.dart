@@ -4,7 +4,7 @@ import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import '../constant/constant.dart';
 
-String? x = "";
+//String? x = "";
 
 class VerifyAccount extends StatelessWidget {
   const VerifyAccount({Key? key}) : super(key: key);
