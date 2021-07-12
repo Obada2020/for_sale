@@ -27,17 +27,17 @@ class MyAdsModel {
     this.updatedAt,
   });
 
-  String? adId;
+  int? adId;
   String? adName;
-  String? adPhoneNumber;
+  int? adPhoneNumber;
   String? adDescription;
   String? adLocation;
   String? adPicture;
-  String? mangerAccept;
-  String? adPrice;
-  String? adCatogaryId;
-  String? accountId;
-  String? adTypeId;
+  int? mangerAccept;
+  int? adPrice;
+  int? adCatogaryId;
+  int? accountId;
+  int? adTypeId;
   String? createdAt;
   String? updatedAt;
 

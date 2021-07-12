@@ -71,8 +71,7 @@ class Ads extends StatelessWidget {
           //================================grid view==========================
 
           Container(
-            margin:
-                EdgeInsets.only(top: size.height * 0.083, right: 16, left: 16),
+            margin: EdgeInsets.only(top: 65, right: 16, left: 16),
             child: GetBuilder<AdsController>(
                 init: AdsController(),
                 builder: (controller) {
@@ -84,7 +83,7 @@ class Ads extends StatelessWidget {
                               gridDelegate:
                                   new SliverGridDelegateWithFixedCrossAxisCount(
                                 crossAxisCount: 2,
-                                childAspectRatio: 2 / 2,
+                                childAspectRatio: 0.9,
                                 crossAxisSpacing: 9,
                                 mainAxisSpacing: 9,
                               ),

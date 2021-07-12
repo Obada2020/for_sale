@@ -43,7 +43,7 @@ class MyAds extends StatelessWidget {
                   itemCount: controller.myads.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 2 / 2,
+                    childAspectRatio: 0.9,
                     crossAxisSpacing: 9,
                     mainAxisSpacing: 9,
                   ),

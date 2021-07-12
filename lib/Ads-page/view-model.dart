@@ -8,6 +8,7 @@ class AdsController extends GetxController {
   var ads = <AdsModel>[].obs;
   var myads = <MyAdsModel>[].obs;
   var favad = <FavoriteModel>[].obs;
+  var scrlho = <ScrlHorModel>[].obs;
   List<AdsModel>? dummysearch;
 
   bool isFirst = true;
@@ -17,14 +18,24 @@ class AdsController extends GetxController {
     super.onInit();
     fdatamyad();
     fdatads();
+    fdatascrol();
+    fdatafavad();
+    fdatadsbynamescrl();
   }
 
   fdatads() async {
     List<AdsModel> ad = await ApiService.fdataAds();
     ads.value = ad;
-    print("Here APIIIIIIIIIIIIIIIIIIII"); 
+    print("Here APIIIIIIIIIIIIIIIIIIII");
     dummysearch = ads.toList();
-  //******************************************************************** */
+    //******************************************************************** */
+    update();
+  }
+
+  fdatadsbynamescrl() async {
+    List<AdsModel> adby = await ApiService.fdataAdsNameScrl();
+    ads.value = adby;
+    dummysearch = ads.toList();
     update();
   }
 
@@ -36,6 +47,11 @@ class AdsController extends GetxController {
   fdatafavad() async {
     List<FavoriteModel> fav = await ApiService.fdatafavad();
     favad.value = fav;
+  }
+
+  fdatascrol() async {
+    List<ScrlHorModel> scroll = await ApiService.fdataScrlho();
+    scrlho.value = scroll;
   }
   //==================================search========================
 
@@ -60,4 +76,6 @@ class AdsController extends GetxController {
       update();
     }
   }
+  //====================================================================
+
 }
