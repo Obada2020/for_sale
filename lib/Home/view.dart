@@ -93,7 +93,7 @@ class _HomeState extends State<Home> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: klabelStyleTitle),
+        Text(title, style: klabelStyleTitle.copyWith(color: Colors.black)),
         Row(
           children: [
             Text("عرض الكل", style: klabelStyleShowAll),

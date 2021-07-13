@@ -6,7 +6,7 @@ import 'package:for_sale/My-ads/model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static String url = "https://forsale-test.000webhostapp.com/public/api/";
+  static String url = "http://forsale-test.herokuapp.com/api/";
   //==============================Ads Api=======================
   static Future fdataAds() async {
     List<AdsModel> ads = [];
