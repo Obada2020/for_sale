@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String url = "https://forsale-test.000webhostapp.com/public/api/";
-  //==============================Ads Api=======================
+
   static Future fdataAds() async {
     List<AdsModel> ads = [];
     http.Response res = await http.get(Uri.parse(url + "ad"));
@@ -22,8 +22,8 @@ class ApiService {
     }
   }
 
-  //==============================================================
-  //==============================MyAds Api=======================
+
+
   static Future fdataMyad() async {
     List<MyAdsModel> myads = [];
     http.Response res =
@@ -40,8 +40,7 @@ class ApiService {
     }
   }
 
-  //==============================================================
-  //==============================FavoriteAds Api=======================
+
   static Future fdatafavad() async {
     List<FavoriteModel> myads = [];
     http.Response res = await http
@@ -57,6 +56,8 @@ class ApiService {
       print('statuscode=${res.statusCode}');
     }
   }
-  //==============================================================
+
+  
+
 
 }
