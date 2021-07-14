@@ -1,17 +1,29 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
-import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
+import 'package:multi_image_picker/multi_image_picker.dart';
 
-class AddUI extends StatefulWidget {
-  @override
-  _AddUIState createState() => _AddUIState();
-}
+class AddUI extends StatelessWidget {
+  ////////////////////////////////////////////////////////
 
-class _AddUIState extends State<AddUI> {
+  String? adPhoneNumber,
+      adDescription,
+      adLocation,
+      adPicture,
+      adPrice,
+      accountId,
+      adTypeId,
+      adCatogaryId,
+      catogaryDetailsId,
+      adDescriptionsId,
+      adTypeNameId,
+      adId;
+
+  ////////////////////////////////////////////////////////
   final items = List<String>.generate(5, (i) => "Item $i");
-
+  var c = Get.put(AddNameController());
   String v = "A";
   Color t = Colors.red;
 
@@ -20,68 +32,41 @@ class _AddUIState extends State<AddUI> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text("إضافة إعلان"),
-          centerTitle: true,
-          leading: Icon(Icons.arrow_back_rounded),
-          flexibleSpace: Container(
-            decoration: BoxDecoration(gradient: kGColor),
-          ),
-          actions: [
-            Icon(Icons.arrow_forward),
-            SizedBox(width: 15),
-          ],
+      appBar: AppBar(
+        title: Text("إضافة إعلان"),
+        centerTitle: true,
+        leading: Icon(Icons.arrow_back_rounded),
+        flexibleSpace: Container(
+          decoration: BoxDecoration(gradient: kGColor),
         ),
-        backgroundColor: Color(0xFFF2F2F2),
-        body: SingleChildScrollView(
-            child: ConstrainedBox(
+        actions: [
+          Icon(Icons.arrow_forward),
+          SizedBox(width: 15),
+        ],
+      ),
+      backgroundColor: Color(0xFFF2F2F2),
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
           constraints: BoxConstraints(maxHeight: size.height * 3),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               SizedBox(height: 12),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                // height: MediaQuery.of(context).size.height * 0.299,
-                color: Colors.white,
-                child: Container(
-                  padding:
-                      EdgeInsets.only(right: 16, top: 16, left: 16, bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "نوع الأعلان",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(height: 16),
-                      ChooseType(),
-                    ],
-                  ),
-                ),
-              ),
+              get(ChooseType(t: adTypeId), "نوع الإعلان"),
               SizedBox(height: 12),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                color: Colors.white,
-                child: Container(
-                  padding:
-                      EdgeInsets.only(top: 19, left: 16, bottom: 18, right: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "القسم",
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(height: 13),
-                      test(),
-                    ],
-                  ),
-                ),
-              ),
+              get(
+                  WAddName(
+                      adCatogaryId: adCatogaryId,
+                      adDescriptionsId: adDescriptionsId,
+                      catogaryDetailsId: catogaryDetailsId),
+                  "القسم"),
               SizedBox(height: 12),
-              TypesTypes(),
+              Obx(() => Visibility(
+                    child: TypesTypes(
+                      adTypeId: adTypeId,
+                    ),
+                    visible: c.showLastCat.value,
+                  )),
               SizedBox(height: 12),
               DetailsAdd(),
               SizedBox(height: 12),
@@ -91,15 +76,13 @@ class _AddUIState extends State<AddUI> {
               SizedBox(height: 18),
               Padding(
                 padding: const EdgeInsets.all(18),
-                child: Container(
-                  decoration: BoxDecoration(gradient: kGColor),
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    gradient: kGColor,
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
                   child: ElevatedButton(
                       style: ButtonStyle(
-                          shape:
-                              MaterialStateProperty.all<RoundedRectangleBorder>(
-                                  RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          )),
                           padding: MaterialStateProperty.all(
                               EdgeInsets.symmetric(
                                   vertical: 13, horizontal: 140)),
@@ -114,13 +97,36 @@ class _AddUIState extends State<AddUI> {
               SizedBox(height: 18),
             ],
           ),
-        )));
+        ),
+      ),
+    );
   }
 }
 
-class ChooseType extends StatefulWidget {
-  ChooseType({Key? key}) : super(key: key);
+Widget get(Widget x, String title) {
+  return Container(
+    width: MediaQuery.of(Get.context!).size.width,
+    color: Colors.white,
+    child: Container(
+      padding: EdgeInsets.only(right: 16, top: 16, left: 16, bottom: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 16),
+          x
+        ],
+      ),
+    ),
+  );
+}
 
+class ChooseType extends StatefulWidget {
+  String? t;
+  ChooseType({Key? key, this.t}) : super(key: key);
   @override
   _ChooseTypeState createState() => _ChooseTypeState();
 }
@@ -131,18 +137,10 @@ class _ChooseTypeState extends State<ChooseType> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
         color: Colors.white,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.18),
-            offset: Offset(0.0, -1), //(x,y)
-            blurRadius: 6.0,
-          ),
-        ],
       ),
       // color: Colors.transparent,
       child: Row(
@@ -154,6 +152,7 @@ class _ChooseTypeState extends State<ChooseType> {
                   onTap: () {
                     setState(() {
                       type = Types.normal;
+                      widget.t = "0";
                     });
                   },
                   child: Container(
@@ -186,6 +185,7 @@ class _ChooseTypeState extends State<ChooseType> {
                   onTap: () {
                     setState(() {
                       type = Types.special;
+                      widget.t = "1";
                     });
                   },
                   child: Container(
@@ -218,95 +218,200 @@ class _ChooseTypeState extends State<ChooseType> {
 
 enum Types { normal, special }
 
-class test extends StatefulWidget {
+class WAddName extends StatefulWidget {
+  String? adCatogaryId, catogaryDetailsId, adDescriptionsId;
+  WAddName({this.adCatogaryId, this.adDescriptionsId, this.catogaryDetailsId});
   @override
-  _testState createState() => _testState();
+  _WAddNameState createState() => _WAddNameState();
 }
 
-class _testState extends State<test> {
-  String? v;
-  String defaultValue = "السيارات";
+class _WAddNameState extends State<WAddName> {
   @override
   Widget build(BuildContext context) {
+    var c = Get.find<AddNameController>();
     Size size = MediaQuery.of(context).size;
 
-    return
-        // Conta
-        Container(
-      decoration: BoxDecoration(
-        border:
-            Border.all(width: 1, color: Color(0xFF707070).withOpacity(0.01009)),
-        borderRadius: BorderRadius.all(Radius.circular(4)),
-        gradient:
-            // selectindex == index
-            //     ? kGColor :
-            LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [
-            Color(0xffF2F2F2),
-            Color(0xffF2F2F2),
-          ],
-        ),
-      ),
-      width: size.width - 300,
-      // height: size.height * 0.083,
-      height: 41,
-      padding: EdgeInsets.all(5),
-      child: ListView.builder(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext ctx, int index) {
-          return DropdownButton<String>(
-            underline: SizedBox(),
-            // decoration: InputDecoration(
-            //     enabledBorder: UnderlineInputBorder(
-            //         borderSide: BorderSide(color: Colors.white))),
-            value: v,
-            onChanged: (value) {
-              setState(() {
-                v = value;
-              });
-            },
-            hint: Text(defaultValue),
-            disabledHint: Text("Disabled"),
-            elevation: 8,
-            // style: TextStyle(color: Colors.green, fontSize: 16),
-            items: [
-              DropdownMenuItem<String>(
-                child: Text(
-                  "السيارات",
-                  // style: TextStyle(color: Colors.black),
-                ),
-                value: "1",
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                  width: 1, color: Color(0xFF707070).withOpacity(0.01009)),
+              borderRadius: BorderRadius.all(Radius.circular(4)),
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [
+                  Color(0xffF2F2F2),
+                  Color(0xffF2F2F2),
+                ],
               ),
-              DropdownMenuItem<String>(
-                child: Text("عقارات"),
-                value: "2",
-              ),
-              DropdownMenuItem<String>(
-                child: Text("الألكترونيات"),
-                value: "3",
-              ),
-            ],
-          );
-        },
-        itemCount: 1,
+            ),
+            width: size.width - 300,
+            height: 41,
+            padding: EdgeInsets.all(5),
+            child: Obx(() => Container(
+                  child: c.addsName.isNotEmpty
+                      ? DropdownButton<String>(
+                          underline: SizedBox(),
+                          value: widget.adCatogaryId,
+                          onChanged: (value) {
+                            c.fetchDataAddsCat(int.parse(value!), 1);
+                            // print(value);
+                          },
+                          hint: Text(c.addsName[0].adCatogaryName.toString()),
+                          disabledHint: Text("Disabled"),
+                          elevation: 8,
+                          items: c.addsName
+                              .map(
+                                (e) => DropdownMenuItem<String>(
+                                  child: Text(e.adCatogaryName.toString()),
+                                  value: e.adCatogaryId.toString(),
+                                ),
+                              )
+                              .toList(),
+                        )
+                      : Container(
+                          width: 150,
+                          height: 80,
+                          child: LinearProgressIndicator(),
+                        ),
+                )),
+          ),
+          //*** */
+          SizedBox(width: 7),
+          Obx(
+            () => c.show1.value
+                ? Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1,
+                          color: Color(0xFF707070).withOpacity(0.01009)),
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xffF2F2F2),
+                          Color(0xffF2F2F2),
+                        ],
+                      ),
+                    ),
+                    height: 41,
+                    child: Obx(
+                      () => Container(
+                        child: c.addsCat1.value.list!.length != 0
+                            ? DropdownButton<String>(
+                                underline: SizedBox(),
+                                value: widget.catogaryDetailsId,
+                                onChanged: (value) {
+                                  // print(value);
+
+                                  c.fetchDataAddsCat(int.parse(value!), 2);
+                                },
+                                hint: Text(c
+                                    .addsCat1.value.list![0].catogaryName
+                                    .toString()
+                                    .trim()),
+                                disabledHint: Text("Disabled"),
+                                elevation: 8,
+                                items: c.addsCat1.value.list!
+                                    .map(
+                                      (e) => DropdownMenuItem<String>(
+                                        child: Text(e.catogaryName.toString()),
+                                        value: e.catogaryDetailsId.toString(),
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : Container(
+                                width: 150,
+                                height: 80,
+                                child: LinearProgressIndicator(),
+                              ),
+                      ),
+                    ),
+                  )
+                : Container(),
+          ),
+          SizedBox(width: 7),
+          Obx(
+            () => c.show2.value
+                ? Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          width: 1,
+                          color: Color(0xFF707070).withOpacity(0.01009)),
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Color(0xffF2F2F2),
+                          Color(0xffF2F2F2),
+                        ],
+                      ),
+                    ),
+                    // width: size.width - 600,
+                    height: 41,
+                    // padding: EdgeInsets.all(5),
+                    child: Obx(
+                      () => Container(
+                        child: c.addsCat2.value.list!.length != 0
+                            ? DropdownButton<String>(
+                                underline: SizedBox(),
+                                value: widget.adDescriptionsId,
+                                onChanged: (value) {
+                                  // print(value);
+                                  c.fetchDataAddsCat(int.parse(value!), 3);
+                                },
+                                hint: Text(c.addsCat2.value.list![0]
+                                    .adDetailsDescription
+                                    .toString()
+                                    .trim()),
+                                disabledHint: Text("Disabled"),
+                                elevation: 8,
+                                items: c.addsCat2.value.list!
+                                    .map(
+                                      (e) => DropdownMenuItem<String>(
+                                        child: Text(
+                                            e.adDetailsDescription.toString()),
+                                        value: e.adDescriptionsId.toString(),
+                                      ),
+                                    )
+                                    .toList(),
+                              )
+                            : Container(
+                                width: 150,
+                                height: 80,
+                                child: LinearProgressIndicator(),
+                              ),
+                      ),
+                    ),
+                  )
+                : Container(),
+          ),
+        ],
       ),
     );
   }
 }
 
 class TypesTypes extends StatefulWidget {
-  TypesTypes({Key? key}) : super(key: key);
+  String? adTypeId;
+  TypesTypes({this.adTypeId});
 
   @override
   _TypesTypesState createState() => _TypesTypesState();
 }
 
 class _TypesTypesState extends State<TypesTypes> {
-  List<String> list = ["الكل", "هايلوكس", "كوريلا", "لاند كروزر"];
+  // List<String> list = ["الكل", "هايلوكس", "كوريلا", "لاند كروزر"];
   int selectedIndex = 0;
+  var c = Get.find<AddNameController>();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -326,41 +431,48 @@ class _TypesTypesState extends State<TypesTypes> {
           ),
         ],
       ),
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        shrinkWrap: true,
-        itemBuilder: (BuildContext ctx, int index) {
-          return InkWell(
-            onTap: () {
-              setState(() {
-                selectedIndex = index;
-              });
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: 20),
+      child: Obx(
+        () => c.lastCat.value.list!.isNotEmpty
+            ? ListView.separated(
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemBuilder: (BuildContext ctx, int index) {
+                  return InkWell(
+                    onTap: () {
+                      setState(() {
+                        selectedIndex = index;
+                        widget.adTypeId = c
+                            .lastCat.value.list![index].adCatogaryId
+                            .toString();
+                      });
+                    },
+                    child: Container(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
 
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  gradient: selectedIndex == index
-                      ? kGColor
-                      : LinearGradient(
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                          colors: [
-                            Color(0xffffffff),
-                          ],
-                        ),
-                  borderRadius: BorderRadius.all(Radius.circular(4))),
-              // width: 56,
-              // height: 28,
-              child: Center(child: Text(list[index])),
-            ),
-          );
-        },
-        itemCount: 4,
-        separatorBuilder: (BuildContext context, int index) {
-          return SizedBox(width: 12);
-        },
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.black),
+                          gradient: selectedIndex == index ? kGColor : null,
+                          borderRadius: BorderRadius.all(Radius.circular(4))),
+                      // width: 56,
+                      // height: 28,
+                      child: Center(
+                          child: Text(
+                        c.lastCat.value.list![index].adTypeName!,
+                        style: TextStyle(color: Colors.black),
+                      )),
+                    ),
+                  );
+                },
+                itemCount: c.lastCat.value.list!.length,
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(width: 12);
+                },
+              )
+            : Container(
+                width: 150,
+                height: 80,
+                child: LinearProgressIndicator(),
+              ),
       ),
     );
   }
@@ -374,13 +486,70 @@ class DetailsAdd extends StatefulWidget {
 }
 
 class _DetailsAddState extends State<DetailsAdd> {
+  List<Asset> images = [];
+  Size size = MediaQuery.of(Get.context!).size;
+
+  Future<void> loadAssets() async {
+    setState(() {
+      images = <Asset>[];
+    });
+
+    List<Asset> resultList;
+    String error;
+
+    try {
+      resultList = await MultiImagePicker.pickImages(
+        maxImages: 300,
+      );
+    } on Exception catch (e) {
+      error = e.toString();
+    }
+    if (!mounted) return;
+
+    setState(() {
+      images = resultList;
+      if (error.isEmpty) _error = 'No Error Dectected';
+    });
+  }
+
+  Widget buildGridView() {
+    if (images.isEmpty)
+      return GridView.count(
+        crossAxisCount: 3,
+        children: List.generate(images.length, (index) {
+          Asset asset = images[index];
+          return AssetThumb(
+            asset: asset,
+            width: 300,
+            height: 300,
+          );
+        }),
+      );
+    else
+      return Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFF2F2F2),
+          border:
+              Border.all(width: 1, color: Color(0xFF707070).withOpacity(0.09)),
+          borderRadius: BorderRadius.all(Radius.circular(4)),
+        ),
+        margin: EdgeInsets.symmetric(horizontal: 16),
+        width: size.width - 20,
+        height: 100,
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [Text("upload"), Text("انقر لرفع الصور")],
+          ),
+        ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-
     return Form(
       child: Container(
-        // height: 500,
         width: size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
@@ -419,26 +588,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                   ),
                 ),
                 SizedBox(height: 10),
-                InkWell(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xFFF2F2F2),
-                      border: Border.all(
-                          width: 1, color: Color(0xFF707070).withOpacity(0.09)),
-                      borderRadius: BorderRadius.all(Radius.circular(4)),
-                    ),
-                    margin: EdgeInsets.symmetric(horizontal: 16),
-                    width: size.width - 20,
-                    height: 100,
-                    child: Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [Text("upload"), Text("انقر لرفع الصور")],
-                      ),
-                    ),
-                  ),
-                ),
+                buildGridView()
               ],
             ),
             SizedBox(height: 16),
@@ -739,3 +889,156 @@ class _CommunicateState extends State<Communicate> {
         ));
   }
 }
+
+
+
+
+//   List<Asset> images = [];
+//   List<File> listImages = [];
+//   @override
+//   void initState() {
+//     super.initState();
+//   }
+
+//   Widget buildGridView() {
+//     return GridView.count(
+//       crossAxisCount: 3,
+//       children: List.generate(images.length, (index) {
+//         Asset asset = images[index];
+//         return AssetThumb(
+//           asset: asset,
+//           width: 300,
+//           height: 300,
+//         );
+//       }),
+//     );
+//   }
+
+
+//   void _uploadFiles() async {
+//     String uid = await FlutterSecureStorage().read(key: "getTocken");
+//     try {
+//       var dio = Dio();
+//       FormData formData = new FormData.fromMap({
+//         "pictures[]": images, 
+//       });
+//       Response resp = await dio.post(
+//         mainUrl + 'merchant/upload-galleries',
+//         data: formData,
+//         onSendProgress: (int sent, int total) {
+//           //
+//         }, 
+//         options: Options(
+//           headers: {
+//             HttpHeaders.authorizationHeader: uid,
+//           },
+//         )
+//       );
+//       if(resp.statusCode == 200) {
+//         print("============= Print Resp data: ");
+//         print(resp.data);
+//       }
+
+//     } catch (e) {
+//       print(e);
+//     }
+//   }
+
+//   Future<void> loadAssets() async {
+//     List<Asset> resultList = List<Asset>();
+//     try {
+//       resultList = await MultiImagePicker.pickImages(
+//         maxImages: 6,
+//         enableCamera: true,
+//         selectedAssets: images,
+//         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+//         materialOptions: MaterialOptions(
+//           actionBarColor: "#abcdef",
+//           actionBarTitle: "Example App",
+//           allViewTitle: "All Photos",
+//           useDetailsView: false,
+//           selectCircleStrokeColor: "#000000",
+//         ),
+//       );
+//     } on Exception catch (e) {
+//       print(e);
+//     }
+
+//     // If the widget was removed from the tree while the asynchronous platform
+//     // message was in flight, we want to discard the reply rather than calling
+//     // setState to update our non-existent appearance.
+//     if (!mounted) return;
+//     setState(() {
+//       images = resultList;
+//     });
+//   }
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       floatingActionButton: FloatingActionButton(
+//         heroTag: "btn1",
+//         backgroundColor: ColorHelper.orange,
+//         child: Icon(Icons.add_photo_alternate),
+//         onPressed: loadAssets,
+//       ),
+//       appBar: new AppBar(
+//         title: Text('បញ្ជីរូបភាព'),
+//         backgroundColor: ColorHelper.orange,
+//       ),
+//       body: Column(
+//         children: <Widget>[
+//           //Error message
+//           errorMessage != "" ? 
+//           Container(
+//             margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+//             height: 50,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.all(Radius.circular(4)),
+//               color: ColorHelper.red.withOpacity(0.5),
+//             ),
+//             child: Center(
+//               child: Text("$errorMessage", style: TextStyle(color: ColorHelper.swhite, fontSize: 15),),
+//             ),
+//           ):
+//           Container(),
+
+//           Expanded(
+//             child: Container(
+//               margin: EdgeInsets.only(left: 10, right: 10, top: 10),
+//               child: buildGridView(),
+//             ),
+//           ),
+//           SafeArea(
+//             child: Container(
+//               margin: EdgeInsets.all(10),
+//               decoration: BoxDecoration(
+//                 color: ColorHelper.green,
+//                 borderRadius: BorderRadius.all(Radius.circular(4))
+//               ),
+//               height: 50,
+//               child: InkWell(
+//                 onTap: () {
+//                   if(images.length > 0) {
+//                     setState(() {
+//                       errorMessage = "";
+//                     });
+//                     // Call function upload multiple files
+//                     _uploadFiles();
+//                   } else {
+//                     setState(() {
+//                       errorMessage = "សូមបញ្ជូលរូបភាព";
+//                     });
+//                   } 
+//                 },
+//                 child: Center(
+//                   child: Text("រួចរាល់", style: TextStyle(color: ColorHelper.swhite, fontSize: 15, fontWeight: FontWeight.w500,),),
+//                 ),
+//               ),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
