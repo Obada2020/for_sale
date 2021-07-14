@@ -8,6 +8,8 @@ import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 
+import 'My-ads/view.dart';
+
 void main() {
   runApp(MyApp());
 }
@@ -22,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Navbar(),
+      home: FavoriteAds(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,

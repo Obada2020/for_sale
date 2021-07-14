@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 class AdsController extends GetxController {
   var ads = <AdsModel>[].obs;
   var myads = <MyAdsModel>[].obs;
-  var favad = <FavoriteModel>[].obs;
   var scrlho = <ScrlHorModel>[].obs;
+  var favad = <FavoriteModel>[].obs;
   List<AdsModel>? dummysearch;
 
   bool isFirst = true;
@@ -16,11 +16,16 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fdatamyad();
     fdatads();
-    fdatascrol();
     fdatafavad();
+    fdatamyad();
+    fdatascrol();
     fdatadsbynamescrl();
+  }
+
+  fdatamyad() async {
+    List<MyAdsModel> myad = await ApiService.fdataMyad();
+    myads.value = myad;
   }
 
   fdatads() async {
@@ -39,19 +44,14 @@ class AdsController extends GetxController {
     update();
   }
 
-  fdatamyad() async {
-    List<MyAdsModel> myad = await ApiService.fdataMyad();
-    myads.value = myad;
+  fdatascrol() async {
+    List<ScrlHorModel> scroll = await ApiService.fdataScrlho();
+    scrlho.value = scroll;
   }
 
   fdatafavad() async {
     List<FavoriteModel> fav = await ApiService.fdatafavad();
     favad.value = fav;
-  }
-
-  fdatascrol() async {
-    List<ScrlHorModel> scroll = await ApiService.fdataScrlho();
-    scrlho.value = scroll;
   }
   //==================================search========================
 
@@ -61,8 +61,11 @@ class AdsController extends GetxController {
       dummysearch!.forEach((item) {
         var service = item;
         print("Here");
-        if (service.adName!.toLowerCase().contains(query.toLowerCase())) {
-          print("Here is a Service ************ " + service.adName!.toString());
+        if (service.adDescription!
+            .toLowerCase()
+            .contains(query.toLowerCase())) {
+          print("Here is a Service ************ " +
+              service.adDescription!.toString());
           dummylistdata.add(service);
         }
       });

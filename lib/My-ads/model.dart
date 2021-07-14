@@ -13,7 +13,6 @@ String myAdsModelToJson(List<MyAdsModel> data) =>
 class MyAdsModel {
   MyAdsModel({
     this.adId,
-    this.adName,
     this.adPhoneNumber,
     this.adDescription,
     this.adLocation,
@@ -28,7 +27,6 @@ class MyAdsModel {
   });
 
   int? adId;
-  String? adName;
   int? adPhoneNumber;
   String? adDescription;
   String? adLocation;
@@ -43,7 +41,6 @@ class MyAdsModel {
 
   factory MyAdsModel.fromJson(Map<String, dynamic> json) => MyAdsModel(
         adId: json["ad_id"],
-        adName: json["ad_name"],
         adPhoneNumber: json["ad_phone_number"],
         adDescription: json["ad_description"],
         adLocation: json["ad_location"],
@@ -59,7 +56,6 @@ class MyAdsModel {
 
   Map<String, dynamic> toJson() => {
         "ad_id": adId,
-        "ad_name": adName,
         "ad_phone_number": adPhoneNumber,
         "ad_description": adDescription,
         "ad_location": adLocation,
