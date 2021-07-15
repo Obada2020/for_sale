@@ -8,6 +8,8 @@ import 'package:for_sale/Sign-in/view.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 
+import 'My-ads/view.dart';
+
 void main() {
   runApp(MyApp());
 }

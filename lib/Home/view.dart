@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Category-page/view.dart';
+import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -9,8 +10,11 @@ class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
 }
-//لك احلا حيى بالكرة 
+
+//لك احلا حيى بالكرة
 class _HomeState extends State<Home> {
+  // HomeController homeController = Get.put(HomeController());
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -26,44 +30,58 @@ class _HomeState extends State<Home> {
         child: Column(
           children: [
             //start title category
-            ListView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: 2,
-                itemBuilder: (context, index) {
-                  return Column(
-                    children: [
-                      //title
-                      Padding(
-                        padding: EdgeInsetsDirectional.only(
-                            start: 16, end: 16, top: 20),
-                        child: containerTitle(),
-                      ),
-                      //category
-                      Container(
-                        height: 140,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) => containerCategory(),
-                          separatorBuilder: (context, index) =>
-                              SizedBox(width: 5),
-                          itemCount: 5,
-                        ),
-                      ),
-                      //offer
-                      Container(
-                        height: 270.0,
-                        child: ListView.separated(
-                          scrollDirection: Axis.horizontal,
-                          itemBuilder: (context, index) =>
-                              containerOffer(context, size),
-                          itemCount: 5,
-                          separatorBuilder: (context, index) =>
-                              SizedBox(width: 12),
-                        ),
-                      )
-                    ],
-                  );
+            GetX<HomeController>(
+                init: HomeController(),
+                builder: (ctrl) {
+                  return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: ctrl.homeList.value.length,
+                      itemBuilder: (context, indexF) {
+                        return Column(
+                          children: [
+                            //title
+                            Padding(
+                              padding: EdgeInsetsDirectional.only(
+                                  start: 16, end: 16, top: 20),
+                              child: containerTitle(ctrl
+                                  .homeList.value[indexF].adCatogaryName
+                                  .toString()),
+                            ),
+                            //category
+                            Container(
+                              height: 140,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, indexL) =>
+                                    containerCategory(
+                                        name: ctrl
+                                            .homeList
+                                            .value[indexF]
+                                            .catogaryDetails![indexL]
+                                            .catogaryName!
+                                            .toString()),
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(width: 5),
+                                itemCount: ctrl.homeList.value[indexF]
+                                    .catogaryDetails!.length,
+                              ),
+                            ),
+                            //offer
+                            Container(
+                              height: 270.0,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) =>
+                                    containerOffer(context, size),
+                                itemCount: 5,
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(width: 12),
+                              ),
+                            )
+                          ],
+                        );
+                      });
                 }),
           ],
         ),
@@ -71,11 +89,11 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget containerTitle() {
+  Widget containerTitle(String title) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text("العقارات", style: klabelStyleTitle),
+        Text(title, style: klabelStyleTitle.copyWith(color: Colors.black)),
         Row(
           children: [
             Text("عرض الكل", style: klabelStyleShowAll),
@@ -86,7 +104,8 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget containerCategory() {
+  Widget containerCategory({String? name}) {
+    //pictre value
     return TextButton(
       child: Container(
         height: 140.0,
@@ -102,7 +121,7 @@ class _HomeState extends State<Home> {
                 Image.asset("img/5321.jpg"),
                 SizedBox(height: 11.2),
                 Text(
-                  "منازل للبيع",
+                  name!,
                   style: klabelStyleTitleCategory,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,

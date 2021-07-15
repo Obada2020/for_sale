@@ -18,9 +18,12 @@ final klabelStyleBold11 = TextStyle(
   fontSize: 11,
 ); // sign in , Verify account
 
-var klabelStyleBold12 =
-    TextStyle(fontFamily: 'FairuzBold', fontSize: 12); // Add Ad , Settings
-
+final klabelStyleBold12 = TextStyle(
+  fontFamily: 'FairuzBold',
+  fontSize: 12,
+); // Add Ad , Settings
+final klabelStyleBold12card =
+    TextStyle(fontFamily: 'FairuzBold', fontSize: 12, color: Colors.black);
 final klabelStyleBold14 =
     TextStyle(fontFamily: 'FairuzBold', fontSize: 14); // more , My Account
 
