@@ -15,6 +15,8 @@ class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // backgroundColor: Color(0xFFF2F2F2),
+
       appBar: AppBar(
         leading: IconButton(
           onPressed: null,
@@ -52,7 +54,8 @@ class _SettingsState extends State<Settings> {
               padding: const EdgeInsets.only(bottom: 14),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    // color: Colors.white,
+                    border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4)),
                 padding: EdgeInsets.only(left: 10),
                 height: 50,
@@ -90,7 +93,8 @@ class _SettingsState extends State<Settings> {
             ),
             Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    // color: Colors.white,
+                    border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4)),
                 width: double.infinity,
                 height: 50,
