@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import '../constant/constant.dart';
 
 class Settings extends StatefulWidget {
@@ -106,6 +107,8 @@ class _SettingsState extends State<Settings> {
                     Switch(
                       value: isSwitched,
                       onChanged: (value) {
+                        Get.changeThemeMode(
+                            Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
                         setState(() {
                           isSwitched = value;
                         });

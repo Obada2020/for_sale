@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/constant/constant.dart';
+
 ////////////////////////
+////////////////////////
+////////////////////////
+////////////////////////
+////////////////////////
+///
 class ChatUI extends StatefulWidget {
   ChatUI({Key? key}) : super(key: key);
 
@@ -62,7 +68,7 @@ class _ChatUIState extends State<ChatUI> {
                     child: Padding(
                       padding: EdgeInsets.only(
                           left: 14, top: 18, bottom: 18, right: 24),
-                      child: TextFormField(
+                      child: TextFormField( 
                         controller: text,
                         decoration: InputDecoration(
                             // hintText: "اكتب رسالة",

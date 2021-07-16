@@ -494,8 +494,8 @@ class _DetailsAddState extends State<DetailsAdd> {
       images = <Asset>[];
     });
 
-    List<Asset> resultList;
-    String error;
+    List<Asset> resultList = [];
+    String? error;
 
     try {
       resultList = await MultiImagePicker.pickImages(
@@ -508,7 +508,7 @@ class _DetailsAddState extends State<DetailsAdd> {
 
     setState(() {
       images = resultList;
-      if (error.isEmpty) _error = 'No Error Dectected';
+      if (error!.isEmpty) error = 'No Error Dectected';
     });
   }
 

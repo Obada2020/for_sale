@@ -21,9 +21,9 @@ class FavoriteModel {
     this.ad,
   });
 
-  String? favoriteId;
-  String? accountId;
-  String? adId;
+  int? favoriteId;
+  int? accountId;
+  int? adId;
   String? createdAt;
   String? updatedAt;
   List<Ad>? ad;
@@ -64,17 +64,17 @@ class Ad {
     this.updatedAt,
   });
 
-  String? adId;
+  int? adId;
   String? adName;
-  String? adPhoneNumber;
+  int? adPhoneNumber;
   String? adDescription;
   String? adLocation;
   String? adPicture;
-  String? mangerAccept;
-  String? adPrice;
-  String? adCatogaryId;
-  String? accountId;
-  String? adTypeId;
+  int? mangerAccept;
+  int? adPrice;
+  int? adCatogaryId;
+  int? accountId;
+  int? adTypeId;
   String? createdAt;
   String? updatedAt;
 
