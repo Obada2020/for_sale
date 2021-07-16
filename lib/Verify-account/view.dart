@@ -73,8 +73,9 @@ class VerifyAccount extends StatelessWidget {
                           keyboardType: TextInputType.number,
                           outlineBorderRadius: 4,
                           fieldWidth: size.width * 0.1256684492,
+                          style: TextStyle(color: Colors.black),
                           otpFieldStyle: OtpFieldStyle(
-                            backgroundColor: Colors.grey.shade500,
+                            backgroundColor: Theme.of(context).accentColor,
                             disabledBorderColor: Colors.white,
                             enabledBorderColor: Colors.white,
                           ),
