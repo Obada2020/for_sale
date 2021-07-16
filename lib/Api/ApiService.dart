@@ -1,5 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
+
 import 'package:for_sale/Add-ad/model.dart';
+import 'package:for_sale/Ads-details/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
@@ -13,8 +16,11 @@ class ApiService {
     List<AdsModel> ads = [];
     http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
       'ad_catogary_id': '1',
-      'catogary_details_id': '1',
-      'ad_descriptions_id': '1'
+      'catogary_details_id': '8',
+      'ad_descriptions_id': '7'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
@@ -24,7 +30,7 @@ class ApiService {
       }
       return ads;
     } else {
-      print('statuscode=${res.statusCode}');
+      print('statuscode ads=${res.statusCode}');
     }
   }
 
@@ -36,6 +42,9 @@ class ApiService {
       'catogary_details_id': '1',
       'ad_descriptions_id': '1',
       'ad_type_name_id': '1'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
@@ -45,14 +54,18 @@ class ApiService {
       }
       return ads;
     } else {
-      print('statuscode=${res.statusCode}');
+      print('statuscode scrl=${res.statusCode}');
     }
   }
 
   static Future fdataMyad() async {
     List<MyAdsModel> myads = [];
-    http.Response res =
-        await http.post(Uri.parse(url + "myad"), body: {'account_id': '1'});
+    http.Response res = await http.post(Uri.parse(url + "myad"), body: {
+      'account_id': '1'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
@@ -61,23 +74,54 @@ class ApiService {
       }
       return myads;
     } else {
-      print('statuscode=${res.statusCode}');
+      print('statuscode my ad=${res.statusCode}');
     }
   }
 
   static Future fdatafavad() async {
-    List<FavoriteModel> myads = [];
-    http.Response res = await http
-        .post(Uri.parse(url + "myfavorite"), body: {'account_id': '1'});
+    List<FavoriteModel> fads = [];
+    http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
+      'account_id': '1'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        myads.add(FavoriteModel.fromJson(item));
+        fads.add(FavoriteModel.fromJson(item));
       }
-      return myads;
+      // print('fads $fads');
+      // print('body $body');
+
+      return fads;
     } else {
-      print('statuscode=${res.statusCode}');
+      print('body ${res.body}');
+
+      print('statuscode fav=${res.statusCode}');
+    }
+  }
+
+  //==============================================================
+  //==========================AddDeletFaveAds Api=================
+  static Future fdatacdfav() async {
+    List<AddDeleteFavModel> f = [];
+    http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
+      'account_id': '1',
+      'ad_id': '1'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+      for (var item in body) {
+        f.add(AddDeleteFavModel.fromJson(item));
+      }
+      return f;
+    } else {
+      print('statuscode cdfav=${res.statusCode}');
     }
   }
 
@@ -102,13 +146,12 @@ class ApiService {
       body: {type: "$id"},
     );
     var data = jsonDecode(response.body);
-    if (data['isTheLast'] == "yes")
-      return new LastAdd.fromJson(data);
-    else
-      return t == 1
-          ? new AddCat1.fromJson(data)
-          : t == 2
-              ? new Ad_descriptions.fromJson(data)
-              : new LastAdd.fromJson(data);
+    return data['isTheLast'] == "yes"
+        ? new LastAdd.fromJson(data)
+        : t == 1
+            ? new AddCat1.fromJson(data)
+            : t == 2
+                ? new Ad_descriptions.fromJson(data)
+                : new LastAdd.fromJson(data);
   }
 }
