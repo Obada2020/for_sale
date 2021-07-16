@@ -23,7 +23,9 @@ class Signin extends StatelessWidget {
         // width: size.width,
         // height: size.height * 0.3467966574,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(4)),
+          color: Theme.of(context).primaryColor,
+          borderRadius: BorderRadius.circular(4),
+        ),
         child: Padding(
           padding: const EdgeInsets.fromLTRB(12, 17, 12, 15),
           child: SingleChildScrollView(
@@ -60,8 +62,10 @@ class Signin extends StatelessWidget {
                           borderSide: new BorderSide(color: Color(0xFF231F1F)),
                           borderRadius: BorderRadius.circular(4)),
                       hintText: "789 456 123",
-                      hintStyle:
-                          TextStyle(fontSize: 12, color: Color(0xFF333333)),
+                      hintStyle: TextStyle(
+                        fontSize: 12,
+                        // color: Color(0xFF333333),
+                      ),
                     ),
                   ),
                 ),

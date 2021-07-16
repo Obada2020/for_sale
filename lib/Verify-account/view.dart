@@ -39,7 +39,9 @@ class VerifyAccount extends StatelessWidget {
           width: size.width,
           //height: size.height * 0.38,
           decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(4)),
+            color: Theme.of(context).primaryColor,
+            borderRadius: BorderRadius.circular(4),
+          ),
           child: Padding(
             padding: const EdgeInsets.fromLTRB(12, 17, 12, 15),
             child: SingleChildScrollView(
@@ -72,7 +74,7 @@ class VerifyAccount extends StatelessWidget {
                           outlineBorderRadius: 4,
                           fieldWidth: size.width * 0.1256684492,
                           otpFieldStyle: OtpFieldStyle(
-                            backgroundColor: Colors.grey.shade200,
+                            backgroundColor: Colors.grey.shade500,
                             disabledBorderColor: Colors.white,
                             enabledBorderColor: Colors.white,
                           ),

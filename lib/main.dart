@@ -9,11 +9,14 @@ import 'package:for_sale/Pages/privacy_and_terms.dart';
 import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/Sign-in/view.dart';
 import 'package:for_sale/Verify-account/view.dart';
+import 'package:for_sale/theme/theme_service.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'My-ads/view.dart';
 
-void main() {
+void main() async {
+  await GetStorage.init();
   runApp(MyApp());
 }
 
@@ -27,14 +30,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: MyAccount(),
+      home: Settings(),
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-          scaffoldBackgroundColor: Color(0xFFF2F2F2),
-          accentColor: Colors.red,
-          primaryColor: Colors.green),
-      color: Colors.red,
+      theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
+      themeMode: themeService().getThemeMode(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,

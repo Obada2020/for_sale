@@ -28,7 +28,7 @@ class MyAccount extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(4)),
                     width: double.infinity,
                     height: 96,
@@ -81,7 +81,7 @@ class MyAccount extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(4)),
                     width: double.infinity,
                     height: 48,
@@ -106,7 +106,7 @@ class MyAccount extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(4)),
                     width: double.infinity,
                     height: 48,
@@ -134,7 +134,7 @@ class MyAccount extends StatelessWidget {
                 Container(
                     margin: EdgeInsets.only(bottom: 12),
                     decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         borderRadius: BorderRadius.circular(4)),
                     width: double.infinity,
                     height: 48,

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Themes {
-  final lightTheme = ThemeData.light();
+  final lightTheme = ThemeData.light().copyWith(primaryColor: Colors.white);
   // .copyWith(
   //   textTheme: TextTheme(
   //     bodyText1: TextStyle(color: Colors.black),
@@ -10,7 +10,7 @@ class Themes {
   //   buttonColor: Colors.black,
   //   iconTheme: IconThemeData(color: Colors.black),
   // );
-  final darkTheme = ThemeData.dark();
+  final darkTheme = ThemeData.dark().copyWith(primaryColor: Colors.black);
   // .copyWith(
   //   textTheme: TextTheme(
   //     bodyText1: TextStyle(color: Colors.red),
