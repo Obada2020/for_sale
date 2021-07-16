@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Favorite-ads/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -38,10 +39,10 @@ class FavoriteAds extends StatelessWidget {
         child: GetX<AdsController>(
           init: AdsController(),
           builder: (controller) {
-            if (controller.myads != null) {
+            if (controller.favad != null) {
               return GridView.builder(
                   shrinkWrap: true,
-                  itemCount: controller.myads.length,
+                  itemCount: controller.favad.length,
                   gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     childAspectRatio: 0.9,
@@ -76,7 +77,7 @@ class FavoriteAds extends StatelessWidget {
                                     topLeft: Radius.circular(4),
                                   ),
                                   child: Image.network(
-                                    controller.myads[index].adPicture
+                                    controller.favad[0].ad![index].adPicture!
                                         .toString(),
                                     fit: BoxFit.cover,
                                   )),
@@ -89,8 +90,9 @@ class FavoriteAds extends StatelessWidget {
                                 top: 3,
                               ),
                               child: Text(
-                                controller.myads[index].adName!,
+                                controller.favad[0].ad![index].adDescription!,
                                 style: klabelStyleBold12,
+                                maxLines: 2,
                               ),
                             ),
                             Row(
@@ -108,23 +110,23 @@ class FavoriteAds extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(4),
                                         gradient: kGColor),
                                     child: Text(
-                                      controller.myads[index].adPrice
+                                      controller.favad[0].ad![index].adPrice
                                           .toString(),
                                       style: klabelStyleBold11light,
                                     )),
                                 Text(
                                   ('قبل : ${(DateTime.now().difference(DateTime(
                                         int.parse(controller
-                                            .myads[index].createdAt!
+                                            .favad[index].createdAt!
                                             .substring(0, 4)),
                                         int.parse(controller
-                                            .myads[index].createdAt!
+                                            .favad[index].createdAt!
                                             .substring(5, 7)),
                                         int.parse(controller
-                                            .myads[index].createdAt!
+                                            .favad[index].createdAt!
                                             .substring(8, 10)),
                                         int.parse(controller
-                                            .myads[index].createdAt!
+                                            .favad[index].createdAt!
                                             .substring(11, 13)),
                                       )).inDays)}  يوم  '),
                                   maxLines: 2,

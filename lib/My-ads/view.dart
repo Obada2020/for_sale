@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/My-ads/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -88,8 +89,9 @@ class MyAds extends StatelessWidget {
                                 top: 3,
                               ),
                               child: Text(
-                                controller.myads[index].adName!,
+                                controller.myads[index].adDescription!,
                                 style: klabelStyleBold12,
+                                maxLines: 2,
                               ),
                             ),
                             Row(

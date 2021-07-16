@@ -132,8 +132,10 @@ class Ads extends StatelessWidget {
                                             top: 3,
                                           ),
                                           child: Text(
-                                            controller.ads[index].adName!,
-                                            style: klabelStyleBold12,
+                                            controller
+                                                .ads[index].adDescription!,
+                                            style: klabelStyleBold12card,
+                                            maxLines: 2,
                                           ),
                                         ),
                                         Row(

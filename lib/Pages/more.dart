@@ -28,7 +28,7 @@ class More extends StatelessWidget {
                 padding: EdgeInsets.only(right: 17),
                 margin: EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(4)),
                 width: double.infinity,
                 height: 48,
@@ -36,7 +36,7 @@ class More extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.view_list_sharp,
-                      color: Color(0xFF405A76),
+                      //color: Color(0xFF405A76),
                       size: 27,
                     ),
                     SizedBox(
@@ -52,7 +52,7 @@ class More extends StatelessWidget {
                 padding: EdgeInsets.only(right: 17),
                 margin: EdgeInsets.only(bottom: 12),
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(4)),
                 width: double.infinity,
                 height: 48,
@@ -60,7 +60,7 @@ class More extends StatelessWidget {
                   children: [
                     Icon(
                       Icons.settings,
-                      color: Color(0xFF405A76),
+                      //color: Color(0xFF405A76),
                       size: 27,
                     ),
                     SizedBox(

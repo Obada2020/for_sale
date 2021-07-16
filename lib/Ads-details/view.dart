@@ -1,5 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:for_sale/Ads-details/view-model.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
@@ -33,7 +34,7 @@ class _AdsdetailsState extends State<Adsdetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-
+    // IconData icon = Icons.favorite_border;
     return Scaffold(
       backgroundColor: kbodyColor,
       appBar: AppBar(
@@ -41,12 +42,9 @@ class _AdsdetailsState extends State<Adsdetails> {
           decoration: BoxDecoration(gradient: kGColor),
         ),
         actions: [
-          IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.favorite_outline_rounded,
-              color: Colors.white,
-            ),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: IconFav(),
           ),
         ],
         title: Center(
@@ -148,7 +146,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                     border: Border.all(color: Color(0xff333333)),
                     ontap: () {
                       Share.share(
-                          '${adctrl.ads[Get.arguments].adName}\n\n${adctrl.ads[Get.arguments].adDescription}\n\n http://hyperurl.co/4buy');
+                          '${adctrl.ads[Get.arguments].adDescription}\n\n http://hyperurl.co/4buy');
                     },
                   ),
                 ),
@@ -225,7 +223,11 @@ class _AdsdetailsState extends State<Adsdetails> {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text('${adctrl.ads[Get.arguments].adName}'),
+                  child: Text(
+                    '${adctrl.ads[Get.arguments].adDescription}',
+                    style: klabelStyleBold12card,
+                    maxLines: 2,
+                  ),
                 ),
                 Row(
                   children: [
@@ -445,8 +447,9 @@ class _AdsdetailsState extends State<Adsdetails> {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    controller.ads[index].adName!,
-                                    style: klabelStyleBold12,
+                                    controller.ads[index].adDescription!,
+                                    style: klabelStyleBold12card,
+                                    maxLines: 1,
                                   ),
                                 ),
                                 Row(
@@ -511,6 +514,35 @@ class _AdsdetailsState extends State<Adsdetails> {
         ],
       ),
     );
+  }
+}
+
+class IconFav extends StatefulWidget {
+  @override
+  _IconFavState createState() => _IconFavState();
+}
+
+class _IconFavState extends State<IconFav> {
+  IconData icon = Icons.favorite_border;
+
+  @override
+  Widget build(BuildContext context) {
+    return GetX<AddFavController>(
+        init: AddFavController(),
+        builder: (ctrl) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                ctrl.fdata();
+                ctrl.result == "true"
+                    ? icon = Icons.face_retouching_natural_rounded
+                    : icon = Icons.favorite_border;
+              });
+            },
+            child: Icon(icon),
+            //  Icon(icon),
+          );
+        });
   }
 }
 
