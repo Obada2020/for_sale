@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Verify-account/view.dart';
+import 'package:get/get.dart';
 import '../constant/constant.dart';
 
 class Signin extends StatelessWidget {
@@ -56,6 +58,7 @@ class Signin extends StatelessWidget {
                 child: Container(
                   // height: 50,
                   child: TextFormField(
+                    controller: Num,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: new OutlineInputBorder(
@@ -86,7 +89,9 @@ class Signin extends StatelessWidget {
                 ),
                 // height: 41,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(VerifyAccount);
+                    },
                     child: Text(
                       'تسجيل الدخول',
                       style: kBottonSubmitStyleBold13,
