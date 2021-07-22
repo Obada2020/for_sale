@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Verify-account/view.dart';
+import 'package:get/get.dart';
 import '../constant/constant.dart';
 
 class Signin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Size size = MediaQuery.of(context).size;
-    TextEditingController Num = TextEditingController();
+    TextEditingController num = TextEditingController();
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -56,6 +59,7 @@ class Signin extends StatelessWidget {
                 child: Container(
                   // height: 50,
                   child: TextFormField(
+                    controller: num,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
                       border: new OutlineInputBorder(
@@ -86,7 +90,10 @@ class Signin extends StatelessWidget {
                 ),
                 // height: 41,
                 child: TextButton(
-                    onPressed: () {},
+                    onPressed: () async {
+                      await ApiService.fdataSignin(num.text.toString());
+                      Get.to(VerifyAccount);
+                    },
                     child: Text(
                       'تسجيل الدخول',
                       style: kBottonSubmitStyleBold13,

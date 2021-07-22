@@ -5,6 +5,7 @@ import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
+import 'package:for_sale/Sign-in/model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -178,4 +179,28 @@ class ApiService {
       print('statuscode=${res.statusCode}');
     }
   }
+
+  //===============================================================
+  //============================Signin=============================
+  static Future fdataSignin(var phone) async {
+    List<SigninModel> sign = [];
+    http.Response res = await http.post(Uri.parse(url + "register"), body: {
+      'account_phone_number': '$phone',
+      'account_type_id': '2'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+      //   for (var item in body) {
+      //     sign.add(SigninModel.fromJson(item));
+      //   }
+      //   return sign;
+      // } else {
+      print('statuscode cdfav=${res.statusCode}');
+    }
+  }
+  //===============================================================
+
 }
