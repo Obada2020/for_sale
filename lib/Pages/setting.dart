@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/theme/theme_service.dart';
 import 'package:get/get.dart';
 import '../constant/constant.dart';
+import 'package:for_sale/theme/themes.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -52,7 +54,8 @@ class _SettingsState extends State<Settings> {
               padding: const EdgeInsets.only(bottom: 14),
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
+                    //border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4)),
                 padding: EdgeInsets.only(left: 10),
                 height: 50,
@@ -62,7 +65,6 @@ class _SettingsState extends State<Settings> {
                   value: _dropDownValue,
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
-                  //style: const TextStyle(color: Colors.deepPurple),
                   underline: Container(
                     height: 0,
                     color: Colors.white,
@@ -90,8 +92,10 @@ class _SettingsState extends State<Settings> {
             ),
             Container(
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(4)),
+                  color: Theme.of(context).primaryColor,
+                  //border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(4),
+                ),
                 width: double.infinity,
                 height: 50,
                 child: Row(
@@ -107,8 +111,9 @@ class _SettingsState extends State<Settings> {
                     Switch(
                       value: isSwitched,
                       onChanged: (value) {
-                        Get.changeThemeMode(
-                            Get.isDarkMode ? ThemeMode.light : ThemeMode.dark);
+                        themeService().changeThemeMode();
+                        // Get.changeThemeMode(
+                        //     Get.isDarkMode ? lightTheme() : darkTheme());
                         setState(() {
                           isSwitched = value;
                         });

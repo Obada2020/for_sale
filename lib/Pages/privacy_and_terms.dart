@@ -29,7 +29,7 @@ class PrivacyAndTerms extends StatelessWidget {
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: EdgeInsets.fromLTRB(16, 20, 16, 0),
+            padding: EdgeInsets.fromLTRB(16, 20, 16, 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
