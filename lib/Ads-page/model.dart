@@ -15,7 +15,7 @@ class AdsModel {
     this.adId,
     this.adPhoneNumber,
     this.adDescription,
-    this.adLocation,
+    this.adname,
     this.adPicture,
     this.mangerAccept,
     this.adPrice,
@@ -30,9 +30,9 @@ class AdsModel {
   });
 
   int? adId;
+  String? adname;
   String? adPhoneNumber;
   String? adDescription;
-  String? adLocation;
   String? adPicture;
   int? mangerAccept;
   String? adPrice;
@@ -47,9 +47,9 @@ class AdsModel {
 
   factory AdsModel.fromJson(Map<String, dynamic> json) => AdsModel(
         adId: json["ad_id"],
+        adname: json['ad_name'],
         adPhoneNumber: json["ad_phone_number"],
         adDescription: json["ad_description"],
-        adLocation: json["ad_location"],
         adPicture: json["ad_picture"],
         mangerAccept: json["manger_accept"],
         adPrice: json["ad_price"],
@@ -64,10 +64,10 @@ class AdsModel {
       );
 
   Map<String, dynamic> toJson() => {
+        "|ad_name": adname,
         "ad_id": adId,
         "ad_phone_number": adPhoneNumber,
         "ad_description": adDescription,
-        "ad_location": adLocation,
         "ad_picture": adPicture,
         "manger_accept": mangerAccept,
         "ad_price": adPrice,
@@ -106,6 +106,7 @@ class ScrlHorModel {
 
   int? adTypeNameId;
   String? adTypeName;
+
   int? adId;
   int? adCatogaryId;
   int? catogaryDetailsId;

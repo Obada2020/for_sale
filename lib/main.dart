@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:for_sale/Home/view.dart';
-import 'package:for_sale/Sign-in/view.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/theme/theme_service.dart';
-import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'Sign-in/view.dart';
 
 void main() async {
   await GetStorage.init();
@@ -24,8 +24,8 @@ class _MyAppState extends State<MyApp> {
     return GetMaterialApp(
       home: Signin(),
       debugShowCheckedModeBanner: false,
-      theme: Themes().lightTheme,
-      darkTheme: Themes().darkTheme,
+      // theme: Themes().lightTheme,
+      // darkTheme: Themes().darkTheme,
       themeMode: themeService().getThemeMode(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
