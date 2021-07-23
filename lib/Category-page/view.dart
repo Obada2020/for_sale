@@ -80,11 +80,12 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       onTap: () {
         var paras = {
+          "title":widget.parameter['title_navbar'],
           "category_type": widget.parameter['ad_catogary_id'],
           "category_details": widget.parameter['catogary_details_id'],
           "category_ad": categ.adCatogaryId,
         };
-        Get.to(Ads());
+        Get.to(Ads(parameter: paras));
       },
     );
   }
