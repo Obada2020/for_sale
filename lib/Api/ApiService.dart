@@ -112,7 +112,8 @@ class ApiService {
   //==========================AddDeletFaveAds Api=================
   static Future fdatacdfav() async {
     List<AddDeleteFavModel> f = [];
-    http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
+    http.Response res =
+        await http.post(Uri.parse(url + "FavoriteControleItem"), body: {
       'account_id': '1',
       'ad_id': '1'
     }, headers: {
