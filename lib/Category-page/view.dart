@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Ads-details/view.dart';
+import 'package:for_sale/Ads-page/view.dart';
 import 'package:for_sale/Category-page/model.dart';
 import 'package:for_sale/Category-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
@@ -51,29 +53,39 @@ class _CategoryPageState extends State<CategoryPage> {
   }
 
   Widget containerCategory({CategoryModel? categ}) {
-    return Container(
-      height: 160.0,
-      width: 110.0,
-      decoration: BoxDecoration(
-          color: Colors.white, borderRadius: BorderRadius.circular(5)),
-      child: Padding(
-        padding:
-            const EdgeInsetsDirectional.only(start: 20, end: 20, top: 15.1),
-        child: Center(
-          child: Column(
-            children: [
-              Image.asset("img/5321.jpg"),
-              SizedBox(height: 11.2),
-              Text(
-                categ!.adDetailsDescription.toString(),
-                style: klabelStyleTitleCategory,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              )
-            ],
+    return GestureDetector(
+      child: Container(
+        height: 160.0,
+        width: 110.0,
+        decoration: BoxDecoration(
+            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+        child: Padding(
+          padding:
+              const EdgeInsetsDirectional.only(start: 20, end: 20, top: 15.1),
+          child: Center(
+            child: Column(
+              children: [
+                Image.asset("img/5321.jpg"),
+                SizedBox(height: 11.2),
+                Text(
+                  categ!.adDetailsDescription.toString(),
+                  style: klabelStyleTitleCategory,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                )
+              ],
+            ),
           ),
         ),
       ),
+      onTap: () {
+        var paras = {
+          "category_type": widget.parameter['ad_catogary_id'],
+          "category_details": widget.parameter['catogary_details_id'],
+          "category_ad": categ.adCatogaryId,
+        };
+        Get.to(Ads());
+      },
     );
   }
 }
