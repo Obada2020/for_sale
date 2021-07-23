@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Favorite-ads/view.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -22,7 +23,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+<<<<<<< HEAD
       home: Ads(),
+=======
+      home: Navbar(),
+>>>>>>> a42747eb678c78143d65bc01928995661e3e3512
       debugShowCheckedModeBanner: false,
       // theme: Themes().lightTheme,
       // darkTheme: Themes().darkTheme,
