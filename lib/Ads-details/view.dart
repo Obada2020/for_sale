@@ -447,7 +447,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    controller.ads[index].adDescription!,
+                                    controller.ads[index].adname!,
                                     style: klabelStyleBold12card,
                                     maxLines: 1,
                                   ),
