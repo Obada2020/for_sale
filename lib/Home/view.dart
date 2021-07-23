@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Category-page/view.dart';
+import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
@@ -13,8 +14,6 @@ class Home extends StatefulWidget {
 
 //لك احلا حيى بالكرة
 class _HomeState extends State<Home> {
-  // HomeController homeController = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -55,12 +54,18 @@ class _HomeState extends State<Home> {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, indexL) =>
                                     containerCategory(
-                                        name: ctrl
-                                            .homeList
-                                            .value[indexF]
-                                            .catogaryDetails![indexL]
-                                            .catogaryName!
-                                            .toString()),
+                                        name: 
+                                        ctrl
+                                        .homeList
+                                        .value[indexF]
+                                        .catogaryDetails![indexL],
+                                        title: 
+                                        ctrl
+                                        .homeList
+                                        .value[indexF]
+                                        .adCatogaryName
+                                        .toString()
+                                    ),
                                 separatorBuilder: (context, index) =>
                                     SizedBox(width: 5),
                                 itemCount: ctrl.homeList.value[indexF]
@@ -104,7 +109,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget containerCategory({String? name}) {
+  Widget containerCategory({CatogaryDetail? name,String? title}) {
     //pictre value
     return TextButton(
       child: Container(
@@ -121,18 +126,24 @@ class _HomeState extends State<Home> {
                 Image.asset("img/5321.jpg"),
                 SizedBox(height: 11.2),
                 Text(
-                  name!,
+                  name!.catogaryName.toString(),
                   style: klabelStyleTitleCategory,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                )
+                ),
               ],
             ),
           ),
         ),
       ),
       onPressed: () {
-        Get.to(CategoryPage());
+        var parameter = {
+          "title_navbar" : title,
+          "ad_catogary_id": name.adCatogaryId,
+          "catogary_details_id": name.catogaryDetailsId
+        };
+        print(parameter);
+        Get.to(CategoryPage(parameter: parameter));
       },
     );
   }
