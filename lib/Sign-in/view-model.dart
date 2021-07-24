@@ -1,20 +1,19 @@
-// import 'package:for_sale/Api/ApiService.dart';
-// import 'package:for_sale/Sign-in/model.dart';
-// import 'package:get/get.dart';
+import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Sign-in/model.dart';
+import 'package:get/get.dart';
 
-// class FavAdsController extends GetxController {
-//   var favad = <SigninModel>[].obs;
+class Login extends GetxController {
+  //
+  Rx<User> user = User().obs;
+  //
+  register(phone) async {
+    return await ApiService.register(phone);
+    // user.value.info!.serialNumber = serialNumber;
+  }
 
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     fdatafavad();
-//   }
-
-
-
-//   fdatafavad() async {
-//     List<SigninModel> fav = await ApiService.fdataSignin("phone");
-//     favad.value = fav;
-//   }
-// }
+  //
+  login(serialNumber) async {
+    user = await ApiService.login(
+        user.value.info!.accountPhoneNumber, serialNumber);
+  }
+}

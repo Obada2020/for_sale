@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:for_sale/Favorite-ads/view.dart';
-import 'package:for_sale/Home/navbar.dart';
+import 'package:for_sale/Add-ad/view.dart';
+import 'package:for_sale/Ads-details/view.dart';
+import 'package:for_sale/Ads-page/view.dart';
+import 'package:for_sale/My-account/view.dart';
+import 'package:for_sale/Pages/more.dart';
+import 'package:for_sale/Pages/privacy_and_terms.dart';
+import 'package:for_sale/Pages/setting.dart';
+import 'package:for_sale/Sign-in/Signin_view.dart';
+import 'package:for_sale/Sign-in/Verify-account_view.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -23,7 +30,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+<<<<<<< HEAD
       home: Navbar(),
+=======
+      home: Ads(),
+>>>>>>> 7d95dc9308312d67441f4fa7e8f6e1d690941fb4
       debugShowCheckedModeBanner: false,
       // theme: Themes().lightTheme,
       // darkTheme: Themes().darkTheme,

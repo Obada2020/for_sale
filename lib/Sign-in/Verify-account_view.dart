@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Home/view.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
+import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import '../constant/constant.dart';
+import 'model.dart';
 
 //String? x = "";
 
 class VerifyAccount extends StatelessWidget {
-  const VerifyAccount({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var c = Get.find<Login>();
+    var number = c.user.value.info!.accountPhoneNumber;
     Size size = MediaQuery.of(context).size;
     TextEditingController Num = TextEditingController();
+    c.user.value.info = Info();
+
+    var serial;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -57,7 +66,7 @@ class VerifyAccount extends StatelessWidget {
                     ),
                     Padding(
                       child: Text(
-                        'لقد أرسلنا رمز إلى رقم جوالك 0592036504 يحتوي على رمز تفعيل من 6 خانات',
+                        'لقد أرسلنا رمز إلى رقم جوالك $number يحتوي على رمز تفعيل من 6 خانات',
                         style: klabelStyleBold11,
                       ),
                       padding: EdgeInsets.only(bottom: 30),
@@ -66,26 +75,28 @@ class VerifyAccount extends StatelessWidget {
                       child: Container(
                         //height: 50,
                         width: size.width,
-                        child: OTPTextField(
-                          length: 6,
-                          textFieldAlignment: MainAxisAlignment.spaceAround,
-                          fieldStyle: FieldStyle.underline,
-                          keyboardType: TextInputType.number,
-                          outlineBorderRadius: 4,
-                          fieldWidth: size.width * 0.1256684492,
-                          style: TextStyle(color: Colors.black),
-                          otpFieldStyle: OtpFieldStyle(
-                            backgroundColor: Theme.of(context).accentColor,
-                            disabledBorderColor: Colors.white,
-                            enabledBorderColor: Colors.white,
+                        child: Directionality(
+                          textDirection: TextDirection.ltr,
+                          child: OTPTextField(
+                            length: 6,
+                            textFieldAlignment: MainAxisAlignment.spaceAround,
+                            fieldStyle: FieldStyle.underline,
+                            keyboardType: TextInputType.number,
+                            outlineBorderRadius: 4,
+                            fieldWidth: size.width * 0.1256684492,
+                            style: TextStyle(color: Colors.black),
+                            otpFieldStyle: OtpFieldStyle(
+                              backgroundColor: Theme.of(context).accentColor,
+                              disabledBorderColor: Colors.white,
+                              enabledBorderColor: Colors.white,
+                            ),
+                            onChanged: (k) {},
+                            onCompleted: (n) {
+                              print(n);
+                              serial = n;
+                              // c.login(n);
+                            },
                           ),
-                          onChanged: (k) {
-                            if (k != null) {}
-                          },
-                          onCompleted: (n) {
-                            // print("Completed: " + pin);
-                            // print(n);
-                          },
                         ),
                       ),
                       padding: EdgeInsets.only(bottom: 10),
@@ -116,7 +127,20 @@ class VerifyAccount extends StatelessWidget {
                       ),
                       //height: 41,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () async {
+                            print(serial);
+                            var number =
+                                await c.user.value.info!.accountPhoneNumber;
+                            print(c.user.value.info!.accountPhoneNumber);
+                            print(number);
+
+                            var z = await ApiService.login(number, serial);
+                            if (z == null) {
+                              showAlertDialog(context);
+                            } else {
+                              Get.offAll(() => Home());
+                            }
+                          },
                           child: Text(
                             'تفعيل',
                             style: kBottonSubmitStyleBold13,
@@ -126,5 +150,36 @@ class VerifyAccount extends StatelessWidget {
             ),
           ),
         ));
+  }
+
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel"),
+      onPressed: () {},
+    );
+    Widget continueButton = TextButton(
+      child: Text("Continue"),
+      onPressed: () {},
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("AlertDialog"),
+      content: Text(
+          "Would you like to continue learning how to use Flutter alerts?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
