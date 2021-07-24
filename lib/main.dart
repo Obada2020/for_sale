@@ -11,6 +11,7 @@ import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:for_sale/Sign-in/Verify-account_view.dart';
 import 'package:for_sale/theme/theme_service.dart';
+import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
@@ -31,10 +32,14 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+<<<<<<< HEAD
       home: Navbar(),
+=======
+      home: Signin(),
+>>>>>>> 143e13e51de44772bef72b65c514c7c3d9b5ec0c
       debugShowCheckedModeBanner: false,
-      // theme: Themes().lightTheme,
-      // darkTheme: Themes().darkTheme,
+      theme: Themes().lightTheme,
+      darkTheme: Themes().darkTheme,
       themeMode: themeService().getThemeMode(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
