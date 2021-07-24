@@ -23,11 +23,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-<<<<<<< HEAD
-      home: Ads(),
-=======
       home: Navbar(),
->>>>>>> a42747eb678c78143d65bc01928995661e3e3512
       debugShowCheckedModeBanner: false,
       // theme: Themes().lightTheme,
       // darkTheme: Themes().darkTheme,
