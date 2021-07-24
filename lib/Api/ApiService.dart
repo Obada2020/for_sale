@@ -6,6 +6,7 @@ import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
 import 'package:for_sale/Sign-in/model.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -180,10 +181,7 @@ class ApiService {
     }
   }
 
-  //===============================================================
-  //============================Signin=============================
-  static Future fdataSignin(var phone) async {
-    List<SigninModel> sign = [];
+  static Future register(var phone) async {
     http.Response res = await http.post(Uri.parse(url + "register"), body: {
       'account_phone_number': '$phone',
       'account_type_id': '2'
@@ -192,15 +190,34 @@ class ApiService {
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
-      //   for (var item in body) {
-      //     sign.add(SigninModel.fromJson(item));
-      //   }
-      //   return sign;
-      // } else {
+      return true;
+      // var body = jsonDecode(res.body);
+      // return body[0]["user"][0]["serial_number"];
+
+    } else {
       print('statuscode cdfav=${res.statusCode}');
+      return false;
     }
   }
-  //===============================================================
 
+  static login(phone, serialnumber) async {
+    print(phone);
+    print(serialnumber);
+
+    http.Response res = await http.post(Uri.parse(url + "login"), body: {
+      'account_phone_number': '$phone',
+      'serial_number': '$serialnumber'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    var body = jsonDecode(res.body);
+    print('statuscode cdfav=${res.statusCode}');
+    if (res.statusCode == 200) {
+      return User.fromJson(body);
+    } else {
+      print('statuscode cdfav=${res.statusCode}');
+      return null;
+    }
+  }
 }
