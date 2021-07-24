@@ -8,7 +8,7 @@ import 'listhorizonal.dart';
 class Ads extends StatelessWidget {
   var parameter;
   Ads({this.parameter});
-  
+
   AdsController adsController = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
@@ -19,18 +19,11 @@ class Ads extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(120),
         child: AppBar(
-          leading: IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-            ),
-          ),
           title: Center(
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                'سيارات BMW',
+                parameter['title'] + " " + parameter['title2'],
                 style: klabelAppbarStyle,
               ),
             ),
@@ -90,7 +83,10 @@ class Ads extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),
       child: GetBuilder<AdsController>(
-          init: AdsController(),
+          init: AdsController(
+              adcatogaryid: parameter['ad_catogary_id'],
+              catogarydetailsid: parameter['catogary_details_id'],
+              addescriptionsid: parameter['ad_descriptions_id']),
           builder: (controller) {
             return Container(
                 child: controller.ads.length != 0

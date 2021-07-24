@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Category-page/model.dart';
 import 'package:get/get.dart';
@@ -16,7 +15,8 @@ class CategoryController extends GetxController {
   }
 
   fdata() async {
-    List<CategoryModel> allCategory = await ApiService.fdataCategory(this.adCatogaryId,this.catogaryDetailsId);
+    List<CategoryModel> allCategory = await ApiService.fdataCategory(
+        this.adCatogaryId, this.catogaryDetailsId);
     categoryList.value = allCategory;
   }
 }

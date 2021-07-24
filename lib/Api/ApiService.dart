@@ -12,38 +12,44 @@ import 'package:http/http.dart' as http;
 class ApiService {
   static String url = "https://forsale-test.herokuapp.com/api/";
   //==============================Ads Api=======================
-  static Future fdataAds() async {
-    List<AdsModel> ads = [];
-    http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
-      'ad_catogary_id': '1',
-      'catogary_details_id': '8',
-      'ad_descriptions_id': '7'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
+  // static Future fdataAds(
+  //     int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
+  //   List<AdsModel> ads = [];
+  //   http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
+  //     'ad_catogary_id': adcatogaryid.toString(),
+  //     'catogary_details_id': catogarydetailsid.toString(),
+  //     'ad_descriptions_id': addescriptionsid.toString()
+  //   }, headers: {
+  //     HttpHeaders.authorizationHeader:
+  //         'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+  //   });
+  //   if (res.statusCode == 200) {
+  //     var body = jsonDecode(res.body);
 
-      for (var item in body) {
-        ads.add(AdsModel.fromJson(item));
-      }
-      return ads;
-    } else {
-      print('statuscode ads=${res.statusCode}');
-    }
-  }
+  //     for (var item in body) {
+  //       ads.add(AdsModel.fromJson(item));
+  //     }
+  //     return ads;
+  //   } else {
+  //     print('statuscode ads=${res.statusCode}');
+  //   }
+  // }
 
   //==============================================================
   //==============================AdsByNameScroll Api=======================
-  static Future fdataAdsNameScrl() async {
+  static Future fdataAdsNameScrl(int? adcatogaryid, int? catogarydetailsid,
+      int? addescriptionsid, int? adtypenameid) async {
     List<AdsModel> ads = [];
     http.Response res =
         await http.post(Uri.parse(url + "BringAdsInName"), body: {
       'ad_catogary_id': '1',
+      // adcatogaryid.toString(),
       'catogary_details_id': '1',
+      // catogarydetailsid.toString(),
       'ad_descriptions_id': '1',
-      'ad_type_name_id': '1'
+      // addescriptionsid.toString(),
+      'ad_type_name_id': '',
+      // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -54,9 +60,43 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
+      print('**************');
+      print(adcatogaryid.toString());
+      print(catogarydetailsid.toString());
+      print(addescriptionsid.toString());
+      print(adtypenameid.toString());
+      print('**************');
+
       return ads;
     } else {
       print('statuscode scrl=${res.statusCode}');
+    }
+  }
+
+  //==============================================================
+  //==============================scrollhor Api=======================
+  static Future fdataScrlho(
+      int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
+    List<ScrlHorModel> scrl = [];
+    http.Response res =
+        await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
+      'ad_catogary_id': adcatogaryid,
+      'catogary_details_id': catogarydetailsid,
+      'ad_descriptions_id': addescriptionsid,
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+
+      for (var item in body) {
+        scrl.add(ScrlHorModel.fromJson(item));
+        print(item);
+      }
+      return scrl;
+    } else {
+      print('statuscode scrlh=${res.statusCode}');
     }
   }
 
@@ -133,32 +173,7 @@ class ApiService {
   }
 
   //==============================================================
-  //==============================scrollhor Api=======================
-  static Future fdataScrlho() async {
-    List<ScrlHorModel> scrl = [];
-    http.Response res =
-        await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
-      'ad_catogary_id': '1',
-      'catogary_details_id': '1',
-      'ad_descriptions_id': '1'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
 
-      for (var item in body) {
-        scrl.add(ScrlHorModel.fromJson(item));
-        print(item);
-      }
-      return scrl;
-    } else {
-      print('statuscode scrlh=${res.statusCode}');
-    }
-  }
-
-  //==============================================================
   //============================== Home ===========================
   static Future fdataHome() async {
     var homeList = <HomeModel>[];
