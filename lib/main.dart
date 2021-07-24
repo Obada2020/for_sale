@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/My-account/view.dart';
 import 'package:for_sale/Pages/more.dart';
 import 'package:for_sale/Pages/privacy_and_terms.dart';
@@ -30,7 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Ads(),
+      home: Navbar(),
       debugShowCheckedModeBanner: false,
       // theme: Themes().lightTheme,
       // darkTheme: Themes().darkTheme,

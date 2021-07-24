@@ -5,6 +5,13 @@ import 'package:for_sale/My-ads/model.dart';
 import 'package:get/get.dart';
 
 class AdsController extends GetxController {
+  int? adCatogaryId;
+  int? adDescriptionsId;
+  int? catogaryDetailsId;
+
+  AdsController(
+      {this.adCatogaryId, this.adDescriptionsId, this.catogaryDetailsId});
+
   var ads = <AdsModel>[].obs;
   var myads = <MyAdsModel>[].obs;
   var scrlho = <ScrlHorModel>[].obs;
@@ -16,6 +23,9 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    print({"adCatogaryId ================>":adCatogaryId});
+    print({"adDescriptionsId ================>":adDescriptionsId});
+    print({"catogaryDetailsId ================>":catogaryDetailsId});
     fdatads();
     fdatafavad();
     fdatamyad();
@@ -29,7 +39,8 @@ class AdsController extends GetxController {
   }
 
   fdatads() async {
-    List<AdsModel> ad = await ApiService.fdataAds();
+    List<AdsModel> ad = await ApiService.fdataAds(
+        adCatogaryId, adDescriptionsId, catogaryDetailsId);
     ads.value = ad;
     print("Here APIIIIIIIIIIIIIIIIIIII");
     dummysearch = ads.toList();

@@ -6,15 +6,10 @@ import 'package:for_sale/Category-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
-class CategoryPage extends StatefulWidget {
+class CategoryPage extends StatelessWidget {
   var parameter;
   CategoryPage({this.parameter});
 
-  @override
-  _CategoryPageState createState() => _CategoryPageState();
-}
-
-class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +18,7 @@ class _CategoryPageState extends State<CategoryPage> {
             padding: const EdgeInsetsDirectional.only(end: 50),
             child: Center(
               child: Text(
-                widget.parameter['title_navbar'],
+                parameter['title_navbar'],
                 style: klabelAppbarStyle,
               ),
             ),
@@ -34,8 +29,8 @@ class _CategoryPageState extends State<CategoryPage> {
         ),
         body: GetX<CategoryController>(
             init: CategoryController(
-                adCatogaryId: widget.parameter['ad_catogary_id'],
-                catogaryDetailsId: widget.parameter['catogary_details_id']),
+                adCatogaryId: parameter['ad_catogary_id'],
+                catogaryDetailsId: parameter['ad_descriptions_id']),
             builder: (ctrl) {
               return GridView.builder(
                 itemCount: ctrl.categoryList.value.length,
@@ -80,12 +75,13 @@ class _CategoryPageState extends State<CategoryPage> {
       ),
       onTap: () {
         var paras = {
-          "title":widget.parameter['title_navbar'],
-          "category_type": widget.parameter['ad_catogary_id'],
-          "category_details": widget.parameter['catogary_details_id'],
-          "category_ad": categ.adCatogaryId,
+          "title": parameter['title_navbar'],
+          "ad_catogary_id": parameter['ad_catogary_id'],
+          "ad_descriptions_id": parameter['ad_descriptions_id'],
+          "catogary_details_id": categ.adCatogaryId,
         };
-        Get.to(Ads(parameter: paras));
+        print(paras);
+        Get.to(() => Ads(parameterAds: paras));
       },
     );
   }

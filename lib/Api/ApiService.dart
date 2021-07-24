@@ -12,13 +12,14 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String url = "https://forsale-test.herokuapp.com/api/";
+  
   //==============================Ads Api=======================
-  static Future fdataAds() async {
+  static Future fdataAds(int? adCatogaryId, int? catogaryDetailsId,int? adDescriptionsId) async {
     List<AdsModel> ads = [];
     http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
-      'ad_catogary_id': '1',
-      'catogary_details_id': '8',
-      'ad_descriptions_id': '7'
+      'ad_catogary_id': adCatogaryId,
+      'ad_descriptions_id': adDescriptionsId,
+      'catogary_details_id': catogaryDetailsId,
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'

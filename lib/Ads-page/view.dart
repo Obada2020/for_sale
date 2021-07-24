@@ -6,9 +6,10 @@ import 'package:get/get.dart';
 import 'listhorizonal.dart';
 
 class Ads extends StatelessWidget {
-  var parameter;
-  Ads({this.parameter});
-  
+  var parameterAds;
+  Ads({this.parameterAds});
+
+
   AdsController adsController = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
@@ -30,7 +31,7 @@ class Ads extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                'سيارات BMW',
+                parameterAds['title'],
                 style: klabelAppbarStyle,
               ),
             ),
@@ -50,14 +51,14 @@ class Ads extends StatelessWidget {
           gridview(),
           //================================list horisental=========================
           Positioned(
-            child: ListHorizantol(),
+            child: ListHorizantol(parameterHorizantol:parameterAds),
           ),
         ],
       ),
     );
   }
-  //================================ serch  ==========================
 
+  //================================ serch  ==========================
   Widget serch(Size size) {
     return Container(
       margin: EdgeInsets.only(right: 15, left: 15, bottom: 12, top: 95),
@@ -84,8 +85,8 @@ class Ads extends StatelessWidget {
       ),
     );
   }
-  //================================grid view==========================
 
+  //================================grid view=========================
   Widget gridview() {
     return Container(
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),

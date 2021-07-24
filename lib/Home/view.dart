@@ -5,15 +5,7 @@ import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-//لك احلا حيى بالكرة
-class _HomeState extends State<Home> {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -54,18 +46,11 @@ class _HomeState extends State<Home> {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, indexL) =>
                                     containerCategory(
-                                        name: 
-                                        ctrl
-                                        .homeList
-                                        .value[indexF]
-                                        .catogaryDetails![indexL],
-                                        title: 
-                                        ctrl
-                                        .homeList
-                                        .value[indexF]
-                                        .adCatogaryName
-                                        .toString()
-                                    ),
+                                        name: ctrl.homeList.value[indexF]
+                                            .catogaryDetails![indexL],
+                                        title: ctrl.homeList.value[indexF]
+                                            .adCatogaryName
+                                            .toString()),
                                 separatorBuilder: (context, index) =>
                                     SizedBox(width: 5),
                                 itemCount: ctrl.homeList.value[indexF]
@@ -109,7 +94,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget containerCategory({CatogaryDetail? name,String? title}) {
+  Widget containerCategory({CatogaryDetail? name, String? title}) {
     //pictre value
     return TextButton(
       child: Container(
@@ -137,13 +122,15 @@ class _HomeState extends State<Home> {
         ),
       ),
       onPressed: () {
+        //ad_catogary_id => cars
+        //ad_descriptions_id => yapany
         var parameter = {
-          "title_navbar" : title,
+          "title_navbar": title,
           "ad_catogary_id": name.adCatogaryId,
-          "catogary_details_id": name.catogaryDetailsId
+          "ad_descriptions_id": name.catogaryDetailsId
         };
-        print(parameter);
-        Get.to(CategoryPage(parameter: parameter));
+        print({"home parameter =>": parameter});
+        Get.to(() => CategoryPage(parameter: parameter));
       },
     );
   }
