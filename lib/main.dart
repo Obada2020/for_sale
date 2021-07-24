@@ -10,10 +10,10 @@ import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:for_sale/Sign-in/Verify-account_view.dart';
 import 'package:for_sale/theme/theme_service.dart';
-import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'My-ads/view.dart';
+
+import 'Ads-page/view.dart';
 
 void main() async {
   await GetStorage.init();
@@ -30,10 +30,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Signin(),
+      home: Ads(),
       debugShowCheckedModeBanner: false,
-      theme: Themes().lightTheme,
-      darkTheme: Themes().darkTheme,
+      // theme: Themes().lightTheme,
+      // darkTheme: Themes().darkTheme,
       themeMode: themeService().getThemeMode(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,

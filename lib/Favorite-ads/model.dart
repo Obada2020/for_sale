@@ -50,9 +50,9 @@ class FavoriteModel {
 class Ad {
   Ad({
     this.adId,
+    this.adname,
     this.adPhoneNumber,
     this.adDescription,
-    this.adLocation,
     this.adPicture,
     this.mangerAccept,
     this.adPrice,
@@ -64,9 +64,9 @@ class Ad {
   });
 
   int? adId;
+  String? adname;
   String? adPhoneNumber;
   String? adDescription;
-  String? adLocation;
   String? adPicture;
   int? mangerAccept;
   String? adPrice;
@@ -78,9 +78,9 @@ class Ad {
 
   factory Ad.fromJson(Map<String, dynamic> json) => Ad(
         adId: json["ad_id"],
+        adname: json['ad_name'],
         adPhoneNumber: json["ad_phone_number"],
         adDescription: json["ad_description"],
-        adLocation: json["ad_location"],
         adPicture: json["ad_picture"],
         mangerAccept: json["manger_accept"],
         adPrice: json["ad_price"],
@@ -93,9 +93,9 @@ class Ad {
 
   Map<String, dynamic> toJson() => {
         "ad_id": adId,
+        "|ad_name": adname,
         "ad_phone_number": adPhoneNumber,
         "ad_description": adDescription,
-        "ad_location": adLocation,
         "ad_picture": adPicture,
         "manger_accept": mangerAccept,
         "ad_price": adPrice,
