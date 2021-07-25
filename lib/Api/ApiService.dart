@@ -59,13 +59,6 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
-      print('**************');
-      print(adcatogaryid!.toString());
-      print(catogarydetailsid!.toString());
-      print(addescriptionsid!.toString());
-      print(adtypenameid!.toString());
-      print('**************');
-
       return ads;
     } else {
       print('statuscode scrl=${res.statusCode}');
