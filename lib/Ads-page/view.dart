@@ -6,9 +6,14 @@ import 'package:get/get.dart';
 import 'listhorizonal.dart';
 
 class Ads extends StatelessWidget {
+<<<<<<< HEAD
+  var parameter;
+  Ads({this.parameter});
+=======
   var parameterAds;
   Ads({this.parameterAds});
 
+>>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
 
   AdsController adsController = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
@@ -20,13 +25,6 @@ class Ads extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(120),
         child: AppBar(
-          leading: IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-            ),
-          ),
           title: Center(
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
@@ -91,7 +89,10 @@ class Ads extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),
       child: GetBuilder<AdsController>(
-          init: AdsController(),
+          init: AdsController(
+              adcatogaryid: parameter['ad_catogary_id'],
+              catogarydetailsid: parameter['catogary_details_id'],
+              addescriptionsid: parameter['ad_descriptions_id']),
           builder: (controller) {
             return Container(
                 child: controller.ads.length != 0
@@ -108,7 +109,7 @@ class Ads extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(Adsdetails(), arguments: index);
+                              Get.to(() => Adsdetails(), arguments: index);
                             },
                             child: Container(
                               decoration: BoxDecoration(

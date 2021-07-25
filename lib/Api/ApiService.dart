@@ -14,12 +14,53 @@ class ApiService {
   static String url = "https://forsale-test.herokuapp.com/api/";
   
   //==============================Ads Api=======================
+<<<<<<< HEAD
+  // static Future fdataAds(
+  //     int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
+  //   List<AdsModel> ads = [];
+  //   http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
+  //     'ad_catogary_id': adcatogaryid.toString(),
+  //     'catogary_details_id': catogarydetailsid.toString(),
+  //     'ad_descriptions_id': addescriptionsid.toString()
+  //   }, headers: {
+  //     HttpHeaders.authorizationHeader:
+  //         'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+  //   });
+  //   if (res.statusCode == 200) {
+  //     var body = jsonDecode(res.body);
+
+  //     for (var item in body) {
+  //       ads.add(AdsModel.fromJson(item));
+  //     }
+  //     return ads;
+  //   } else {
+  //     print('statuscode ads=${res.statusCode}');
+  //   }
+  // }
+
+  //==============================================================
+  //==============================AdsByNameScroll Api=======================
+  static Future fdataAdsNameScrl(int? adcatogaryid, int? catogarydetailsid,
+      int? addescriptionsid, int? adtypenameid) async {
+    List<AdsModel> ads = [];
+    http.Response res =
+        await http.post(Uri.parse(url + "BringAdsInName"), body: {
+      'ad_catogary_id': '1',
+      // adcatogaryid.toString(),
+      'catogary_details_id': '1',
+      // catogarydetailsid.toString(),
+      'ad_descriptions_id': '1',
+      // addescriptionsid.toString(),
+      'ad_type_name_id': '',
+      // adtypenameid.toString()
+=======
   static Future fdataAds(int? adCatogaryId, int? catogaryDetailsId,int? adDescriptionsId) async {
     List<AdsModel> ads = [];
     http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
       'ad_catogary_id': adCatogaryId,
       'ad_descriptions_id': adDescriptionsId,
       'catogary_details_id': catogaryDetailsId,
+>>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -30,22 +71,29 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
+      print('**************');
+      print(adcatogaryid.toString());
+      print(catogarydetailsid.toString());
+      print(addescriptionsid.toString());
+      print(adtypenameid.toString());
+      print('**************');
+
       return ads;
     } else {
-      print('statuscode ads=${res.statusCode}');
+      print('statuscode scrl=${res.statusCode}');
     }
   }
 
   //==============================================================
-  //==============================AdsByNameScroll Api=======================
-  static Future fdataAdsNameScrl() async {
-    List<AdsModel> ads = [];
+  //==============================scrollhor Api=======================
+  static Future fdataScrlho(
+      int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
+    List<ScrlHorModel> scrl = [];
     http.Response res =
-        await http.post(Uri.parse(url + "BringAdsInName"), body: {
-      'ad_catogary_id': '1',
-      'catogary_details_id': '1',
-      'ad_descriptions_id': '1',
-      'ad_type_name_id': '1'
+        await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
+      'ad_catogary_id': adcatogaryid,
+      'catogary_details_id': catogarydetailsid,
+      'ad_descriptions_id': addescriptionsid,
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -54,11 +102,12 @@ class ApiService {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        ads.add(AdsModel.fromJson(item));
+        scrl.add(ScrlHorModel.fromJson(item));
+        print(item);
       }
-      return ads;
+      return scrl;
     } else {
-      print('statuscode scrl=${res.statusCode}');
+      print('statuscode scrlh=${res.statusCode}');
     }
   }
 
@@ -135,32 +184,7 @@ class ApiService {
   }
 
   //==============================================================
-  //==============================scrollhor Api=======================
-  static Future fdataScrlho() async {
-    List<ScrlHorModel> scrl = [];
-    http.Response res =
-        await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
-      'ad_catogary_id': '1',
-      'catogary_details_id': '1',
-      'ad_descriptions_id': '1'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
 
-      for (var item in body) {
-        scrl.add(ScrlHorModel.fromJson(item));
-        print(item);
-      }
-      return scrl;
-    } else {
-      print('statuscode scrlh=${res.statusCode}');
-    }
-  }
-
-  //==============================================================
   //============================== Home ===========================
   static Future fdataHome() async {
     var homeList = <HomeModel>[];
@@ -179,6 +203,7 @@ class ApiService {
       print('statuscode=${res.statusCode}');
     }
   }
+  //============================== sign in ===========================
 
   static Future register(var phone) async {
     http.Response res = await http.post(Uri.parse(url + "register"), body: {
@@ -221,6 +246,9 @@ class ApiService {
   }
 
   //===============================================================
+
+  //============================== categ ===========================
+
   // get all category
   static Future fdataCategory(int? namCateId, int? cateDetai) async {
     var allCategory = <CategoryModel>[];
