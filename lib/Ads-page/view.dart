@@ -6,14 +6,9 @@ import 'package:get/get.dart';
 import 'listhorizonal.dart';
 
 class Ads extends StatelessWidget {
-<<<<<<< HEAD
-  var parameter;
-  Ads({this.parameter});
-=======
   var parameterAds;
   Ads({this.parameterAds});
 
->>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
 
   AdsController adsController = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
@@ -90,9 +85,9 @@ class Ads extends StatelessWidget {
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),
       child: GetBuilder<AdsController>(
           init: AdsController(
-              adcatogaryid: parameter['ad_catogary_id'],
-              catogarydetailsid: parameter['catogary_details_id'],
-              addescriptionsid: parameter['ad_descriptions_id']),
+            adCatogaryId: parameterAds[''],
+            adDescriptionsId: parameterAds[''],
+            catogaryDetailsId: parameterAds[''],),
           builder: (controller) {
             return Container(
                 child: controller.ads.length != 0

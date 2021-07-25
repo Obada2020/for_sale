@@ -75,16 +75,6 @@ class CategoryPage extends StatelessWidget {
       ),
       onTap: () {
         var paras = {
-<<<<<<< HEAD
-          "title": widget.parameter['title_navbar'],
-          "title2": categ.adDetailsDescription.toString(),
-          "ad_category_id": widget.parameter['ad_catogary_id'],
-          "catogary_details_id": widget.parameter['catogary_details_id'],
-          "ad_descriptions_id": categ.adDescriptionsId,
-        };
-        print('****************$paras');
-        Get.to(() => Ads(parameter: paras));
-=======
           "title": parameter['title_navbar'],
           "ad_catogary_id": parameter['ad_catogary_id'],
           "ad_descriptions_id": parameter['ad_descriptions_id'],
@@ -92,7 +82,6 @@ class CategoryPage extends StatelessWidget {
         };
         print(paras);
         Get.to(() => Ads(parameterAds: paras));
->>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
       },
     );
   }
