@@ -4,14 +4,42 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class ListHorizantol extends StatefulWidget {
+<<<<<<< HEAD
   var parameter;
   ListHorizantol({this.parameter});
+=======
+  var parameterHorizantol;
+  ListHorizantol({this.parameterHorizantol});
+
+>>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
   @override
   _ListHorizantolState createState() => _ListHorizantolState();
 }
 
 class _ListHorizantolState extends State<ListHorizantol> {
   int selectindex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol
+    });
+        print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol['ad_catogary_id']
+    });
+        print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol['ad_descriptions_id']
+    });
+        print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol['catogary_details_id']
+    });
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +51,17 @@ class _ListHorizantolState extends State<ListHorizantol> {
       height: 60,
       child: GetX<AdsController>(
           init: AdsController(
+<<<<<<< HEAD
               adcatogaryid: widget.parameter['ad_catogary_id'],
               catogarydetailsid: widget.parameter['catogary_details_id'],
               addescriptionsid: widget.parameter['ad_descriptions_id']),
+=======
+              adCatogaryId: widget.parameterHorizantol['ad_catogary_id'],
+              adDescriptionsId:
+                  widget.parameterHorizantol['ad_descriptions_id'],
+              catogaryDetailsId:
+                  widget.parameterHorizantol['catogary_details_id']),
+>>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
           builder: (ctrl) {
             return ListView.builder(
               scrollDirection: Axis.horizontal,

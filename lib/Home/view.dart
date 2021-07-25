@@ -5,15 +5,7 @@ import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
-  Home({Key? key}) : super(key: key);
-
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-//لك احلا حيى بالكرة
-class _HomeState extends State<Home> {
+class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -130,12 +122,18 @@ class _HomeState extends State<Home> {
         ),
       ),
       onPressed: () {
+        //ad_catogary_id => cars
+        //ad_descriptions_id => yapany
         var parameter = {
           "title_navbar": title,
           "ad_catogary_id": name.adCatogaryId,
-          "catogary_details_id": name.catogaryDetailsId
+          "ad_descriptions_id": name.catogaryDetailsId
         };
+<<<<<<< HEAD
         print(parameter);
+=======
+        print({"home parameter =>": parameter});
+>>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
         Get.to(() => CategoryPage(parameter: parameter));
       },
     );

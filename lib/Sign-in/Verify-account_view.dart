@@ -12,15 +12,14 @@ import 'model.dart';
 //String? x = "";
 
 class VerifyAccount extends StatelessWidget {
+  //var c = Get.find<Login>();
+  TextEditingController Num = TextEditingController();
+  //c.user.value.info = Info();
+  var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
+  dynamic serial = "1";
   @override
   Widget build(BuildContext context) {
-    var c = Get.find<Login>();
-    var number = c.user.value.info!.accountPhoneNumber;
     Size size = MediaQuery.of(context).size;
-    TextEditingController Num = TextEditingController();
-    c.user.value.info = Info();
-
-    var serial;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -91,9 +90,9 @@ class VerifyAccount extends StatelessWidget {
                               enabledBorderColor: Colors.white,
                             ),
                             onChanged: (k) {},
-                            onCompleted: (n) {
+                            onCompleted: (n) async {
                               print(n);
-                              serial = n;
+                              serial = n.toString();
                               // c.login(n);
                             },
                           ),
@@ -129,11 +128,7 @@ class VerifyAccount extends StatelessWidget {
                       child: TextButton(
                           onPressed: () async {
                             print(serial);
-                            var number =
-                                await c.user.value.info!.accountPhoneNumber;
-                            print(c.user.value.info!.accountPhoneNumber);
                             print(number);
-
                             var z = await ApiService.login(number, serial);
                             if (z == null) {
                               showAlertDialog(context);

@@ -12,7 +12,9 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static String url = "https://forsale-test.herokuapp.com/api/";
+  
   //==============================Ads Api=======================
+<<<<<<< HEAD
   // static Future fdataAds(
   //     int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
   //   List<AdsModel> ads = [];
@@ -51,6 +53,14 @@ class ApiService {
       // addescriptionsid.toString(),
       'ad_type_name_id': '',
       // adtypenameid.toString()
+=======
+  static Future fdataAds(int? adCatogaryId, int? catogaryDetailsId,int? adDescriptionsId) async {
+    List<AdsModel> ads = [];
+    http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
+      'ad_catogary_id': adCatogaryId,
+      'ad_descriptions_id': adDescriptionsId,
+      'catogary_details_id': catogaryDetailsId,
+>>>>>>> 21dcb79a1bf0f3030268c250b6176ae5ff0925c6
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
