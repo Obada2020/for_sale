@@ -84,9 +84,9 @@ class Ads extends StatelessWidget {
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),
       child: GetBuilder<AdsController>(
           init: AdsController(
-              adCatogaryId: parameterAds['ad_catogary_id'],
-              catogaryDetailsId: parameterAds['catogary_details_id'],
-              adDescriptionsId: parameterAds['ad_descriptions_id']),
+              adcatogaryid: parameterAds['ad_catogary_id'],
+              catogarydetailsid: parameterAds['catogary_details_id'],
+              addescriptionsid: parameterAds['ad_descriptions_id']),
           builder: (controller) {
             return Container(
                 child: controller.ads.length != 0
