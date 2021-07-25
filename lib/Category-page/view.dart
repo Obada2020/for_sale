@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
+import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:for_sale/Category-page/model.dart';
 import 'package:for_sale/Category-page/view-model.dart';
@@ -9,7 +10,7 @@ import 'package:get/get.dart';
 class CategoryPage extends StatelessWidget {
   var parameter;
   CategoryPage({this.parameter});
-
+  AdsController c = Get.put(AdsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,14 +75,18 @@ class CategoryPage extends StatelessWidget {
         ),
       ),
       onTap: () {
-        var paras = {
-          "title": parameter['title_navbar'],
-          "ad_catogary_id": parameter['ad_catogary_id'],
-          "ad_descriptions_id": parameter['ad_descriptions_id'],
-          "catogary_details_id": categ.adCatogaryId,
-        };
-        print(paras);
-        Get.to(() => Ads(parameterAds: paras));
+        // var paras = {
+        //   "title": parameter['title_navbar'],
+        //   "ad_catogary_id": parameter['ad_catogary_id'],
+        //   "ad_descriptions_id": parameter['ad_descriptions_id'],
+        //   "catogary_details_id": categ.adCatogaryId,
+        // };
+        // print(
+        //     "HERE Catogary page View yehya aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+        // print(parameter);
+        c.fdatadsbynamescrl(parameter['ad_catogary_id'], categ.adCatogaryId,
+            parameter['ad_descriptions_id'], parameter['title_navbar']);
+        Get.to(() => Ads());
       },
     );
   }

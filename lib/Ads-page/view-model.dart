@@ -22,11 +22,11 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fdatadsbynamescrl();
+    // fdatadsbynamescrl();
     // fdatads();
-    fdatafavad();
-    fdatamyad();
-    fdatascrol();
+    // fdatafavad();
+    // fdatamyad();
+    // fdatascrol();
   }
 
   fdatamyad() async {
@@ -44,19 +44,27 @@ class AdsController extends GetxController {
   //   update();
   // }
 
-  fdatadsbynamescrl() async {
-    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(this.adcatogaryid,
-        this.catogarydetailsid, this.addescriptionsid, this.adtypenameid);
+  fdatadsbynamescrl(a, c, d, n) async {
+    print("fffffffffffffffffffffffffffff");
+    // print(this.adcatogaryid);
+    print(a.toString() +
+        "" +
+        c.toString() +
+        "" +
+        d.toString() +
+        "" +
+        n.toString());
+    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(a, c, d, n);
     ads.value = adby;
     dummysearch = ads.toList();
-    print('**************');
-    print(adcatogaryid);
-    print(catogarydetailsid);
-    print(addescriptionsid);
-    print(adtypenameid);
-    print('**************');
+    // print('**************');
+    // print(adcatogaryid);
+    // print(catogarydetailsid);
+    // print(addescriptionsid);
+    // print(adtypenameid);
+    // print('**************');
 
-    update();
+    // update();
   }
 
   fdatascrol() async {

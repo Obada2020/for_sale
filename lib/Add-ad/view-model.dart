@@ -21,28 +21,28 @@ class AddNameController extends GetxController {
   }
 
   fetchData() async {
-    var f = await ApiService.fetchAddName();
-    if (f.isNotEmpty) addsName.value = f;
+    // var f = await ApiService.fetchAddName();
+    // if (f.isNotEmpty) addsName.value = f;
   }
 
   fetchDataAddsCat(int index, int t) async {
-    var f = await ApiService.fetchDropDown(index, t);
-    print(f.runtimeType);
-    if (f.isTheLast == "yes" || t == 3) {
-      lastCat.value = f;
-      showLastCat.value = true;
-    } else {
-      t == 1
-          ? addsCat1.value = f
-          : t == 2
-              ? addsCat2.value = f
-              : lastCat.value = f;
-      t == 1
-          ? show1.value = true
-          : t == 2
-              ? show2.value = true
-              : showLastCat.value = true;
-      showLastCat.value = false;
-    }
+    // var f = await ApiService.fetchDropDown(index, t);
+    // print(f.runtimeType);
+    // if (f.isTheLast == "yes" || t == 3) {
+    //   lastCat.value = f;
+    //   showLastCat.value = true;
+    // } else {
+    //   t == 1
+    //       ? addsCat1.value = f
+    //       : t == 2
+    //           ? addsCat2.value = f
+    //           : lastCat.value = f;
+    //   t == 1
+    //       ? show1.value = true
+    //       : t == 2
+    //           ? show2.value = true
+    //           : showLastCat.value = true;
+    //   showLastCat.value = false;
+    // }
   }
 }
