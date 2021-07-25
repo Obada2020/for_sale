@@ -43,7 +43,7 @@ class Ads extends StatelessWidget {
           gridview(),
           //================================list horisental=========================
           Positioned(
-            child: ListHorizantol(),
+            child: ListHorizantol(parameter: parameter),
           ),
         ],
       ),
@@ -103,7 +103,7 @@ class Ads extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return InkWell(
                             onTap: () {
-                              Get.to(Adsdetails(), arguments: index);
+                              Get.to(() => Adsdetails(), arguments: index);
                             },
                             child: Container(
                               decoration: BoxDecoration(

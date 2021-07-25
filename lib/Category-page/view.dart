@@ -87,7 +87,7 @@ class _CategoryPageState extends State<CategoryPage> {
           "ad_descriptions_id": categ.adDescriptionsId,
         };
         print('****************$paras');
-        Get.to(Ads(parameter: paras));
+        Get.to(() => Ads(parameter: paras));
       },
     );
   }

@@ -193,6 +193,7 @@ class ApiService {
       print('statuscode=${res.statusCode}');
     }
   }
+  //============================== sign in ===========================
 
   static Future register(var phone) async {
     http.Response res = await http.post(Uri.parse(url + "register"), body: {
@@ -235,6 +236,9 @@ class ApiService {
   }
 
   //===============================================================
+
+  //============================== categ ===========================
+
   // get all category
   static Future fdataCategory(int? namCateId, int? cateDetai) async {
     var allCategory = <CategoryModel>[];

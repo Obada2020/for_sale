@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'Ads-page/view.dart';
+import 'Home/navbar.dart';
 
 void main() async {
   await GetStorage.init();
@@ -30,11 +31,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-<<<<<<< HEAD
       home: Navbar(),
-=======
-      home: Ads(),
->>>>>>> 7d95dc9308312d67441f4fa7e8f6e1d690941fb4
       debugShowCheckedModeBanner: false,
       // theme: Themes().lightTheme,
       // darkTheme: Themes().darkTheme,

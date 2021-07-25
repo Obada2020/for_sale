@@ -4,6 +4,8 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class ListHorizantol extends StatefulWidget {
+  var parameter;
+  ListHorizantol({this.parameter});
   @override
   _ListHorizantolState createState() => _ListHorizantolState();
 }
@@ -20,7 +22,10 @@ class _ListHorizantolState extends State<ListHorizantol> {
       width: size.width,
       height: 60,
       child: GetX<AdsController>(
-          init: AdsController(),
+          init: AdsController(
+              adcatogaryid: widget.parameter['ad_catogary_id'],
+              catogarydetailsid: widget.parameter['catogary_details_id'],
+              addescriptionsid: widget.parameter['ad_descriptions_id']),
           builder: (ctrl) {
             return ListView.builder(
               scrollDirection: Axis.horizontal,

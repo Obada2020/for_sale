@@ -54,18 +54,11 @@ class _HomeState extends State<Home> {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, indexL) =>
                                     containerCategory(
-                                        name: 
-                                        ctrl
-                                        .homeList
-                                        .value[indexF]
-                                        .catogaryDetails![indexL],
-                                        title: 
-                                        ctrl
-                                        .homeList
-                                        .value[indexF]
-                                        .adCatogaryName
-                                        .toString()
-                                    ),
+                                        name: ctrl.homeList.value[indexF]
+                                            .catogaryDetails![indexL],
+                                        title: ctrl.homeList.value[indexF]
+                                            .adCatogaryName
+                                            .toString()),
                                 separatorBuilder: (context, index) =>
                                     SizedBox(width: 5),
                                 itemCount: ctrl.homeList.value[indexF]
@@ -109,7 +102,7 @@ class _HomeState extends State<Home> {
     );
   }
 
-  Widget containerCategory({CatogaryDetail? name,String? title}) {
+  Widget containerCategory({CatogaryDetail? name, String? title}) {
     //pictre value
     return TextButton(
       child: Container(
@@ -138,12 +131,12 @@ class _HomeState extends State<Home> {
       ),
       onPressed: () {
         var parameter = {
-          "title_navbar" : title,
+          "title_navbar": title,
           "ad_catogary_id": name.adCatogaryId,
           "catogary_details_id": name.catogaryDetailsId
         };
         print(parameter);
-        Get.to(CategoryPage(parameter: parameter));
+        Get.to(() => CategoryPage(parameter: parameter));
       },
     );
   }
