@@ -4,12 +4,35 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class ListHorizantol extends StatefulWidget {
+  var parameterHorizantol;
+  ListHorizantol({this.parameterHorizantol});
   @override
   _ListHorizantolState createState() => _ListHorizantolState();
 }
 
 class _ListHorizantolState extends State<ListHorizantol> {
   int selectindex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol
+    });
+    print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol['ad_catogary_id']
+    });
+    print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol['ad_descriptions_id']
+    });
+    print({
+      "insde class horizantel =>>>>>>>>>>>>>>>>>>>__________________________":
+          widget.parameterHorizantol['catogary_details_id']
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +43,12 @@ class _ListHorizantolState extends State<ListHorizantol> {
       width: size.width,
       height: 60,
       child: GetX<AdsController>(
-          init: AdsController(),
+          init: AdsController(
+              adcatogaryid: widget.parameterHorizantol['ad_catogary_id'],
+              catogarydetailsid:
+                  widget.parameterHorizantol['catogary_details_id'],
+              addescriptionsid:
+                  widget.parameterHorizantol['ad_descriptions_id']),
           builder: (ctrl) {
             return ListView.builder(
               scrollDirection: Axis.horizontal,

@@ -4,9 +4,12 @@ import 'dart:io';
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Ads-details/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
+import 'package:for_sale/Category-page/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
+import 'package:for_sale/Sign-in/model.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -14,10 +17,16 @@ class ApiService {
 
   static Future fdataAds() async {
     List<AdsModel> ads = [];
-    http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
+    http.Response res =
+        await http.post(Uri.parse(url + "BringAdsInName"), body: {
       'ad_catogary_id': '1',
-      'catogary_details_id': '8',
-      'ad_descriptions_id': '7'
+      // adcatogaryid.toString(),
+      'catogary_details_id': '1',
+      // catogarydetailsid.toString(),
+      'ad_descriptions_id': '1',
+      // addescriptionsid.toString(),
+      'ad_type_name_id': '',
+      // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -28,20 +37,26 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
+      print('**************');
+      print(adcatogaryid.toString());
+      print(catogarydetailsid.toString());
+      print(addescriptionsid.toString());
+      print(adtypenameid.toString());
+      print('**************');
+
       return ads;
     } else {
-      print('statuscode ads=${res.statusCode}');
+      print('statuscode scrl=${res.statusCode}');
     }
   }
 
   static Future fdataAdsNameScrl() async {
     List<AdsModel> ads = [];
     http.Response res =
-        await http.post(Uri.parse(url + "BringAdsInName"), body: {
-      'ad_catogary_id': '1',
-      'catogary_details_id': '1',
-      'ad_descriptions_id': '1',
-      'ad_type_name_id': '1'
+        await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
+      'ad_catogary_id': adcatogaryid,
+      'catogary_details_id': catogarydetailsid,
+      'ad_descriptions_id': addescriptionsid,
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -50,11 +65,12 @@ class ApiService {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        ads.add(AdsModel.fromJson(item));
+        scrl.add(ScrlHorModel.fromJson(item));
+        print(item);
       }
-      return ads;
+      return scrl;
     } else {
-      print('statuscode scrl=${res.statusCode}');
+      print('statuscode scrlh=${res.statusCode}');
     }
   }
 
@@ -107,7 +123,8 @@ class ApiService {
   //==========================AddDeletFaveAds Api=================
   static Future fdatacdfav() async {
     List<AddDeleteFavModel> f = [];
-    http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
+    http.Response res =
+        await http.post(Uri.parse(url + "FavoriteControleItem"), body: {
       'account_id': '1',
       'ad_id': '1'
     }, headers: {
@@ -134,6 +151,7 @@ class ApiService {
 
     return data.map((visit) => new AddName.fromJson(visit)).toList();
   }
+  //============================== sign in ===========================
 
   static Future<dynamic> fetchDropDown(int id, int t) async {
     String type = t == 1
