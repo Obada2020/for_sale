@@ -5,13 +5,12 @@ import 'package:for_sale/My-ads/model.dart';
 import 'package:get/get.dart';
 
 class AdsController extends GetxController {
-  int? adCatogaryId;
-  int? adDescriptionsId;
-  int? catogaryDetailsId;
-
+  int? adcatogaryid;
+  int? catogarydetailsid;
+  int? addescriptionsid;
+  int? adtypenameid;
   AdsController(
-      {this.adCatogaryId, this.adDescriptionsId, this.catogaryDetailsId});
-
+      {this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid});
   var ads = <AdsModel>[].obs;
   var myads = <MyAdsModel>[].obs;
   var scrlho = <ScrlHorModel>[].obs;
@@ -23,10 +22,8 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    print({"adCatogaryId ================>":adCatogaryId});
-    print({"adDescriptionsId ================>":adDescriptionsId});
-    print({"catogaryDetailsId ================>":catogaryDetailsId});
-    fdatads();
+    fdatadsbynamescrl();
+    // fdatads();
     fdatafavad();
     fdatamyad();
     fdatascrol();
@@ -37,15 +34,15 @@ class AdsController extends GetxController {
     myads.value = myad;
   }
 
-  fdatads() async {
-    List<AdsModel> ad = await ApiService.fdataAds(
-        adCatogaryId, adDescriptionsId, catogaryDetailsId);
-    ads.value = ad;
-    print("Here APIIIIIIIIIIIIIIIIIIII");
-    dummysearch = ads.toList();
-    //******************************************************************** */
-    update();
-  }
+  // fdatads() async {
+  //   List<AdsModel> ad = await ApiService.fdataAds(
+  //       this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
+  //   ads.value = ad;
+  //   print("Here APIIIIIIIIIIIIIIIIIIII");
+  //   dummysearch = ads.toList();
+  //   //******************************************************************** */
+  //   update();
+  // }
 
   fdatadsbynamescrl() async {
     List<AdsModel> adby = await ApiService.fdataAdsNameScrl(

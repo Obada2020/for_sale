@@ -9,7 +9,6 @@ class Ads extends StatelessWidget {
   var parameterAds;
   Ads({this.parameterAds});
 
-
   AdsController adsController = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
@@ -44,7 +43,7 @@ class Ads extends StatelessWidget {
           gridview(),
           //================================list horisental=========================
           Positioned(
-            child: ListHorizantol(parameterHorizantol:parameterAds),
+            child: ListHorizantol(parameterHorizantol: parameterAds),
           ),
         ],
       ),
@@ -85,9 +84,9 @@ class Ads extends StatelessWidget {
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),
       child: GetBuilder<AdsController>(
           init: AdsController(
-            adCatogaryId: parameterAds[''],
-            adDescriptionsId: parameterAds[''],
-            catogaryDetailsId: parameterAds[''],),
+              adcatogaryid: parameterAds['ad_catogary_id'],
+              catogarydetailsid: parameterAds['catogary_details_id'],
+              addescriptionsid: parameterAds['ad_descriptions_id']),
           builder: (controller) {
             return Container(
                 child: controller.ads.length != 0

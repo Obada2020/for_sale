@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
+
+import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Ads-details/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -11,17 +13,20 @@ import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  
-  static String url = "https://forsale-test.herokuapp.com/api/";
+  static String url = "http://forsale-test.000webhostapp.com/public/api/";
 
-  //==============================Ads Api=======================
-  static Future fdataAds(
-      int? adCatogaryId, int? catogaryDetailsId, int? adDescriptionsId) async {
+  static Future fdataAds() async {
     List<AdsModel> ads = [];
-    http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
-      'ad_catogary_id': adCatogaryId,
-      'ad_descriptions_id': adDescriptionsId,
-      'catogary_details_id': catogaryDetailsId,
+    http.Response res =
+        await http.post(Uri.parse(url + "BringAdsInName"), body: {
+      'ad_catogary_id': '1',
+      // adcatogaryid.toString(),
+      'catogary_details_id': '1',
+      // catogarydetailsid.toString(),
+      'ad_descriptions_id': '1',
+      // addescriptionsid.toString(),
+      'ad_type_name_id': '',
+      // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -38,11 +43,8 @@ class ApiService {
     }
   }
 
-  //==============================================================
-  //==============================scrollhor Api=======================
-  static Future fdataScrlho(
-      int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
-    List<ScrlHorModel> scrl = [];
+  static Future fdataAdsNameScrl() async {
+    List<AdsModel> ads = [];
     http.Response res =
         await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
       'ad_catogary_id': adcatogaryid,
@@ -65,8 +67,6 @@ class ApiService {
     }
   }
 
-  //==============================================================
-  //==============================MyAds Api=======================
   static Future fdataMyad() async {
     List<MyAdsModel> myads = [];
     http.Response res = await http.post(Uri.parse(url + "myad"), body: {
@@ -87,8 +87,6 @@ class ApiService {
     }
   }
 
-  //==============================================================
-  //==============================FavoriteAds Api=======================
   static Future fdatafavad() async {
     List<FavoriteModel> fads = [];
     http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
@@ -137,86 +135,34 @@ class ApiService {
     }
   }
 
-  //==============================================================
+  //**************************************************************************************** */
+  static Future<List<AddName>> fetchAddName() async {
+    var response = await http.get(
+      Uri.parse(url + "adcatogary"),
+    );
+    List data = jsonDecode(response.body);
 
-  //============================== Home ===========================
-  static Future fdataHome() async {
-    var homeList = <HomeModel>[];
-    http.Response res =
-        await http.get(Uri.parse(url + "MobileAppHomePage"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
-      for (var item in body) {
-        homeList.add(HomeModel.fromJson(item));
-      }
-      return homeList;
-    } else {
-      print('statuscode=${res.statusCode}');
-    }
+    return data.map((visit) => new AddName.fromJson(visit)).toList();
   }
   //============================== sign in ===========================
 
-  static Future register(var phone) async {
-    http.Response res = await http.post(Uri.parse(url + "register"), body: {
-      'account_phone_number': '$phone',
-      'account_type_id': '2'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      return true;
-      // var body = jsonDecode(res.body);
-      // return body[0]["user"][0]["serial_number"];
-
-    } else {
-      print('statuscode cdfav=${res.statusCode}');
-      return false;
-    }
-  }
-
-  static login(phone, serialnumber) async {
-    print(phone);
-    print(serialnumber);
-
-    http.Response res = await http.post(Uri.parse(url + "login"), body: {
-      'account_phone_number': '$phone',
-      'serial_number': '$serialnumber'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    var body = jsonDecode(res.body);
-    print('statuscode cdfav=${res.statusCode}');
-    if (res.statusCode == 200) {
-      return User.fromJson(body);
-    } else {
-      print('statuscode cdfav=${res.statusCode}');
-      return null;
-    }
-  }
-
-  //===============================================================
-
-  //============================== categ ===========================
-
-  // get all category
-  static Future fdataCategory(int? namCateId, int? cateDetai) async {
-    var allCategory = <CategoryModel>[];
-    http.Response res =
-        await http.post(Uri.parse(url + "ViewAdDescriptionPage"), body: {
-      'ad_catogary_id': namCateId.toString(),
-      'catogary_details_id': cateDetai.toString()
-    });
-    if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
-      for (var item in body) {
-        allCategory.add(CategoryModel.fromJson(item));
-      }
-      return allCategory;
-    } else {}
+  static Future<dynamic> fetchDropDown(int id, int t) async {
+    String type = t == 1
+        ? "ad_catogary_id"
+        : t == 2
+            ? "catogary_details_id"
+            : "ad_descriptions_id";
+    var response = await http.post(
+      Uri.parse(url + "getAllDropDownListInfo$t"),
+      body: {type: "$id"},
+    );
+    var data = jsonDecode(response.body);
+    return data['isTheLast'] == "yes"
+        ? new LastAdd.fromJson(data)
+        : t == 1
+            ? new AddCat1.fromJson(data)
+            : t == 2
+                ? new Ad_descriptions.fromJson(data)
+                : new LastAdd.fromJson(data);
   }
 }
