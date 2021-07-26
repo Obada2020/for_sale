@@ -65,6 +65,8 @@ class Signin extends StatelessWidget {
                   child: TextFormField(
                     controller: num,
                     keyboardType: TextInputType.number,
+                    validator: (val) =>
+                        (val!.length == 0 ? 'This Field Is Required' : null),
                     decoration: InputDecoration(
                       border: new OutlineInputBorder(
                           borderSide: new BorderSide(color: Color(0xFF231F1F)),
@@ -95,10 +97,32 @@ class Signin extends StatelessWidget {
                 // height: 41,
                 child: TextButton(
                     onPressed: () async {
-                      c.user.value.info!.accountPhoneNumber =
-                          num.text.toString();
-                      Get.to(() => VerifyAccount());
-                      await ApiService.register(num.text);
+                      if (num.text == "") {
+                        Get.snackbar(
+                          "", "",
+                          titleText: Center(
+                            child: Text(
+                              "يرجى إدخال الرقم أولا",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          //snackPosition: SnackPosition.BOTTOM,
+                          backgroundColor: Colors.grey[10],
+                          borderColor: Colors.black,
+                          borderWidth: 1,
+                        );
+                        // ScaffoldMessenger.of(context).showSnackBar(
+                        //   const SnackBar(
+                        //       content: Text('يرجى إدخال الرقم أولا')),
+                        // );
+                        return;
+                      } else {
+                        c.user.value.info!.accountPhoneNumber =
+                            num.text.toString();
+                        Get.to(() => VerifyAccount());
+                        await ApiService.register(num.text);
+                      }
                     },
                     child: Text(
                       'تسجيل الدخول',

@@ -16,10 +16,10 @@ class VerifyAccount extends StatelessWidget {
   TextEditingController Num = TextEditingController();
   //c.user.value.info = Info();
   var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
-  dynamic serial = "1";
+  dynamic serial = "";
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    //Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -44,7 +44,7 @@ class VerifyAccount extends StatelessWidget {
         ),
         body: Container(
           margin: EdgeInsets.fromLTRB(12, 17, 12, 0),
-          width: size.width,
+          width: double.infinity,
           //height: size.height * 0.38,
           decoration: BoxDecoration(
             color: Theme.of(context).primaryColor,
@@ -73,7 +73,7 @@ class VerifyAccount extends StatelessWidget {
                     Padding(
                       child: Container(
                         //height: 50,
-                        width: size.width,
+                        width: double.infinity,
                         child: Directionality(
                           textDirection: TextDirection.ltr,
                           child: OTPTextField(
@@ -82,7 +82,8 @@ class VerifyAccount extends StatelessWidget {
                             fieldStyle: FieldStyle.underline,
                             keyboardType: TextInputType.number,
                             outlineBorderRadius: 4,
-                            fieldWidth: size.width * 0.1256684492,
+                            fieldWidth: MediaQuery.of(context).size.width *
+                                0.1256684492,
                             style: TextStyle(color: Colors.black),
                             otpFieldStyle: OtpFieldStyle(
                               backgroundColor: Theme.of(context).accentColor,
@@ -90,7 +91,7 @@ class VerifyAccount extends StatelessWidget {
                               enabledBorderColor: Colors.white,
                             ),
                             onChanged: (k) {},
-                            onCompleted: (n) async {
+                            onCompleted: (n) {
                               print(n);
                               serial = n.toString();
                               // c.login(n);
@@ -108,7 +109,9 @@ class VerifyAccount extends StatelessWidget {
                             'لم تستلم رمز؟',
                           ),
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () async {
+                              // await ApiService.register(number);
+                            },
                             child: Text(
                               'إعادة الإرسال',
                               style: klabelStyleBold11,
@@ -119,7 +122,7 @@ class VerifyAccount extends StatelessWidget {
                       padding: EdgeInsets.only(bottom: 15),
                     ),
                     Container(
-                      width: size.width,
+                      width: double.infinity,
                       decoration: BoxDecoration(
                         gradient: kGColor,
                         borderRadius: BorderRadius.circular(4),
@@ -129,12 +132,12 @@ class VerifyAccount extends StatelessWidget {
                           onPressed: () async {
                             print(serial);
                             print(number);
-                            var z = await ApiService.login(number, serial);
-                            if (z == null) {
-                              showAlertDialog(context);
-                            } else {
-                              Get.offAll(() => Home());
-                            }
+                            // var z = await ApiService.login(number, serial);
+                            // if (z == null) {
+                            //   showAlertDialog(context);
+                            // } else {
+                            //   Get.offAll(() => Home());
+                            // }
                           },
                           child: Text(
                             'تفعيل',
@@ -151,11 +154,15 @@ class VerifyAccount extends StatelessWidget {
     // set up the buttons
     Widget cancelButton = TextButton(
       child: Text("Cancel"),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
     Widget continueButton = TextButton(
       child: Text("Continue"),
-      onPressed: () {},
+      onPressed: () {
+        Navigator.pop(context);
+      },
     );
 
     // set up the AlertDialog

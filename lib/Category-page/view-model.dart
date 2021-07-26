@@ -15,8 +15,8 @@ class CategoryController extends GetxController {
   }
 
   fdata() async {
-    List<CategoryModel> allCategory = await ApiService.fdataCategory(
-        this.adCatogaryId, this.catogaryDetailsId);
-    categoryList.value = allCategory;
+    // List<CategoryModel> allCategory = await ApiService.fdataCategory(
+    //     this.adCatogaryId, this.catogaryDetailsId);
+    // categoryList.value = allCategory;
   }
 }

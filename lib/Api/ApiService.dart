@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Ads-details/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -40,6 +41,7 @@ class ApiService {
   //==============================================================
   //==============================AdsByNameScroll Api=======================
   static Future fdataAdsNameScrl(
+<<<<<<< HEAD
       int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
     List<AdsModel> ads = [];
     http.Response res =
@@ -51,6 +53,16 @@ class ApiService {
       'ad_descriptions_id': '1',
       // addescriptionsid.toString(),
       // 'ad_type_name_id': '',
+=======
+      adcatogaryid, catogarydetailsid, addescriptionsid, adtypenameid) async {
+    List<AdsModel> ads = [];
+    http.Response res =
+        await http.post(Uri.parse(url + "BringAdsInName"), body: {
+      'ad_catogary_id': adcatogaryid.toString(),
+      'catogary_details_id': catogarydetailsid.toString(),
+      'ad_descriptions_id': addescriptionsid.toString(),
+      'ad_type_name_id': '',
+>>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
       // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
@@ -62,7 +74,10 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
       return ads;
     } else {
       print('statuscode scrl=${res.statusCode}');
@@ -215,6 +230,50 @@ class ApiService {
     }
   }
 
+  static Future<List<AdInfoKey>?> fetchAdInfoKey(id) async {
+    http.Response response = await http
+        .post(Uri.parse(url + "getAdInfoKey"), body: {'ad_catogary_id': '$id'});
+
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body);
+      return data.map((x) => new AdInfoKey.fromJson(x)).toList();
+    } else {
+      // throw Exception('Unable to fetch Adds from the REST API');
+      print('Request failed with status: ${response.statusCode}.');
+      return null;
+    }
+  }
+
+  static Future<List<AddName>> fetchAddName() async {
+    var response = await http.get(
+      Uri.parse(url + "adcatogary"),
+    );
+    List data = jsonDecode(response.body);
+
+    return data.map((visit) => new AddName.fromJson(visit)).toList();
+  }
+  //============================== sign in ===========================
+
+  static Future<dynamic> fetchDropDown(int id, int t) async {
+    String type = t == 1
+        ? "ad_catogary_id"
+        : t == 2
+            ? "catogary_details_id"
+            : "ad_descriptions_id";
+    var response = await http.post(
+      Uri.parse(url + "getAllDropDownListInfo$t"),
+      body: {type: "$id"},
+    );
+    var data = jsonDecode(response.body);
+    return data['isTheLast'] == "yes"
+        ? new LastAdd.fromJson(data)
+        : t == 1
+            ? new AddCat1.fromJson(data)
+            : t == 2
+                ? new Ad_descriptions.fromJson(data)
+                : new LastAdd.fromJson(data);
+  }
+
   static login(phone, serialnumber) async {
     print(phone);
     print(serialnumber);
@@ -234,26 +293,5 @@ class ApiService {
       print('statuscode cdfav=${res.statusCode}');
       return null;
     }
-  }
-
-  //===============================================================
-
-  //============================== categ ===========================
-
-  // get all category
-  static Future fdataCategory(int? namCateId, int? cateDetai) async {
-    var allCategory = <CategoryModel>[];
-    http.Response res =
-        await http.post(Uri.parse(url + "ViewAdDescriptionPage"), body: {
-      'ad_catogary_id': namCateId.toString(),
-      'catogary_details_id': cateDetai.toString()
-    });
-    if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
-      for (var item in body) {
-        allCategory.add(CategoryModel.fromJson(item));
-      }
-      return allCategory;
-    } else {}
   }
 }

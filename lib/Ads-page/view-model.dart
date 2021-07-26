@@ -21,11 +21,17 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fdatadsbynamescrl();
+    // fdatadsbynamescrl();
     // fdatads();
+<<<<<<< HEAD
     fdatascrol();
     fdatafavad();
     fdatamyad();
+=======
+    // fdatafavad();
+    // fdatamyad();
+    // fdatascrol();
+>>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
   }
 
   fdatamyad() async {
@@ -43,6 +49,7 @@ class AdsController extends GetxController {
   //   update();
   // }
 
+<<<<<<< HEAD
   fdatadsbynamescrl() async {
     List<AdsModel> adby = await ApiService.fdataAdsNameScrl(
         this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
@@ -53,10 +60,32 @@ class AdsController extends GetxController {
     print(catogarydetailsid);
     print(addescriptionsid);
     print('fdata**************');
+=======
+  fdatadsbynamescrl(a, c, d, n) async {
+    print("fffffffffffffffffffffffffffff");
+    // print(this.adcatogaryid);
+    print(a.toString() +
+        "" +
+        c.toString() +
+        "" +
+        d.toString() +
+        "" +
+        n.toString());
+    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(a, c, d, n);
+    ads.value = adby;
+    dummysearch = ads.toList();
+    // print('**************');
+    // print(adcatogaryid);
+    // print(catogarydetailsid);
+    // print(addescriptionsid);
+    // print(adtypenameid);
+    // print('**************');
+>>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
 
-    update();
+    // update();
   }
 
+<<<<<<< HEAD
   fdatascrol() async {
     List<ScrlHorModel> scroll = await ApiService.fdataScrlho(
         this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
@@ -67,6 +96,12 @@ class AdsController extends GetxController {
     print('scroool**************');
     scrlho.value = scroll;
   }
+=======
+  // fdatascrol() async {
+  //   // List<ScrlHorModel> scroll = await ApiService.fdataScrlho();
+  //   scrlho.value = scroll;
+  // }
+>>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
 
   fdatafavad() async {
     List<FavoriteModel> fav = await ApiService.fdatafavad();

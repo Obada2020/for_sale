@@ -6,13 +6,18 @@ import 'package:get/get.dart';
 import 'listhorizonal.dart';
 
 class Ads extends StatelessWidget {
-  var parameterAds;
-  Ads({this.parameterAds});
-
-  AdsController adsController = Get.put(AdsController());
+  // Map? parameterAds;
+  // Ads({this.parameterAds});
+  AdsController c = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    // print("ttttttttttttttttttttttttttttttttttttttt");
+    // print(parameterAds!['ad_catogary_id']);
+    // adsController.addescriptionsid = parameterAds['ad_descriptions_id'];
+    // adsController.catogarydetailsid = parameterAds['catogary_details_id'];
+    // adsController.adtypenameid = parameterAds['title'];
+
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: kbodyColor,
@@ -23,7 +28,11 @@ class Ads extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
+<<<<<<< HEAD
                 parameterAds['title'] + " " + parameterAds['title2'],
+=======
+                "parameterAds!['title']",
+>>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
                 style: klabelAppbarStyle,
               ),
             ),
@@ -43,7 +52,7 @@ class Ads extends StatelessWidget {
           gridview(),
           //================================list horisental=========================
           Positioned(
-            child: ListHorizantol(parameterHorizantol: parameterAds),
+            child: ListHorizantol(),
           ),
         ],
       ),
@@ -63,7 +72,7 @@ class Ads extends StatelessWidget {
       ),
       child: TextField(
         onChanged: (txt) {
-          adsController.fileserch(txt);
+          c.fileserch(txt);
         },
         decoration: InputDecoration(
           hintText: " ابحث عن   ${parameterAds['title2']}",
@@ -82,17 +91,19 @@ class Ads extends StatelessWidget {
   Widget gridview() {
     return Container(
       margin: EdgeInsets.only(top: 65, right: 16, left: 16),
-      child: GetBuilder<AdsController>(
-          init: AdsController(
-              adcatogaryid: parameterAds['ad_catogary_id'],
-              catogarydetailsid: parameterAds['catogary_details_id'],
-              addescriptionsid: parameterAds['ad_descriptions_id']),
-          builder: (controller) {
-            return Container(
-                child: controller.ads.length != 0
+      child: Obx(
+          // initState: (_) => AdsController().fdatadsbynamescrl(
+          //     parameterAds!['ad_catogary_id'],
+          //     parameterAds!['catogary_details_id'],
+          //     parameterAds!['ad_descriptions_id'],
+          //     parameterAds!['title']),
+          // init: AdsController(),
+          // builder: (controller) {
+          () => Container(
+                child: c.ads.length != 0
                     ? GridView.builder(
                         shrinkWrap: true,
-                        itemCount: controller.ads.length,
+                        itemCount: c.ads.length,
                         gridDelegate:
                             new SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -114,7 +125,7 @@ class Ads extends StatelessWidget {
                                     color: Colors.grey.withOpacity(0.2),
                                   )
                                 ],
-                                color: controller.ads[index].adTypeId == '2'
+                                color: c.ads[index].adTypeId == 2
                                     ? Color(0x79667590)
                                     : Colors.white,
                                 borderRadius: BorderRadius.circular(4),
@@ -130,8 +141,7 @@ class Ads extends StatelessWidget {
                                           topLeft: Radius.circular(4),
                                         ),
                                         child: Image.network(
-                                          controller.ads[index].adPicture
-                                              .toString(),
+                                          c.ads[index].adPicture.toString(),
                                           fit: BoxFit.cover,
                                         )),
                                   ),
@@ -143,7 +153,7 @@ class Ads extends StatelessWidget {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      controller.ads[index].adname!,
+                                      c.ads[index].adname!,
                                       style: klabelStyleBold12card,
                                       maxLines: 2,
                                     ),
@@ -164,23 +174,18 @@ class Ads extends StatelessWidget {
                                                   BorderRadius.circular(4),
                                               gradient: kGColor),
                                           child: Text(
-                                            controller.ads[index].adPrice
-                                                .toString(),
+                                            c.ads[index].adPrice.toString(),
                                             style: klabelStyleBold11light,
                                           )),
                                       Text(
                                         ('قبل : ${(DateTime.now().difference(DateTime(
-                                              int.parse(controller
-                                                  .ads[index].createdAt!
+                                              int.parse(c.ads[index].createdAt!
                                                   .substring(0, 4)),
-                                              int.parse(controller
-                                                  .ads[index].createdAt!
+                                              int.parse(c.ads[index].createdAt!
                                                   .substring(5, 7)),
-                                              int.parse(controller
-                                                  .ads[index].createdAt!
+                                              int.parse(c.ads[index].createdAt!
                                                   .substring(8, 10)),
-                                              int.parse(controller
-                                                  .ads[index].createdAt!
+                                              int.parse(c.ads[index].createdAt!
                                                   .substring(11, 13)),
                                             )).inDays)}  يوم  '),
                                         maxLines: 2,
@@ -198,9 +203,10 @@ class Ads extends StatelessWidget {
                         })
                     : Center(
                         child: Container(
-                        child: CircularProgressIndicator(),
-                      )));
-          }),
+                          child: CircularProgressIndicator(),
+                        ),
+                      ),
+              )),
     );
   }
 }
