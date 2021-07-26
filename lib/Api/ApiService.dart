@@ -191,6 +191,25 @@ class ApiService {
       print('statuscode=${res.statusCode}');
     }
   }
+  //============================== categ ===========================
+
+  // get all category
+  static Future fdataCategory(int? namCateId, int? cateDetai) async {
+    var allCategory = <CategoryModel>[];
+    http.Response res =
+        await http.post(Uri.parse(url + "ViewAdDescriptionPage"), body: {
+      'ad_catogary_id': namCateId.toString(),
+      'catogary_details_id': cateDetai.toString()
+    });
+    if (res.statusCode == 200) {
+      var body = jsonDecode(res.body);
+      for (var item in body) {
+        allCategory.add(CategoryModel.fromJson(item));
+      }
+      return allCategory;
+    } else {}
+  }
+
   //============================== sign in ===========================
 
   static Future register(var phone) async {
