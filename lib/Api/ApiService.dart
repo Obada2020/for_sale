@@ -41,19 +41,6 @@ class ApiService {
   //==============================================================
   //==============================AdsByNameScroll Api=======================
   static Future fdataAdsNameScrl(
-<<<<<<< HEAD
-      int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
-    List<AdsModel> ads = [];
-    http.Response res =
-        await http.post(Uri.parse(url + "BringAdsInName"), body: {
-      'ad_catogary_id': '1',
-      // adcatogaryid.toString(),
-      'catogary_details_id': '1',
-      // catogarydetailsid.toString(),
-      'ad_descriptions_id': '1',
-      // addescriptionsid.toString(),
-      // 'ad_type_name_id': '',
-=======
       adcatogaryid, catogarydetailsid, addescriptionsid, adtypenameid) async {
     List<AdsModel> ads = [];
     http.Response res =
@@ -62,7 +49,6 @@ class ApiService {
       'catogary_details_id': catogarydetailsid.toString(),
       'ad_descriptions_id': addescriptionsid.toString(),
       'ad_type_name_id': '',
->>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
       // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
@@ -74,10 +60,6 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
-<<<<<<< HEAD
-
-=======
->>>>>>> 1f3c457fe810ee5f6b4fb4af0001f2eb6368dd54
       return ads;
     } else {
       print('statuscode scrl=${res.statusCode}');
