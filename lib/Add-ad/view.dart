@@ -118,7 +118,7 @@ class AddUI extends StatelessWidget {
                 filter: new ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                 child: Center(
                     child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 80, vertical: 350),
+                  margin: EdgeInsets.symmetric(horizontal: 80, vertical: 150),
                   decoration: BoxDecoration(
                       color: Colors.grey.shade400,
                       borderRadius: BorderRadius.all(Radius.circular(15))),
@@ -534,7 +534,6 @@ class DetailsAdd extends StatefulWidget {
 }
 
 class _DetailsAddState extends State<DetailsAdd> {
- 
   List<Asset> images = [];
   Size size = MediaQuery.of(Get.context!).size;
   // ignore: unused_field
@@ -575,36 +574,97 @@ class _DetailsAddState extends State<DetailsAdd> {
       _error = error;
     });
   }
-    Future<File> getImageFileFromAssets(String path) async {
-  final byteData = await rootBundle.load('assets/$path');
 
-  final file = File('${(await getTemporaryDirectory()).path}/$path');
-  await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+  Future<File> getImageFileFromAssets(String path) async {
+    final byteData = await rootBundle.load('assets/$path');
 
-  return file;
-}
-    // submit() async {
-    //   for (int i = 0; i < images.length; i++) {
-    //       var path2 = await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
-    //       var file = await getImageFileFromAsset(path2);
-    //       var base64Image = base64Encode(file.readAsBytesSync());
-    //       files.add(base64Image); 
-    //         var data = {
-    //           "files": files,
-    //         };
-    //        try {
-    //            var response = await http.post(data, 'url')
-    //            var body = jsonDecode(response.body);
-    //            print(body);
-    //            if (body['msg'] == "Success!") {
-    //            print('posted successfully!');
-    //        } else {
-    //            _showToast(context, body['msg']);
-    //        }
-    //        } catch (e) {
-    //           return e.message;
-    //        }
-    // }
+    final file = File('${(await getTemporaryDirectory()).path}/$path');
+    await file.writeAsBytes(byteData.buffer
+        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+    return file;
+  }
+
+  //   void _uploadFiles() async {
+//     String uid = await FlutterSecureStorage().read(key: "getTocken");
+//     try {
+//       var dio = Dio();
+//       FormData formData = new FormData.fromMap({
+//         "pictures[]": images,
+//       });
+//       Response resp = await dio.post(
+//         mainUrl + 'merchant/upload-galleries',
+//         data: formData,
+//         onSendProgress: (int sent, int total) {
+//           //
+//         },
+//         options: Options(
+//           headers: {
+//             HttpHeaders.authorizationHeader: uid,
+//           },
+//         )
+//       );
+//       if(resp.statusCode == 200) {
+//         print("============= Print Resp data: ");
+//         print(resp.data);
+//       }
+
+//     } catch (e) {
+//       print(e);
+//     }
+//   }
+
+//   Future<void> loadAssets() async {
+//     List<Asset> resultList = List<Asset>();
+//     try {
+//       resultList = await MultiImagePicker.pickImages(
+//         maxImages: 6,
+//         enableCamera: true,
+//         selectedAssets: images,
+//         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
+//         materialOptions: MaterialOptions(
+//           actionBarColor: "#abcdef",
+//           actionBarTitle: "Example App",
+//           allViewTitle: "All Photos",
+//           useDetailsView: false,
+//           selectCircleStrokeColor: "#000000",
+//         ),
+//       );
+//     } on Exception catch (e) {
+//       print(e);
+//     }
+
+//     // If the widget was removed from the tree while the asynchronous platform
+//     // message was in flight, we want to discard the reply rather than calling
+//     // setState to update our non-existent appearance.
+//     if (!mounted) return;
+//     setState(() {
+//       images = resultList;
+//     });
+//   }
+
+  // submit() async {
+  //   for (int i = 0; i < images.length; i++) {
+  //       var path2 = await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
+  //       var file = await getImageFileFromAsset(path2);
+  //       var base64Image = base64Encode(file.readAsBytesSync());
+  //       files.add(base64Image);
+  //         var data = {
+  //           "files": files,
+  //         };
+  //        try {
+  //            var response = await http.post(data, 'url')
+  //            var body = jsonDecode(response.body);
+  //            print(body);
+  //            if (body['msg'] == "Success!") {
+  //            print('posted successfully!');
+  //        } else {
+  //            _showToast(context, body['msg']);
+  //        }
+  //        } catch (e) {
+  //           return e.message;
+  //        }
+  // }
   // }
   Widget buildGridView() {
     if (images.isNotEmpty)
@@ -1000,133 +1060,3 @@ class _CommunicateState extends State<Communicate> {
   }
 }
 
-
-
-
-//   void _uploadFiles() async {
-//     String uid = await FlutterSecureStorage().read(key: "getTocken");
-//     try {
-//       var dio = Dio();
-//       FormData formData = new FormData.fromMap({
-//         "pictures[]": images, 
-//       });
-//       Response resp = await dio.post(
-//         mainUrl + 'merchant/upload-galleries',
-//         data: formData,
-//         onSendProgress: (int sent, int total) {
-//           //
-//         }, 
-//         options: Options(
-//           headers: {
-//             HttpHeaders.authorizationHeader: uid,
-//           },
-//         )
-//       );
-//       if(resp.statusCode == 200) {
-//         print("============= Print Resp data: ");
-//         print(resp.data);
-//       }
-
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
-
-//   Future<void> loadAssets() async {
-//     List<Asset> resultList = List<Asset>();
-//     try {
-//       resultList = await MultiImagePicker.pickImages(
-//         maxImages: 6,
-//         enableCamera: true,
-//         selectedAssets: images,
-//         cupertinoOptions: CupertinoOptions(takePhotoIcon: "chat"),
-//         materialOptions: MaterialOptions(
-//           actionBarColor: "#abcdef",
-//           actionBarTitle: "Example App",
-//           allViewTitle: "All Photos",
-//           useDetailsView: false,
-//           selectCircleStrokeColor: "#000000",
-//         ),
-//       );
-//     } on Exception catch (e) {
-//       print(e);
-//     }
-
-//     // If the widget was removed from the tree while the asynchronous platform
-//     // message was in flight, we want to discard the reply rather than calling
-//     // setState to update our non-existent appearance.
-//     if (!mounted) return;
-//     setState(() {
-//       images = resultList;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       floatingActionButton: FloatingActionButton(
-//         heroTag: "btn1",
-//         backgroundColor: ColorHelper.orange,
-//         child: Icon(Icons.add_photo_alternate),
-//         onPressed: loadAssets,
-//       ),
-//       appBar: new AppBar(
-//         title: Text('បញ្ជីរូបភាព'),
-//         backgroundColor: ColorHelper.orange,
-//       ),
-//       body: Column(
-//         children: <Widget>[
-//           //Error message
-//           errorMessage != "" ? 
-//           Container(
-//             margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-//             height: 50,
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.all(Radius.circular(4)),
-//               color: ColorHelper.red.withOpacity(0.5),
-//             ),
-//             child: Center(
-//               child: Text("$errorMessage", style: TextStyle(color: ColorHelper.swhite, fontSize: 15),),
-//             ),
-//           ):
-//           Container(),
-
-//           Expanded(
-//             child: Container(
-//               margin: EdgeInsets.only(left: 10, right: 10, top: 10),
-//               child: buildGridView(),
-//             ),
-//           ),
-//           SafeArea(
-//             child: Container(
-//               margin: EdgeInsets.all(10),
-//               decoration: BoxDecoration(
-//                 color: ColorHelper.green,
-//                 borderRadius: BorderRadius.all(Radius.circular(4))
-//               ),
-//               height: 50,
-//               child: InkWell(
-//                 onTap: () {
-//                   if(images.length > 0) {
-//                     setState(() {
-//                       errorMessage = "";
-//                     });
-//                     // Call function upload multiple files
-//                     _uploadFiles();
-//                   } else {
-//                     setState(() {
-//                       errorMessage = "សូមបញ្ជូលរូបភាព";
-//                     });
-//                   } 
-//                 },
-//                 child: Center(
-//                   child: Text("រួចរាល់", style: TextStyle(color: ColorHelper.swhite, fontSize: 15, fontWeight: FontWeight.w500,),),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

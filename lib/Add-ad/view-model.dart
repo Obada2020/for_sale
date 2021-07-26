@@ -32,7 +32,7 @@ class AddNameController extends GetxController {
     var f = await ApiService.fetchAddName();
     if (f.isNotEmpty) addsName.value = f;
     loading.value = false;
-  }
+  } 
 
   void fetchDataAddsCat(int index, int t) async {
     loading.value = true;
