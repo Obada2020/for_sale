@@ -604,7 +604,7 @@ class _DetailsAddState extends State<DetailsAdd> {
 //           },
 //         )
 //       );
-//       if(resp.statusCode == 200) {
+//       if(resp.status Code == 200) {
 //         print("============= Print Resp data: ");
 //         print(resp.data);
 //       }

@@ -6,6 +6,8 @@ import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'Favorite-ads/view.dart';
+
 void main() async {
   await GetStorage.init();
   runApp(MyApp());
@@ -21,7 +23,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: AddUI(),
+      home: FavoriteAds(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,

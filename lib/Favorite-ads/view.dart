@@ -43,7 +43,7 @@ class FavoriteAds extends StatelessWidget {
       child: GetX<AdsController>(
         init: AdsController(),
         builder: (controller) {
-          if (controller.favad != null) {
+          if (controller.favad.isNotEmpty) {
             return GridView.builder(
                 shrinkWrap: true,
                 itemCount: controller.favad.length,

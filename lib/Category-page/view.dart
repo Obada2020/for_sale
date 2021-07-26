@@ -86,7 +86,7 @@ class CategoryPage extends StatelessWidget {
         // print(parameter);
         c.fdatadsbynamescrl(parameter['ad_catogary_id'], categ.adCatogaryId,
             parameter['ad_descriptions_id'], parameter['title_navbar']);
-        Get.to(() => Ads());
+        Get.to(() => Ads(title: parameter['title_navbar']));
       },
     );
   }

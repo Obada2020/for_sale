@@ -6,8 +6,8 @@ import 'package:get/get.dart';
 import 'listhorizonal.dart';
 
 class Ads extends StatelessWidget {
-  // Map? parameterAds;
-  // Ads({this.parameterAds});
+  String? title;
+  Ads({this.title});
   AdsController c = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
