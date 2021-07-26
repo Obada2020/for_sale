@@ -73,22 +73,3 @@ import 'dart:convert';
 //         "updated_at": updatedAt == null ? null : updatedAt,
 //       };
 // }
-AddDeleteFavModel addDeleteFavModelFromJson(String str) => AddDeleteFavModel.fromJson(json.decode(str));
-
-String addDeleteFavModelToJson(AddDeleteFavModel data) => json.encode(data.toJson());
-
-class AddDeleteFavModel {
-    AddDeleteFavModel({
-        this.resualt,
-    });
-
-    String? resualt;
-
-    factory AddDeleteFavModel.fromJson(Map<String, dynamic> json) => AddDeleteFavModel(
-        resualt: json["resualt"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "resualt": resualt,
-    };
-}

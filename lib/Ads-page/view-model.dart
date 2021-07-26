@@ -8,7 +8,6 @@ class AdsController extends GetxController {
   int? adcatogaryid;
   int? catogarydetailsid;
   int? addescriptionsid;
-  int? adtypenameid;
   AdsController(
       {this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid});
   var ads = <AdsModel>[].obs;
@@ -40,7 +39,7 @@ class AdsController extends GetxController {
   //   ads.value = ad;
   //   print("Here APIIIIIIIIIIIIIIIIIIII");
   //   dummysearch = ads.toList();
-  //   //******************************************************************** */
+  //   //*********************************************************************/
   //   update();
   // }
 
@@ -83,9 +82,36 @@ class AdsController extends GetxController {
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         var service = item;
-        print("Here");
-        if (service.adname!.toLowerCase().contains(query.toLowerCase())) {
-          print("Here is a Service ************ " + service.adname!.toString());
+        if (service.adname!.toLowerCase().contains(query.toLowerCase()) ||
+            service.adDescription!
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            service.adPrice!.toLowerCase().contains(query.toLowerCase())) {
+          dummylistdata.add(service);
+        }
+      });
+      ads.clear();
+      ads.addAll(dummylistdata);
+      update();
+    } else {
+      print(dummysearch!.length);
+      ads.clear();
+      ads.addAll(dummysearch!);
+      update();
+    }
+  }
+  //====================================================================
+  //==================================filter========================
+
+  filter(String query) async {
+    List<AdsModel> dummylistdata = <AdsModel>[];
+    if (query.isNotEmpty && dummysearch!.isNotEmpty) {
+      dummysearch!.forEach((item) {
+        var service = item;
+        if (service.adname!.toLowerCase().contains(query.toLowerCase()) ||
+            service.adDescription!
+                .toLowerCase()
+                .contains(query.toLowerCase())) {
           dummylistdata.add(service);
         }
       });

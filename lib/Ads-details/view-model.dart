@@ -3,7 +3,7 @@ import 'package:for_sale/Api/ApiService.dart';
 import 'package:get/get.dart';
 
 class AddFavController extends GetxController {
-  var result = <AddDeleteFavModel>[].obs;
+  var result = false.obs;
   @override
   void onInit() {
     super.onInit();
@@ -11,8 +11,9 @@ class AddFavController extends GetxController {
   }
 
   fdata() async {
-    List<AddDeleteFavModel> res = await ApiService.fdatacdfav();
+    bool res = await ApiService.fdatacdfav();
     result.value = res;
-    print('result==  $res');
+    print('result ctrl==  $res');
+    return res;
   }
 }

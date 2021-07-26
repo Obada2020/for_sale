@@ -71,7 +71,7 @@ class Ads extends StatelessWidget {
           c.fileserch(txt);
         },
         decoration: InputDecoration(
-          hintText: " ابحث عن  سيارات",
+          hintText: " ابحث عن   {parameterAds['title2']}",
           hintStyle: TextStyle(
               fontFamily: 'FairuzBlack',
               fontSize: 14,
