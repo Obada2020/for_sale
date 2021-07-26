@@ -98,28 +98,31 @@ class Catogary {
 
 //************************************************************************************************************* */
 class Ad_descriptions {
-	List<Addescription>? list;
-	String? isTheLast;
+  List<Addescription>? list;
+  String? isTheLast;
 
-	Ad_descriptions({this.list, this.isTheLast});
+  Ad_descriptions({this.list, this.isTheLast});
 
-	Ad_descriptions.fromJson(Map<String, dynamic> json) {
-		if (json['0'] != null) {
-			list = <Addescription>[];
-			json['0'].forEach((v) { list!.add(new Addescription.fromJson(v)); });
-		}
-		isTheLast = json['isTheLast'];
-	}
+  Ad_descriptions.fromJson(Map<String, dynamic> json) {
+    if (json['0'] != null) {
+      list = <Addescription>[];
+      json['0'].forEach((v) {
+        list!.add(new Addescription.fromJson(v));
+      });
+    }
+    isTheLast = json['isTheLast'];
+  }
 
-	Map<String, dynamic> toJson() {
-		final Map<String, dynamic> data = new Map<String, dynamic>();
-		if (this.list != null) {
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.list != null) {
       data['0'] = this.list!.map((v) => v.toJson()).toList();
     }
-		data['isTheLast'] = this.isTheLast;
-		return data;
-	}
+    data['isTheLast'] = this.isTheLast;
+    return data;
+  }
 }
+
 class Addescription {
   int? adDescriptionsId;
   String? adDetailsDescription;
@@ -164,7 +167,6 @@ class Addescription {
     return data;
   }
 }
-
 
 //****************************************************************************************************************** */
 //****************************************************************************************************************** */
@@ -234,6 +236,41 @@ class LastCatogary {
     data['ad_catogary_id'] = this.adCatogaryId;
     data['catogary_details_id'] = this.catogaryDetailsId;
     data['ad_descriptions_id'] = this.adDescriptionsId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+//*************************************************************************************************************** */
+class AdInfoKey {
+  int? adInfoId;
+  String? adInfo;
+  int? adCatogaryId;
+  String? createdAt;
+  String? updatedAt;
+
+  AdInfoKey({
+    this.adInfoId,
+    this.adInfo,
+    this.adCatogaryId,
+    this.createdAt,
+    this.updatedAt,
+  });
+
+  AdInfoKey.fromJson(Map<String, dynamic> json) {
+    adInfoId = json['ad_info_id'];
+    adInfo = json['ad_info'];
+    adCatogaryId = json['ad_catogary_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ad_info_id'] = this.adInfoId;
+    data['ad_info'] = this.adInfo;
+    data['ad_catogary_id'] = this.adCatogaryId;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
     return data;

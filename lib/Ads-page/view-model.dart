@@ -67,11 +67,10 @@ class AdsController extends GetxController {
     // update();
   }
 
-  fdatascrol() async {
-    List<ScrlHorModel> scroll = await ApiService.fdataScrlho(
-        this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
-    scrlho.value = scroll;
-  }
+  // fdatascrol() async {
+  //   // List<ScrlHorModel> scroll = await ApiService.fdataScrlho();
+  //   scrlho.value = scroll;
+  // }
 
   fdatafavad() async {
     List<FavoriteModel> fav = await ApiService.fdatafavad();
