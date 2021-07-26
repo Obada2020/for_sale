@@ -195,6 +195,4 @@ class ApiService {
       return null;
    }     
   }
-
-  
 }
