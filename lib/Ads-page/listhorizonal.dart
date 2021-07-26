@@ -12,6 +12,7 @@ class ListHorizantol extends StatefulWidget {
 
 class _ListHorizantolState extends State<ListHorizantol> {
   int selectindex = 0;
+  AdsController adsController = Get.put(AdsController());
 
   @override
   void initState() {
@@ -58,6 +59,7 @@ class _ListHorizantolState extends State<ListHorizantol> {
                   onPressed: () {
                     setState(() {
                       selectindex = index;
+                      ctrl.filter(ctrl.scrlho[index].adTypeName.toString());
                     });
                   },
                   child: Container(

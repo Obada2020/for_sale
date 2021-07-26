@@ -18,6 +18,7 @@ class _AdsdetailsState extends State<Adsdetails> {
     'img/image2.jpg',
     'img/image3.jpg',
   ];
+  // IconData icon = Icons.favorite_border;
 
   int _current = 0;
 
@@ -34,7 +35,7 @@ class _AdsdetailsState extends State<Adsdetails> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // IconData icon = Icons.favorite_border;
+    IconData icon = Icons.favorite_border;
     return Scaffold(
       backgroundColor: kbodyColor,
       appBar: AppBar(
@@ -44,7 +45,21 @@ class _AdsdetailsState extends State<Adsdetails> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(left: 20),
-            child: IconFav(),
+            child: GetX<AddFavController>(
+                init: AddFavController(),
+                builder: (ctrl) {
+                  return GestureDetector(
+                    onTap: () {
+                      ctrl.fdata();
+
+                      print('view ${ctrl.result}');
+                    },
+                    child: ctrl.result == true
+                        ? Icon(Icons.check)
+                        : Icon(Icons.favorite_border),
+                    //  Icon(icon),
+                  );
+                }),
           ),
         ],
         title: Center(
@@ -514,35 +529,6 @@ class _AdsdetailsState extends State<Adsdetails> {
         ],
       ),
     );
-  }
-}
-
-class IconFav extends StatefulWidget {
-  @override
-  _IconFavState createState() => _IconFavState();
-}
-
-class _IconFavState extends State<IconFav> {
-  IconData icon = Icons.favorite_border;
-
-  @override
-  Widget build(BuildContext context) {
-    return GetX<AddFavController>(
-        init: AddFavController(),
-        builder: (ctrl) {
-          return GestureDetector(
-            onTap: () {
-              setState(() {
-                ctrl.fdata();
-                ctrl.result == "true"
-                    ? icon = Icons.face_retouching_natural_rounded
-                    : icon = Icons.favorite_border;
-              });
-            },
-            child: Icon(icon),
-            //  Icon(icon),
-          );
-        });
   }
 }
 

@@ -23,7 +23,7 @@ class Ads extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                parameterAds['title'],
+                parameterAds['title'] + " " + parameterAds['title2'],
                 style: klabelAppbarStyle,
               ),
             ),
@@ -66,7 +66,7 @@ class Ads extends StatelessWidget {
           adsController.fileserch(txt);
         },
         decoration: InputDecoration(
-          hintText: " ابحث عن  سيارات",
+          hintText: " ابحث عن   ${parameterAds['title2']}",
           hintStyle: TextStyle(
               fontFamily: 'FairuzBlack',
               fontSize: 14,

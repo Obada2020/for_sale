@@ -39,8 +39,8 @@ class ApiService {
 
   //==============================================================
   //==============================AdsByNameScroll Api=======================
-  static Future fdataAdsNameScrl(int? adcatogaryid, int? catogarydetailsid,
-      int? addescriptionsid, int? adtypenameid) async {
+  static Future fdataAdsNameScrl(
+      int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
     List<AdsModel> ads = [];
     http.Response res =
         await http.post(Uri.parse(url + "BringAdsInName"), body: {
@@ -50,7 +50,7 @@ class ApiService {
       // catogarydetailsid.toString(),
       'ad_descriptions_id': '1',
       // addescriptionsid.toString(),
-      'ad_type_name_id': '',
+      // 'ad_type_name_id': '',
       // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
@@ -62,12 +62,6 @@ class ApiService {
       for (var item in body) {
         ads.add(AdsModel.fromJson(item));
       }
-      print('**************');
-      print(adcatogaryid.toString());
-      print(catogarydetailsid.toString());
-      print(addescriptionsid.toString());
-      print(adtypenameid.toString());
-      print('**************');
 
       return ads;
     } else {
@@ -82,16 +76,24 @@ class ApiService {
     List<ScrlHorModel> scrl = [];
     http.Response res =
         await http.post(Uri.parse(url + "ScrollOfViewAds"), body: {
-      'ad_catogary_id': adcatogaryid,
-      'catogary_details_id': catogarydetailsid,
-      'ad_descriptions_id': addescriptionsid,
+      'ad_catogary_id': '1',
+      // adcatogaryid.toString(),
+      'catogary_details_id': '1',
+      // catogarydetailsid.toString(),
+      'ad_descriptions_id': '1',
+
+      // adtypenameid.toString()
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
-
+      print('scroool**************');
+      print(adcatogaryid);
+      print(catogarydetailsid);
+      print(addescriptionsid);
+      print('scroool**************');
       for (var item in body) {
         scrl.add(ScrlHorModel.fromJson(item));
         print(item);
@@ -154,21 +156,19 @@ class ApiService {
   //==============================================================
   //==========================AddDeletFaveAds Api=================
   static Future fdatacdfav() async {
-    List<AddDeleteFavModel> f = [];
     http.Response res =
         await http.post(Uri.parse(url + "FavoriteControleItem"), body: {
-      'account_id': '1',
-      'ad_id': '1'
+      'account_id': '30',
+      'ad_id': '4'
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
-      for (var item in body) {
-        f.add(AddDeleteFavModel.fromJson(item));
-      }
-      return f;
+
+      print('==========>${body['resualt']}');
+      return body['resualt'] == 'true' ? true : false;
     } else {
       print('statuscode cdfav=${res.statusCode}');
     }

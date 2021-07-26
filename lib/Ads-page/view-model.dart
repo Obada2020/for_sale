@@ -8,7 +8,6 @@ class AdsController extends GetxController {
   int? adcatogaryid;
   int? catogarydetailsid;
   int? addescriptionsid;
-  int? adtypenameid;
   AdsController(
       {this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid});
   var ads = <AdsModel>[].obs;
@@ -24,9 +23,9 @@ class AdsController extends GetxController {
     super.onInit();
     fdatadsbynamescrl();
     // fdatads();
+    fdatascrol();
     fdatafavad();
     fdatamyad();
-    fdatascrol();
   }
 
   fdatamyad() async {
@@ -40,21 +39,20 @@ class AdsController extends GetxController {
   //   ads.value = ad;
   //   print("Here APIIIIIIIIIIIIIIIIIIII");
   //   dummysearch = ads.toList();
-  //   //******************************************************************** */
+  //   //*********************************************************************/
   //   update();
   // }
 
   fdatadsbynamescrl() async {
-    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(this.adcatogaryid,
-        this.catogarydetailsid, this.addescriptionsid, this.adtypenameid);
+    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(
+        this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
     ads.value = adby;
     dummysearch = ads.toList();
-    print('**************');
+    print('fdata**************');
     print(adcatogaryid);
     print(catogarydetailsid);
     print(addescriptionsid);
-    print(adtypenameid);
-    print('**************');
+    print('fdata**************');
 
     update();
   }
@@ -62,6 +60,11 @@ class AdsController extends GetxController {
   fdatascrol() async {
     List<ScrlHorModel> scroll = await ApiService.fdataScrlho(
         this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
+    print('scroool**************');
+    print(adcatogaryid);
+    print(catogarydetailsid);
+    print(addescriptionsid);
+    print('scroool**************');
     scrlho.value = scroll;
   }
 
@@ -76,9 +79,36 @@ class AdsController extends GetxController {
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         var service = item;
-        print("Here");
-        if (service.adname!.toLowerCase().contains(query.toLowerCase())) {
-          print("Here is a Service ************ " + service.adname!.toString());
+        if (service.adname!.toLowerCase().contains(query.toLowerCase()) ||
+            service.adDescription!
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            service.adPrice!.toLowerCase().contains(query.toLowerCase())) {
+          dummylistdata.add(service);
+        }
+      });
+      ads.clear();
+      ads.addAll(dummylistdata);
+      update();
+    } else {
+      print(dummysearch!.length);
+      ads.clear();
+      ads.addAll(dummysearch!);
+      update();
+    }
+  }
+  //====================================================================
+  //==================================filter========================
+
+  filter(String query) async {
+    List<AdsModel> dummylistdata = <AdsModel>[];
+    if (query.isNotEmpty && dummysearch!.isNotEmpty) {
+      dummysearch!.forEach((item) {
+        var service = item;
+        if (service.adname!.toLowerCase().contains(query.toLowerCase()) ||
+            service.adDescription!
+                .toLowerCase()
+                .contains(query.toLowerCase())) {
           dummylistdata.add(service);
         }
       });
