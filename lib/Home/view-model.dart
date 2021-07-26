@@ -1,4 +1,3 @@
-import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:get/get.dart';
 
