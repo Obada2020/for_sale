@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/constant/constant.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class More extends StatelessWidget {
   const More({Key? key}) : super(key: key);
@@ -21,6 +22,7 @@ class More extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.fromLTRB(16, 16, 16, 0),
         width: double.infinity,
+        height: MediaQuery.of(context).size.height,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -73,16 +75,54 @@ class More extends StatelessWidget {
                   ],
                 )),
             Container(
-              height: MediaQuery.of(context).size.height * 1.28,
+              height: MediaQuery.of(context).size.height - 250,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    height: 95,
+                    height: 130,
                     width: double.infinity,
-                    color: Colors.red,
                     child: Column(
-                      children: [Column()],
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              child: InkWell(
+                                child: Image.asset(
+                                  'img/face.png',
+                                  scale: 12,
+                                ),
+                                onTap: () {
+                                  facebook();
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                child: Image.asset(
+                                  'img/insta.png',
+                                  scale: 12,
+                                ),
+                                onTap: () {
+                                  insta();
+                                },
+                              ),
+                            ),
+                            Expanded(
+                              child: InkWell(
+                                child: Image.asset(
+                                  'img/snap.png',
+                                  scale: 12,
+                                ),
+                                onTap: () {
+                                  snap();
+                                },
+                              ),
+                            ),
+                          ],
+                        )
+                      ],
                     ),
                   ),
                 ],
@@ -92,5 +132,32 @@ class More extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  facebook() async {
+    var url = "https://www.facebook.com/profile.php?id=100010221011270";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  insta() async {
+    var url = "https://www.instagram.com";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
+  snap() async {
+    var url = "https://www.snapchat.com";
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

@@ -46,11 +46,14 @@ class Home extends StatelessWidget {
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, indexL) =>
                                     containerCategory(
-                                        name: ctrl.homeList.value[indexF]
-                                            .catogaryDetails![indexL],
-                                        title: ctrl.homeList.value[indexF]
-                                            .adCatogaryName
-                                            .toString()),
+                                  name: ctrl.homeList.value[indexF]
+                                      .catogaryDetails![indexL],
+                                  title: ctrl
+                                      .homeList.value[indexF].adCatogaryName
+                                      .toString(),
+                                  img: ctrl.homeList.value[indexF]
+                                      .catogaryDetails![indexL].picture,
+                                ),
                                 separatorBuilder: (context, index) =>
                                     SizedBox(width: 5),
                                 itemCount: ctrl.homeList.value[indexF]
@@ -94,7 +97,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget containerCategory({CatogaryDetail? name, String? title}) {
+  Widget containerCategory({CatogaryDetail? name, String? title, String? img}) {
     //pictre value
     return TextButton(
       child: Container(
@@ -108,7 +111,17 @@ class Home extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Image.asset("img/5321.jpg"),
+                Container(
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(4),
+                        topLeft: Radius.circular(4),
+                      ),
+                      child: Image.network(
+                        img.toString(),
+                        fit: BoxFit.cover,
+                      )),
+                ),
                 SizedBox(height: 11.2),
                 Text(
                   name!.catogaryName.toString(),

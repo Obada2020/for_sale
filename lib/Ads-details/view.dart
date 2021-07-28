@@ -49,12 +49,12 @@ class _AdsdetailsState extends State<Adsdetails> {
                 init: AddFavController(),
                 builder: (ctrl) {
                   return GestureDetector(
-                    onTap: () {
-                      ctrl.fdata();
+                    onTap: () async {
+                      await ctrl.fdata();
 
-                      print('view ${ctrl.result}');
+                      print('view ${ctrl.result.value}');
                     },
-                    child: ctrl.result == true
+                    child: ctrl.result.value == true
                         ? Icon(Icons.check)
                         : Icon(Icons.favorite_border),
                     //  Icon(icon),
@@ -409,7 +409,8 @@ class _AdsdetailsState extends State<Adsdetails> {
                   return GridView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
-                      itemCount: controller.ads.length,
+                      itemCount:
+                          controller.ads.length < 8 ? controller.ads.length : 8,
                       gridDelegate:
                           new SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 1,
@@ -462,7 +463,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    controller.ads[index].adname!,
+                                    controller.ads[index].adName!,
                                     style: klabelStyleBold12card,
                                     maxLines: 1,
                                   ),

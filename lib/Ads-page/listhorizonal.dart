@@ -43,7 +43,7 @@ class _ListHorizantolState extends State<ListHorizantol> {
       color: kbodyColor,
       width: size.width,
       height: 60,
-      child:  GetX<AdsController>(
+      child: GetX<AdsController>(
           // initState: (_) => AdsController().fdatadsbynamescrl(
           //     parameterAds!['ad_catogary_id'],
           //     parameterAds!['catogary_details_id'],
@@ -51,47 +51,48 @@ class _ListHorizantolState extends State<ListHorizantol> {
           //     parameterAds!['title']),
           // init: AdsController(),
           builder: (ctrl) {
-            return ListView.builder(
-              scrollDirection: Axis.horizontal,
-              shrinkWrap: true,
-              itemBuilder: (BuildContext ctx, int index) {
-                return RawMaterialButton(
-                  onPressed: () {
-                    setState(() {
-                      selectindex = index;
-                      ctrl.filter(ctrl.scrlho[index].adTypeName.toString());
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.fromLTRB(13, 10, 13, 14),
-                    padding: EdgeInsets.fromLTRB(18, 5, 18, 5),
-                    height: 30,
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Color(0xff333333)),
-                        gradient: selectindex == index
-                            ? kGColor
-                            : LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: [
-                                  Color(0xffF2F2F2),
-                                  Color(0xffF2F2F2),
-                                ],
-                              ),
-                        color: Color(0xffF2F2F2),
-                        borderRadius: BorderRadius.circular(4)),
-                    child: Text(
-                      "${ctrl.scrlho[index].adTypeName},",
-                      style: selectindex == index
-                          ? klabelStyleBold11light
-                          : klabelStyleBold11dark,
-                    ),
-                  ),
-                );
+        return ListView.builder(
+          scrollDirection: Axis.horizontal,
+          shrinkWrap: true,
+          itemBuilder: (BuildContext ctx, int index) {
+            return RawMaterialButton(
+              onPressed: () {
+                setState(() {
+                  selectindex = index;
+                  ctrl.filter(
+                      ctrl.scrl[index].adtypename!.adTypeNameId.toString());
+                });
               },
-              itemCount: ctrl.scrlho.length,
+              child: Container(
+                margin: EdgeInsets.fromLTRB(13, 10, 13, 14),
+                padding: EdgeInsets.fromLTRB(18, 5, 18, 5),
+                height: 30,
+                decoration: BoxDecoration(
+                    border: Border.all(color: Color(0xff333333)),
+                    gradient: selectindex == index
+                        ? kGColor
+                        : LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Color(0xffF2F2F2),
+                              Color(0xffF2F2F2),
+                            ],
+                          ),
+                    color: Color(0xffF2F2F2),
+                    borderRadius: BorderRadius.circular(4)),
+                child: Text(
+                  "${ctrl.scrl[index].adtypename!.adTypeName},",
+                  style: selectindex == index
+                      ? klabelStyleBold11light
+                      : klabelStyleBold11dark,
+                ),
+              ),
             );
-          }),
+          },
+          itemCount: ctrl.scrl.length,
+        );
+      }),
     );
   }
 }

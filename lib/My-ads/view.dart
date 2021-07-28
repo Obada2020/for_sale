@@ -40,10 +40,10 @@ class MyAds extends StatelessWidget {
   Widget gridview() {
     return Container(
       margin: EdgeInsets.only(top: 16, right: 16, left: 16),
-      child: GetX<AdsController>(
-        init: AdsController(),
+      child: GetX<MyAdsController>(
+        init: MyAdsController(),
         builder: (controller) {
-          if (controller.myads != null) {
+          if (controller.myads.isNotEmpty) {
             return GridView.builder(
                 shrinkWrap: true,
                 itemCount: controller.myads.length,
@@ -93,7 +93,7 @@ class MyAds extends StatelessWidget {
                               top: 3,
                             ),
                             child: Text(
-                              controller.myads[index].adname!,
+                              controller.myads[index].adName!,
                               style: klabelStyleBold12,
                               maxLines: 2,
                             ),

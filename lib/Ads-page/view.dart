@@ -7,7 +7,8 @@ import 'listhorizonal.dart';
 
 class Ads extends StatelessWidget {
   String? title;
-  Ads({this.title});
+  String? title2;
+  Ads({this.title, this.title2});
   AdsController c = Get.put(AdsController());
   TextEditingController serc = TextEditingController();
   @override
@@ -28,7 +29,7 @@ class Ads extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                "parameterAds!['title']",
+                title.toString() + " " + title2.toString(),
                 style: klabelAppbarStyle,
               ),
             ),
@@ -71,7 +72,7 @@ class Ads extends StatelessWidget {
           c.fileserch(txt);
         },
         decoration: InputDecoration(
-          hintText: " ابحث عن   {parameterAds['title2']}",
+          hintText: " ابحث عن   ${title2.toString()}",
           hintStyle: TextStyle(
               fontFamily: 'FairuzBlack',
               fontSize: 14,
@@ -149,7 +150,7 @@ class Ads extends StatelessWidget {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      c.ads[index].adname!,
+                                      c.ads[index].adName!,
                                       style: klabelStyleBold12card,
                                       maxLines: 2,
                                     ),

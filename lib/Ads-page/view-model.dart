@@ -1,7 +1,5 @@
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
-import 'package:for_sale/Favorite-ads/model.dart';
-import 'package:for_sale/My-ads/model.dart';
 import 'package:get/get.dart';
 
 class AdsController extends GetxController {
@@ -11,9 +9,11 @@ class AdsController extends GetxController {
   AdsController(
       {this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid});
   var ads = <AdsModel>[].obs;
-  var myads = <MyAdsModel>[].obs;
-  var scrlho = <ScrlHorModel>[].obs;
-  var favad = <FavoriteModel>[].obs;
+  var fullads = <AdsModel>[].obs;
+  var scrl = <AdsModel>[].obs;
+  // var myads = <MyAdsModel>[].obs;
+  // var scrlho = <ScrlHorModel>[].obs;
+  // var favad = <FavoriteModel>[].obs;
   List<AdsModel>? dummysearch;
 
   bool isFirst = true;
@@ -28,10 +28,10 @@ class AdsController extends GetxController {
     // fdatascrol();
   }
 
-  fdatamyad() async {
-    List<MyAdsModel> myad = await ApiService.fdataMyad();
-    myads.value = myad;
-  }
+  // fdatamyad() async {
+  //   List<MyAdsModel> myad = await ApiService.fdataMyad();
+  //   myads.value = myad;
+  // }
 
   // fdatads() async {
   //   List<AdsModel> ad = await ApiService.fdataAds(
@@ -45,25 +45,16 @@ class AdsController extends GetxController {
 
   fdatadsbynamescrl(a, c, d, n) async {
     print("fffffffffffffffffffffffffffff");
-    // print(this.adcatogaryid);
-    print(a.toString() +
-        "" +
-        c.toString() +
-        "" +
-        d.toString() +
-        "" +
-        n.toString());
-    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(a, c, d, n);
+    print(a.toString() + " " + c.toString() + " " + d.toString());
+    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(
+      a,
+      c,
+      d,
+    );
+    fullads.value = adby;
+    scrl.value = adby;
     ads.value = adby;
     dummysearch = ads.toList();
-    // print('**************');
-    // print(adcatogaryid);
-    // print(catogarydetailsid);
-    // print(addescriptionsid);
-    // print(adtypenameid);
-    // print('**************');
-
-    // update();
   }
 
   // fdatascrol() async {
@@ -71,10 +62,10 @@ class AdsController extends GetxController {
   //   scrlho.value = scroll;
   // }
 
-  fdatafavad() async {
-    List<FavoriteModel> fav = await ApiService.fdatafavad();
-    favad.value = fav;
-  }
+  // fdatafavad() async {
+  //   List<FavoriteModel> fav = await ApiService.fdatafavad();
+  //   favad.value = fav;
+  // }
   //==================================search========================
 
   fileserch(String query) async {
@@ -82,7 +73,7 @@ class AdsController extends GetxController {
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         var service = item;
-        if (service.adname!.toLowerCase().contains(query.toLowerCase()) ||
+        if (service.adName!.toLowerCase().contains(query.toLowerCase()) ||
             service.adDescription!
                 .toLowerCase()
                 .contains(query.toLowerCase()) ||
@@ -108,10 +99,7 @@ class AdsController extends GetxController {
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         var service = item;
-        if (service.adname!.toLowerCase().contains(query.toLowerCase()) ||
-            service.adDescription!
-                .toLowerCase()
-                .contains(query.toLowerCase())) {
+        if (service.adTypeNameId!.toString().contains(query)) {
           dummylistdata.add(service);
         }
       });

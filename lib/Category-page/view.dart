@@ -61,10 +61,20 @@ class CategoryPage extends StatelessWidget {
           child: Center(
             child: Column(
               children: [
-                Image.asset("img/5321.jpg"),
+                Container(
+                  child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(4),
+                        topLeft: Radius.circular(4),
+                      ),
+                      child: Image.network(
+                        categ!.picture.toString(),
+                        fit: BoxFit.cover,
+                      )),
+                ),
                 SizedBox(height: 11.2),
                 Text(
-                  categ!.adDetailsDescription.toString(),
+                  categ.adDetailsDescription.toString(),
                   style: klabelStyleTitleCategory,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
@@ -86,7 +96,10 @@ class CategoryPage extends StatelessWidget {
         // print(parameter);
         c.fdatadsbynamescrl(parameter['ad_catogary_id'], categ.adCatogaryId,
             parameter['ad_descriptions_id'], parameter['title_navbar']);
-        Get.to(() => Ads(title: parameter['title_navbar']));
+        Get.to(() => Ads(
+              title: parameter['title_navbar'],
+              title2: categ.adDetailsDescription,
+            ));
       },
     );
   }

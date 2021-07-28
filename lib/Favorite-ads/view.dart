@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
-import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Favorite-ads/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -40,8 +40,8 @@ class FavoriteAds extends StatelessWidget {
   Widget gridview() {
     return Container(
       margin: EdgeInsets.only(top: 16, right: 16, left: 16),
-      child: GetX<AdsController>(
-        init: AdsController(),
+      child: GetX<FavAdsController>(
+        init: FavAdsController(),
         builder: (controller) {
           if (controller.favad.isNotEmpty) {
             return GridView.builder(
@@ -54,6 +54,7 @@ class FavoriteAds extends StatelessWidget {
                   mainAxisSpacing: 9,
                 ),
                 itemBuilder: (context, index) {
+                  print(controller.favad[1].ad![0].adname);
                   return InkWell(
                     onTap: () {
                       Get.to(Adsdetails(), arguments: index);
@@ -81,7 +82,7 @@ class FavoriteAds extends StatelessWidget {
                                   topLeft: Radius.circular(4),
                                 ),
                                 child: Image.network(
-                                  controller.favad[0].ad![index].adPicture!
+                                  controller.favad[index].ad![0].adPicture!
                                       .toString(),
                                   fit: BoxFit.cover,
                                 )),
@@ -94,7 +95,7 @@ class FavoriteAds extends StatelessWidget {
                               top: 3,
                             ),
                             child: Text(
-                              controller.favad[0].ad![index].adname!,
+                              controller.favad[index].ad![0].adname!,
                               style: klabelStyleBold12,
                               maxLines: 2,
                             ),
@@ -114,7 +115,7 @@ class FavoriteAds extends StatelessWidget {
                                       borderRadius: BorderRadius.circular(4),
                                       gradient: kGColor),
                                   child: Text(
-                                    controller.favad[0].ad![index].adPrice
+                                    controller.favad[index].ad![0].adPrice
                                         .toString(),
                                     style: klabelStyleBold11light,
                                   )),

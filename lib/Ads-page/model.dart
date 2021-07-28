@@ -13,12 +13,13 @@ String adsModelToJson(List<AdsModel> data) =>
 class AdsModel {
   AdsModel({
     this.adId,
+    this.adName,
     this.adPhoneNumber,
     this.adDescription,
-    this.adname,
     this.adPicture,
     this.mangerAccept,
     this.adPrice,
+    this.adInfo,
     this.accountId,
     this.adTypeId,
     this.adCatogaryId,
@@ -27,15 +28,17 @@ class AdsModel {
     this.adTypeNameId,
     this.createdAt,
     this.updatedAt,
+    this.adtypename,
   });
 
   int? adId;
-  String? adname;
+  String? adName;
   String? adPhoneNumber;
   String? adDescription;
   String? adPicture;
   int? mangerAccept;
   String? adPrice;
+  String? adInfo;
   int? accountId;
   int? adTypeId;
   int? adCatogaryId;
@@ -44,15 +47,17 @@ class AdsModel {
   int? adTypeNameId;
   String? createdAt;
   String? updatedAt;
+  Adtypename? adtypename;
 
   factory AdsModel.fromJson(Map<String, dynamic> json) => AdsModel(
         adId: json["ad_id"],
-        adname: json['ad_name'],
+        adName: json["ad_name"],
         adPhoneNumber: json["ad_phone_number"],
         adDescription: json["ad_description"],
         adPicture: json["ad_picture"],
         mangerAccept: json["manger_accept"],
         adPrice: json["ad_price"],
+        adInfo: json["ad_info"],
         accountId: json["account_id"],
         adTypeId: json["ad_type_id"],
         adCatogaryId: json["ad_catogary_id"],
@@ -61,16 +66,18 @@ class AdsModel {
         adTypeNameId: json["ad_type_name_id"],
         createdAt: json["created_at"],
         updatedAt: json["updated_at"],
+        adtypename: Adtypename.fromJson(json["adtypename"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "|ad_name": adname,
         "ad_id": adId,
+        "ad_name": adName,
         "ad_phone_number": adPhoneNumber,
         "ad_description": adDescription,
         "ad_picture": adPicture,
         "manger_accept": mangerAccept,
         "ad_price": adPrice,
+        "ad_info": adInfo,
         "account_id": accountId,
         "ad_type_id": adTypeId,
         "ad_catogary_id": adCatogaryId,
@@ -79,24 +86,14 @@ class AdsModel {
         "ad_type_name_id": adTypeNameId,
         "created_at": createdAt,
         "updated_at": updatedAt,
+        "adtypename": adtypename!.toJson(),
       };
 }
 
-// To parse this JSON data, do
-//
-//     final scrlHorModel = scrlHorModelFromJson(jsonString);
-
-List<ScrlHorModel> scrlHorModelFromJson(String str) => List<ScrlHorModel>.from(
-    json.decode(str).map((x) => ScrlHorModel.fromJson(x)));
-
-String scrlHorModelToJson(List<ScrlHorModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
-class ScrlHorModel {
-  ScrlHorModel({
+class Adtypename {
+  Adtypename({
     this.adTypeNameId,
     this.adTypeName,
-    this.adId,
     this.adCatogaryId,
     this.catogaryDetailsId,
     this.adDescriptionsId,
@@ -106,18 +103,15 @@ class ScrlHorModel {
 
   int? adTypeNameId;
   String? adTypeName;
-
-  int? adId;
   int? adCatogaryId;
   int? catogaryDetailsId;
   int? adDescriptionsId;
   String? createdAt;
   String? updatedAt;
 
-  factory ScrlHorModel.fromJson(Map<String, dynamic> json) => ScrlHorModel(
+  factory Adtypename.fromJson(Map<String, dynamic> json) => Adtypename(
         adTypeNameId: json["ad_type_name_id"],
         adTypeName: json["ad_type_name"],
-        adId: json["ad_id"],
         adCatogaryId: json["ad_catogary_id"],
         catogaryDetailsId: json["catogary_details_id"],
         adDescriptionsId: json["ad_descriptions_id"],
@@ -128,7 +122,6 @@ class ScrlHorModel {
   Map<String, dynamic> toJson() => {
         "ad_type_name_id": adTypeNameId,
         "ad_type_name": adTypeName,
-        "ad_id": adId,
         "ad_catogary_id": adCatogaryId,
         "catogary_details_id": catogaryDetailsId,
         "ad_descriptions_id": adDescriptionsId,
