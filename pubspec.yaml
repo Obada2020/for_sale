@@ -27,6 +27,7 @@ dependencies:
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
+  # flutter_absolute_path: ^1.0.6
   get: ^4.1.4
   get_storage: ^2.0.2
   http: ^0.13.3

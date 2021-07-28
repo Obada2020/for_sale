@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide FormData;
 import 'package:get_storage/get_storage.dart';
+import 'package:http/http.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 
 class AddUI extends StatelessWidget {
@@ -534,6 +535,7 @@ class DetailsAdd extends StatefulWidget {
 }
 
 class _DetailsAddState extends State<DetailsAdd> {
+  var c = Get.find<AddNameController>();
   List<Asset> images = [];
   Size size = MediaQuery.of(Get.context!).size;
   // ignore: unused_field
@@ -561,7 +563,7 @@ class _DetailsAddState extends State<DetailsAdd> {
       );
     } on Exception catch (e) {
       error = e.toString();
-      print("heeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee" + error);
+      print(error);
     }
 
     // If the widget was removed from the tree while the asynchronous platform
@@ -573,46 +575,9 @@ class _DetailsAddState extends State<DetailsAdd> {
       images = resultList;
       _error = error;
     });
+
+    await c.postImage(images);
   }
-
-  Future<File> getImageFileFromAssets(String path) async {
-    final byteData = await rootBundle.load('assets/$path');
-
-    final file = File('${(await getTemporaryDirectory()).path}/$path');
-    await file.writeAsBytes(byteData.buffer
-        .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-    return file;
-  }
-
-  //   void _uploadFiles() async {
-//     String uid = await FlutterSecureStorage().read(key: "getTocken");
-//     try {
-//       var dio = Dio();
-//       FormData formData = new FormData.fromMap({
-//         "pictures[]": images,
-//       });
-//       Response resp = await dio.post(
-//         mainUrl + 'merchant/upload-galleries',
-//         data: formData,
-//         onSendProgress: (int sent, int total) {
-//           //
-//         },
-//         options: Options(
-//           headers: {
-//             HttpHeaders.authorizationHeader: uid,
-//           },
-//         )
-//       );
-//       if(resp.status Code == 200) {
-//         print("============= Print Resp data: ");
-//         print(resp.data);
-//       }
-
-//     } catch (e) {
-//       print(e);
-//     }
-//   }
 
 //   Future<void> loadAssets() async {
 //     List<Asset> resultList = List<Asset>();
@@ -1059,4 +1024,3 @@ class _CommunicateState extends State<Communicate> {
         ));
   }
 }
-

@@ -22,7 +22,11 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+<<<<<<< Updated upstream
       home: Home(),
+=======
+      home: AddUI(),
+>>>>>>> Stashed changes
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
