@@ -6,16 +6,22 @@ import 'package:for_sale/theme/theme_service.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Home/view.dart';
 
 void main() async {
   await GetStorage.init();
-  runApp(MyApp());
+  SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  var t = sharedPreferences.getString("number");
+
+  runApp(MyApp(t != null ? 'H' : 'L'));
 }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  var t;
+  MyApp(this.t);
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -24,7 +30,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Navbar(),
+      home: widget.t == 'H' ? Navbar() : Signin(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,

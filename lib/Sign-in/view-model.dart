@@ -1,6 +1,7 @@
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Sign-in/model.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends GetxController {
   @override
@@ -22,6 +23,9 @@ class Login extends GetxController {
     // print("Result = " + result);
     if (result != "Anas") {
       user.value = result;
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      sharedPreferences.setString("number", number);
     }
     return result;
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/Home/view.dart';
 import 'package:for_sale/My-account/model.dart';
 import 'package:for_sale/My-account/view.dart';
@@ -141,7 +142,7 @@ class VerifyAccount extends StatelessWidget {
                             if (z == "Anas") {
                               showAlertDialog(context);
                             } else {
-                              Get.offAll(() => MyAccount());
+                              Get.offAll(() => Navbar());
                             }
                           },
                           child: Text(

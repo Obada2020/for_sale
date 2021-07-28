@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Pages/privacy_and_terms.dart';
+import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class More extends StatelessWidget {
@@ -27,54 +30,62 @@ class More extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Container(
-                padding: EdgeInsets.only(right: 17),
-                margin: EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4)),
-                width: double.infinity,
-                height: 48,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.view_list_sharp,
-                      //color: Color(0xFF405A76),
-                      size: 27,
-                    ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Text(
-                      'الشروط والأحكام',
-                      style: klabelStyleBold12,
-                    ),
-                  ],
-                )),
-            Container(
-                padding: EdgeInsets.only(right: 17),
-                margin: EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4)),
-                width: double.infinity,
-                height: 48,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.settings,
-                      //color: Color(0xFF405A76),
-                      size: 27,
-                    ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Text(
-                      'الإعدادات',
-                      style: klabelStyleBold12,
-                    ),
-                  ],
-                )),
+            InkWell(
+              onTap: () {
+                Get.to(() => PrivacyAndTerms());
+              },
+              child: Container(
+                  padding: EdgeInsets.only(right: 17),
+                  margin: EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(4)),
+                  width: double.infinity,
+                  height: 48,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.view_list_sharp,
+                        size: 27,
+                      ),
+                      SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        'الشروط والأحكام',
+                        style: klabelStyleBold12,
+                      ),
+                    ],
+                  )),
+            ),
+            InkWell(
+              onTap: () {
+                Get.to(() => Settings());
+              },
+              child: Container(
+                  padding: EdgeInsets.only(right: 17),
+                  margin: EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(4)),
+                  width: double.infinity,
+                  height: 48,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.settings,
+                        size: 27,
+                      ),
+                      SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        'الإعدادات',
+                        style: klabelStyleBold12,
+                      ),
+                    ],
+                  )),
+            ),
             Container(
               height: size.height - (size.height * 0.4),
               child: Column(
