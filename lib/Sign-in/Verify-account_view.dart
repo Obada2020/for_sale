@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Home/view.dart';
+import 'package:for_sale/My-account/model.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -110,7 +111,7 @@ class VerifyAccount extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              // await ApiService.register(number);
+                              await ApiService.register(number);
                             },
                             child: Text(
                               'إعادة الإرسال',
@@ -132,12 +133,12 @@ class VerifyAccount extends StatelessWidget {
                           onPressed: () async {
                             print(serial);
                             print(number);
-                            // var z = await ApiService.login(number, serial);
-                            // if (z == null) {
-                            //   showAlertDialog(context);
-                            // } else {
-                            //   Get.offAll(() => Home());
-                            // }
+                            var z = await ApiService.login(number, serial);
+                            if (z == null) {
+                              showAlertDialog(context);
+                            } else {
+                              Get.offAll(() => Home());
+                            }
                           },
                           child: Text(
                             'تفعيل',
