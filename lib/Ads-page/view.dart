@@ -29,7 +29,7 @@ class Ads extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                title.toString() + " " + title2.toString(),
+                title != null ? title.toString() + " " + title2.toString() : '',
                 style: klabelAppbarStyle,
               ),
             ),
@@ -72,7 +72,7 @@ class Ads extends StatelessWidget {
           c.fileserch(txt);
         },
         decoration: InputDecoration(
-          hintText: " ابحث عن   ${title2.toString()}",
+          hintText: title != null ? " ابحث عن   ${title2!.toString()}" : 'ابحث',
           hintStyle: TextStyle(
               fontFamily: 'FairuzBlack',
               fontSize: 14,

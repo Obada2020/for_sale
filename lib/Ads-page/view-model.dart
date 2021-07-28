@@ -43,7 +43,7 @@ class AdsController extends GetxController {
   //   update();
   // }
 
-  fdatadsbynamescrl(a, c, d, n) async {
+  fdatadsbynamescrl(a, c, d) async {
     print("fffffffffffffffffffffffffffff");
     print(a.toString() + " " + c.toString() + " " + d.toString());
     List<AdsModel> adby = await ApiService.fdataAdsNameScrl(

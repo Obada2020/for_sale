@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Ads-page/view.dart';
 import 'package:for_sale/Category-page/view.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/Home/view-model.dart';
@@ -6,6 +8,8 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
+  AdsController c = Get.put(AdsController());
+
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -33,12 +37,13 @@ class Home extends StatelessWidget {
                           children: [
                             //title
                             Padding(
-                              padding: EdgeInsetsDirectional.only(
-                                  start: 16, end: 16, top: 20),
-                              child: containerTitle(ctrl
-                                  .homeList.value[indexF].adCatogaryName
-                                  .toString()),
-                            ),
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 16, end: 16, top: 20),
+                                child: containerTitle(
+                                  ctrl.homeList.value[indexF].adCatogaryName
+                                      .toString(),
+                                  ctrl.homeList.value[indexF].adCatogaryId,
+                                )),
                             //category
                             Container(
                               height: 140,
@@ -82,14 +87,19 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget containerTitle(String title) {
+  Widget containerTitle(String title, id) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(title, style: klabelStyleTitle.copyWith(color: Colors.black)),
         Row(
           children: [
-            Text("عرض الكل", style: klabelStyleShowAll),
+            InkWell(
+                child: Text("عرض الكل", style: klabelStyleShowAll),
+                onTap: () {
+                  c.fdatadsbynamescrl(id, '', '');
+                  Get.to(() => Ads());
+                }),
             Icon(Icons.chevron_right_sharp, color: Colors.blue, size: 15),
           ],
         ),
