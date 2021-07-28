@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:for_sale/theme/themes.dart';
@@ -23,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Signin(),
+      home: Navbar(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
