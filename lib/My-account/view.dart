@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/My-account/view-model.dart';
+import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyAccount extends StatelessWidget {
-  const MyAccount({Key? key}) : super(key: key);
-
+  String? obada = "";
+  var c = Get.put(MyAccountController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,17 +52,22 @@ class MyAccount extends StatelessWidget {
                                       'أنت مسجل معنا برقم هاتف   :   ',
                                       style: klabelStyleBold14,
                                     ),
-                                    Text(
-                                      '${Get.find<Login>().user.value.info!.accountPhoneNumber.toString()}',
-                                      style: klabelStyleBold14,
-                                    ),
+                                    Obx(
+                                      () => Text(
+                                        c.number.toString(),
+                                        style: klabelStyleBold14,
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
                               Row(
                                 children: [
                                   InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        c.deleteNumber();
+                                        Get.offAll(() => Signin());
+                                      },
                                       child: Row(
                                         children: [
                                           Icon(Icons.logout),
