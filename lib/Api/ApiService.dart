@@ -310,7 +310,7 @@ class ApiService {
       return User.fromJson(body);
     } else {
       print('statuscode cdfav=${res.statusCode}');
-      return null;
+      return "Anas";
     }
   }
 }

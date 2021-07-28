@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Home/view.dart';
 import 'package:for_sale/My-account/model.dart';
+import 'package:for_sale/My-account/view.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -14,10 +15,13 @@ import 'model.dart';
 
 class VerifyAccount extends StatelessWidget {
   //var c = Get.find<Login>();
+  String obada;
   TextEditingController Num = TextEditingController();
   //c.user.value.info = Info();
-  var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
+  // var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
+  var soso = Get.find<Login>();
   dynamic serial = "";
+  VerifyAccount(this.obada);
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
@@ -66,7 +70,7 @@ class VerifyAccount extends StatelessWidget {
                     ),
                     Padding(
                       child: Text(
-                        'لقد أرسلنا رمز إلى رقم جوالك $number يحتوي على رمز تفعيل من 6 خانات',
+                        'لقد أرسلنا رمز إلى رقم جوالك $obada يحتوي على رمز تفعيل من 6 خانات',
                         style: klabelStyleBold11,
                       ),
                       padding: EdgeInsets.only(bottom: 30),
@@ -111,7 +115,7 @@ class VerifyAccount extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              await ApiService.register(number);
+                              await ApiService.register(obada);
                             },
                             child: Text(
                               'إعادة الإرسال',
@@ -132,12 +136,12 @@ class VerifyAccount extends StatelessWidget {
                       child: TextButton(
                           onPressed: () async {
                             print(serial);
-                            print(number);
-                            var z = await ApiService.login(number, serial);
-                            if (z == null) {
+                            print(obada);
+                            var z = await soso.login(obada, serial);
+                            if (z == "Anas") {
                               showAlertDialog(context);
                             } else {
-                              Get.offAll(() => Home());
+                              Get.offAll(() => MyAccount());
                             }
                           },
                           child: Text(
