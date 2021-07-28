@@ -229,27 +229,6 @@ class ApiService {
     } else {}
   }
 
-  //============================== sign in ===========================
-
-  static Future register(var phone) async {
-    http.Response res = await http.post(Uri.parse(url + "register"), body: {
-      'account_phone_number': '$phone',
-      'account_type_id': '2'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      return true;
-      // var body = jsonDecode(res.body);
-      // return body[0]["user"][0]["serial_number"];
-
-    } else {
-      print('statuscode cdfav=${res.statusCode}');
-      return false;
-    }
-  }
-
   static Future<List<AdInfoKey>?> fetchAdInfoKey(id) async {
     http.Response response = await http
         .post(Uri.parse(url + "getAdInfoKey"), body: {'ad_catogary_id': '$id'});
@@ -272,7 +251,6 @@ class ApiService {
 
     return data.map((visit) => new AddName.fromJson(visit)).toList();
   }
-  //============================== sign in ===========================
 
   static Future<dynamic> fetchDropDown(int id, int t) async {
     String type = t == 1
@@ -292,6 +270,27 @@ class ApiService {
             : t == 2
                 ? new Ad_descriptions.fromJson(data)
                 : new LastAdd.fromJson(data);
+  }
+
+  //============================== sign in ===========================
+
+  static Future register(var phone) async {
+    http.Response res = await http.post(Uri.parse(url + "register"), body: {
+      'account_phone_number': '$phone',
+      'account_type_id': '2'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    if (res.statusCode == 200) {
+      return true;
+      // var body = jsonDecode(res.body);
+      // return body[0]["user"][0]["serial_number"];
+
+    } else {
+      print('statuscode cdfav=${res.statusCode}');
+      return false;
+    }
   }
 
   static login(phone, serialnumber) async {

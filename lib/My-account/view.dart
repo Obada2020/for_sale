@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
 
 class MyAccount extends StatelessWidget {
   const MyAccount({Key? key}) : super(key: key);
@@ -48,7 +50,7 @@ class MyAccount extends StatelessWidget {
                                       style: klabelStyleBold14,
                                     ),
                                     Text(
-                                      '0592036504',
+                                      '${Get.find<Login>().user.value.info!.accountPhoneNumber.toString()}',
                                       style: klabelStyleBold14,
                                     ),
                                   ],
