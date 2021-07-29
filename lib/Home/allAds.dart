@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
-import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
-import 'listhorizonal.dart';
 
-class Ads extends StatelessWidget {
+class AdsAll extends StatelessWidget {
   String? title;
   String? title2;
-  Ads({this.title, this.title2});
-  AdsController c = Get.put(AdsController());
+  AdsAll({this.title, this.title2});
   TextEditingController serc = TextEditingController();
+  HomeController c = Get.find();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -38,15 +38,7 @@ class Ads extends StatelessWidget {
           ),
         ),
       ),
-      body: Stack(
-        children: [
-          gridview(),
-          //================================list horisental=========================
-          Positioned(
-            child: ListHorizantol(),
-          ),
-        ],
-      ),
+      body: gridview(),
     );
   }
 
@@ -81,7 +73,7 @@ class Ads extends StatelessWidget {
   //================================grid view=========================
   Widget gridview() {
     return Container(
-      margin: EdgeInsets.only(top: 65, right: 16, left: 16),
+      margin: EdgeInsets.only(top: 5, right: 16, left: 16),
       child: Obx(() => Container(
             child: c.ads.length != 0
                 ? GridView.builder(

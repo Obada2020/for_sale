@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:for_sale/Category-page/view.dart';
+import 'package:for_sale/Home/allAds.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
-  AdsController c = Get.put(AdsController());
+  HomeController c = Get.put(HomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -25,62 +26,58 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             //start title category
-            GetX<HomeController>(
-                init: HomeController(),
-                builder: (ctrl) {
-                  return ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: ctrl.homeList.value.length,
-                      itemBuilder: (context, indexF) {
-                        return Column(
-                          children: [
-                            //title
-                            Padding(
-                                padding: EdgeInsetsDirectional.only(
-                                    start: 16, end: 16, top: 20),
-                                child: containerTitle(
-                                  ctrl.homeList.value[indexF].adCatogaryName
-                                      .toString(),
-                                  ctrl.homeList.value[indexF].adCatogaryId,
-                                )),
-                            //category
-                            Container(
-                              height: 140,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, indexL) =>
-                                    containerCategory(
-                                  name: ctrl.homeList.value[indexF]
-                                      .catogaryDetails![indexL],
-                                  title: ctrl
-                                      .homeList.value[indexF].adCatogaryName
-                                      .toString(),
-                                  img: ctrl.homeList.value[indexF]
-                                      .catogaryDetails![indexL].picture,
-                                ),
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(width: 5),
-                                itemCount: ctrl.homeList.value[indexF]
-                                    .catogaryDetails!.length,
-                              ),
+            GetX<HomeController>(builder: (ctrl) {
+              return ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: ctrl.homeList.value.length,
+                  itemBuilder: (context, indexF) {
+                    return Column(
+                      children: [
+                        //title
+                        Padding(
+                            padding: EdgeInsetsDirectional.only(
+                                start: 16, end: 16, top: 20),
+                            child: containerTitle(
+                              ctrl.homeList.value[indexF].adCatogaryName
+                                  .toString(),
+                              ctrl.homeList.value[indexF].adCatogaryId,
+                            )),
+                        //category
+                        Container(
+                          height: 140,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, indexL) => containerCategory(
+                              name: ctrl.homeList.value[indexF]
+                                  .catogaryDetails![indexL],
+                              title: ctrl.homeList.value[indexF].adCatogaryName
+                                  .toString(),
+                              img: ctrl.homeList.value[indexF]
+                                  .catogaryDetails![indexL].picture,
                             ),
-                            //offer
-                            Container(
-                              height: 270.0,
-                              child: ListView.separated(
-                                scrollDirection: Axis.horizontal,
-                                itemBuilder: (context, index) =>
-                                    containerOffer(context, size),
-                                itemCount: 5,
-                                separatorBuilder: (context, index) =>
-                                    SizedBox(width: 12),
-                              ),
-                            )
-                          ],
-                        );
-                      });
-                }),
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 5),
+                            itemCount: ctrl
+                                .homeList.value[indexF].catogaryDetails!.length,
+                          ),
+                        ),
+                        //offer
+                        Container(
+                          height: 270.0,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) =>
+                                containerOffer(context, size),
+                            itemCount: 5,
+                            separatorBuilder: (context, index) =>
+                                SizedBox(width: 12),
+                          ),
+                        )
+                      ],
+                    );
+                  });
+            }),
           ],
         ),
       ),
@@ -97,8 +94,9 @@ class Home extends StatelessWidget {
             InkWell(
                 child: Text("عرض الكل", style: klabelStyleShowAll),
                 onTap: () {
-                  c.fdatadsbynamescrl(id, '', '');
-                  Get.to(() => Ads());
+                  print('idcathome $id');
+                  c.fdatadadshome(id);
+                  Get.to(() => AdsAll());
                 }),
             Icon(Icons.chevron_right_sharp, color: Colors.blue, size: 15),
           ],
@@ -108,7 +106,6 @@ class Home extends StatelessWidget {
   }
 
   Widget containerCategory({CatogaryDetail? name, String? title, String? img}) {
-    //pictre value
     return TextButton(
       child: Container(
         height: 140.0,
@@ -145,12 +142,10 @@ class Home extends StatelessWidget {
         ),
       ),
       onPressed: () {
-        //ad_catogary_id => cars
-        //ad_descriptions_id => yapany
         var parameter = {
           "title_navbar": title,
           "ad_catogary_id": name.adCatogaryId,
-          "ad_descriptions_id": name.catogaryDetailsId
+          "catogary_details_id": name.catogaryDetailsId
         };
         print({"home parameter =>": parameter});
         Get.to(() => CategoryPage(parameter: parameter));

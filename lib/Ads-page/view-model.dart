@@ -47,9 +47,9 @@ class AdsController extends GetxController {
     print("fffffffffffffffffffffffffffff");
     print(a.toString() + " " + c.toString() + " " + d.toString());
     List<AdsModel> adby = await ApiService.fdataAdsNameScrl(
-      a,
-      c,
-      d,
+      a.toString(),
+      c.toString(),
+      d.toString(),
     );
     fullads.value = adby;
     scrl.value = adby;
@@ -57,15 +57,6 @@ class AdsController extends GetxController {
     dummysearch = ads.toList();
   }
 
-  // fdatascrol() async {
-  //   // List<ScrlHorModel> scroll = await ApiService.fdataScrlho();
-  //   scrlho.value = scroll;
-  // }
-
-  // fdatafavad() async {
-  //   List<FavoriteModel> fav = await ApiService.fdatafavad();
-  //   favad.value = fav;
-  // }
   //==================================search========================
 
   fileserch(String query) async {

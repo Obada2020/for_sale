@@ -30,7 +30,7 @@ class CategoryPage extends StatelessWidget {
         body: GetX<CategoryController>(
             init: CategoryController(
                 adCatogaryId: parameter['ad_catogary_id'],
-                catogaryDetailsId: parameter['ad_descriptions_id']),
+                catogaryDetailsId: parameter['catogary_details_id']),
             builder: (ctrl) {
               return GridView.builder(
                 itemCount: ctrl.categoryList.value.length,
@@ -95,8 +95,8 @@ class CategoryPage extends StatelessWidget {
         // print(parameter);
         c.fdatadsbynamescrl(
           parameter['ad_catogary_id'],
-          parameter['ad_descriptions_id'],
-          categ.adCatogaryId,
+          parameter['catogary_details_id'],
+          categ.adDescriptionsId,
         );
         Get.to(() => Ads(
               title: parameter['title_navbar'],
