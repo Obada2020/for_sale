@@ -30,7 +30,7 @@ class _AdsdetailsState extends State<Adsdetails> {
     return result;
   }
 
-  final AdsController adctrl = Get.find();
+  final AdsController adctrl = Get.put(AdsController());
 
   @override
   Widget build(BuildContext context) {

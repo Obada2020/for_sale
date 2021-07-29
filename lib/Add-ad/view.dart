@@ -1,44 +1,30 @@
-import 'dart:io';
 import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart' hide FormData;
-import 'package:get_storage/get_storage.dart';
-import 'package:http/http.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 
 class AddUI extends StatelessWidget {
-  ////////////////////////////////////////////////////////
-
-  String? adPhoneNumber,
-      adDescription,
-      adLocation,
-      adPicture,
+  final items = List<String>.generate(5, (i) => "Item $i");
+  final c = Get.put(AddNameController());
+  final String v = "A";
+  final Color t = Colors.red;
+  String? ad_name, ad_description;
+  List<Map<String, String>>? ad_info;
+  int? adPhoneNumber = 0,
       adPrice,
-      accountId,
       adTypeId,
       adCatogaryId,
       catogaryDetailsId,
-      adDescriptionsId,
-      adTypeNameId,
-      adId;
-
-  ////////////////////////////////////////////////////////
-  final items = List<String>.generate(5, (i) => "Item $i");
-  var c = Get.put(AddNameController());
-  String v = "A";
-  Color t = Colors.red;
-  ////////////////////////////////////////////////////////////////
+      adDescriptionId,
+      adTypeNameId;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    //  widget onLoading() {
-
     return Scaffold(
       appBar: AppBar(
         title: Text("إضافة إعلان"),
@@ -67,7 +53,7 @@ class AddUI extends StatelessWidget {
                   get(
                       WAddName(
                           adCatogaryId: adCatogaryId,
-                          adDescriptionsId: adDescriptionsId,
+                          adDescriptionsId: adDescriptionId,
                           catogaryDetailsId: catogaryDetailsId),
                       "القسم"),
                   SizedBox(height: 12),
@@ -171,7 +157,7 @@ Widget get(Widget x, String title) {
 }
 
 class ChooseType extends StatefulWidget {
-  String? t;
+  int? t;
   ChooseType({Key? key, this.t}) : super(key: key);
   @override
   _ChooseTypeState createState() => _ChooseTypeState();
@@ -179,7 +165,6 @@ class ChooseType extends StatefulWidget {
 
 class _ChooseTypeState extends State<ChooseType> {
   Types type = Types.normal;
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -198,7 +183,7 @@ class _ChooseTypeState extends State<ChooseType> {
                   onTap: () {
                     setState(() {
                       type = Types.normal;
-                      widget.t = "0";
+                      widget.t = 0;
                     });
                   },
                   child: Container(
@@ -231,7 +216,7 @@ class _ChooseTypeState extends State<ChooseType> {
                   onTap: () {
                     setState(() {
                       type = Types.special;
-                      widget.t = "1";
+                      widget.t = 1;
                     });
                   },
                   child: Container(
@@ -263,13 +248,14 @@ class _ChooseTypeState extends State<ChooseType> {
 }
 
 class WAddName extends StatefulWidget {
-  String? adCatogaryId, catogaryDetailsId, adDescriptionsId;
+  int? adCatogaryId, catogaryDetailsId, adDescriptionsId;
   WAddName({this.adCatogaryId, this.adDescriptionsId, this.catogaryDetailsId});
   @override
   _WAddNameState createState() => _WAddNameState();
 }
 
 class _WAddNameState extends State<WAddName> {
+  
   @override
   Widget build(BuildContext context) {
     var c = Get.find<AddNameController>();
@@ -299,11 +285,12 @@ class _WAddNameState extends State<WAddName> {
                   child: c.addsName.isNotEmpty
                       ? DropdownButton<String>(
                           underline: SizedBox(),
-                          value: widget.adCatogaryId,
+                          value: widget.adCatogaryId!.toString(),
                           isExpanded: true,
                           onChanged: !c.show1.value
                               ? (value) {
-                                  c.fetchDataAddsCat(int.parse(value!), 1);
+                                  widget.adCatogaryId = int.parse(value!);
+                                  c.fetchDataAddsCat(int.parse(value), 1);
                                   c.fetchAddInfoKey(int.parse(value));
                                 }
                               : null,
@@ -351,7 +338,7 @@ class _WAddNameState extends State<WAddName> {
                         child: c.addsCat1.value.list!.length != 0
                             ? DropdownButton<String>(
                                 underline: SizedBox(),
-                                value: widget.catogaryDetailsId,
+                                value: widget.catogaryDetailsId.toString(),
                                 onChanged: !c.show2.value
                                     ? (value) {
                                         c.fetchDataAddsCat(
@@ -409,7 +396,7 @@ class _WAddNameState extends State<WAddName> {
                         child: c.addsCat2.value.list!.length != 0
                             ? DropdownButton<String>(
                                 underline: SizedBox(),
-                                value: widget.adDescriptionsId,
+                                value: widget.adDescriptionsId.toString(),
                                 onChanged: !c.showLastCat.value
                                     ? (value) {
                                         c.fetchDataAddsCat(
@@ -449,7 +436,7 @@ class _WAddNameState extends State<WAddName> {
 }
 
 class TypesTypes extends StatefulWidget {
-  String? adTypeId;
+  int? adTypeId;
   TypesTypes({this.adTypeId});
 
   @override
@@ -490,9 +477,8 @@ class _TypesTypesState extends State<TypesTypes> {
                     onTap: () {
                       setState(() {
                         selectedIndex = index;
-                        widget.adTypeId = c
-                            .lastCat.value.list![index].adCatogaryId
-                            .toString();
+                        widget.adTypeId =
+                            c.lastCat.value.list![index].adCatogaryId;
                       });
                     },
                     child: Container(
@@ -576,7 +562,7 @@ class _DetailsAddState extends State<DetailsAdd> {
       _error = error;
     });
 
-    await c.postImage(images);
+    // await c.postImage(images);
   }
 
 //   Future<void> loadAssets() async {

@@ -42,7 +42,6 @@ class AddNameController extends GetxController {
 
   void fetchDataAddsCat(int index, int t) async {
     loading.value = true;
-
     var f = await ApiService.fetchDropDown(index, t);
     print(f.runtimeType);
     if (f.isTheLast == "yes" || t == 3) {
@@ -66,7 +65,6 @@ class AddNameController extends GetxController {
 
   void fetchAddInfoKey(int id) async {
     loading.value = true;
-
     var result = await ApiService.fetchAdInfoKey(id);
     if (result != null) {
       addsInfoKey.value = result;
@@ -77,48 +75,10 @@ class AddNameController extends GetxController {
     loading.value = false;
   }
 
-  // Future postImage(List<Asset> images) async {
-  //   List<String> files = <String>[];
-  //   Future<File> getImageFileFromAssets(Asset asset) async {
-  //     final byteData = await asset.getByteData();
-  //     final tempFile =
-  //         File("${(await getTemporaryDirectory()).path}/${asset.name}");
-  //     final file = await tempFile.writeAsBytes(
-  //       byteData.buffer
-  //           .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
-  //     );
-  //     return file;
-  //   }
-
-  //   ///**************************************** */
-  //   var request = http.MultipartRequest(
-  //       'POST', Uri.parse("http://192.168.130.200/signup.php"));
-
-  //   for (int i = 0; i < images.length; i++) {
-  //     // var path2 = await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
-  //     var file = await getImageFileFromAssets(images[i]);
-  //     // var base64Image = base64Encode(file.readAsBytesSync());
-  //     // files.add(base64Image);
-
-  //     request.files.add(
-  //       http.MultipartFile(
-  //         'image$i',
-  //         File(file.path).readAsBytes().asStream(),
-  //         File(file.path).lengthSync(),
-
-  //         filename: file.path.split("/").last,
-  //       ),
-  //     );
-  //   }
-  //   var res = await request.send();
-  //   var response = await http.Response.fromStream(res);
-  //   print(response.body);
-  // }
-
   Future postImage(List<Asset> images) async {
+    List<String> files = <String>[];
     Future<File> getImageFileFromAssets(Asset asset) async {
       final byteData = await asset.getByteData();
-
       final tempFile =
           File("${(await getTemporaryDirectory()).path}/${asset.name}");
       final file = await tempFile.writeAsBytes(
@@ -128,41 +88,30 @@ class AddNameController extends GetxController {
       return file;
     }
 
-    List<File> files = [];
-    images.forEach((element) async {
-      files.add(await getImageFileFromAssets(element));
-      print("x");
-    });
-    Future.delayed(Duration(seconds: 5))
-        .then((value) => files.forEach((element) {
-              print(element.path.toString());
-              print("FILES");
-            }));
+    ///**************************************** */
+    var request = http.MultipartRequest(
+        'POST', Uri.parse("http://192.168.130.200/signup.php"));
 
-    // String uid = await FlutterSecureStorage().read(key: "getTocken");
-    // print(images[0].getByteData().toString());
-    // try {
-    //   Dio dio = Dio();
-    //   FormData formData = new FormData.fromMap({
-    //     "pictures[]": files,
-    //   });
-    //   Response resp = await dio.post('http://192.168.130.200/signup.php',
-    //       data: formData, onSendProgress: (int sent, int total) {
-    //     // print(sent);
-    //     //
-    //   },
-    //       options: Options(
-    //         headers: {
-    //           HttpHeaders.authorizationHeader:
-    //               'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    //         },
-    //       ));
-    //   if (resp.statusCode == 200) {
-    //     // print("============= Print Resp data: ");
-    //     // print(resp.data);
-    //   }
-    // } catch (e) {
-    //   print(e);
-    // }
+    for (int i = 0; i < images.length; i++) {
+      // var path2 = await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
+      var file = await getImageFileFromAssets(images[i]);
+      // var base64Image = base64Encode(file.readAsBytesSync());
+      // files.add(base64Image);
+
+      request.files.add(
+        http.MultipartFile(
+          'image$i',
+          File(file.path).readAsBytes().asStream(),
+          File(file.path).lengthSync(),
+
+          filename: file.path.split("/").last,
+        ),
+      );
+    }
+    var res = await request.send();
+    var response = await http.Response.fromStream(res);
+    print(response.body);
   }
+
+ 
 }

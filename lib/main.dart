@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:for_sale/Add-ad/view.dart';
+import 'package:for_sale/Ads-details/view.dart';
+import 'package:for_sale/Favorite-ads/view.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-
-import 'Home/view.dart';
 
 void main() async {
   await GetStorage.init();
@@ -22,7 +24,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: Home(),
+      home: AddUI(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
@@ -39,3 +41,4 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
+
