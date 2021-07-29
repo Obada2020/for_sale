@@ -27,13 +27,13 @@ dependencies:
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
   dio: ^4.0.0
-  # flutter_absolute_path: ^1.0.6
   get: ^4.1.4
   get_storage: ^2.0.2
   http: ^0.13.3
   multi_image_picker2: ^5.0.0
   otp_text_field: ^1.1.1
   share: ^2.0.4
+  shared_preferences: ^2.0.6
   url_launcher: ^6.0.9
 
 dev_dependencies:
@@ -41,7 +41,7 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-
+# mhd
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.

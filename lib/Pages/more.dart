@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Pages/privacy_and_terms.dart';
+import 'package:for_sale/Pages/setting.dart';
 import 'package:for_sale/constant/constant.dart';
+import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class More extends StatelessWidget {
@@ -7,6 +10,7 @@ class More extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -26,97 +30,109 @@ class More extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            InkWell(
+              onTap: () {
+                Get.to(() => PrivacyAndTerms());
+              },
+              child: Container(
+                  padding: EdgeInsets.only(right: 17),
+                  margin: EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(4)),
+                  width: double.infinity,
+                  height: 48,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.view_list_sharp,
+                        size: 27,
+                      ),
+                      SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        'الشروط والأحكام',
+                        style: klabelStyleBold12,
+                      ),
+                    ],
+                  )),
+            ),
+            InkWell(
+              onTap: () {
+                Get.to(() => Settings());
+              },
+              child: Container(
+                  padding: EdgeInsets.only(right: 17),
+                  margin: EdgeInsets.only(bottom: 12),
+                  decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.circular(4)),
+                  width: double.infinity,
+                  height: 48,
+                  child: Row(
+                    children: [
+                      Icon(
+                        Icons.settings,
+                        size: 27,
+                      ),
+                      SizedBox(
+                        width: 9,
+                      ),
+                      Text(
+                        'الإعدادات',
+                        style: klabelStyleBold12,
+                      ),
+                    ],
+                  )),
+            ),
             Container(
-                padding: EdgeInsets.only(right: 17),
-                margin: EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4)),
-                width: double.infinity,
-                height: 48,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.view_list_sharp,
-                      //color: Color(0xFF405A76),
-                      size: 27,
-                    ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Text(
-                      'الشروط والأحكام',
-                      style: klabelStyleBold12,
-                    ),
-                  ],
-                )),
-            Container(
-                padding: EdgeInsets.only(right: 17),
-                margin: EdgeInsets.only(bottom: 12),
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    borderRadius: BorderRadius.circular(4)),
-                width: double.infinity,
-                height: 48,
-                child: Row(
-                  children: [
-                    Icon(
-                      Icons.settings,
-                      //color: Color(0xFF405A76),
-                      size: 27,
-                    ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Text(
-                      'الإعدادات',
-                      style: klabelStyleBold12,
-                    ),
-                  ],
-                )),
-            Container(
-              height: MediaQuery.of(context).size.height - 250,
+              height: size.height - (size.height * 0.4),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    height: 130,
-                    width: double.infinity,
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
+                        Text(
+                          'تواصل معنا',
+                          style: TextStyle(fontSize: 20),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Expanded(
                               child: InkWell(
-                                child: Image.asset(
-                                  'img/face.png',
-                                  scale: 12,
-                                ),
+                                child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                      image: new ExactAssetImage(
+                                        'img/twitter.png',
+                                      ),
+                                      fit: BoxFit.contain,
+                                    ))),
                                 onTap: () {
-                                  facebook();
+                                  twitter();
                                 },
                               ),
                             ),
                             Expanded(
                               child: InkWell(
-                                child: Image.asset(
-                                  'img/insta.png',
-                                  scale: 12,
-                                ),
+                                child: Container(
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                        image: DecorationImage(
+                                      image: new ExactAssetImage(
+                                        'img/insta.png',
+                                      ),
+                                      fit: BoxFit.contain,
+                                    ))),
                                 onTap: () {
                                   insta();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                child: Image.asset(
-                                  'img/snap.png',
-                                  scale: 12,
-                                ),
-                                onTap: () {
-                                  snap();
                                 },
                               ),
                             ),
@@ -134,8 +150,8 @@ class More extends StatelessWidget {
     );
   }
 
-  facebook() async {
-    var url = "https://www.facebook.com/profile.php?id=100010221011270";
+  twitter() async {
+    var url = "https://twitter.com/forsaleq8com/";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -144,16 +160,7 @@ class More extends StatelessWidget {
   }
 
   insta() async {
-    var url = "https://www.instagram.com";
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
-  snap() async {
-    var url = "https://www.snapchat.com";
+    var url = "https://www.instagram.com/forsaleq8com/";
     if (await canLaunch(url)) {
       await launch(url);
     } else {

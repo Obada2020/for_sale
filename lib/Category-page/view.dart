@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Ads-page/view.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -31,7 +30,7 @@ class CategoryPage extends StatelessWidget {
         body: GetX<CategoryController>(
             init: CategoryController(
                 adCatogaryId: parameter['ad_catogary_id'],
-                catogaryDetailsId: parameter['ad_descriptions_id']),
+                catogaryDetailsId: parameter['catogary_details_id']),
             builder: (ctrl) {
               return GridView.builder(
                 itemCount: ctrl.categoryList.value.length,
@@ -51,8 +50,8 @@ class CategoryPage extends StatelessWidget {
   Widget containerCategory({CategoryModel? categ}) {
     return GestureDetector(
       child: Container(
-        height: 160.0,
-        width: 110.0,
+        // height: 160.0,
+        // width: 110.0,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5)),
         child: Padding(
@@ -94,11 +93,14 @@ class CategoryPage extends StatelessWidget {
         // print(
         //     "HERE Catogary page View yehya aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
         // print(parameter);
-        c.fdatadsbynamescrl(parameter['ad_catogary_id'], categ.adCatogaryId,
-            parameter['ad_descriptions_id'], parameter['title_navbar']);
+        c.fdatadsbynamescrl(
+          parameter['ad_catogary_id'],
+          parameter['catogary_details_id'],
+          categ.adDescriptionsId,
+        );
         Get.to(() => Ads(
               title: parameter['title_navbar'],
-              title2: categ.adDetailsDescription,
+              title2: categ.adDetailsDescription.toString(),
             ));
       },
     );

@@ -12,7 +12,7 @@ class Signin extends StatelessWidget {
     // Size size = MediaQuery.of(context).size;
     TextEditingController num = TextEditingController();
     Login c = Get.put(Login());
-    c.user.value.info = Info();
+
     return Scaffold(
       appBar: AppBar(
         flexibleSpace: Container(
@@ -118,9 +118,9 @@ class Signin extends StatelessWidget {
                         // );
                         return;
                       } else {
-                        c.user.value.info!.accountPhoneNumber =
-                            num.text.toString();
-                        Get.to(() => VerifyAccount());
+                        // c.user.value.info!.accountPhoneNumber =
+                        //     num.text.toString();
+                        Get.to(() => VerifyAccount(num.text.toString()));
                         await ApiService.register(num.text);
                       }
                     },

@@ -1,44 +1,17 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:for_sale/Add-ad/model.dart';
-import 'package:for_sale/Ads-details/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Category-page/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
 import 'package:for_sale/Sign-in/model.dart';
-import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
   static String url = "https://forsale-test.herokuapp.com/api/";
 
-  //==============================Ads Api=======================
-  // static Future fdataAds(
-  //     int? adcatogaryid, int? catogarydetailsid, int? addescriptionsid) async {
-  //   List<AdsModel> ads = [];
-  //   http.Response res = await http.post(Uri.parse(url + "BringAds"), body: {
-  //     'ad_catogary_id': adcatogaryid.toString(),
-  //     'catogary_details_id': catogarydetailsid.toString(),
-  //     'ad_descriptions_id': addescriptionsid.toString()
-  //   }, headers: {
-  //     HttpHeaders.authorizationHeader:
-  //         'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-  //   });
-  //   if (res.statusCode == 200) {
-  //     var body = jsonDecode(res.body);
-
-  //     for (var item in body) {
-  //       ads.add(AdsModel.fromJson(item));
-  //     }
-  //     return ads;
-  //   } else {
-  //     print('statuscode ads=${res.statusCode}');
-  //   }
-  // }
-
-  //==============================================================
   //==============================AdsByNameScroll Api=======================
   static Future fdataAdsNameScrl(
       adcatogaryid, catogarydetailsid, addescriptionsid) async {
@@ -46,8 +19,11 @@ class ApiService {
     http.Response res =
         await http.post(Uri.parse(url + "BringAdsInName"), body: {
       'ad_catogary_id': adcatogaryid.toString(),
-      'catogary_details_id': catogarydetailsid.toString(),
-      'ad_descriptions_id': addescriptionsid.toString(),
+      'catogary_details_id':
+          catogarydetailsid != null ? catogarydetailsid.toString() : '',
+      'ad_descriptions_id':
+          addescriptionsid != null ? addescriptionsid.toString() : '',
+      'ad_type_name_id': ''
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -65,7 +41,7 @@ class ApiService {
   }
 
   static Future fdatahomeads(adcatogaryid) async {
-    List<AdsModel> ads = [];
+    List<AdsHomeModel> ads = [];
     http.Response res =
         await http.post(Uri.parse(url + "BringAdsInName"), body: {
       'ad_catogary_id': adcatogaryid.toString(),
@@ -74,10 +50,11 @@ class ApiService {
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     if (res.statusCode == 200) {
-      var body = jsonDecode(res.body);
+      print('idcatapi $adcatogaryid');
 
+      var body = jsonDecode(res.body);
       for (var item in body) {
-        ads.add(AdsModel.fromJson(item));
+        ads.add(AdsHomeModel.fromJson(item));
       }
       return ads;
     } else {
@@ -229,27 +206,6 @@ class ApiService {
     } else {}
   }
 
-  //============================== sign in ===========================
-
-  static Future register(var phone) async {
-    http.Response res = await http.post(Uri.parse(url + "register"), body: {
-      'account_phone_number': '$phone',
-      'account_type_id': '2'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
-    if (res.statusCode == 200) {
-      return true;
-      // var body = jsonDecode(res.body);
-      // return body[0]["user"][0]["serial_number"];
-
-    } else {
-      print('statuscode cdfav=${res.statusCode}');
-      return false;
-    }
-  }
-
   static Future<List<AdInfoKey>?> fetchAdInfoKey(id) async {
     http.Response response = await http
         .post(Uri.parse(url + "getAdInfoKey"), body: {'ad_catogary_id': '$id'});
@@ -272,7 +228,6 @@ class ApiService {
 
     return data.map((visit) => new AddName.fromJson(visit)).toList();
   }
-  //============================== sign in ===========================
 
   static Future<dynamic> fetchDropDown(int id, int t) async {
     String type = t == 1
@@ -294,6 +249,27 @@ class ApiService {
                 : new LastAdd.fromJson(data);
   }
 
+  //============================== sign in ===========================
+
+  static Future register(var phone) async {
+    http.Response res = await http.post(Uri.parse(url + "register"), body: {
+      'account_phone_number': '$phone',
+      'account_type_id': '2'
+    }, headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    if (res.statusCode == 200) {
+      return true;
+      // var body = jsonDecode(res.body);
+      // return body[0]["user"][0]["serial_number"];
+
+    } else {
+      print('statuscode cdfav=${res.statusCode}');
+      return false;
+    }
+  }
+
   static login(phone, serialnumber) async {
     print(phone);
     print(serialnumber);
@@ -311,7 +287,7 @@ class ApiService {
       return User.fromJson(body);
     } else {
       print('statuscode cdfav=${res.statusCode}');
-      return null;
+      return "Anas";
     }
   }
 }
