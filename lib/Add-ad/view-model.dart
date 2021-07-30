@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
@@ -7,6 +8,8 @@ import 'package:get/get.dart' hide FormData hide Response;
 import 'package:get_storage/get_storage.dart';
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:get_storage/get_storage.dart';
 
 class AddNameController extends GetxController {
   //
@@ -76,7 +79,7 @@ class AddNameController extends GetxController {
   }
 
   Future postImage(List<Asset> images) async {
-    List<String> files = <String>[];
+    // List<String> files = <String>[];
     Future<File> getImageFileFromAssets(Asset asset) async {
       final byteData = await asset.getByteData();
       final tempFile =
@@ -91,7 +94,6 @@ class AddNameController extends GetxController {
     ///**************************************** */
     var request = http.MultipartRequest(
         'POST', Uri.parse("http://192.168.130.200/signup.php"));
-
     for (int i = 0; i < images.length; i++) {
       // var path2 = await FlutterAbsolutePath.getAbsolutePath(images[i].identifier);
       var file = await getImageFileFromAssets(images[i]);
@@ -103,7 +105,6 @@ class AddNameController extends GetxController {
           'image$i',
           File(file.path).readAsBytes().asStream(),
           File(file.path).lengthSync(),
-
           filename: file.path.split("/").last,
         ),
       );
@@ -113,5 +114,7 @@ class AddNameController extends GetxController {
     print(response.body);
   }
 
- 
+  Future postADD() async{
+    
+  }
 }
