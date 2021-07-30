@@ -6,6 +6,8 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class FavoriteAds extends StatelessWidget {
+  AdsController c = Get.find();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -14,13 +16,6 @@ class FavoriteAds extends StatelessWidget {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
-        ),
-        leading: IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-          ),
         ),
         title: Center(
           child: Padding(
@@ -42,7 +37,6 @@ class FavoriteAds extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 16, right: 16, left: 16),
       child: GetX<AdsController>(
-        init: AdsController(),
         builder: (controller) {
           if (controller.favad.isNotEmpty) {
             return GridView.builder(
@@ -58,7 +52,20 @@ class FavoriteAds extends StatelessWidget {
                   print(controller.favad[1].ad![0].adname);
                   return InkWell(
                     onTap: () {
-                      Get.to(Adsdetails(), arguments: index);
+                      Map details = {
+                        'adId': c.favad[index].adId,
+                        'accountId': c.favad[index].accountId,
+                        'adName': c.favad[index].ad![0].adname,
+                        'adphone': c.favad[index].ad![0].adPhoneNumber,
+                        'addescr': c.favad[index].ad![0].adDescription,
+                        'adpicture': c.favad[index].ad![0].adPicture,
+                        'adprice': c.favad[index].ad![0].adPrice,
+                        'created': c.favad[index].ad![0].createdAt,
+                        'updated': c.favad[index].ad![0].updatedAt,
+                      };
+                      Get.to(() => Adsdetails(
+                            details: details,
+                          ));
                     },
                     child: Container(
                       decoration: BoxDecoration(

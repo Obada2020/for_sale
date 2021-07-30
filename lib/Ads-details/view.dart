@@ -8,8 +8,12 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Adsdetails extends StatefulWidget {
+  AdsController c = Get.find();
+
   @override
   _AdsdetailsState createState() => _AdsdetailsState();
+  var details;
+  Adsdetails({this.details});
 }
 
 class _AdsdetailsState extends State<Adsdetails> {
@@ -30,10 +34,11 @@ class _AdsdetailsState extends State<Adsdetails> {
     return result;
   }
 
-  final AdsController adctrl = Get.put(AdsController());
+  // final AdsController adctrl = Get.find();
 
   @override
   Widget build(BuildContext context) {
+    print(widget.details);
     Size size = MediaQuery.of(context).size;
     IconData icon = Icons.favorite_border;
     return Scaffold(
@@ -85,7 +90,7 @@ class _AdsdetailsState extends State<Adsdetails> {
   }
 
   calling() async {
-    var url = 'tel:+963${adctrl.ads[Get.arguments].adPhoneNumber}';
+    var url = 'tel:+963${widget.details['adphone']}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -94,8 +99,7 @@ class _AdsdetailsState extends State<Adsdetails> {
   }
 
   whatsapp() async {
-    var url =
-        "whatsapp://send?phone=+963${adctrl.ads[Get.arguments].adPhoneNumber}";
+    var url = "whatsapp://send?phone=+963${widget.details['adphone']}";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -161,7 +165,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                     border: Border.all(color: Color(0xff333333)),
                     ontap: () {
                       Share.share(
-                          '${adctrl.ads[Get.arguments].adDescription}\n\n http://hyperurl.co/4buy');
+                          '${widget.details['addescr']}\n\n http://hyperurl.co/4buy');
                     },
                   ),
                 ),
@@ -239,7 +243,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    '${adctrl.ads[Get.arguments].adDescription}',
+                    widget.details['adName'],
                     style: klabelStyleBold12card,
                     maxLines: 2,
                   ),
@@ -258,7 +262,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                           borderRadius: BorderRadius.circular(4),
                           gradient: kGColor),
                       child: Text(
-                        '${adctrl.ads[Get.arguments].adPrice}',
+                        widget.details['adprice'],
                         style: klabelStyleBold11light,
                       ),
                     ),
@@ -270,7 +274,7 @@ class _AdsdetailsState extends State<Adsdetails> {
                       width: 10,
                     ),
                     Text(
-                      '${adctrl.ads[Get.arguments].createdAt}',
+                      widget.details['created'],
                       style: TextStyle(
                           fontFamily: 'FairuzBold',
                           fontSize: 10,
@@ -303,7 +307,7 @@ class _AdsdetailsState extends State<Adsdetails> {
               style: klabelStyleBlack16,
             ),
             Text(
-              '${adctrl.ads[Get.arguments].adDescription}',
+              widget.details['addescr'],
               style: TextStyle(
                   fontFamily: 'FairuzBlack', fontSize: 12, color: Colors.black),
             ),
@@ -403,7 +407,6 @@ class _AdsdetailsState extends State<Adsdetails> {
             margin: EdgeInsets.only(top: 14, right: 16),
             height: 200,
             child: GetX<AdsController>(
-              init: AdsController(),
               builder: (controller) {
                 if (controller.ads != null) {
                   return GridView.builder(
@@ -421,9 +424,22 @@ class _AdsdetailsState extends State<Adsdetails> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            print('object');
                             Get.back();
-                            Get.to(Adsdetails(), arguments: index);
+                            Map details = {
+                              'adId': widget.c.ads[index].adId,
+                              'accountId': widget.c.ads[index].accountId,
+                              'adName': widget.c.ads[index].adName,
+                              'adphone': widget.c.ads[index].adPhoneNumber,
+                              'addescr': widget.c.ads[index].adDescription,
+                              'adpicture': widget.c.ads[index].adPicture,
+                              'adprice': widget.c.ads[index].adPrice,
+                              'adinfo': widget.c.ads[index].adInfo,
+                              'created': widget.c.ads[index].createdAt,
+                              'updated': widget.c.ads[index].updatedAt,
+                            };
+                            Get.to(() => Adsdetails(
+                                  details: details,
+                                ));
                           },
                           child: Container(
                             decoration: BoxDecoration(

@@ -96,7 +96,21 @@ class Ads extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Get.to(() => Adsdetails(), arguments: index);
+                          Map details = {
+                            'adId': c.ads[index].adId,
+                            'accountId': c.ads[index].accountId,
+                            'adName': c.ads[index].adName,
+                            'adphone': c.ads[index].adPhoneNumber,
+                            'addescr': c.ads[index].adDescription,
+                            'adpicture': c.ads[index].adPicture,
+                            'adprice': c.ads[index].adPrice,
+                            'adinfo': c.ads[index].adInfo,
+                            'created': c.ads[index].createdAt,
+                            'updated': c.ads[index].updatedAt,
+                          };
+                          Get.to(() => Adsdetails(
+                                details: details,
+                              ));
                         },
                         child: Container(
                           decoration: BoxDecoration(

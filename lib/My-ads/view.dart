@@ -6,6 +6,8 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class MyAds extends StatelessWidget {
+  AdsController c = Get.find();
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -13,13 +15,6 @@ class MyAds extends StatelessWidget {
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
-        ),
-        leading: IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-          ),
         ),
         title: Center(
           child: Padding(
@@ -41,7 +36,6 @@ class MyAds extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 16, right: 16, left: 16),
       child: GetX<AdsController>(
-        init: AdsController(),
         builder: (controller) {
           if (controller.myads.isNotEmpty) {
             return GridView.builder(
@@ -56,7 +50,21 @@ class MyAds extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: () {
-                      Get.to(Adsdetails(), arguments: index);
+                      Map details = {
+                        'adId': c.myads[index].adId,
+                        'accountId': c.myads[index].accountId,
+                        'adName': c.myads[index].adName,
+                        'adphone': c.myads[index].adPhoneNumber,
+                        'addescr': c.myads[index].adDescription,
+                        'adpicture': c.myads[index].adPicture,
+                        'adprice': c.myads[index].adPrice,
+                        'adinfo': c.myads[index].adInfo,
+                        'created': c.myads[index].createdAt,
+                        'updated': c.myads[index].updatedAt,
+                      };
+                      Get.to(() => Adsdetails(
+                            details: details,
+                          ));
                     },
                     child: Container(
                       decoration: BoxDecoration(

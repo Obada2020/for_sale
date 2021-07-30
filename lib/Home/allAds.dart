@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
-import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -89,7 +88,21 @@ class AdsAll extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Get.to(() => Adsdetails(), arguments: index);
+                          Map details = {
+                            'adId': c.adsHome[index].adId,
+                            'accountId': c.adsHome[index].accountId,
+                            'adName': c.adsHome[index].adName,
+                            'adphone': c.adsHome[index].adPhoneNumber,
+                            'addescr': c.adsHome[index].adDescription,
+                            'adpicture': c.adsHome[index].adPicture,
+                            'adprice': c.adsHome[index].adPrice,
+                            'adinfo': c.adsHome[index].adInfo,
+                            'created': c.adsHome[index].createdAt,
+                            'updated': c.adsHome[index].updatedAt,
+                          };
+                          Get.to(() => Adsdetails(
+                                details: details,
+                              ));
                         },
                         child: Container(
                           decoration: BoxDecoration(

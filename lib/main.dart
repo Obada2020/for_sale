@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'Home/navbar.dart';
+
 void main() async {
   await GetStorage.init();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
@@ -27,7 +29,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      home: AddUI(),
+      home: widget.t == 'H' ? Navbar() : Navbar(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,

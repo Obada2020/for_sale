@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Favorite-ads/view.dart';
 import 'package:for_sale/My-account/view-model.dart';
+import 'package:for_sale/My-ads/view.dart';
 import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
@@ -9,6 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class MyAccount extends StatelessWidget {
   String? obada = "";
   var c = Get.put(MyAccountController());
+  AdsController actrl = Get.put(AdsController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,7 +100,10 @@ class MyAccount extends StatelessWidget {
                     width: double.infinity,
                     height: 48,
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        actrl.fdatafavad();
+                        Get.to(() => FavoriteAds());
+                      },
                       child: Padding(
                         padding: const EdgeInsets.only(right: 16),
                         child: Row(
@@ -125,7 +132,10 @@ class MyAccount extends StatelessWidget {
                       child: Row(
                         children: [
                           InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                actrl.fdatamyad();
+                                Get.to(() => MyAds());
+                              },
                               child: Row(
                                 children: [
                                   Icon(Icons.list),
