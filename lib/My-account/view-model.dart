@@ -1,3 +1,4 @@
+import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -7,6 +8,9 @@ class MyAccountController extends GetxController {
   void onInit() {
     super.onInit();
     getNumber();
+    // if (number.value == "") {
+    //   Get.to(() => Signin());
+    // }
   }
 
   getNumber() async {

@@ -1,10 +1,12 @@
 import 'dart:io';
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Sign-in/Signin_view.dart';
 import 'package:get/get.dart' hide FormData hide Response;
 import 'package:http/http.dart' as http;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AddNameController extends GetxController {
   //
@@ -26,8 +28,14 @@ class AddNameController extends GetxController {
   RxBool loading = false.obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    String t = "";
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    t = sharedPreferences.getString("number")!.toString();
+    // if (t == "") {
+    //   Get.to(() => Signin());
+    // }
     fetchData();
   }
 
@@ -78,7 +86,7 @@ class AddNameController extends GetxController {
     Future<File> getImageFileFromAssets(Asset asset) async {
       final byteData = await asset.getByteData();
       final tempFile =
-          File("${(await getTemporaryDirectory()).path}/${asset.name}"); 
+          File("${(await getTemporaryDirectory()).path}/${asset.name}");
       final file = await tempFile.writeAsBytes(
         byteData.buffer
             .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),
@@ -109,7 +117,5 @@ class AddNameController extends GetxController {
     print(response.body);
   }
 
-  Future postADD() async{
-    
-  }
+  Future postADD() async {}
 }

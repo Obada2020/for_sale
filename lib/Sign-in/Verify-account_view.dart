@@ -173,9 +173,8 @@ class VerifyAccount extends StatelessWidget {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("AlertDialog"),
-      content: Text(
-          "Would you like to continue learning how to use Flutter alerts?"),
+      title: Text("خطأ"),
+      content: Text("! الرمز غير صحيح"),
       actions: [
         cancelButton,
         continueButton,
