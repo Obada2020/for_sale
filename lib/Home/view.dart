@@ -9,7 +9,7 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
-  HomeController c = Get.put(HomeController());
+  AdsController c = Get.put(AdsController());
 
   @override
   Widget build(BuildContext context) {
@@ -26,58 +26,62 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             //start title category
-            GetX<HomeController>(builder: (ctrl) {
-              return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: ctrl.homeList.value.length,
-                  itemBuilder: (context, indexF) {
-                    return Column(
-                      children: [
-                        //title
-                        Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 16, end: 16, top: 20),
-                            child: containerTitle(
-                              ctrl.homeList.value[indexF].adCatogaryName
-                                  .toString(),
-                              ctrl.homeList.value[indexF].adCatogaryId,
-                            )),
-                        //category
-                        Container(
-                          height: 140,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, indexL) => containerCategory(
-                              name: ctrl.homeList.value[indexF]
-                                  .catogaryDetails![indexL],
-                              title: ctrl.homeList.value[indexF].adCatogaryName
-                                  .toString(),
-                              img: ctrl.homeList.value[indexF]
-                                  .catogaryDetails![indexL].picture,
+            GetX<HomeController>(
+                init: HomeController(),
+                builder: (ctrl) {
+                  return ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: ctrl.homeList.value.length,
+                      itemBuilder: (context, indexF) {
+                        return Column(
+                          children: [
+                            //title
+                            Padding(
+                                padding: EdgeInsetsDirectional.only(
+                                    start: 16, end: 16, top: 20),
+                                child: containerTitle(
+                                  ctrl.homeList.value[indexF].adCatogaryName
+                                      .toString(),
+                                  ctrl.homeList.value[indexF].adCatogaryId,
+                                )),
+                            //category
+                            Container(
+                              height: 140,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, indexL) =>
+                                    containerCategory(
+                                  name: ctrl.homeList.value[indexF]
+                                      .catogaryDetails![indexL],
+                                  title: ctrl
+                                      .homeList.value[indexF].adCatogaryName
+                                      .toString(),
+                                  img: ctrl.homeList.value[indexF]
+                                      .catogaryDetails![indexL].picture,
+                                ),
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(width: 5),
+                                itemCount: ctrl.homeList.value[indexF]
+                                    .catogaryDetails!.length,
+                              ),
                             ),
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 5),
-                            itemCount: ctrl
-                                .homeList.value[indexF].catogaryDetails!.length,
-                          ),
-                        ),
-                        //offer
-                        Container(
-                          height: 270.0,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                containerOffer(context, size),
-                            itemCount: 5,
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 12),
-                          ),
-                        )
-                      ],
-                    );
-                  });
-            }),
+                            //offer
+                            Container(
+                              height: 270.0,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) =>
+                                    containerOffer(context, size),
+                                itemCount: 5,
+                                separatorBuilder: (context, index) =>
+                                    SizedBox(width: 12),
+                              ),
+                            )
+                          ],
+                        );
+                      });
+                }),
           ],
         ),
       ),

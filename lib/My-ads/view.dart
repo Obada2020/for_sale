@@ -40,8 +40,8 @@ class MyAds extends StatelessWidget {
   Widget gridview() {
     return Container(
       margin: EdgeInsets.only(top: 16, right: 16, left: 16),
-      child: GetX<MyAdsController>(
-        init: MyAdsController(),
+      child: GetX<AdsController>(
+        init: AdsController(),
         builder: (controller) {
           if (controller.myads.isNotEmpty) {
             return GridView.builder(

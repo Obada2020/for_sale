@@ -58,7 +58,7 @@ class ApiService {
       }
       return ads;
     } else {
-      print('statuscode scrl=${res.statusCode}');
+      print('statuscode adshome=${res.statusCode}');
     }
   }
 
@@ -102,7 +102,7 @@ class ApiService {
   static Future fdataMyad() async {
     List<MyAdsModel> myads = [];
     http.Response res = await http.post(Uri.parse(url + "myad"), body: {
-      'account_id': '2'
+      'account_id': '35'
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
@@ -124,7 +124,7 @@ class ApiService {
   static Future fdatafavad() async {
     List<FavoriteModel> fads = [];
     http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
-      'account_id': '30'
+      'account_id': '31'
     }, headers: {
       HttpHeaders.authorizationHeader:
           'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'

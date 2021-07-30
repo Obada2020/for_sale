@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
+import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
@@ -9,7 +10,7 @@ class AdsAll extends StatelessWidget {
   String? title2;
   AdsAll({this.title, this.title2});
   TextEditingController serc = TextEditingController();
-  HomeController c = Get.find();
+  AdsController c = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +56,7 @@ class AdsAll extends StatelessWidget {
       ),
       child: TextField(
         onChanged: (txt) {
-          c.fileserch(txt);
+          c.fileserchHome(txt);
         },
         decoration: InputDecoration(
           hintText: title != null ? " ابحث عن   ${title2!.toString()}" : 'ابحث',
@@ -75,10 +76,10 @@ class AdsAll extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 5, right: 16, left: 16),
       child: Obx(() => Container(
-            child: c.ads.length != 0
+            child: c.adsHome.length != 0
                 ? GridView.builder(
                     shrinkWrap: true,
-                    itemCount: c.ads.length,
+                    itemCount: c.adsHome.length,
                     gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       childAspectRatio: 0.9,
@@ -99,7 +100,7 @@ class AdsAll extends StatelessWidget {
                                 color: Colors.grey.withOpacity(0.2),
                               )
                             ],
-                            color: c.ads[index].adTypeId == 2
+                            color: c.adsHome[index].adTypeId == 2
                                 ? Color(0x79667590)
                                 : Colors.white,
                             borderRadius: BorderRadius.circular(4),
@@ -115,7 +116,7 @@ class AdsAll extends StatelessWidget {
                                       topLeft: Radius.circular(4),
                                     ),
                                     child: Image.network(
-                                      c.ads[index].adPicture.toString(),
+                                      c.adsHome[index].adPicture.toString(),
                                       fit: BoxFit.cover,
                                     )),
                               ),
@@ -127,7 +128,7 @@ class AdsAll extends StatelessWidget {
                                   top: 3,
                                 ),
                                 child: Text(
-                                  c.ads[index].adName!,
+                                  c.adsHome[index].adName!,
                                   style: klabelStyleBold12card,
                                   maxLines: 2,
                                 ),
@@ -148,18 +149,18 @@ class AdsAll extends StatelessWidget {
                                               BorderRadius.circular(4),
                                           gradient: kGColor),
                                       child: Text(
-                                        c.ads[index].adPrice.toString(),
+                                        c.adsHome[index].adPrice.toString(),
                                         style: klabelStyleBold11light,
                                       )),
                                   Text(
                                     ('قبل : ${(DateTime.now().difference(DateTime(
-                                          int.parse(c.ads[index].createdAt!
+                                          int.parse(c.adsHome[index].createdAt!
                                               .substring(0, 4)),
-                                          int.parse(c.ads[index].createdAt!
+                                          int.parse(c.adsHome[index].createdAt!
                                               .substring(5, 7)),
-                                          int.parse(c.ads[index].createdAt!
+                                          int.parse(c.adsHome[index].createdAt!
                                               .substring(8, 10)),
-                                          int.parse(c.ads[index].createdAt!
+                                          int.parse(c.adsHome[index].createdAt!
                                               .substring(11, 13)),
                                         )).inDays)}  يوم  '),
                                     maxLines: 2,
