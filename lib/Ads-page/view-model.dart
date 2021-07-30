@@ -25,7 +25,7 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    fdatadadshome(adcatogaryid);
+    // fdatadadshome(adcatogaryid: adcatogaryid);
     fdatamyad();
     fdatafavad();
   }
@@ -103,12 +103,11 @@ class AdsController extends GetxController {
     favad.value = fav;
   }
 
-  fdatadadshome(adcatogaryid) async {
-    print('idcatctrl $adcatogaryid');
-    List<AdsHomeModel> adby = await ApiService.fdatahomeads(adcatogaryid);
-    adsHome.value = adby;
-    dummysearchHome = adsHome.toList();
-  }
+  // fdatadadshome({adcatogaryid}) async {
+  //   List<AdsHomeModel> adby = await ApiService.fdatahomeads(adcatogaryid);
+  //   adsHome.value = adby;
+  //   dummysearchHome = adsHome.toList();
+  // }
   //==================================searchHome========================
 
   fileserchHome(String query) async {

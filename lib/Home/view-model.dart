@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   var homeList = <HomeModel>[].obs;
-  // var adsHome = <AdsHomeModel>[].obs;
-  // List<AdsHomeModel>? dummysearchHome;
+  var adsHome = <AdsHomeModel>[].obs;
+  List<AdsHomeModel>? searchHome;
+
   // int? id;
   // HomeController({this.id});
+
   @override
   void onInit() {
     super.onInit();
@@ -15,12 +17,12 @@ class HomeController extends GetxController {
     //fdatadadshome(id);
   }
 
-  // fdatadadshome(id) async {
-  //   print('idcatctrl $id');
-  //   List<AdsHomeModel> adby = await ApiService.fdatahomeads(id);
-  //   adsHome.value = adby;
-  //   dummysearchHome = adsHome.toList();
-  // }
+  fdatadadshome(id) async {
+    print('idcatctrl $id');
+    List<AdsHomeModel> adby = await ApiService.fdatahomeads(id);
+    adsHome.value = adby;
+    searchHome = adsHome.toList();
+  }
 
   fdata() async {
     List<HomeModel> myad = await ApiService.fdataHome();
