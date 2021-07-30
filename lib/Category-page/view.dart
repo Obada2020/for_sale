@@ -40,8 +40,11 @@ class CategoryPage extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 5),
                 itemBuilder: (BuildContext context, int index) {
-                  return containerCategory(
-                      categ: ctrl.categoryList.value[index]);
+                  return Container(
+                    margin: EdgeInsets.only(top: 16),
+                    child: containerCategory(
+                        categ: ctrl.categoryList.value[index]),
+                  );
                 },
               );
             }));
@@ -50,36 +53,32 @@ class CategoryPage extends StatelessWidget {
   Widget containerCategory({CategoryModel? categ}) {
     return GestureDetector(
       child: Container(
-        // height: 160.0,
-        // width: 110.0,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5)),
-        child: Padding(
-          padding:
-              const EdgeInsetsDirectional.only(start: 20, end: 20, top: 15.1),
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(4),
-                        topLeft: Radius.circular(4),
-                      ),
-                      child: Image.network(
-                        categ!.picture.toString(),
-                        fit: BoxFit.cover,
-                      )),
-                ),
-                SizedBox(height: 11.2),
-                Text(
+        child: Center(
+          child: Column(
+            children: [
+              Expanded(
+                child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      topLeft: Radius.circular(4),
+                    ),
+                    child: Image.network(
+                      categ!.picture.toString(),
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
                   categ.adDetailsDescription.toString(),
                   style: klabelStyleTitleCategory,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 1,
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),

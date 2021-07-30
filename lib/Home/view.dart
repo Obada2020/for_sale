@@ -63,7 +63,7 @@ class Home extends StatelessWidget {
                                           .catogaryDetails![indexL].picture,
                                     ),
                                     separatorBuilder: (context, index) =>
-                                        SizedBox(width: 5),
+                                        SizedBox(width: 0),
                                     itemCount: controller.homeList.value[indexF]
                                         .catogaryDetails!.length,
                                   ),
@@ -75,22 +75,46 @@ class Home extends StatelessWidget {
                                         child: ListView.separated(
                                           scrollDirection: Axis.horizontal,
                                           itemBuilder: (context, index) =>
-                                              containerOffer(context, size,
-                                                  disc: controller.adsHome
-                                                      .value[index].adName,
-                                                  price: controller.adsHome
-                                                      .value[index].adPrice,
-                                                  time: controller.adsHome
-                                                      .value[index].createdAt,
-                                                  image: controller.adsHome
-                                                      .value[index].adPicture),
+                                              Container(
+                                                padding: EdgeInsets.only(right: 8),
+                                                child: containerOffer(context, size,
+                                                    disc: controller.adsHome
+                                                        .value[index].adName,
+                                                    price: controller.adsHome
+                                                        .value[index].adPrice,
+                                                    image: controller.adsHome
+                                                        .value[index].adPicture,
+                                                    time:
+                                                        'قبل : ${(DateTime.now().difference(DateTime(
+                                                              int.parse(controller
+                                                                  .adsHome[index]
+                                                                  .createdAt!
+                                                                  .substring(
+                                                                      0, 4)),
+                                                              int.parse(controller
+                                                                  .adsHome[index]
+                                                                  .createdAt!
+                                                                  .substring(
+                                                                      5, 7)),
+                                                              int.parse(controller
+                                                                  .adsHome[index]
+                                                                  .createdAt!
+                                                                  .substring(
+                                                                      8, 10)),
+                                                              int.parse(controller
+                                                                  .adsHome[index]
+                                                                  .createdAt!
+                                                                  .substring(
+                                                                      11, 13)),
+                                                            )).inDays)}  يوم  '),
+                                              ),
                                           itemCount: controller
                                               .adsHome
                                               .value[indexF]
                                               .adDescription!
                                               .length,
                                           separatorBuilder: (context, index) =>
-                                              SizedBox(width: 12),
+                                              SizedBox(width: 4),
                                         ),
                                       )
                                     : CircularProgressIndicator())
@@ -136,7 +160,7 @@ class Home extends StatelessWidget {
         child: Center(
           child: Column(
             children: [
-              Container(
+              Expanded(
                 child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(4),
@@ -180,9 +204,11 @@ class Home extends StatelessWidget {
       child: Column(
         children: [
           //image
-          Image.network(
-            image,
-            fit: BoxFit.cover,
+          Expanded(
+            child: Image.network(
+              image,
+              fit: BoxFit.cover,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
@@ -217,7 +243,7 @@ class Home extends StatelessWidget {
                           style: klabelStyleBold11light,
                         )),
                     Text(
-                      time!.split("T")[0].toString(),
+                      time!,
                       style: TextStyle(
                           fontFamily: 'FairuzBold',
                           fontSize: 10,
