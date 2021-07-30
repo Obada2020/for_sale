@@ -1,12 +1,10 @@
-import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:get/get.dart' hide FormData hide Response;
-import 'package:get_storage/get_storage.dart';
-import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:http/http.dart' as http;
+import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:path_provider/path_provider.dart';
 
 class AddNameController extends GetxController {
   //
@@ -80,7 +78,7 @@ class AddNameController extends GetxController {
     Future<File> getImageFileFromAssets(Asset asset) async {
       final byteData = await asset.getByteData();
       final tempFile =
-          File("${(await getTemporaryDirectory()).path}/${asset.name}");
+          File("${(await getTemporaryDirectory()).path}/${asset.name}"); 
       final file = await tempFile.writeAsBytes(
         byteData.buffer
             .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes),

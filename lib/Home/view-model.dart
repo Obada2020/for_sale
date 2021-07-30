@@ -12,7 +12,7 @@ class HomeController extends GetxController {
   void onInit() {
     super.onInit();
     fdata();
-    fdatadadshome(id);
+    //fdatadadshome(id);
   }
 
   fdatadadshome(id) async {
