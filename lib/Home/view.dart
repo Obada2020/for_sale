@@ -9,8 +9,6 @@ import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
 class Home extends StatelessWidget {
-  HomeController c = Get.put(HomeController());
-
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -26,58 +24,81 @@ class Home extends StatelessWidget {
         child: Column(
           children: [
             //start title category
-            GetX<HomeController>(builder: (ctrl) {
-              return ListView.builder(
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: ctrl.homeList.value.length,
-                  itemBuilder: (context, indexF) {
-                    return Column(
-                      children: [
-                        //title
-                        Padding(
-                            padding: EdgeInsetsDirectional.only(
-                                start: 16, end: 16, top: 20),
-                            child: containerTitle(
-                              ctrl.homeList.value[indexF].adCatogaryName
-                                  .toString(),
-                              ctrl.homeList.value[indexF].adCatogaryId,
-                            )),
-                        //category
-                        Container(
-                          height: 140,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, indexL) => containerCategory(
-                              name: ctrl.homeList.value[indexF]
-                                  .catogaryDetails![indexL],
-                              title: ctrl.homeList.value[indexF].adCatogaryName
-                                  .toString(),
-                              img: ctrl.homeList.value[indexF]
-                                  .catogaryDetails![indexL].picture,
-                            ),
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 5),
-                            itemCount: ctrl
-                                .homeList.value[indexF].catogaryDetails!.length,
-                          ),
-                        ),
-                        //offer
-                        Container(
-                          height: 270.0,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                containerOffer(context, size),
-                            itemCount: 5,
-                            separatorBuilder: (context, index) =>
-                                SizedBox(width: 12),
-                          ),
-                        )
-                      ],
-                    );
-                  });
-            }),
+            GetX<HomeController>(
+                init: HomeController(),
+                builder: (controller) {
+                  return controller.homeList.length != 0
+                      ? ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: controller.homeList.value.length,
+                          itemBuilder: (context, indexF) {
+                            controller.fdatadadshome(
+                                controller.homeList[0].adCatogaryId);
+                            return Column(
+                              children: [
+                                Padding(
+                                    padding: EdgeInsetsDirectional.only(
+                                        start: 16, end: 16, top: 20),
+                                    child: containerTitle(
+                                      controller
+                                          .homeList.value[indexF].adCatogaryName
+                                          .toString(),
+                                      controller
+                                          .homeList.value[indexF].adCatogaryId,
+                                    )),
+                                //category
+                                Container(
+                                  height: 140,
+                                  child: ListView.separated(
+                                    scrollDirection: Axis.horizontal,
+                                    itemBuilder: (context, indexL) =>
+                                        containerCategory(
+                                      name: controller.homeList.value[indexF]
+                                          .catogaryDetails![indexL],
+                                      title: controller
+                                          .homeList.value[indexF].adCatogaryName
+                                          .toString(),
+                                      img: controller.homeList.value[indexF]
+                                          .catogaryDetails![indexL].picture,
+                                    ),
+                                    separatorBuilder: (context, index) =>
+                                        SizedBox(width: 5),
+                                    itemCount: controller.homeList.value[indexF]
+                                        .catogaryDetails!.length,
+                                  ),
+                                ),
+                                //offer
+                                Obx(() => controller.adsHome.length != 0
+                                    ? Container(
+                                        height: 270.0,
+                                        child: ListView.separated(
+                                          scrollDirection: Axis.horizontal,
+                                          itemBuilder: (context, index) =>
+                                              containerOffer(context, size,
+                                                  disc: controller.adsHome
+                                                      .value[index].adName,
+                                                  price: controller.adsHome
+                                                      .value[index].adPrice,
+                                                  time: controller.adsHome
+                                                      .value[index].createdAt,
+                                                  image: controller.adsHome
+                                                      .value[index].adPicture),
+                                          itemCount: controller
+                                              .adsHome
+                                              .value[indexF]
+                                              .adDescription!
+                                              .length,
+                                          separatorBuilder: (context, index) =>
+                                              SizedBox(width: 12),
+                                        ),
+                                      )
+                                    : CircularProgressIndicator())
+                              ],
+                            );
+                          })
+                      : CircularProgressIndicator();
+                }),
           ],
         ),
       ),
@@ -95,7 +116,7 @@ class Home extends StatelessWidget {
                 child: Text("عرض الكل", style: klabelStyleShowAll),
                 onTap: () {
                   print('idcathome $id');
-                  c.fdatadadshome(id);
+                  // c.fdatadadshome(id);
                   Get.to(() => AdsAll());
                 }),
             Icon(Icons.chevron_right_sharp, color: Colors.blue, size: 15),
@@ -112,32 +133,28 @@ class Home extends StatelessWidget {
         width: 110.0,
         decoration: BoxDecoration(
             color: Colors.white, borderRadius: BorderRadius.circular(5)),
-        child: Padding(
-          padding:
-              const EdgeInsetsDirectional.only(start: 20, end: 20, top: 15.1),
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(4),
-                        topLeft: Radius.circular(4),
-                      ),
-                      child: Image.network(
-                        img.toString(),
-                        fit: BoxFit.cover,
-                      )),
-                ),
-                SizedBox(height: 11.2),
-                Text(
-                  name!.catogaryName.toString(),
-                  style: klabelStyleTitleCategory,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ],
-            ),
+        child: Center(
+          child: Column(
+            children: [
+              Container(
+                child: ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(4),
+                      topLeft: Radius.circular(4),
+                    ),
+                    child: Image.network(
+                      img.toString(),
+                      fit: BoxFit.cover,
+                    )),
+              ),
+              SizedBox(height: 11.2),
+              Text(
+                name!.catogaryName.toString(),
+                style: klabelStyleTitleCategory,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 1,
+              ),
+            ],
           ),
         ),
       ),
@@ -153,7 +170,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Widget containerOffer(context, size) {
+  Widget containerOffer(context, size, {disc, price, String? time, image}) {
     return Container(
       width: 210,
       height: 218,
@@ -163,8 +180,8 @@ class Home extends StatelessWidget {
       child: Column(
         children: [
           //image
-          Image.asset(
-            "img/country house.jpg",
+          Image.network(
+            image,
             fit: BoxFit.cover,
           ),
           Padding(
@@ -174,7 +191,7 @@ class Home extends StatelessWidget {
               children: [
                 //title
                 Text(
-                  "هذا النص هو نص تجريبي من مولد النص العربي",
+                  disc,
                   style: klabelStyleTitleCategory,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
@@ -196,11 +213,11 @@ class Home extends StatelessWidget {
                             borderRadius: BorderRadius.circular(4),
                             gradient: kGColor),
                         child: Text(
-                          '500  د.ك ',
+                          price.toString() + " ك د",
                           style: klabelStyleBold11light,
                         )),
                     Text(
-                      'قبل 2 يوم و 4 ساعة',
+                      time!.split("T")[0].toString(),
                       style: TextStyle(
                           fontFamily: 'FairuzBold',
                           fontSize: 10,

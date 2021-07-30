@@ -1,5 +1,8 @@
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Favorite-ads/model.dart';
+import 'package:for_sale/Home/model.dart';
+import 'package:for_sale/My-ads/model.dart';
 import 'package:get/get.dart';
 
 class AdsController extends GetxController {
@@ -11,37 +14,21 @@ class AdsController extends GetxController {
   var ads = <AdsModel>[].obs;
   var fullads = <AdsModel>[].obs;
   var scrl = <AdsModel>[].obs;
-  // var myads = <MyAdsModel>[].obs;
-  // var scrlho = <ScrlHorModel>[].obs;
-  // var favad = <FavoriteModel>[].obs;
+  var myads = <MyAdsModel>[].obs;
+  var favad = <FavoriteModel>[].obs;
+  var adsHome = <AdsHomeModel>[].obs;
   List<AdsModel>? dummysearch;
+  List<AdsHomeModel>? dummysearchHome;
 
   bool isFirst = true;
   var accountID;
   @override
   void onInit() {
     super.onInit();
-    // fdatadsbynamescrl();
-    // fdatads();
-    // fdatafavad();
-    // fdatamyad();
-    // fdatascrol();
+    // fdatadadshome(adcatogaryid: adcatogaryid);
+    fdatamyad();
+    fdatafavad();
   }
-
-  // fdatamyad() async {
-  //   List<MyAdsModel> myad = await ApiService.fdataMyad();
-  //   myads.value = myad;
-  // }
-
-  // fdatads() async {
-  //   List<AdsModel> ad = await ApiService.fdataAds(
-  //       this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid);
-  //   ads.value = ad;
-  //   print("Here APIIIIIIIIIIIIIIIIIIII");
-  //   dummysearch = ads.toList();
-  //   //*********************************************************************/
-  //   update();
-  // }
 
   fdatadsbynamescrl(a, c, d) async {
     print("fffffffffffffffffffffffffffff");
@@ -104,6 +91,47 @@ class AdsController extends GetxController {
       update();
     }
   }
-  //====================================================================
 
+  //====================================================================
+  fdatamyad() async {
+    List<MyAdsModel> myad = await ApiService.fdataMyad();
+    myads.value = myad;
+  }
+
+  fdatafavad() async {
+    List<FavoriteModel> fav = await ApiService.fdatafavad();
+    favad.value = fav;
+  }
+
+  // fdatadadshome({adcatogaryid}) async {
+  //   List<AdsHomeModel> adby = await ApiService.fdatahomeads(adcatogaryid);
+  //   adsHome.value = adby;
+  //   dummysearchHome = adsHome.toList();
+  // }
+  //==================================searchHome========================
+
+  fileserchHome(String query) async {
+    List<AdsHomeModel> dummylistdataHome = <AdsHomeModel>[];
+    if (query.isNotEmpty && dummysearchHome!.isNotEmpty) {
+      dummysearchHome!.forEach((item) {
+        var serviceHome = item;
+        if (serviceHome.adName!.toLowerCase().contains(query.toLowerCase()) ||
+            serviceHome.adDescription!
+                .toLowerCase()
+                .contains(query.toLowerCase()) ||
+            serviceHome.adPrice!.toLowerCase().contains(query.toLowerCase())) {
+          dummylistdataHome.add(serviceHome);
+        }
+      });
+      adsHome.clear();
+      adsHome.addAll(dummylistdataHome);
+      update();
+    } else {
+      print(dummysearchHome!.length);
+      adsHome.clear();
+      adsHome.addAll(dummysearchHome!);
+      update();
+    }
+  }
+  //====================================================================
 }

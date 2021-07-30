@@ -4,22 +4,24 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   var homeList = <HomeModel>[].obs;
-  var ads = <AdsHomeModel>[].obs;
-  List<AdsHomeModel>? dummysearch;
-  int? id;
-  HomeController({this.id});
+  var adsHome = <AdsHomeModel>[].obs;
+  List<AdsHomeModel>? searchHome;
+
+  // int? id;
+  // HomeController({this.id});
+
   @override
   void onInit() {
     super.onInit();
     fdata();
-    fdatadadshome(id);
+    //fdatadadshome(id);
   }
 
   fdatadadshome(id) async {
     print('idcatctrl $id');
     List<AdsHomeModel> adby = await ApiService.fdatahomeads(id);
-    ads.value = adby;
-    dummysearch = ads.toList();
+    adsHome.value = adby;
+    searchHome = adsHome.toList();
   }
 
   fdata() async {
@@ -29,30 +31,30 @@ class HomeController extends GetxController {
 
     print({"================>": myad});
   }
-  //==================================search========================
+  // //==================================searchHome========================
 
-  fileserch(String query) async {
-    List<AdsHomeModel> dummylistdata = <AdsHomeModel>[];
-    if (query.isNotEmpty && dummysearch!.isNotEmpty) {
-      dummysearch!.forEach((item) {
-        var service = item;
-        if (service.adName!.toLowerCase().contains(query.toLowerCase()) ||
-            service.adDescription!
-                .toLowerCase()
-                .contains(query.toLowerCase()) ||
-            service.adPrice!.toLowerCase().contains(query.toLowerCase())) {
-          dummylistdata.add(service);
-        }
-      });
-      ads.clear();
-      ads.addAll(dummylistdata);
-      update();
-    } else {
-      print(dummysearch!.length);
-      ads.clear();
-      ads.addAll(dummysearch!);
-      update();
-    }
-  }
-  //====================================================================
+  // fileserchHome(String query) async {
+  //   List<AdsHomeModel> dummylistdataHome = <AdsHomeModel>[];
+  //   if (query.isNotEmpty && dummysearchHome!.isNotEmpty) {
+  //     dummysearchHome!.forEach((item) {
+  //       var serviceHome = item;
+  //       if (serviceHome.adName!.toLowerCase().contains(query.toLowerCase()) ||
+  //           serviceHome.adDescription!
+  //               .toLowerCase()
+  //               .contains(query.toLowerCase()) ||
+  //           serviceHome.adPrice!.toLowerCase().contains(query.toLowerCase())) {
+  //         dummylistdataHome.add(serviceHome);
+  //       }
+  //     });
+  //     adsHome.clear();
+  //     adsHome.addAll(dummylistdataHome);
+  //     update();
+  //   } else {
+  //     print(dummysearchHome!.length);
+  //     adsHome.clear();
+  //     adsHome.addAll(dummysearchHome!);
+  //     update();
+  //   }
+  // }
+  // //====================================================================
 }

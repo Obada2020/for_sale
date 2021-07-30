@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
+import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Favorite-ads/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
@@ -40,8 +41,8 @@ class FavoriteAds extends StatelessWidget {
   Widget gridview() {
     return Container(
       margin: EdgeInsets.only(top: 16, right: 16, left: 16),
-      child: GetX<FavAdsController>(
-        init: FavAdsController(),
+      child: GetX<AdsController>(
+        init: AdsController(),
         builder: (controller) {
           if (controller.favad.isNotEmpty) {
             return GridView.builder(
