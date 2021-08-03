@@ -33,6 +33,8 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
+      //locale: Locale('en', 'US'), // translations will be displayed in that locale
+      //fallbackLocale: Locale('ar', 'SA'),
       themeMode: themeService().getThemeMode(),
       localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
