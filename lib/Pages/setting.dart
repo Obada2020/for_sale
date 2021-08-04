@@ -13,9 +13,22 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   bool isSwitched = false;
-  String _dropDownValue = 'العربية';
+  String? _dropDownValue;
+  a() {
+    print(Get.deviceLocale);
+    if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
+      _dropDownValue = "العربية";
+      return;
+    } else if (Get.deviceLocale!.languageCode == Locale('en').toString()) {
+      _dropDownValue = "English";
+      return;
+    }
+    _dropDownValue = "العربية";
+  }
+
   @override
   Widget build(BuildContext context) {
+    a();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -32,7 +45,8 @@ class _SettingsState extends State<Settings> {
             child: Padding(
           padding: const EdgeInsets.only(left: 60),
           child: Text(
-            'الإعدادات',
+            'appbar'.tr,
+            //'الإعدادات'.tr,
             style: klabelAppbarStyle,
           ),
         )),
@@ -46,7 +60,8 @@ class _SettingsState extends State<Settings> {
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Text(
-                'اللغة',
+                'language'.tr,
+                //'اللغة'.tr,
                 style: klabelStyleBold12,
               ),
             ),
@@ -70,6 +85,11 @@ class _SettingsState extends State<Settings> {
                     color: Colors.white,
                   ),
                   onChanged: (newValue) {
+                    if (newValue == 'العربية') {
+                      Get.updateLocale(Locale('ar'));
+                    } else if (newValue == 'English') {
+                      Get.updateLocale(Locale('en'));
+                    }
                     setState(() {
                       _dropDownValue = newValue!;
                     });
@@ -104,7 +124,8 @@ class _SettingsState extends State<Settings> {
                     Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: Text(
-                        'الوضع المظلم',
+                        'theme'.tr,
+                        //'الوضع المظلم'.tr,
                         style: klabelStyleBold12,
                       ),
                     ),
