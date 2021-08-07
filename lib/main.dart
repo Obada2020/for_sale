@@ -18,24 +18,26 @@ void main() async {
   var l = sharedPreferences.getString("lang");
   if (l == null) {
     print("main null");
-    if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
-      sharedPreferences.setString("lang", "ar");
-
-      return;
-    } else if (Get.deviceLocale!.languageCode == Locale('en').toString()) {
-      sharedPreferences.setString("lang", "en");
-      return;
-    }
+    // if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
+    //   sharedPreferences.setString("lang", "ar");
+    //   return;
+    // } else if (Get.deviceLocale!.languageCode == Locale('en').toString()) {
+    //   sharedPreferences.setString("lang", "en");
+    //   return;
+    // }
+    sharedPreferences.setString("lang", "ar");
+    //return;
   }
-  print("main " + t!);
+  // print("main " + t!);
   //runApp(MyApp(t  != null ? 'H' : 'L'));
-  runApp(MyApp(t));
+  runApp(MyApp(l));
+  //runApp(MyApp());
 }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   //var t;
-  //MyApp(this.t);
+  //MyApp();
   String? lan;
   MyApp(this.lan);
   @override
@@ -59,8 +61,8 @@ class _MyAppState extends State<MyApp> {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: [
-        Locale('ar', 'AE'),
-        Locale('en', 'US'), // English, no country code
+        Locale('ar'),
+        Locale('en'), // English, no country code
       ],
       localeResolutionCallback: (locale, supportedLocales) {
         for (var supportedLocale in supportedLocales) {
@@ -72,13 +74,14 @@ class _MyAppState extends State<MyApp> {
         return supportedLocales.first;
       },
 
-      locale: widget.lan == null || widget.lan != "ar"
-          ? Locale("en")
-          : Locale("ar"),
+      locale: widget.lan == null || widget.lan == "ar"
+          ? Locale("ar")
+          : Locale("en"),
+      //locale: Locale("ar"),
       //Locale('ar', 'AE'), // translations will be displayed in that locale
       // //locale:
       // Get.deviceLocale,
-      fallbackLocale: Locale('ar', 'AE'),
+      fallbackLocale: Locale('ar'),
     );
   }
 }
