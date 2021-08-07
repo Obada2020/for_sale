@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../constant/constant.dart';
 import 'package:for_sale/theme/themes.dart';
 
@@ -13,22 +14,37 @@ class Settings extends StatefulWidget {
 
 class _SettingsState extends State<Settings> {
   bool isSwitched = false;
+  bool isLoading = true;
+
   String? _dropDownValue;
-  a() {
-    print(Get.deviceLocale);
-    if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
-      _dropDownValue = "العربية";
-      return;
-    } else if (Get.deviceLocale!.languageCode == Locale('en').toString()) {
+
+  a() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    String? t = sharedPreferences.getString("lang");
+    print(t!);
+    if (t == "en")
       _dropDownValue = "English";
-      return;
-    }
-    _dropDownValue = "العربية";
+    else if (t == "ar") _dropDownValue = "العربية";
+
+    isLoading = false;
+    setState(() {});
+  }
+
+  change(l) async {
+    isLoading = true;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    sharedPreferences.setString("lang", l);
+    print("lang saved successfully" + l);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    a();
   }
 
   @override
   Widget build(BuildContext context) {
-    a();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -51,100 +67,110 @@ class _SettingsState extends State<Settings> {
           ),
         )),
       ),
-      body: Container(
-        margin: EdgeInsets.fromLTRB(16, 19, 16, 0),
-        width: double.infinity,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 10),
-              child: Text(
-                'language'.tr,
-                //'اللغة'.tr,
-                style: klabelStyleBold12,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(bottom: 14),
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Theme.of(context).primaryColor,
-                    //border: Border.all(color: Colors.grey),
-                    borderRadius: BorderRadius.circular(4)),
-                padding: EdgeInsets.only(left: 10),
-                height: 50,
-                width: double.infinity,
-                child: DropdownButton<String>(
-                  isExpanded: true,
-                  value: _dropDownValue,
-                  icon: const Icon(Icons.arrow_downward),
-                  iconSize: 24,
-                  underline: Container(
-                    height: 0,
-                    color: Colors.white,
+      body: isLoading
+          ? CircularProgressIndicator()
+          : Container(
+              margin: EdgeInsets.fromLTRB(16, 19, 16, 0),
+              width: double.infinity,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 10),
+                    child: Text(
+                      'language'.tr,
+                      //'اللغة'.tr,
+                      style: klabelStyleBold12,
+                    ),
                   ),
-                  onChanged: (newValue) {
-                    if (newValue == 'العربية') {
-                      Get.updateLocale(Locale('ar'));
-                    } else if (newValue == 'English') {
-                      Get.updateLocale(Locale('en'));
-                    }
-                    setState(() {
-                      _dropDownValue = newValue!;
-                    });
-                  },
-                  items: <String>['العربية', 'English']
-                      .map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: Text(
-                          value,
-                          style: klabelStyleBold12,
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 14),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).primaryColor,
+                          //border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(4)),
+                      padding: EdgeInsets.only(left: 10),
+                      height: 50,
+                      width: double.infinity,
+                      child: DropdownButton<String>(
+                        isExpanded: true,
+                        value: _dropDownValue,
+                        icon: const Icon(Icons.arrow_downward),
+                        iconSize: 24,
+                        underline: Container(
+                          height: 0,
+                          color: Colors.white,
                         ),
+                        onChanged: (newValue) async {
+                          if (newValue == 'العربية') {
+                            Get.updateLocale(Locale('ar'));
+                            await change("ar");
+                            setState(() {
+                              isLoading = false;
+                            });
+                          } else if (newValue == 'English') {
+                            Get.updateLocale(Locale('en'));
+                            await change("en");
+                            setState(() {
+                              isLoading = false;
+                            });
+                          }
+                          setState(() {
+                            _dropDownValue = newValue!;
+                          });
+                        },
+                        items: <String>['العربية', 'English']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 12),
+                              child: Text(
+                                value,
+                                style: klabelStyleBold12,
+                              ),
+                            ),
+                          );
+                        }).toList(),
                       ),
-                    );
-                  }).toList(),
-                ),
+                    ),
+                  ),
+                  Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor,
+                        //border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      width: double.infinity,
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(right: 12),
+                            child: Text(
+                              'theme'.tr,
+                              //'الوضع المظلم'.tr,
+                              style: klabelStyleBold12,
+                            ),
+                          ),
+                          Switch(
+                            value: isSwitched,
+                            onChanged: (value) {
+                              themeService().changeThemeMode();
+                              // Get.changeThemeMode(
+                              //     Get.isDarkMode ? lightTheme() : darkTheme());
+                              setState(() {
+                                isSwitched = value;
+                              });
+                            },
+                          ),
+                        ],
+                      )),
+                ],
               ),
             ),
-            Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  //border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                width: double.infinity,
-                height: 50,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Text(
-                        'theme'.tr,
-                        //'الوضع المظلم'.tr,
-                        style: klabelStyleBold12,
-                      ),
-                    ),
-                    Switch(
-                      value: isSwitched,
-                      onChanged: (value) {
-                        themeService().changeThemeMode();
-                        // Get.changeThemeMode(
-                        //     Get.isDarkMode ? lightTheme() : darkTheme());
-                        setState(() {
-                          isSwitched = value;
-                        });
-                      },
-                    ),
-                  ],
-                )),
-          ],
-        ),
-      ),
     );
   }
 }

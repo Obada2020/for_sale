@@ -15,16 +15,29 @@ void main() async {
   await GetStorage.init();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
   var t = sharedPreferences.getString("number");
+  var l = sharedPreferences.getString("lang");
+  if (l == null) {
+    print("main null");
+    if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
+      sharedPreferences.setString("lang", "ar");
 
-  //runApp(MyApp(t != null ? 'H' : 'L'));
-  runApp(MyApp());
+      return;
+    } else if (Get.deviceLocale!.languageCode == Locale('en').toString()) {
+      sharedPreferences.setString("lang", "en");
+      return;
+    }
+  }
+  print("main " + t!);
+  //runApp(MyApp(t  != null ? 'H' : 'L'));
+  runApp(MyApp(t));
 }
 
 class MyApp extends StatefulWidget {
   // This widget is the root of your application.
   //var t;
   //MyApp(this.t);
-  MyApp();
+  String? lan;
+  MyApp(this.lan);
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -58,10 +71,13 @@ class _MyAppState extends State<MyApp> {
         }
         return supportedLocales.first;
       },
-      locale:
-          //Locale('ar', 'AE'), // translations will be displayed in that locale
-          //locale:
-          Get.deviceLocale,
+
+      locale: widget.lan == null || widget.lan != "ar"
+          ? Locale("en")
+          : Locale("ar"),
+      //Locale('ar', 'AE'), // translations will be displayed in that locale
+      // //locale:
+      // Get.deviceLocale,
       fallbackLocale: Locale('ar', 'AE'),
     );
   }
