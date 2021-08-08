@@ -24,12 +24,7 @@ class _SettingsState extends State<Settings> {
   getSwitchValue() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var v = sharedPreferences.getString("switch");
-    if (v == "") {
-      setState(() {
-        isSwitched = false;
-      });
-      print(isSwitched.toString() + " 1 ");
-    } else if (v == "true") {
+    if (v == "true") {
       setState(() {
         isSwitched = true;
       });
