@@ -17,37 +17,40 @@ class _SettingsState extends State<Settings> {
   //bool isLoading = true;
   setSwitchValue(value) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString("switch", value);
-    print("===" + value + "===");
+    sharedPreferences.setString("switch", value.toString());
+    print("===" + value.toString() + "===");
   }
 
   getSwitchValue() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? v = sharedPreferences.getString("switch");
-    if (v == null) {
+    var v = sharedPreferences.getString("switch");
+    if (v == "") {
       setState(() {
         isSwitched = false;
       });
+      print(isSwitched.toString() + " 1 ");
     } else if (v == "true") {
       setState(() {
         isSwitched = true;
       });
+      print(isSwitched.toString() + " 2 ");
       //return true;
     } else if (v == "false") {
       setState(() {
         isSwitched = false;
       });
-
+      print(isSwitched.toString() + " 3 ");
       // return false;
     }
-    print("+++" + v! + "+++");
+    //print("+++" + v! + "+++");
   }
 
   String? _dropDownValue;
   List<String> x = [];
   a() async {
+    getSwitchValue();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    String? t = sharedPreferences.getString("lang");
+    var t = sharedPreferences.getString("lang");
     print(t!);
     if (t == "en") {
       setState(() {
@@ -78,7 +81,7 @@ class _SettingsState extends State<Settings> {
   void initState() {
     super.initState();
     a();
-    getSwitchValue();
+    //getSwitchValue();
   }
 
   @override
@@ -201,9 +204,9 @@ class _SettingsState extends State<Settings> {
                         // Get.changeThemeMode(
                         //     Get.isDarkMode ? lightTheme() : darkTheme());
                         setState(() {
-                          setSwitchValue(value);
                           isSwitched = value;
                         });
+                        setSwitchValue(value);
                       },
                     ),
                   ],

@@ -14,7 +14,7 @@ import 'Home/navbar.dart';
 void main() async {
   await GetStorage.init();
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  var t = sharedPreferences.getString("number");
+  //var t = sharedPreferences.getString("number");
   var l = sharedPreferences.getString("lang");
   if (l == null) {
     print("main null");
