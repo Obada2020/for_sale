@@ -7,8 +7,9 @@ class MyAccountController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getNumber();
+    // getNumber();
     // if (number.value == "") {
+    //   print("==================Null=================");
     //   Get.to(() => Signin());
     // }
   }

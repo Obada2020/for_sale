@@ -30,13 +30,19 @@ class AddNameController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    //getNumber();
+    fetchData();
+  }
+
+  getNumber() async {
     String t = "";
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     t = sharedPreferences.getString("number")!.toString();
-    // if (t == "") {
-    //   Get.to(() => Signin());
-    // }
-    fetchData();
+    if (t == "") {
+      print("==================Null1==================");
+      Get.to(() => Signin());
+    } else
+      print("==================Null2==================");
   }
 
   fetchData() async {
