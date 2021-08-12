@@ -16,13 +16,13 @@ import 'model.dart';
 
 class VerifyAccount extends StatelessWidget {
   //var c = Get.find<Login>();
-  String obada;
-  TextEditingController Num = TextEditingController();
+  String number;
+  //TextEditingController Num = TextEditingController();
   //c.user.value.info = Info();
   // var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
-  var soso = Get.find<Login>();
+  var cnt = Get.find<Login>();
   dynamic serial = "";
-  VerifyAccount(this.obada);
+  VerifyAccount(this.number);
   @override
   Widget build(BuildContext context) {
     //Size size = MediaQuery.of(context).size;
@@ -71,7 +71,7 @@ class VerifyAccount extends StatelessWidget {
                     ),
                     Padding(
                       child: Text(
-                        'لقد أرسلنا رمز إلى رقم جوالك $obada يحتوي على رمز تفعيل من 6 خانات',
+                        'لقد أرسلنا رمز إلى رقم جوالك $number يحتوي على رمز تفعيل من 6 خانات',
                         style: klabelStyleBold11,
                       ),
                       padding: EdgeInsets.only(bottom: 30),
@@ -116,7 +116,7 @@ class VerifyAccount extends StatelessWidget {
                           ),
                           TextButton(
                             onPressed: () async {
-                              await ApiService.register(obada);
+                              await ApiService.register(number);
                             },
                             child: Text(
                               'إعادة الإرسال',
@@ -137,9 +137,27 @@ class VerifyAccount extends StatelessWidget {
                       child: TextButton(
                           onPressed: () async {
                             print(serial);
-                            print(obada);
-                            var z = await soso.login(obada, serial);
-                            if (z == "Anas") {
+                            print(number);
+                            if (serial.Length < 6) {
+                              Get.snackbar(
+                                "", "",
+                                titleText: Center(
+                                  child: Text(
+                                    "يرجى إدخال رمز التحقق أولا",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                                //snackPosition: SnackPosition.BOTTOM,
+                                backgroundColor: Colors.grey[10],
+                                borderColor: Colors.black,
+                                borderWidth: 1,
+                              );
+                              return;
+                            }
+                            var z = await cnt.login(number, serial);
+                            if (z == "Login Error") {
                               showAlertDialog(context);
                             } else {
                               Get.offAll(() => Navbar());

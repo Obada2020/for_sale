@@ -21,7 +21,7 @@ class Login extends GetxController {
   login(number, serialNumber) async {
     dynamic result = await ApiService.login(number, serialNumber);
     // print("Result = " + result);
-    if (result != "Anas") {
+    if (result != "Login Error") {
       user.value = result;
       SharedPreferences sharedPreferences =
           await SharedPreferences.getInstance();
