@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../constant/constant.dart';
+import 'package:get/get.dart';
 
 class PrivacyAndTerms extends StatelessWidget {
   const PrivacyAndTerms({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class PrivacyAndTerms extends StatelessWidget {
               child: Padding(
             padding: const EdgeInsets.only(left: 60),
             child: Text(
-              'الشروط والأحكام',
+              'PrivacyAndTerms_Appbar'.tr,
               style: klabelAppbarStyle,
             ),
           )),
@@ -36,7 +37,7 @@ class PrivacyAndTerms extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(bottom: 12),
                   child: Text(
-                    'شروط الاستخدام',
+                    'PrivacyAndTerms_Label1'.tr,
                     style: TextStyle(fontSize: 16, fontFamily: 'FairuzBlack'),
                   ),
                 ),

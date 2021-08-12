@@ -20,7 +20,8 @@ class Signin extends StatelessWidget {
         ),
         title: Center(
           child: Text(
-            'تسجيل الدخول',
+            //'تسجيل الدخول',
+            'Signin_Appbar'.tr,
             style: klabelAppbarStyle,
           ),
         ),
@@ -40,21 +41,21 @@ class Signin extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 child: Text(
-                  'تسجيل الدخول',
+                  'Signin_Label1'.tr,
                   style: klabelStyleBlack14,
                 ),
                 padding: EdgeInsets.only(bottom: 11),
               ),
               Padding(
                 child: Text(
-                  ' مرحبا بك مجددا , أدخل رقم هاتفك للدخول إلى التطبيق',
+                  'Signin_Label2'.tr,
                   style: klabelStyleBold11,
                 ),
                 padding: EdgeInsets.only(bottom: 23),
               ),
               Padding(
                 child: Text(
-                  'رقم الهاتف',
+                  'Signin_Label3'.tr,
                   style: klabelStyleBold11,
                 ),
                 padding: EdgeInsets.only(bottom: 9),
@@ -65,8 +66,8 @@ class Signin extends StatelessWidget {
                   child: TextFormField(
                     controller: num,
                     keyboardType: TextInputType.number,
-                    validator: (val) =>
-                        (val!.length == 0 ? 'This Field Is Required' : null),
+                    // validator: (val) =>
+                    //     (val!.length == 0 ? 'This Field Is Required' : null),
                     decoration: InputDecoration(
                       border: new OutlineInputBorder(
                           borderSide: new BorderSide(color: Color(0xFF231F1F)),
@@ -83,7 +84,7 @@ class Signin extends StatelessWidget {
               ),
               Padding(
                 child: Text(
-                  'بالنقر على متابعة ، فأنت توافق على شروط وسياسة المستخدم',
+                  'Signin_Label4'.tr,
                   style: klabelStyleBold11,
                 ),
                 padding: EdgeInsets.only(bottom: 20),
@@ -102,7 +103,7 @@ class Signin extends StatelessWidget {
                           "", "",
                           titleText: Center(
                             child: Text(
-                              "يرجى إدخال الرقم أولا",
+                              'Signin_Validation'.tr,
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),
@@ -125,7 +126,7 @@ class Signin extends StatelessWidget {
                       }
                     },
                     child: Text(
-                      'تسجيل الدخول',
+                      'Signin_Button'.tr,
                       style: kBottonSubmitStyleBold13,
                     )),
               ),

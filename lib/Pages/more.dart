@@ -18,7 +18,7 @@ class More extends StatelessWidget {
         ),
         title: Center(
           child: Text(
-            'المزيد',
+            'More_Appbar'.tr,
             style: klabelAppbarStyle,
           ),
         ),
@@ -52,7 +52,7 @@ class More extends StatelessWidget {
                         width: 9,
                       ),
                       Text(
-                        'الشروط والأحكام',
+                        'More_Label1'.tr,
                         style: klabelStyleBold12,
                       ),
                     ],
@@ -80,7 +80,7 @@ class More extends StatelessWidget {
                         width: 9,
                       ),
                       Text(
-                        'الإعدادات',
+                        'More_Label2'.tr,
                         style: klabelStyleBold12,
                       ),
                     ],
@@ -96,7 +96,7 @@ class More extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'تواصل معنا',
+                          'More_Label3'.tr,
                           style: TextStyle(fontSize: 20),
                         ),
                         Row(

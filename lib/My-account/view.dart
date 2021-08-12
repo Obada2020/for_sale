@@ -22,7 +22,7 @@ class MyAccount extends StatelessWidget {
           ),
           title: Center(
             child: Text(
-              'حسابي',
+              'MyAccount_Appbar'.tr,
               style: klabelAppbarStyle,
             ),
           ),
@@ -53,7 +53,7 @@ class MyAccount extends StatelessWidget {
                                 child: Row(
                                   children: [
                                     Text(
-                                      'أنت مسجل معنا برقم هاتف   :   ',
+                                      'MyAccount_Label1'.tr,
                                       style: klabelStyleBold14,
                                     ),
                                     Obx(
@@ -79,7 +79,7 @@ class MyAccount extends StatelessWidget {
                                             width: 15,
                                           ),
                                           Text(
-                                            'تسجيل الخروج',
+                                            'MyAccount_Label2'.tr,
                                             style: klabelStyleBold14.copyWith(
                                                 color: Colors.red),
                                           ),
@@ -113,7 +113,7 @@ class MyAccount extends StatelessWidget {
                               width: 15,
                             ),
                             Text(
-                              'إعلاناتي المفضلة',
+                              'MyAccount_Label3',
                               style: klabelStyleBold14,
                             )
                           ],
@@ -143,7 +143,7 @@ class MyAccount extends StatelessWidget {
                                     width: 15,
                                   ),
                                   Text(
-                                    'إعلاناتي',
+                                    'MyAccount_Label4'.tr,
                                     style: klabelStyleBold14,
                                   ),
                                 ],
@@ -169,7 +169,7 @@ class MyAccount extends StatelessWidget {
                                 width: 15,
                               ),
                               Text(
-                                'المراسلة المباشرة مع الإدارة',
+                                'MyAccount_Label5'.tr,
                                 style: klabelStyleBold14,
                               ),
                             ],

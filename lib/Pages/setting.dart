@@ -97,7 +97,7 @@ class _SettingsState extends State<Settings> {
             child: Padding(
           padding: const EdgeInsets.only(left: 60),
           child: Text(
-            'appbar'.tr,
+            'Setting_Appbar'.tr,
             //'الإعدادات'.tr,
             style: klabelAppbarStyle,
           ),
@@ -116,7 +116,7 @@ class _SettingsState extends State<Settings> {
             Padding(
               padding: const EdgeInsets.only(bottom: 10),
               child: Text(
-                'language'.tr,
+                'Setting_Language'.tr,
                 //'اللغة'.tr,
                 style: klabelStyleBold12,
               ),
@@ -187,7 +187,7 @@ class _SettingsState extends State<Settings> {
                     Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: Text(
-                        'theme'.tr,
+                        'Setting_Theme'.tr,
                         //'الوضع المظلم'.tr,
                         style: klabelStyleBold12,
                       ),

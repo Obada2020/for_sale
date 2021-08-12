@@ -42,7 +42,7 @@ class VerifyAccount extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 60),
               child: Text(
-                'تفعيل الحساب',
+                'VerifyAccount_Appbar'.tr,
                 style: klabelAppbarStyle,
               ),
             ),
@@ -64,14 +64,17 @@ class VerifyAccount extends StatelessWidget {
                   children: [
                     Padding(
                       child: Text(
-                        'تفعيل الحساب',
+                        'VerifyAccount_Label1'.tr,
                         style: klabelStyleBlack14,
                       ),
                       padding: EdgeInsets.only(bottom: 8),
                     ),
                     Padding(
                       child: Text(
-                        'لقد أرسلنا رمز إلى رقم جوالك $number يحتوي على رمز تفعيل من 6 خانات',
+                        //'لقد أرسلنا رمز إلى رقم جوالك $number يحتوي على رمز تفعيل من 6 خانات',
+                        'VerifyAccount_Label2'.tr +
+                            '$number' +
+                            'VerifyAccount_Label3'.tr,
                         style: klabelStyleBold11,
                       ),
                       padding: EdgeInsets.only(bottom: 30),
@@ -112,14 +115,14 @@ class VerifyAccount extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'لم تستلم رمز؟',
+                            'VerifyAccount_Label4'.tr,
                           ),
                           TextButton(
                             onPressed: () async {
                               await ApiService.register(number);
                             },
                             child: Text(
-                              'إعادة الإرسال',
+                              'VerifyAccount_Label5'.tr,
                               style: klabelStyleBold11,
                             ),
                           )
@@ -143,7 +146,7 @@ class VerifyAccount extends StatelessWidget {
                                 "", "",
                                 titleText: Center(
                                   child: Text(
-                                    "يرجى إدخال رمز التحقق أولا",
+                                    'VerifyAccount_Snackbar'.tr,
                                     style: TextStyle(
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold),
@@ -164,7 +167,7 @@ class VerifyAccount extends StatelessWidget {
                             }
                           },
                           child: Text(
-                            'تفعيل',
+                            'VerifyAccount_Button'.tr,
                             style: kBottonSubmitStyleBold13,
                           )),
                     ),
@@ -182,20 +185,20 @@ class VerifyAccount extends StatelessWidget {
         Navigator.pop(context);
       },
     );
-    Widget continueButton = TextButton(
-      child: Text("Continue"),
-      onPressed: () {
-        Navigator.pop(context);
-      },
-    );
+    // Widget continueButton = TextButton(
+    //   child: Text("Continue"),
+    //   onPressed: () {
+    //     Navigator.pop(context);
+    //   },
+    // );
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text("خطأ"),
-      content: Text("! الرمز غير صحيح"),
+      title: Text('VerifyAccount_Check1'.tr),
+      content: Text('VerifyAccount_Check2'.tr),
       actions: [
         cancelButton,
-        continueButton,
+        //continueButton,
       ],
     );
 
