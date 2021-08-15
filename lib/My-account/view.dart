@@ -113,7 +113,7 @@ class MyAccount extends StatelessWidget {
                               width: 15,
                             ),
                             Text(
-                              'MyAccount_Label3',
+                              'MyAccount_Label3'.tr,
                               style: klabelStyleBold14,
                             )
                           ],

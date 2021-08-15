@@ -141,7 +141,7 @@ class VerifyAccount extends StatelessWidget {
                           onPressed: () async {
                             print(serial);
                             print(number);
-                            if (serial.Length < 6) {
+                            if (serial.length < 6) {
                               Get.snackbar(
                                 "", "",
                                 titleText: Center(
