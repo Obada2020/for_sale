@@ -1,61 +1,81 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Home/view.dart';
 import 'package:for_sale/My-account/view.dart';
 import 'package:for_sale/Pages/more.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
+import 'package:for_sale/Sign-in/view.dart';
+import 'package:get/get.dart';
 
-class Navbar extends StatefulWidget {
-  Navbar({Key? key}) : super(key: key);
-
+class Home extends StatefulWidget {
+  final String? token;
+  final String? number;
+  Home({this.token, this.number}) {
+    // Get.find<UserController>().number.value = number!;
+    // Get.find<UserController>().token.value = token!;
+  }
   @override
-  _NavbarState createState() => _NavbarState();
+  _HomeState createState() => _HomeState();
 }
 
-class _NavbarState extends State<Navbar> {
+class _HomeState extends State<Home> {
+  bool isLogin = Get.find<UserController>().number.isEmpty;
+
+  //
   int _selectedIndex = 0;
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+  //
+  void _onItemTapped(int index) async {
+    if ((index == 1 && !isLogin) || (index == 2 && !isLogin)) {
+      Navigator.of(context).push(MaterialPageRoute(builder: (x) => Signin()));
+    } else
+      setState(() {
+        _selectedIndex = index;
+      });
   }
 
+  //
   List<Widget> _widgetOptions = <Widget>[
-    Home(),
+    HomePage(),
     AddUI(),
     MyAccount(),
     More()
   ];
-
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //start BottomNavigationBar
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'الرئيسية',
+              label: 'Navbar_Home'.tr,
               backgroundColor: Color(0x667590)),
           BottomNavigationBarItem(
               icon: Icon(Icons.add),
-              label: 'اضافة اعلان',
+              label: 'Navbar_AddAds'.tr,
               backgroundColor: Color(0x667590)),
           BottomNavigationBarItem(
               icon: Icon(Icons.person),
-              label: 'حسابي',
+              label: 'Navbar_MyAccount'.tr,
               backgroundColor: Color(0x667590)),
           BottomNavigationBarItem(
               icon: Icon(Icons.settings),
-              label: 'المزيد',
+              label: 'Navbar_More'.tr,
               backgroundColor: Color(0x667590)),
         ],
         onTap: _onItemTapped,
       ),
 
       //start body
-      body: _widgetOptions[_selectedIndex]);
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _widgetOptions,
+      ),
+    );
   }
 }

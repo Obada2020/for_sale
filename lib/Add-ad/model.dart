@@ -97,13 +97,13 @@ class Catogary {
 }
 
 //************************************************************************************************************* */
-class Ad_descriptions {
+class AdDescriptions {
   List<Addescription>? list;
   String? isTheLast;
 
-  Ad_descriptions({this.list, this.isTheLast});
+  AdDescriptions({this.list, this.isTheLast});
 
-  Ad_descriptions.fromJson(Map<String, dynamic> json) {
+  AdDescriptions.fromJson(Map<String, dynamic> json) {
     if (json['0'] != null) {
       list = <Addescription>[];
       json['0'].forEach((v) {

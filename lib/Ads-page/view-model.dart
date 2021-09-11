@@ -1,53 +1,96 @@
+
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
+import 'package:for_sale/Category-page/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
 import 'package:get/get.dart';
 
 class AdsController extends GetxController {
+  //
   int? adcatogaryid;
+  //
   int? catogarydetailsid;
+  //
   int? addescriptionsid;
-  AdsController(
-      {this.adcatogaryid, this.catogarydetailsid, this.addescriptionsid});
-  var ads = <AdsModel>[].obs;
-  var fullads = <AdsModel>[].obs;
-  var scrl = <AdsModel>[].obs;
+  //
+  Rx<int> selectIndex = 0.obs;
+  //
+  AdsController({
+    this.adcatogaryid,
+    this.catogarydetailsid,
+    this.addescriptionsid,
+  });
+  //
+  var ads = <Ads>[].obs;
+  RxBool isLoadingAds = false.obs;
+  //
+  var fullads = <Ads>[].obs;
+  //
+  var scrl = <String>[].obs;
+  //
   var myads = <MyAdsModel>[].obs;
+  //
   var favad = <FavoriteModel>[].obs;
-  var adsHome = <AdsHomeModel>[].obs;
-  List<AdsModel>? dummysearch;
+  //
+  var allAds = <AdsHomeModel>[].obs;
+  //
+  RxBool isLoadingAllAds = false.obs;
+  //
+  List<Ads>? dummysearch;
+  //
   List<AdsHomeModel>? dummysearchHome;
+  // bool isFirst = true;
+  // var accountID;
+  //
+  var result = false.obs;
 
-  bool isFirst = true;
-  var accountID;
+  //
   @override
   void onInit() {
     super.onInit();
-    // fdatadadshome(adcatogaryid: adcatogaryid);
-    fdatamyad();
-    fdatafavad();
+    // fdatamyad();
+    // favoriteAdd();
+    // print("here initailzed the ads controller");
+    // fetchFavoriteAdds();
   }
 
+  //
+  addFavorite() async {
+    bool res = await ApiService.fdatacdfav();
+    result.value = res;
+    // print('result ctrl==  $res');
+    return res;
+  }
+
+  //
+  void getAdType(List<Ads> list) {
+    List<String>? temp = <String>[];
+    temp = list.map<String>((e) => e.adtypename!.adTypeName!).toList();
+    scrl.value = temp.toSet().toList();
+  }
+
+  //
   fdatadsbynamescrl(a, c, d) async {
-    print("fffffffffffffffffffffffffffff");
-    print(a.toString() + " " + c.toString() + " " + d.toString());
-    List<AdsModel> adby = await ApiService.fdataAdsNameScrl(
+    // print(a.toString() + " " + c.toString() + " " + d.toString());
+    isLoadingAds = true.obs;
+    List<Ads> adby = await ApiService.fdataAdsNameScrl(
       a.toString(),
       c.toString(),
       d.toString(),
     );
+    if (adby.isNotEmpty) ads.value = adby;
+    isLoadingAds = false.obs;
     fullads.value = adby;
-    scrl.value = adby;
-    ads.value = adby;
+    getAdType(adby);
     dummysearch = ads.toList();
   }
 
   //==================================search========================
 
   fileserch(String query) async {
-    List<AdsModel> dummylistdata = <AdsModel>[];
+    List<Ads> dummylistdata = <Ads>[];
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         var service = item;
@@ -55,7 +98,10 @@ class AdsController extends GetxController {
             service.adDescription!
                 .toLowerCase()
                 .contains(query.toLowerCase()) ||
-            service.adPrice!.toLowerCase().contains(query.toLowerCase())) {
+            service.adPrice!
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase())) {
           dummylistdata.add(service);
         }
       });
@@ -63,7 +109,7 @@ class AdsController extends GetxController {
       ads.addAll(dummylistdata);
       update();
     } else {
-      print(dummysearch!.length);
+      // print(dummysearch!.length);
       ads.clear();
       ads.addAll(dummysearch!);
       update();
@@ -73,19 +119,18 @@ class AdsController extends GetxController {
   //==================================filter========================
 
   filter(String query) async {
-    List<AdsModel> dummylistdata = <AdsModel>[];
+    List<Ads> dummylistdata = <Ads>[];
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
-        var service = item;
-        if (service.adTypeNameId!.toString().contains(query)) {
-          dummylistdata.add(service);
+        if (item.adtypename!.adTypeName!.contains(query)) {
+          dummylistdata.add(item);
         }
       });
       ads.clear();
       ads.addAll(dummylistdata);
       update();
     } else {
-      print(dummysearch!.length);
+      // print(dummysearch!.length);
       ads.clear();
       ads.addAll(dummysearch!);
       update();
@@ -98,16 +143,19 @@ class AdsController extends GetxController {
     myads.value = myad;
   }
 
-  fdatafavad() async {
-    List<FavoriteModel> fav = await ApiService.fdatafavad();
+  fetchFavoriteAdds() async {
+    List<FavoriteModel> fav = await ApiService.myfavorite();
     favad.value = fav;
   }
 
-  // fdatadadshome({adcatogaryid}) async {
-  //   List<AdsHomeModel> adby = await ApiService.fdatahomeads(adcatogaryid);
-  //   adsHome.value = adby;
-  //   dummysearchHome = adsHome.toList();
-  // }
+  fetchAllCategoryById(int id) async {
+    isLoadingAllAds.value = true;
+    List<AdsHomeModel> adby = await ApiService.fdatahomeads(id);
+    allAds.value = adby;
+    isLoadingAllAds.value = false;
+    dummysearchHome = allAds.toList();
+  }
+
   //==================================searchHome========================
 
   fileserchHome(String query) async {
@@ -119,19 +167,31 @@ class AdsController extends GetxController {
             serviceHome.adDescription!
                 .toLowerCase()
                 .contains(query.toLowerCase()) ||
-            serviceHome.adPrice!.toLowerCase().contains(query.toLowerCase())) {
+            serviceHome.adPrice!
+                .toString()
+                .toLowerCase()
+                .contains(query.toLowerCase())) {
           dummylistdataHome.add(serviceHome);
         }
       });
-      adsHome.clear();
-      adsHome.addAll(dummylistdataHome);
+      allAds.clear();
+      allAds.addAll(dummylistdataHome);
       update();
     } else {
       print(dummysearchHome!.length);
-      adsHome.clear();
-      adsHome.addAll(dummysearchHome!);
+      allAds.clear();
+      allAds.addAll(dummysearchHome!);
       update();
     }
   }
+
   //====================================================================
+  var categoryList = [].obs;
+  RxBool isLoadingCL = false.obs;
+  fetchCatogaryList(a, c) async {
+    isLoadingCL.value = true;
+    List<CategoryModel> allCategory = await ApiService.fdataCategory(a, c);
+    categoryList.value = allCategory;
+    isLoadingCL.value = false;
+  }
 }

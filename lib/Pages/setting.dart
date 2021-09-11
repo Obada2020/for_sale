@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 import '../constant/constant.dart';
-import 'package:for_sale/theme/themes.dart';
 
 class Settings extends StatefulWidget {
   const Settings({Key? key}) : super(key: key);
@@ -46,7 +46,7 @@ class _SettingsState extends State<Settings> {
     getSwitchValue();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var t = sharedPreferences.getString("lang");
-    print(t!);
+    // print(t!);
     if (t == "en") {
       setState(() {
         _dropDownValue = "English";
@@ -68,7 +68,7 @@ class _SettingsState extends State<Settings> {
     //isLoading = true;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("lang", l);
-    print("lang saved successfully" + l);
+    // print("lang saved successfully" + l);
   }
 
   //var x;
@@ -93,15 +93,12 @@ class _SettingsState extends State<Settings> {
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),
-        title: Center(
-            child: Padding(
-          padding: const EdgeInsets.only(left: 60),
-          child: Text(
-            'Setting_Appbar'.tr,
-            //'الإعدادات'.tr,
-            style: klabelAppbarStyle,
-          ),
-        )),
+        centerTitle: true,
+        title: Text(
+          'Setting_Appbar'.tr,
+          //'الإعدادات'.tr,
+          style: klabelAppbarStyle,
+        ),
       ),
       body:
           //  isLoading
@@ -128,7 +125,7 @@ class _SettingsState extends State<Settings> {
                     color: Theme.of(context).primaryColor,
                     //border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4)),
-                padding: EdgeInsets.only(left: 10),
+                padding: EdgeInsets.symmetric(horizontal: 12),
                 height: 50,
                 width: double.infinity,
                 child: DropdownButton<String>(
@@ -161,12 +158,9 @@ class _SettingsState extends State<Settings> {
                   items: x.map<DropdownMenuItem<String>>((String value) {
                     return DropdownMenuItem<String>(
                       value: value,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 12),
-                        child: Text(
-                          value,
-                          style: klabelStyleBold12,
-                        ),
+                      child: Text(
+                        value,
+                        style: klabelStyleBold12,
                       ),
                     );
                   }).toList(),
@@ -181,16 +175,14 @@ class _SettingsState extends State<Settings> {
                 ),
                 width: double.infinity,
                 height: 50,
+                padding: EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Text(
-                        'Setting_Theme'.tr,
-                        //'الوضع المظلم'.tr,
-                        style: klabelStyleBold12,
-                      ),
+                    Text(
+                      'Setting_Theme'.tr,
+                      //'الوضع المظلم'.tr,
+                      style: klabelStyleBold12,
                     ),
                     Switch(
                       value: isSwitched,

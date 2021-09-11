@@ -2,7 +2,7 @@
 // //
 // //     final detailsModel = detailsModelFromJson(jsonString);
 
-import 'dart:convert';
+// import 'dart:convert';
 
 // List<DetailsModel> detailsModelFromJson(String str) => List<DetailsModel>.from(
 //     json.decode(str).map((x) => DetailsModel.fromJson(x)));

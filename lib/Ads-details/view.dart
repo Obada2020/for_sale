@@ -1,6 +1,5 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:for_sale/Ads-details/view-model.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
@@ -17,6 +16,7 @@ class Adsdetails extends StatefulWidget {
 }
 
 class _AdsdetailsState extends State<Adsdetails> {
+
   List imgList = [
     'img/image.jpg',
     'img/image2.jpg',
@@ -34,13 +34,13 @@ class _AdsdetailsState extends State<Adsdetails> {
     return result;
   }
 
-  // final AdsController adctrl = Get.find();
+  // final AdsController c = Get.put(AdsController());
 
   @override
   Widget build(BuildContext context) {
-    print(widget.details);
+    // print(widget.details);
     Size size = MediaQuery.of(context).size;
-    IconData icon = Icons.favorite_border;
+    // IconData icon = Icons.favorite_border;
     return Scaffold(
       backgroundColor: kbodyColor,
       appBar: AppBar(
@@ -50,22 +50,19 @@ class _AdsdetailsState extends State<Adsdetails> {
         actions: [
           Padding(
             padding: const EdgeInsets.only(left: 20),
-            child: GetX<AddFavController>(
-                init: AddFavController(),
-                builder: (ctrl) {
-                  return GestureDetector(
+            child: 
+                   GestureDetector(
                     onTap: () async {
-                      await ctrl.fdata();
-
-                      print('view ${ctrl.result.value}');
+                      // await c.favoriteAdd();
+                      // print('view ${c.result.value}');
                     },
-                    child: ctrl.result.value == true
-                        ? Icon(Icons.check)
-                        : Icon(Icons.favorite_border),
+                    // child: c.result.value == true
+                        // ? Icon(Icons.check)
+                        // : Icon(Icons.favorite_border),
                     //  Icon(icon),
-                  );
-                }),
-          ),
+                  ))
+               
+          
         ],
         title: Center(
           child: Padding(

@@ -1,38 +1,48 @@
 import 'dart:convert';
 import 'dart:io';
+
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Category-page/model.dart';
+import 'package:for_sale/Chat-WithAdmin/model.dart';
 import 'package:for_sale/Favorite-ads/model.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
 import 'package:for_sale/Sign-in/model.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
+import 'package:get/get.dart' hide Response ;
 import 'package:http/http.dart' as http;
+// import 'package:http/http.dart';
+// import 'dart:async' show Future;
 
 class ApiService {
-  static String url = "https://forsale-test.herokuapp.com/api/";
-
-  //==============================AdsByNameScroll Api=======================
+  //
+  static String uri = "https://www.forsaleq8.com/public/api/";
+  //
+  static var token = Get.find<UserController>().token;
+  //
   static Future fdataAdsNameScrl(
       adcatogaryid, catogarydetailsid, addescriptionsid) async {
-    List<AdsModel> ads = [];
-    http.Response res =
-        await http.post(Uri.parse(url + "BringAdsInName"), body: {
-      'ad_catogary_id': adcatogaryid.toString(),
-      'catogary_details_id':
-          catogarydetailsid != null ? catogarydetailsid.toString() : '',
-      'ad_descriptions_id':
-          addescriptionsid != null ? addescriptionsid.toString() : '',
-      'ad_type_name_id': ''
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    List<Ads> ads = [];
+    http.Response res = await http.post(
+      Uri.parse(uri + "BringAdsInName"),
+      body: {
+        'ad_catogary_id': adcatogaryid.toString(),
+        'catogary_details_id':
+            catogarydetailsid != null ? catogarydetailsid.toString() : '',
+        'ad_descriptions_id':
+            addescriptionsid != null ? addescriptionsid.toString() : '',
+      },
+      // headers: {
+      // HttpHeaders.authorizationHeader:
+      // 'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // }
+    );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        ads.add(AdsModel.fromJson(item));
+        ads.add(Ads.fromJson(item));
       }
       return ads;
     } else {
@@ -42,15 +52,19 @@ class ApiService {
 
   static Future fdatahomeads(adcatogaryid) async {
     List<AdsHomeModel> ads = [];
-    http.Response res =
-        await http.post(Uri.parse(url + "BringAdsInName"), body: {
-      'ad_catogary_id': adcatogaryid.toString(),
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    http.Response res = await http.post(
+      Uri.parse(uri + "BringAdsInName"),
+      body: {
+        'ad_catogary_id': adcatogaryid.toString(),
+      },
+
+      // headers: {
+      //   HttpHeaders.authorizationHeader:
+      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // }
+    );
     if (res.statusCode == 200) {
-      print('idcatapi $adcatogaryid');
+      // print('idcatapi $adcatogaryid');
 
       var body = jsonDecode(res.body);
       for (var item in body) {
@@ -62,15 +76,16 @@ class ApiService {
     }
   }
 
-//============================MyAds Api=======================
   static Future fdataMyad() async {
     List<MyAdsModel> myads = [];
-    http.Response res = await http.post(Uri.parse(url + "myad"), body: {
-      'account_id': '35'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    http.Response res = await http.post(
+      Uri.parse(uri + "myad"), body: {'account_id': '35'},
+
+      // headers: {
+      //   HttpHeaders.authorizationHeader:
+      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // }
+    );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
@@ -85,14 +100,16 @@ class ApiService {
 
   //==============================================================
   //==============================FavoriteAds Api=======================
-  static Future fdatafavad() async {
+  static Future myfavorite() async {
     List<FavoriteModel> fads = [];
-    http.Response res = await http.post(Uri.parse(url + "myfavorite"), body: {
-      'account_id': '31'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    http.Response res = await http.post(
+      Uri.parse(uri + "myfavorite"), body: {'account_id': '1'},
+
+      // headers: {
+      //   HttpHeaders.authorizationHeader:
+      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // }
+    );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
@@ -113,14 +130,15 @@ class ApiService {
   //==============================================================
   //==========================AddDeletFaveAds Api=================
   static Future fdatacdfav() async {
-    http.Response res =
-        await http.post(Uri.parse(url + "FavoriteControleItem"), body: {
-      'account_id': '31',
-      'ad_id': '5'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    http.Response res = await http.post(
+      Uri.parse(uri + "FavoriteControleItem"),
+      body: {'account_id': '31', 'ad_id': '5'},
+
+      //  headers: {
+      //   HttpHeaders.authorizationHeader:
+      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // }
+    );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
 
@@ -134,13 +152,15 @@ class ApiService {
   //==============================================================
 
   //============================== Home ===========================
-  static Future fdataHome() async {
+  static Future fetchAddHome() async {
     var homeList = <HomeModel>[];
-    http.Response res =
-        await http.get(Uri.parse(url + "MobileAppHomePage"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    http.Response res = await http.get(
+      Uri.parse(uri + "MobileAppHomePage"),
+      //  headers: {
+      //   HttpHeaders.authorizationHeader:
+      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // }
+    );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
       for (var item in body) {
@@ -157,7 +177,7 @@ class ApiService {
   static Future fdataCategory(int? namCateId, int? cateDetai) async {
     var allCategory = <CategoryModel>[];
     http.Response res =
-        await http.post(Uri.parse(url + "ViewAdDescriptionPage"), body: {
+        await http.post(Uri.parse(uri + "ViewAdDescriptionPage"), body: {
       'ad_catogary_id': namCateId.toString(),
       'catogary_details_id': cateDetai.toString()
     });
@@ -172,7 +192,7 @@ class ApiService {
 
   static Future<List<AdInfoKey>?> fetchAdInfoKey(id) async {
     http.Response response = await http
-        .post(Uri.parse(url + "getAdInfoKey"), body: {'ad_catogary_id': '$id'});
+        .post(Uri.parse(uri + "getAdInfoKey"), body: {'ad_catogary_id': '$id'});
 
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
@@ -184,13 +204,16 @@ class ApiService {
     }
   }
 
-  static Future<List<AddName>> fetchAddName() async {
+  static Future<List<AddName>> () async {
+    
     var response = await http.get(
-      Uri.parse(url + "adcatogary"),
+      Uri.parse(uri + "adcatogary"),
+      headers: {
+        HttpHeaders.authorizationHeader: token.value,
+      },
     );
     List data = jsonDecode(response.body);
-
-    return data.map((visit) => new AddName.fromJson(visit)).toList();
+    return data.map((a) => new AddName.fromJson(a)).toList();
   }
 
   static Future<dynamic> fetchDropDown(int id, int t) async {
@@ -200,8 +223,9 @@ class ApiService {
             ? "catogary_details_id"
             : "ad_descriptions_id";
     var response = await http.post(
-      Uri.parse(url + "getAllDropDownListInfo$t"),
+      Uri.parse(uri + "getAllDropDownListInfo$t"),
       body: {type: "$id"},
+      headers: {HttpHeaders.authorizationHeader: token.value},
     );
     var data = jsonDecode(response.body);
     return data['isTheLast'] == "yes"
@@ -209,25 +233,19 @@ class ApiService {
         : t == 1
             ? new AddCat1.fromJson(data)
             : t == 2
-                ? new Ad_descriptions.fromJson(data)
+                ? new AdDescriptions.fromJson(data)
                 : new LastAdd.fromJson(data);
   }
 
   //============================== sign in ===========================
 
   static Future register(var phone) async {
-    http.Response res = await http.post(Uri.parse(url + "register"), body: {
-      'account_phone_number': '$phone',
-      'account_type_id': '2'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    http.Response res = await http.post(
+      Uri.parse(uri + "register"),
+      body: {'account_phone_number': '$phone', 'account_type_id': '3'},
+    );
     if (res.statusCode == 200) {
       return true;
-      // var body = jsonDecode(res.body);
-      // return body[0]["user"][0]["serial_number"];
-
     } else {
       print('statuscode cdfav=${res.statusCode}');
       return false;
@@ -238,7 +256,7 @@ class ApiService {
     print(phone);
     print(serialnumber);
 
-    http.Response res = await http.post(Uri.parse(url + "login"), body: {
+    http.Response res = await http.post(Uri.parse(uri + "login"), body: {
       'account_phone_number': '$phone',
       'serial_number': '$serialnumber'
     }, headers: {
@@ -248,10 +266,62 @@ class ApiService {
     var body = jsonDecode(res.body);
     print('statuscode cdfav=${res.statusCode}');
     if (res.statusCode == 200) {
-      return User.fromJson(body);
+      return UserModel.fromJson(body);
     } else {
       print('statuscode cdfav=${res.statusCode}');
       return "Login Error";
     }
   }
+
+  //*************************************************************************** */
+  static Future fetchMessage(int? accountid) async {
+    http.Response response = await http.post(Uri.parse(uri + "showMessage"),
+        body: {'account_id': '$accountid'},
+        headers: {'Accept': 'application/json'});
+    if (response.statusCode == 200) {
+      List data = jsonDecode(response.body);
+      RxList<Message> temp = <Message>[].obs;
+      print("fetch Data");
+      temp.value =
+          data.map((message) => new Message.fromJson(message)).toList();
+      return temp;
+    }
+    return false;
+  }
+
+  //***************************************************************************** */
+  static Future postMessage(int? accountid, String? message) async {
+    http.Response response =
+        await http.post(Uri.parse(uri + "sendMessage"), body: {
+      'account_id': '$accountid',
+      'message': '$message',
+      'is_admin': '0',
+      'read_state': '0'
+    });
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  ////////////////////////////////////////////////////////////////////////////////
+  static Future getTerms() async {
+    http.Response response = await http.get(Uri.parse(uri + "terms"));
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body)[0]['terms_Of_Conditions'];
+      // var r = ModelTerms.fromJson(?)
+    } else
+      return "Error";
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////
+  static Future logout() async {
+    var response = await http.post(Uri.parse(uri + "logout"), headers: {
+      HttpHeaders.authorizationHeader:
+          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+    });
+    if (response.statusCode == 200) return true;
+    return false;
+  }
+  ////////////////////////////////////////////////////////////////////////////////
 }

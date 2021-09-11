@@ -110,7 +110,7 @@ class AdsHomeModel {
   String? adDescription;
   String? adPicture;
   int? mangerAccept;
-  String? adPrice;
+  int? adPrice;
   String? adInfo;
   int? accountId;
   int? adTypeId;

@@ -1,60 +1,52 @@
+import 'dart:developer';
+
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Home/model.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
+  //
   var homeList = <HomeModel>[].obs;
-  var adsHome = <AdsHomeModel>[].obs;
-  List<AdsHomeModel>? searchHome;
-
-  // int? id;
-  // HomeController({this.id});
-
+  //
+  List<List<AdsHomeModel>>? adsHome = [<AdsHomeModel>[]];
+  //
+  RxString terms = "".obs;
+  //
+  RxBool isLoading1 = false.obs;
+  //
+  RxBool isLoading2 = false.obs;
+  //
   @override
   void onInit() {
     super.onInit();
-    fdata();
-    //fdatadadshome(id);
+    fetchHomeList();
+    fetchTerms();
+  }
+  //
+  fetchHomeList() async {
+    //
+    homeList.value = await ApiService.fetchAddHome();
+    //
+    if (homeList.isNotEmpty) 
+      await Future.forEach<HomeModel>(homeList, (element) async { 
+        await fetchAdsHome(element.adCatogaryId);
+       });
+    //
+    isLoading1.value = true;
+  }
+  //
+  fetchAdsHome(id) async {
+    var t = await ApiService.fdatahomeads(id);
+    adsHome!.add(t);
+    // inspect(adsHome);
+    // print("the length" + adsHome!.length.toString());
+    // print("the length" + adsHome!.length.toString());
+    isLoading2.value = true;
   }
 
-  fdatadadshome(id) async {
-    print('idcatctrl $id');
-    List<AdsHomeModel> adby = await ApiService.fdatahomeads(id);
-    adsHome.value = adby;
-    searchHome = adsHome.toList();
+  //
+  fetchTerms() async {
+    terms.value = await ApiService.getTerms();
   }
-
-  fdata() async {
-    List<HomeModel> myad = await ApiService.fdataHome();
-
-    homeList.value = myad;
-
-    print({"================>": myad});
-  }
-  // //==================================searchHome========================
-
-  // fileserchHome(String query) async {
-  //   List<AdsHomeModel> dummylistdataHome = <AdsHomeModel>[];
-  //   if (query.isNotEmpty && dummysearchHome!.isNotEmpty) {
-  //     dummysearchHome!.forEach((item) {
-  //       var serviceHome = item;
-  //       if (serviceHome.adName!.toLowerCase().contains(query.toLowerCase()) ||
-  //           serviceHome.adDescription!
-  //               .toLowerCase()
-  //               .contains(query.toLowerCase()) ||
-  //           serviceHome.adPrice!.toLowerCase().contains(query.toLowerCase())) {
-  //         dummylistdataHome.add(serviceHome);
-  //       }
-  //     });
-  //     adsHome.clear();
-  //     adsHome.addAll(dummylistdataHome);
-  //     update();
-  //   } else {
-  //     print(dummysearchHome!.length);
-  //     adsHome.clear();
-  //     adsHome.addAll(dummysearchHome!);
-  //     update();
-  //   }
-  // }
-  // //====================================================================
+  //
 }

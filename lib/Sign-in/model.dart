@@ -1,10 +1,10 @@
-class User {
+class UserModel {
   Info? info = Info();
   String? token;
 
-  User({this.info, this.token});
+  UserModel({this.info, this.token});
 
-  User.fromJson(Map<String, dynamic> json) {
+  UserModel.fromJson(Map<String, dynamic> json) {
     info = new Info.fromJson(json['user']);
     token = json['token'];
   }

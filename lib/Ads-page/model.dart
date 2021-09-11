@@ -2,16 +2,16 @@
 //
 //     final adsModel = adsModelFromJson(jsonString);
 
-import 'dart:convert';
+// import 'dart:convert';
 
-List<AdsModel> adsModelFromJson(String str) =>
-    List<AdsModel>.from(json.decode(str).map((x) => AdsModel.fromJson(x)));
+// // List<AdsModel> adsModelFromJson(String str) =>
+// //     List<AdsModel>.from(json.decode(str).map((x) => AdsModel.fromJson(x)));
 
-String adsModelToJson(List<AdsModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+// // String adsModelToJson(List<AdsModel> data) =>
+// //     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AdsModel {
-  AdsModel({
+class Ads {
+  Ads({
     this.adId,
     this.adName,
     this.adPhoneNumber,
@@ -37,7 +37,7 @@ class AdsModel {
   String? adDescription;
   String? adPicture;
   int? mangerAccept;
-  String? adPrice;
+  int? adPrice;
   String? adInfo;
   int? accountId;
   int? adTypeId;
@@ -49,7 +49,7 @@ class AdsModel {
   String? updatedAt;
   Adtypename? adtypename;
 
-  factory AdsModel.fromJson(Map<String, dynamic> json) => AdsModel(
+  factory Ads.fromJson(Map<String, dynamic> json) => Ads(
         adId: json["ad_id"],
         adName: json["ad_name"],
         adPhoneNumber: json["ad_phone_number"],

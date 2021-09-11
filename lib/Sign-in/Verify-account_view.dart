@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Home/navbar.dart';
-import 'package:for_sale/Home/view.dart';
-import 'package:for_sale/My-account/model.dart';
-import 'package:for_sale/My-account/view.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:get/get.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/otp_field_style.dart';
 import 'package:otp_text_field/style.dart';
 import '../constant/constant.dart';
-import 'model.dart';
 
 //String? x = "";
 
+// ignore: must_be_immutable
 class VerifyAccount extends StatelessWidget {
   //var c = Get.find<Login>();
-  String number;
+  final String number;
   //TextEditingController Num = TextEditingController();
   //c.user.value.info = Info();
   // var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
-  var cnt = Get.find<Login>();
-  dynamic serial = "";
+  final c = Get.find<UserController>();
+  String serial = "";
+
   VerifyAccount(this.number);
   @override
   Widget build(BuildContext context) {
@@ -81,7 +79,6 @@ class VerifyAccount extends StatelessWidget {
                     ),
                     Padding(
                       child: Container(
-                        //height: 50,
                         width: double.infinity,
                         child: Directionality(
                           textDirection: TextDirection.ltr,
@@ -100,9 +97,22 @@ class VerifyAccount extends StatelessWidget {
                               enabledBorderColor: Colors.white,
                             ),
                             onChanged: (k) {},
-                            onCompleted: (n) {
+                            onCompleted: (n) async {
+                              serial = n;
                               print(n);
-                              serial = n.toString();
+                              var z = await c.login(number, serial);
+                              if (z == "Login Error") {
+                                showAlertDialog(context);
+                              } else {
+                                c.user.value = z;
+                                Get.offAll(
+                                  () => Home(
+                                    number:
+                                        c.user.value.info!.accountPhoneNumber,
+                                    token: c.user.value.token,
+                                  ),
+                                );
+                              }
                               // c.login(n);
                             },
                           ),
@@ -139,9 +149,9 @@ class VerifyAccount extends StatelessWidget {
                       //height: 41,
                       child: TextButton(
                           onPressed: () async {
-                            print(serial);
-                            print(number);
-                            if (serial.length < 6) {
+                            print(serial.length);
+                            // print(number);
+                            if (serial.length < 5) {
                               Get.snackbar(
                                 "", "",
                                 titleText: Center(
@@ -159,11 +169,13 @@ class VerifyAccount extends StatelessWidget {
                               );
                               return;
                             }
-                            var z = await cnt.login(number, serial);
+                            var z = await c.login(number, serial);
                             if (z == "Login Error") {
                               showAlertDialog(context);
                             } else {
-                              Get.offAll(() => Navbar());
+                              c.user.value = z;
+
+                              Get.offAll(() => Home());
                             }
                           },
                           child: Text(

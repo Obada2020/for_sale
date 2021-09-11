@@ -1,16 +1,3 @@
-// To parse this JSON data, do
-//
-//     final favoriteModel = favoriteModelFromJson(jsonString);
-
-import 'dart:convert';
-
-List<FavoriteModel> favoriteModelFromJson(String str) =>
-    List<FavoriteModel>.from(
-        json.decode(str).map((x) => FavoriteModel.fromJson(x)));
-
-String favoriteModelToJson(List<FavoriteModel> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
 class FavoriteModel {
   FavoriteModel({
     this.favoriteId,
