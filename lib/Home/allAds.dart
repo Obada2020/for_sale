@@ -80,7 +80,7 @@ class AdsAll extends GetView<AdsController> {
                 )
               : controller.allAds.isEmpty
                   ? Center(
-                      child: Text("No Ads Found"),
+                      child: Text('empty'.tr),
                     )
                   : GridView.builder(
                       shrinkWrap: true,

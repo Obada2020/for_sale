@@ -1,6 +1,6 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
-
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -10,7 +10,7 @@ import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/My-ads/model.dart';
 import 'package:for_sale/Sign-in/model.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
-import 'package:get/get.dart' hide Response ;
+import 'package:get/get.dart' hide Response;
 import 'package:http/http.dart' as http;
 // import 'package:http/http.dart';
 // import 'dart:async' show Future;
@@ -19,9 +19,12 @@ class ApiService {
   //
   static String uri = "https://www.forsaleq8.com/public/api/";
   //
-  static var token = Get.find<UserController>().token;
+  // static var token = Get.find<UserController>().token;
+  // //
+  // static var accountId = Get.find<UserController>().accountId;
+
   //
-  static Future fdataAdsNameScrl(
+  static fdataAdsNameScrl(
       adcatogaryid, catogarydetailsid, addescriptionsid) async {
     List<Ads> ads = [];
     http.Response res = await http.post(
@@ -50,7 +53,7 @@ class ApiService {
     }
   }
 
-  static Future fdatahomeads(adcatogaryid) async {
+  static fdatahomeads(adcatogaryid) async {
     List<AdsHomeModel> ads = [];
     http.Response res = await http.post(
       Uri.parse(uri + "BringAdsInName"),
@@ -76,15 +79,12 @@ class ApiService {
     }
   }
 
-  static Future fdataMyad() async {
+  static fdataMyad() async {
     List<MyAdsModel> myads = [];
     http.Response res = await http.post(
-      Uri.parse(uri + "myad"), body: {'account_id': '35'},
-
-      // headers: {
-      //   HttpHeaders.authorizationHeader:
-      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-      // }
+      Uri.parse(uri + "myad"),
+      body: {'account_id': '${Get.find<UserController>().accountId}'},
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
@@ -100,15 +100,12 @@ class ApiService {
 
   //==============================================================
   //==============================FavoriteAds Api=======================
-  static Future myfavorite() async {
+  static myfavorite() async {
     List<FavoriteModel> fads = [];
     http.Response res = await http.post(
-      Uri.parse(uri + "myfavorite"), body: {'account_id': '1'},
-
-      // headers: {
-      //   HttpHeaders.authorizationHeader:
-      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-      // }
+      Uri.parse(uri + "myfavorite"),
+      body: {'account_id': '${Get.find<UserController>().accountId}'},
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
@@ -129,7 +126,7 @@ class ApiService {
 
   //==============================================================
   //==========================AddDeletFaveAds Api=================
-  static Future fdatacdfav() async {
+  static fdatacdfav() async {
     http.Response res = await http.post(
       Uri.parse(uri + "FavoriteControleItem"),
       body: {'account_id': '31', 'ad_id': '5'},
@@ -152,7 +149,7 @@ class ApiService {
   //==============================================================
 
   //============================== Home ===========================
-  static Future fetchAddHome() async {
+  static fetchAddHome() async {
     var homeList = <HomeModel>[];
     http.Response res = await http.get(
       Uri.parse(uri + "MobileAppHomePage"),
@@ -174,7 +171,7 @@ class ApiService {
   //============================== categ ===========================
 
   // get all category
-  static Future fdataCategory(int? namCateId, int? cateDetai) async {
+  static fdataCategory(int? namCateId, int? cateDetai) async {
     var allCategory = <CategoryModel>[];
     http.Response res =
         await http.post(Uri.parse(uri + "ViewAdDescriptionPage"), body: {
@@ -190,9 +187,13 @@ class ApiService {
     } else {}
   }
 
-  static Future<List<AdInfoKey>?> fetchAdInfoKey(id) async {
-    http.Response response = await http
-        .post(Uri.parse(uri + "getAdInfoKey"), body: {'ad_catogary_id': '$id'});
+  static fetchAdInfoKey(id) async {
+    http.Response response = await http.post(
+      Uri.parse(uri + "getAdInfoKey"),
+      body: {'ad_catogary_id': '$id'},
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
+
+    );
 
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
@@ -204,16 +205,30 @@ class ApiService {
     }
   }
 
-  static Future<List<AddName>> () async {
-    
+  static fetchAddName() async {
+    // await Future.delayed(Duration(seconds: 5));
     var response = await http.get(
       Uri.parse(uri + "adcatogary"),
-      headers: {
-        HttpHeaders.authorizationHeader: token.value,
-      },
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
+    print("ffffffffffffffffffffffffffffffffffffffffff");
+    print(Get.find<UserController>().token);
+    // print(token);
+    print("ffffffffffffffffffffffffffffffffffffffffff");
     List data = jsonDecode(response.body);
     return data.map((a) => new AddName.fromJson(a)).toList();
+  }
+
+  static fetchMyadtype() async {
+    var response = await http.post(
+      Uri.parse(uri + "myadtype"),
+      body: {'account_id': '${Get.find<UserController>().accountId}'},
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
+    );
+    List data = jsonDecode(response.body);
+    return data
+        .map((a) => new MyAdTypeModel.fromJson(a))
+        .toList(); /////////////////////////////////////////////////////////////////////////
   }
 
   static Future<dynamic> fetchDropDown(int id, int t) async {
@@ -225,7 +240,7 @@ class ApiService {
     var response = await http.post(
       Uri.parse(uri + "getAllDropDownListInfo$t"),
       body: {type: "$id"},
-      headers: {HttpHeaders.authorizationHeader: token.value},
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
     var data = jsonDecode(response.body);
     return data['isTheLast'] == "yes"
@@ -259,9 +274,6 @@ class ApiService {
     http.Response res = await http.post(Uri.parse(uri + "login"), body: {
       'account_phone_number': '$phone',
       'serial_number': '$serialnumber'
-    }, headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
     });
     var body = jsonDecode(res.body);
     print('statuscode cdfav=${res.statusCode}');
@@ -274,14 +286,17 @@ class ApiService {
   }
 
   //*************************************************************************** */
-  static Future fetchMessage(int? accountid) async {
-    http.Response response = await http.post(Uri.parse(uri + "showMessage"),
-        body: {'account_id': '$accountid'},
-        headers: {'Accept': 'application/json'});
+  static Future fetchMessage() async {
+    http.Response response =
+        await http.post(Uri.parse(uri + "showMessage"), body: {
+      'account_id': '${Get.find<UserController>().accountId}'
+    }, headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<UserController>().token}'
+    });
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
       RxList<Message> temp = <Message>[].obs;
-      print("fetch Data");
       temp.value =
           data.map((message) => new Message.fromJson(message)).toList();
       return temp;
@@ -316,10 +331,14 @@ class ApiService {
 
   //////////////////////////////////////////////////////////////////////////////////
   static Future logout() async {
-    var response = await http.post(Uri.parse(uri + "logout"), headers: {
-      HttpHeaders.authorizationHeader:
-          'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-    });
+    print("object");
+    var response = await http.post(
+      Uri.parse(uri + "logout"),
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
+    );
+    print("here response body");
+    print(response.body);
+    // print(token);
     if (response.statusCode == 200) return true;
     return false;
   }

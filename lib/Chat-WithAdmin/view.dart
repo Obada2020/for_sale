@@ -38,7 +38,7 @@ class ChatUI extends StatelessWidget {
         leading: Icon(Icons.arrow_back_rounded),
       ),
       body: Container(
-        color: Color(0xFFF2F2F2),
+        // color: Color(0xFFF2F2F2),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -67,7 +67,13 @@ class ChatUI extends StatelessWidget {
             ),
             Container(
               height: 70,
-              color: Colors.white,
+              // decoration: BoxDecoration(
+              //   border: Border.all(
+              //     width: 1,
+              //     color: Theme.of(context).accentColor,
+              //   ),
+              // ),
+              // color: Colors.white,
               child: Row(
                 children: [
                   IconButton(

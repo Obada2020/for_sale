@@ -35,7 +35,7 @@ class CategoryPage extends GetView<AdsController> {
                   child: CircularProgressIndicator(),
                 )
               : controller.categoryList.isEmpty
-                  ? Center(child: Text("No Ads Found"))
+                  ? Center(child: Text('empty'.tr))
                   : GridView.builder(
                       itemCount: controller.categoryList.length,
                       gridDelegate:

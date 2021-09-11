@@ -42,7 +42,7 @@ class ChatController extends GetxController {
 
   //
   Future fetchMessages() async {
-    RxList<Message> temp = await ApiService.fetchMessage(1);
+    RxList<Message> temp = await ApiService.fetchMessage();
     if (temp.length > message.length) {
       message.value = temp;
       scrollController.value.animateTo(

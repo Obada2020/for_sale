@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
@@ -18,12 +19,12 @@ class VerifyAccount extends StatelessWidget {
   //c.user.value.info = Info();
   // var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
   final c = Get.find<UserController>();
-  String serial = "";
 
+  //
+  String serial = "";
   VerifyAccount(this.number);
   @override
   Widget build(BuildContext context) {
-    //Size size = MediaQuery.of(context).size;
     return Scaffold(
         appBar: AppBar(
           leading: IconButton(
@@ -36,14 +37,10 @@ class VerifyAccount extends StatelessWidget {
           flexibleSpace: Container(
             decoration: BoxDecoration(gradient: kGColor),
           ),
-          title: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(left: 60),
-              child: Text(
-                'VerifyAccount_Appbar'.tr,
-                style: klabelAppbarStyle,
-              ),
-            ),
+          centerTitle: true,
+          title: Text(
+            'VerifyAccount_Appbar'.tr,
+            style: klabelAppbarStyle,
           ),
         ),
         body: Container(
@@ -105,6 +102,7 @@ class VerifyAccount extends StatelessWidget {
                                 showAlertDialog(context);
                               } else {
                                 c.user.value = z;
+                                Get.find<AddNameController>().fetchData();
                                 Get.offAll(
                                   () => Home(
                                     number:
@@ -173,8 +171,7 @@ class VerifyAccount extends StatelessWidget {
                             if (z == "Login Error") {
                               showAlertDialog(context);
                             } else {
-                              c.user.value = z;
-
+                              Get.find<AddNameController>().onInit();
                               Get.offAll(() => Home());
                             }
                           },

@@ -85,141 +85,141 @@ class Ads extends StatelessWidget {
                 ),
               ),
             ),
-            Obx(() => Container(
-                  child: c.isLoadingAllAds.value
-                      ? Center(
-                          child: CircularProgressIndicator(),
-                        )
-                      : c.allAds.isEmpty
-                          ? Center(
-                              child: Text("No Ads Found"),
-                            )
-                          : GridView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: c.ads.length,
-                              gridDelegate:
-                                  new SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                childAspectRatio: 0.9,
-                                crossAxisSpacing: 9,
-                                mainAxisSpacing: 9,
-                              ),
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    Map details = {
-                                      'adId': c.allAds[index].adId,
-                                      'accountId': c.allAds[index].accountId,
-                                      'adName': c.allAds[index].adName,
-                                      'adphone': c.allAds[index].adPhoneNumber,
-                                      'addescr': c.allAds[index].adDescription,
-                                      'adpicture': c.allAds[index].adPicture,
-                                      'adprice': c.allAds[index].adPrice,
-                                      'adinfo': c.allAds[index].adInfo,
-                                      'created': c.allAds[index].createdAt,
-                                      'updated': c.allAds[index].updatedAt,
-                                    };
-                                    Get.to(() => Adsdetails(
-                                        // details: details,
-                                        ));
-                                  },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      boxShadow: [
-                                        BoxShadow(
-                                          spreadRadius: 1,
-                                          blurRadius: 5,
-                                          color: Colors.grey.withOpacity(0.2),
-                                        )
-                                      ],
-                                      color: c.ads[index].adTypeId == 2
-                                          ? Color(0x79667590)
-                                          : Colors.white,
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        //----------card grid-----------
-                                        Container(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(4),
-                                              topLeft: Radius.circular(4),
-                                            ),
-                                            // child: Image.network(
-                                            //   c.ads[index].adPicture.toString(),
-                                            //   fit: BoxFit.cover,
-                                            // ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                            left: 5,
-                                            right: 7,
-                                            top: 3,
-                                          ),
-                                          child: Text(
-                                            c.ads[index].adName!,
-                                            style: klabelStyleBold12card,
-                                            maxLines: 2,
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Container(
-                                                margin: EdgeInsets.only(
-                                                    right: 5,
-                                                    bottom: 5,
-                                                    left: 10),
-                                                padding: EdgeInsets.only(
-                                                  left: 5,
-                                                  right: 6,
-                                                  top: 3,
-                                                  bottom: 4,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            4),
-                                                    gradient: kGColor),
-                                                child: Text(
-                                                  c.ads[index].adPrice
-                                                      .toString(),
-                                                  style: klabelStyleBold11light,
-                                                )),
-                                            Text(
-                                              ('قبل : ${(DateTime.now().difference(DateTime(
-                                                    int.parse(c
-                                                        .ads[index].createdAt!
-                                                        .substring(0, 4)),
-                                                    int.parse(c
-                                                        .ads[index].createdAt!
-                                                        .substring(5, 7)),
-                                                    int.parse(c
-                                                        .ads[index].createdAt!
-                                                        .substring(8, 10)),
-                                                    int.parse(c
-                                                        .ads[index].createdAt!
-                                                        .substring(11, 13)),
-                                                  )).inDays)}  يوم  '),
-                                              maxLines: 2,
-                                              style: TextStyle(
-                                                  fontFamily: 'FairuzBold',
-                                                  fontSize: 10,
-                                                  color: Color(0xFF5E5E5E)),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
+            Obx(
+              () => Container(
+                child: c.isLoadingAllAds.value
+                    ? Center(
+                        child: CircularProgressIndicator(),
+                      )
+                    : c.allAds.isEmpty
+                        ? Center(
+                            child: Text("empty".tr),
+                          )
+                        : GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            itemCount: c.ads.length,
+                            gridDelegate:
+                                new SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.9,
+                              crossAxisSpacing: 9,
+                              mainAxisSpacing: 9,
+                            ),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Map details = {
+                                    'adId': c.allAds[index].adId,
+                                    'accountId': c.allAds[index].accountId,
+                                    'adName': c.allAds[index].adName,
+                                    'adphone': c.allAds[index].adPhoneNumber,
+                                    'addescr': c.allAds[index].adDescription,
+                                    'adpicture': c.allAds[index].adPicture,
+                                    'adprice': c.allAds[index].adPrice,
+                                    'adinfo': c.allAds[index].adInfo,
+                                    'created': c.allAds[index].createdAt,
+                                    'updated': c.allAds[index].updatedAt,
+                                  };
+                                  Get.to(() => Adsdetails(
+                                      // details: details,
+                                      ));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: [
+                                      BoxShadow(
+                                        spreadRadius: 1,
+                                        blurRadius: 5,
+                                        color: Colors.grey.withOpacity(0.2),
+                                      )
+                                    ],
+                                    color: c.ads[index].adTypeId == 2
+                                        ? Color(0x79667590)
+                                        : Colors.white,
+                                    borderRadius: BorderRadius.circular(4),
                                   ),
-                                );
-                              }),
-                ),)
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      //----------card grid-----------
+                                      Container(
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(4),
+                                            topLeft: Radius.circular(4),
+                                          ),
+                                          // child: Image.network(
+                                          //   c.ads[index].adPicture.toString(),
+                                          //   fit: BoxFit.cover,
+                                          // ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                          left: 5,
+                                          right: 7,
+                                          top: 3,
+                                        ),
+                                        child: Text(
+                                          c.ads[index].adName!,
+                                          style: klabelStyleBold12card,
+                                          maxLines: 2,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Container(
+                                              margin: EdgeInsets.only(
+                                                  right: 5,
+                                                  bottom: 5,
+                                                  left: 10),
+                                              padding: EdgeInsets.only(
+                                                left: 5,
+                                                right: 6,
+                                                top: 3,
+                                                bottom: 4,
+                                              ),
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(4),
+                                                  gradient: kGColor),
+                                              child: Text(
+                                                c.ads[index].adPrice.toString(),
+                                                style: klabelStyleBold11light,
+                                              )),
+                                          Text(
+                                            ('قبل : ${(DateTime.now().difference(DateTime(
+                                                  int.parse(c
+                                                      .ads[index].createdAt!
+                                                      .substring(0, 4)),
+                                                  int.parse(c
+                                                      .ads[index].createdAt!
+                                                      .substring(5, 7)),
+                                                  int.parse(c
+                                                      .ads[index].createdAt!
+                                                      .substring(8, 10)),
+                                                  int.parse(c
+                                                      .ads[index].createdAt!
+                                                      .substring(11, 13)),
+                                                )).inDays)}  يوم  '),
+                                            maxLines: 2,
+                                            style: TextStyle(
+                                                fontFamily: 'FairuzBold',
+                                                fontSize: 10,
+                                                color: Color(0xFF5E5E5E)),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }),
+              ),
+            )
           ],
         ),
       ),

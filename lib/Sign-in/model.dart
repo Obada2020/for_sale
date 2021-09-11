@@ -28,7 +28,6 @@ class Info {
   dynamic accountTypeId;
   dynamic createdAt;
   dynamic updatedAt;
-  List<dynamic>? adtype;
 
   Info({
     this.accountId,
@@ -39,11 +38,9 @@ class Info {
     this.accountTypeId,
     this.createdAt,
     this.updatedAt,
-    this.adtype,
   });
 
   Info.fromJson(Map<String, dynamic> json) {
-    adtype = [];
     accountId = json['account_id'];
     accountPhoneNumber = json['account_phone_number'];
     serialNumber = json['serial_number'];
@@ -52,13 +49,9 @@ class Info {
     accountTypeId = json['account_type_id'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
-    json['adtype'].forEach((v) {
-      adtype!.add(new InfoAdd.fromJson(v));
-    });
   }
 
   Map<String, dynamic> toJson() {
-    adtype = [];
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['account_id'] = this.accountId;
     data['account_phone_number'] = this.accountPhoneNumber;
@@ -68,7 +61,6 @@ class Info {
     data['account_type_id'] = this.accountTypeId;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['adtype'] = this.adtype!.map((v) => v.toJson()).toList();
     return data;
   }
 }

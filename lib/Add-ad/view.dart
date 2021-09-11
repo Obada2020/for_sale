@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Add-ad/view-model.dart';
-import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
@@ -24,12 +23,7 @@ class Myform {
 
 class AddUI extends GetView<AddNameController> {
   // final c = Get.put(AddNameController());
-  var _formKey = GlobalKey<FormState>();
-
-  ///
-  ///
-  ////////////////////////////////////////
-
+  final _formKey = GlobalKey<FormState>();
   ////////////////////////////////////////
   ///
   ///
@@ -122,18 +116,12 @@ class AddUI extends GetView<AddNameController> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
-        title: Text("إضافة إعلان"),
+        title: Text("add-ad".tr, style: klabelAppbarStyle),
         centerTitle: true,
-        leading: Icon(Icons.arrow_back_rounded),
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),
-        actions: [
-          Icon(Icons.arrow_forward),
-          SizedBox(width: 15),
-        ],
       ),
-      backgroundColor: Color(0xFFF2F2F2),
       body: Stack(
         children: [
           SingleChildScrollView(
@@ -145,9 +133,9 @@ class AddUI extends GetView<AddNameController> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(height: 12),
-                    get(ChooseType(), "نوع الإعلان"),
+                    get(ChoseType(), "type-ad".tr),
                     SizedBox(height: 12),
-                    get(WAddName(), "القسم"),
+                    get(WAddName(), "section-ad".tr),
                     SizedBox(height: 12),
                     Obx(() => Visibility(
                           visible: controller.showLastCat.value,
@@ -162,9 +150,9 @@ class AddUI extends GetView<AddNameController> {
                         )),
                     SizedBox(height: 12),
                     communicate(controller.myform.value),
-                    SizedBox(height: 18),
+                    SizedBox(height: 8),
                     Padding(
-                      padding: const EdgeInsets.all(18),
+                      padding: const EdgeInsets.all(9),
                       child: DecoratedBox(
                         decoration: BoxDecoration(
                           gradient: kGColor,
@@ -178,26 +166,29 @@ class AddUI extends GetView<AddNameController> {
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.transparent)),
                             onPressed: () async {
-                              FocusScope.of(context).unfocus();
-                              if (check() && validate()) {
-                                // inspect(c.myform.value);
-                                if (await controller.postAdd()) {
-                                  // _formKey.currentState!.reset();
-                                  print("SUCCESS");
-                                  // print("SUCCESSS");
-                                } else
-                                  print("ERROR");
-                                // print(c.myform.value.adName);
-                                // print(c.myform.value.adDescription);
-                                // print(c.myform.value.adPhoneNumber);
-                                // print(c.myform.value.adPrice);
-                                // print(c.myform.value.adTypeId);
-                                // print(adName);
-                                // print(adName);
-                              }
+                              // FocusScope.of(context).unfocus();
+                              // if (check() && validate()) {
+                              //   // inspect(c.myform.value);
+                              //   if (await controller.postAdd()) {
+                              //     // _formKey.currentState!.reset();
+                              //     print("SUCCESS");
+                              //     // print("SUCCESSS");
+                              // } else
+                              //     print("ERROR");
+                              // print(c.myform.value.adName);
+                              // print(c.myform.value.adDescription);
+                              // print(c.myform.value.adPhoneNumber);
+                              // print(c.myform.value.adPrice);
+                              // print(c.myform.value.adTypeId);
+                              // print(adName);
+                              // print(adName);
+                              // }
+                              await controller.postAdd();
                             },
                             child: Center(
-                              child: Text("نشر الإعلان"),
+                              child: Text(
+                                "details-ad14".tr,
+                              ),
                             )),
                       ),
                     ),
@@ -208,7 +199,8 @@ class AddUI extends GetView<AddNameController> {
             ),
           ),
           Obx(() => Visibility(
-              visible: controller.loading.value,
+              visible:
+                  controller.loading.value || controller.loadingMyType.value,
               child: BackdropFilter(
                 filter: new ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                 child: Center(
@@ -246,7 +238,7 @@ enum Types { normal, special }
 Widget get(Widget x, String title) {
   return Container(
     width: MediaQuery.of(Get.context!).size.width,
-    color: Colors.white,
+    color: Theme.of(Get.context!).primaryColor,
     child: Container(
       padding: EdgeInsets.only(right: 16, top: 16, left: 16, bottom: 16),
       child: Column(
@@ -264,13 +256,12 @@ Widget get(Widget x, String title) {
   );
 }
 
-class ChooseType extends StatefulWidget {
-  ChooseType({Key? key, Myform? t}) : super(key: key);
+class ChoseType extends StatefulWidget {
   @override
-  _ChooseTypeState createState() => _ChooseTypeState();
+  _ChoseTypeState createState() => _ChoseTypeState();
 }
 
-class _ChooseTypeState extends State<ChooseType> {
+class _ChoseTypeState extends State<ChoseType> {
   Types type = Types.normal;
   @override
   Widget build(BuildContext context) {
@@ -278,11 +269,12 @@ class _ChooseTypeState extends State<ChooseType> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       child: Row(
         children: [
           Expanded(
+            flex: 1,
             child: Column(
               children: [
                 InkWell(
@@ -294,28 +286,81 @@ class _ChooseTypeState extends State<ChooseType> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                        border: type == Types.normal
-                            ? Border.all(color: Colors.black)
-                            : null,
-                        color: Color(0xFF487485).withOpacity(0.2),
-                        borderRadius: BorderRadius.all(Radius.circular(13))),
+                      border: type == Types.normal
+                          ? Border.all(
+                              color: Theme.of(Get.context!).brightness ==
+                                      Brightness.dark
+                                  ? Colors.yellow
+                                  : Colors.black)
+                          : null,
+                      color: Color(0xFF487485).withOpacity(
+                        0.2,
+                      ),
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          13,
+                        ),
+                      ),
+                    ),
                     height: size.height * 0.125,
                     child: Center(
                       child: Text(
-                        "إعلان \nعادي",
+                        'type-ad1'.tr,
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: 15),
-                Text("لديك عدد 15 إعلان"),
-                Text("مدة الإعلان : 15 يوم")
+                // Text("لديك عدد 15 إعلان"),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("type-ad3".tr),
+                    Obx(
+                      () => Get.find<AddNameController>().loadingMyType.value
+                          ? Text("?")
+                          : Get.find<AddNameController>().myAdTypelist.isEmpty
+                              ? Text("?")
+                              : Text(
+                                  " " +
+                                      Get.find<AddNameController>()
+                                          .myAdTypelist[1]
+                                          .adCount
+                                          .toString() +
+                                      " ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                    ),
+                    Text("type-ad4".tr),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("type-ad5".tr),
+                    Obx(() => Get.find<AddNameController>().loadingMyType.value
+                        ? Text("?")
+                        : Get.find<AddNameController>().myAdTypelist.isEmpty
+                            ? Text("?")
+                            : Text(
+                                " " +
+                                    Get.find<AddNameController>()
+                                        .myAdTypelist[1]
+                                        .adTime
+                                        .toString() +
+                                    " ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
+                    Text('type-ad6'.tr),
+                  ],
+                ),
               ],
             ),
           ),
           SizedBox(width: 15),
           Expanded(
+            flex: 1,
             child: Column(
               children: [
                 InkWell(
@@ -328,22 +373,69 @@ class _ChooseTypeState extends State<ChooseType> {
                   child: Container(
                     height: size.height * 0.125,
                     decoration: BoxDecoration(
-                        color: Color(0xFFE8CECE),
-                        border: type == Types.special
-                            ? Border.all(color: Colors.black)
-                            : null,
-                        borderRadius: BorderRadius.all(Radius.circular(13))),
+                      color: Color(0xFFE8CECE),
+                      border: type == Types.special
+                          ? Border.all(
+                              color: Theme.of(context).disabledColor,
+                            )
+                          : null,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(
+                          13,
+                        ),
+                      ),
+                    ),
                     child: Center(
                       child: Text(
-                        "إعلان\n مميز",
+                        'type-ad2'.tr,
                         style: TextStyle(fontSize: 24),
                       ),
                     ),
                   ),
                 ),
                 SizedBox(height: 15),
-                Text("لديك عدد 15 إعلان"),
-                Text("مدة الإعلان : 15 يوم")
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("type-ad3".tr),
+                    Obx(
+                      () => Get.find<AddNameController>().loadingMyType.value
+                          ? Text("?")
+                          : Get.find<AddNameController>().myAdTypelist.isEmpty
+                              ? Text("?")
+                              : Text(
+                                  " " +
+                                      Get.find<AddNameController>()
+                                          .myAdTypelist[0]
+                                          .adCount
+                                          .toString() +
+                                      " ",
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                    ),
+                    Text("type-ad4".tr),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text("type-ad5".tr),
+                    Obx(() => Get.find<AddNameController>().loadingMyType.value
+                        ? Text("?")
+                        : Get.find<AddNameController>().myAdTypelist.isEmpty
+                            ? Text("?")
+                            : Text(
+                                " " +
+                                    Get.find<AddNameController>()
+                                        .myAdTypelist[0]
+                                        .adTime
+                                        .toString() +
+                                    " ",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              )),
+                    Text('type-ad6'.tr),
+                  ],
+                ),
               ],
             ),
           ),
@@ -381,7 +473,6 @@ class _WAddNameState extends State<WAddName> {
                 ],
               ),
             ),
-            // padding : EdgeInsets.all(3),
             width: size.width - 300,
             height: 41,
             padding: EdgeInsets.all(5),
@@ -669,11 +760,13 @@ class _DetailsAddState extends State<DetailsAdd> {
     }
     if (!mounted) return;
 
-    setState(() {
-      c.myform.value.images = resultList;
+    setState(
+      () {
+        c.myform.value.images = resultList;
 
-      _error = error;
-    });
+        _error = error;
+      },
+    );
   }
 
   Widget buildGridView() {
@@ -714,7 +807,7 @@ class _DetailsAddState extends State<DetailsAdd> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text("upload"), Text("انقر لرفع الصور")],
+                children: [Text("upload"), Text("details-ad3".tr)],
               ),
             ),
           ));
@@ -739,9 +832,9 @@ class _DetailsAddState extends State<DetailsAdd> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 25, top: 19, right: 16),
+            padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
             child: Text(
-              "تفاصيل الإعلان",
+              "details-ad1".tr,
               style: TextStyle(fontSize: 20),
             ),
           ),
@@ -752,9 +845,9 @@ class _DetailsAddState extends State<DetailsAdd> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  "صورة الإعلان",
+                  "details-ad2".tr,
                   style: TextStyle(
                     color: Color(0xFF333333).withOpacity(0.7),
                   ),
@@ -772,9 +865,9 @@ class _DetailsAddState extends State<DetailsAdd> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  "العنوان",
+                  "details-ad4".tr,
                   style: TextStyle(
                     color: Color(0xFF333333).withOpacity(0.7),
                   ),
@@ -784,13 +877,12 @@ class _DetailsAddState extends State<DetailsAdd> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
-                  validator: (txt) =>
-                      txt!.isEmpty ? "الرجاء ادخال العنوان" : null,
+                  validator: (txt) => txt!.isEmpty ? "details-ad5".tr : null,
                   onSaved: (t) {
                     c.myform.value.adName = t!;
                   },
                   decoration: InputDecoration(
-                      hintText: "ادخل عنوان الإعلان",
+                      hintText: "details-ad5".tr,
                       enabledBorder: const OutlineInputBorder(
                         borderSide: const BorderSide(
                             color: Color(0x59707070), width: 0.0),
@@ -811,9 +903,9 @@ class _DetailsAddState extends State<DetailsAdd> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  "السعر",
+                  "details-ad6".tr,
                   style: TextStyle(
                     color: Color(0xFF333333).withOpacity(0.7),
                   ),
@@ -823,37 +915,38 @@ class _DetailsAddState extends State<DetailsAdd> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
-                  validator: (text) =>
-                      text!.isEmpty ? "الرجاء ادخال السعر " : null,
+                  validator: (text) => text!.isEmpty ? "details-ad6".tr : null,
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onSaved: (s) {
                     c.myform.value.adPrice = int.parse(s!);
                   },
                   decoration: InputDecoration(
-                      hintText: "ادخل سعر الإعلان بالدينار الكويتي",
-                      // prefix: Text("د.ك"),
-                      // prefixIcon: Text("data"),
-                      suffixIcon: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Text(
-                          "د.ك",
-                          style: TextStyle(
-                              color: Colors.grey.shade800,
-                              fontWeight: FontWeight.bold),
-                        ),
+                    hintText: "details-ad7".tr,
+                    // prefix: Text("د.ك"),
+                    // prefixIcon: Text("data"),
+                    suffixIcon: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        "details-ad8".tr,
+                        style: TextStyle(
+                            color: Colors.grey.shade800,
+                            fontWeight: FontWeight.bold),
                       ),
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color(0x59707070), width: 0.0),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFF2F2F2),
-                      border: OutlineInputBorder(
-                          borderSide: BorderSide(
+                    ),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color(0x59707070), width: 0.0),
+                    ),
+                    filled: true,
+                    fillColor: Color(0xFFF2F2F2),
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(
                         width: 1,
                         color: Color(0xFF707070).withOpacity(0.09),
-                      ))),
+                      ),
+                    ),
+                  ),
                 ),
               ),
             ],
@@ -863,9 +956,9 @@ class _DetailsAddState extends State<DetailsAdd> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 16),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  "الوصف",
+                  "details-ad9".tr,
                   style: TextStyle(
                     color: Color(0xFF333333).withOpacity(0.7),
                   ),
@@ -875,8 +968,7 @@ class _DetailsAddState extends State<DetailsAdd> {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
-                  validator: (f) =>
-                      f!.isEmpty ? " الرجاء ادخال الوصف هنا" : null,
+                  validator: (f) => f!.isEmpty ? "details-ad10".tr : null,
                   onSaved: (d) {
                     c.myform.value.adDescription = d;
                     print("On Saved");
@@ -887,7 +979,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                   decoration: InputDecoration(
                       // contentPadding: new EdgeInsets.symmetric(
                       //     vertical: 50.0, horizontal: 10.0),
-                      hintText: "ادخل وصف الإعلان",
+                      hintText: "details-ad10".tr,
                       // prefix: Text("د.ك"),
                       // prefixIcon: Text("data"),
 
@@ -1026,9 +1118,9 @@ Widget communicate(Myform phone) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 25, top: 19, right: 16),
+          padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
           child: Text(
-            "التواصل",
+            "details-ad11".tr,
             style: TextStyle(fontSize: 20),
           ),
         ),
@@ -1037,9 +1129,9 @@ Widget communicate(Myform phone) {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.only(right: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "رقم التواصل (الهاتف)",
+                "details-ad12".tr,
                 style: TextStyle(
                   color: Color(0xFF333333).withOpacity(0.7),
                 ),
@@ -1053,13 +1145,12 @@ Widget communicate(Myform phone) {
                 child: TextFormField(
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  validator: (text) =>
-                      text!.isEmpty ? "الرجاء ادخال رقم الهاتف للتواصل" : null,
+                  validator: (text) => text!.isEmpty ? "details-ad13".tr : null,
                   onSaved: (value) {
                     phone.adPhoneNumber = int.parse(value!);
                   },
                   decoration: InputDecoration(
-                    hintText: "ادخل رقم التواصل",
+                    hintText: "details-ad13".tr,
                     // contentPadding: EdgeInsets.only(bottom: 25),
                     contentPadding: EdgeInsets.all(10.0),
                     // errorText: "ادخل رقم التواصل",

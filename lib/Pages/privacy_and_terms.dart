@@ -9,13 +9,6 @@ class PrivacyAndTerms extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-          ),
-        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),

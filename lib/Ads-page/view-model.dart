@@ -1,4 +1,3 @@
-
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -31,8 +30,10 @@ class AdsController extends GetxController {
   var scrl = <String>[].obs;
   //
   var myads = <MyAdsModel>[].obs;
+  RxBool isLoadingMyAds = false.obs;
   //
   var favad = <FavoriteModel>[].obs;
+  RxBool isLoadingFavorite = false.obs;
   //
   var allAds = <AdsHomeModel>[].obs;
   //
@@ -50,10 +51,6 @@ class AdsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    // fdatamyad();
-    // favoriteAdd();
-    // print("here initailzed the ads controller");
-    // fetchFavoriteAdds();
   }
 
   //
@@ -139,13 +136,17 @@ class AdsController extends GetxController {
 
   //====================================================================
   fdatamyad() async {
+    isLoadingMyAds.value = true;
     List<MyAdsModel> myad = await ApiService.fdataMyad();
     myads.value = myad;
+    isLoadingMyAds.value = false;
   }
 
   fetchFavoriteAdds() async {
+    isLoadingFavorite.value = true;
     List<FavoriteModel> fav = await ApiService.myfavorite();
     favad.value = fav;
+    isLoadingFavorite.value = false;
   }
 
   fetchAllCategoryById(int id) async {

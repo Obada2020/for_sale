@@ -11,7 +11,7 @@ final kGColor = LinearGradient(
   ],
 ); // for Appbar And Button
 final kLabelBodyStyle = TextStyle(fontFamily: 'FairuzBlack', fontSize: 14);
-final klabelAppbarStyle = TextStyle(fontFamily: 'FairuzBlack', fontSize: 12);
+final klabelAppbarStyle = TextStyle(fontFamily: 'FairuzBlack', fontSize: 14);
 
 final klabelStyleBold11 = TextStyle(
   fontFamily: 'FairuzBold',

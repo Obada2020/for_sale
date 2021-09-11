@@ -21,12 +21,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  bool isLogin = Get.find<UserController>().number.isEmpty;
-
+  bool isLogin = Get.find<UserController>().token.isNotEmpty;
   //
   int _selectedIndex = 0;
   //
   void _onItemTapped(int index) async {
+    // print(isLogin);
     if ((index == 1 && !isLogin) || (index == 2 && !isLogin)) {
       Navigator.of(context).push(MaterialPageRoute(builder: (x) => Signin()));
     } else
@@ -43,11 +43,18 @@ class _HomeState extends State<Home> {
     More()
   ];
   //
+  List<Widget> _widgetOptions2 = <Widget>[
+    HomePage(),
+    Signin(),
+    Signin(),
+    More()
+  ];
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,
+        // backgroundColor: Theme.of(context).brightness == ThemeMode.dark ? Theme.of(context).backgroundColor,
         currentIndex: _selectedIndex,
         type: BottomNavigationBarType.fixed,
         items: <BottomNavigationBarItem>[
@@ -74,7 +81,7 @@ class _HomeState extends State<Home> {
       //start body
       body: IndexedStack(
         index: _selectedIndex,
-        children: _widgetOptions,
+        children: isLogin ? _widgetOptions : _widgetOptions2,
       ),
     );
   }

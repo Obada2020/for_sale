@@ -276,3 +276,53 @@ class AdInfoKey {
     return data;
   }
 }
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+class MyAdTypeModel {
+  int? adTypeId;
+  String? adTypeName;
+  int? adTime;
+  int? adCount;
+  int? isSpecial;
+  int? accountId;
+  String? createdAt;
+  String? updatedAt;
+
+  MyAdTypeModel(
+      {this.adTypeId,
+      this.adTypeName,
+      this.adTime,
+      this.adCount,
+      this.isSpecial,
+      this.accountId,
+      this.createdAt,
+      this.updatedAt});
+
+  MyAdTypeModel.fromJson(Map<String, dynamic> json) {
+    adTypeId = json['ad_type_id'];
+    adTypeName = json['ad_type_name'];
+    adTime = json['ad_time'];
+    adCount = json['ad_count'];
+    isSpecial = json['is_special'];
+    accountId = json['account_id'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ad_type_id'] = this.adTypeId;
+    data['ad_type_name'] = this.adTypeName;
+    data['ad_time'] = this.adTime;
+    data['ad_count'] = this.adCount;
+    data['is_special'] = this.isSpecial;
+    data['account_id'] = this.accountId;
+    data['created_at'] = this.createdAt;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class MyAdTypeModels {
+  List<MyAdTypeModel> list = <MyAdTypeModel>[];
+}

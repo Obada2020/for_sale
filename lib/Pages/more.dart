@@ -35,9 +35,19 @@ class More extends StatelessWidget {
                 Get.to(() => PrivacyAndTerms());
               },
               child: Container(
-                  padding: EdgeInsets.only(right: 17),
+                  padding: EdgeInsets.only(right: 17, left: 17),
                   margin: EdgeInsets.only(bottom: 12),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Theme.of(Get.context!).brightness ==
+                                    Brightness.dark
+                                ? Colors.transparent
+                                : Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(2, 2))
+                      ],
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(4)),
                   width: double.infinity,
@@ -63,9 +73,19 @@ class More extends StatelessWidget {
                 Get.to(() => Settings());
               },
               child: Container(
-                  padding: EdgeInsets.only(right: 17),
+                  padding: EdgeInsets.only(right: 17, left: 17),
                   margin: EdgeInsets.only(bottom: 12),
                   decoration: BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                            color: Theme.of(Get.context!).brightness ==
+                                    Brightness.dark
+                                ? Colors.transparent
+                                : Colors.grey.withOpacity(0.5),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: Offset(2, 2))
+                      ],
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.circular(4)),
                   width: double.infinity,
@@ -86,61 +106,75 @@ class More extends StatelessWidget {
                     ],
                   )),
             ),
-            Container(
-              height: size.height - (size.height * 0.4),
+            Expanded(child: Container()),
+            Padding(
+              padding: EdgeInsets.only(left: 16, right: 16, bottom: 16),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
+                  Text(
+                    'More_Label3'.tr,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                  SizedBox(height: 12),
                   Container(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
+                    padding: EdgeInsets.symmetric(vertical: 10),
+                    // margin: EdgeInsets.only(bottom: 12),
+                    decoration: BoxDecoration(
+                        boxShadow: [
+                          BoxShadow(
+                              color: Theme.of(Get.context!).brightness ==
+                                      Brightness.dark
+                                  ? Colors.transparent
+                                  : Colors.grey.withOpacity(0.5),
+                              spreadRadius: 1,
+                              blurRadius: 5,
+                              offset: Offset(2, 2))
+                        ],
+                        color: Theme.of(context).primaryColor,
+                        borderRadius: BorderRadius.circular(4)),
+                    width: double.infinity,
+                    height: 48,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          'More_Label3'.tr,
-                          style: TextStyle(fontSize: 20),
+                        Expanded(
+                          child: InkWell(
+                            child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: new ExactAssetImage(
+                                    'img/twitter.png',
+                                  ),
+                                  fit: BoxFit.contain,
+                                ))),
+                            onTap: () {
+                              twitter();
+                            },
+                          ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: InkWell(
-                                child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                      image: new ExactAssetImage(
-                                        'img/twitter.png',
-                                      ),
-                                      fit: BoxFit.contain,
-                                    ))),
-                                onTap: () {
-                                  twitter();
-                                },
-                              ),
-                            ),
-                            Expanded(
-                              child: InkWell(
-                                child: Container(
-                                    height: 50,
-                                    width: 50,
-                                    decoration: BoxDecoration(
-                                        image: DecorationImage(
-                                      image: new ExactAssetImage(
-                                        'img/insta.png',
-                                      ),
-                                      fit: BoxFit.contain,
-                                    ))),
-                                onTap: () {
-                                  insta();
-                                },
-                              ),
-                            ),
-                          ],
-                        )
+                        Expanded(
+                          child: InkWell(
+                            child: Container(
+                                height: 50,
+                                width: 50,
+                                decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                  image: new ExactAssetImage(
+                                    'img/insta.png',
+                                  ),
+                                  fit: BoxFit.contain,
+                                ))),
+                            onTap: () {
+                              insta();
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                  ),
+                  )
                 ],
               ),
             )

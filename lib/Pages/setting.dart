@@ -83,13 +83,6 @@ class _SettingsState extends State<Settings> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          onPressed: null,
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: Colors.white,
-          ),
-        ),
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),
@@ -122,6 +115,16 @@ class _SettingsState extends State<Settings> {
               padding: const EdgeInsets.only(bottom: 14),
               child: Container(
                 decoration: BoxDecoration(
+                    boxShadow: [
+                      BoxShadow(
+                          color: Theme.of(Get.context!).brightness ==
+                                  Brightness.dark
+                              ? Colors.transparent
+                              : Colors.grey.withOpacity(0.5),
+                          spreadRadius: 1,
+                          blurRadius: 5,
+                          offset: Offset(2, 2))
+                    ],
                     color: Theme.of(context).primaryColor,
                     //border: Border.all(color: Colors.grey),
                     borderRadius: BorderRadius.circular(4)),
@@ -170,6 +173,16 @@ class _SettingsState extends State<Settings> {
             Container(
                 decoration: BoxDecoration(
                   color: Theme.of(context).primaryColor,
+                  boxShadow: [
+                    BoxShadow(
+                        color:
+                            Theme.of(Get.context!).brightness == Brightness.dark
+                                ? Colors.transparent
+                                : Colors.grey.withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 5,
+                        offset: Offset(2, 2))
+                  ],
                   //border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(4),
                 ),
@@ -187,7 +200,7 @@ class _SettingsState extends State<Settings> {
                     Switch(
                       value: isSwitched,
                       onChanged: (value) {
-                        themeService().changeThemeMode();
+                        ThemeService().changeThemeMode();
                         // Get.changeThemeMode(
                         //     Get.isDarkMode ? lightTheme() : darkTheme());
                         setState(() {

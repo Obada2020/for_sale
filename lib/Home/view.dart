@@ -33,7 +33,7 @@ class HomePage extends GetView<HomeController> {
               children: [
                 controller.isLoading1.value
                     ? controller.homeList.isEmpty
-                        ? Text("No Ads for this Catogary")
+                        ? Text("empty".tr)
                         : ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
@@ -83,7 +83,7 @@ class HomePage extends GetView<HomeController> {
                                                     .homeList[indexF]
                                                     .adCatogaryId!]
                                                 .isEmpty
-                                            ? Text("No Ads Found")
+                                            ? Text("empty".tr)
                                             : Container(
                                                 height: 270.0,
                                                 child: ListView.separated(

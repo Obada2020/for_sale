@@ -1,18 +1,30 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Binding/binding.dart';
 import 'package:for_sale/Home/navbar.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:for_sale/translate/translate.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
+  //
   WidgetsFlutterBinding.ensureInitialized();
+  //
+  await GetStorage.init();
+  //
+  var c = Get.put(UserController(), permanent: true);
+  //
+  await c.getPreferences();
+  // await Get.putAsync(() => UserController().getPreferences(), permanent: true);
   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  var t = sharedPreferences.getString("token");
-  var n = sharedPreferences.getString("number");
+  // var t = sharedPreferences.getString("token");
+  // var n = sharedPreferences.getString("number");
   var l = sharedPreferences.getString("lang");
   if (l == null) {
     if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
@@ -23,20 +35,66 @@ void main() async {
       return;
     }
   }
-  runApp(MyApp(l ?? "", t ?? "", n ?? ""));
+  runApp(
+    RestartWidget(
+      child: MyApp(
+        l ?? "",
+        c.token.value,
+        c.number.value,
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatefulWidget {
-  String? lan;
-  String? t;
-  String? n;
+///
 
-  MyApp(this.lan, this.t, this.n);
+class RestartWidget extends StatefulWidget {
+  RestartWidget({required this.child});
+
+  final Widget child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>()!.restartApp();
+  }
+
+  @override
+  _RestartWidgetState createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
+  }
+}
+
+//
+class MyApp extends StatefulWidget {
+  final String? lan;
+  final String? t;
+  final String? n;
+  MyApp(
+    this.lan,
+    this.t,
+    this.n,
+  );
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
+  //
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -45,9 +103,9 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
-      themeMode: themeService().getThemeMode(),
+      themeMode: ThemeService().getThemeMode(),
       translations: Translate(),
-      localizationsDelegates: [                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
+      localizationsDelegates: [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
