@@ -133,9 +133,15 @@ class AddUI extends GetView<AddNameController> {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     SizedBox(height: 12),
-                    get(ChoseType(), "type-ad".tr),
+                    get(
+                      ChoseType(),
+                      "type-ad".tr,
+                    ),
                     SizedBox(height: 12),
-                    get(WAddName(), "section-ad".tr),
+                    get(
+                      WAddName(),
+                      "section-ad".tr,
+                    ),
                     SizedBox(height: 12),
                     Obx(() => Visibility(
                           visible: controller.showLastCat.value,
@@ -235,7 +241,7 @@ class AddUI extends GetView<AddNameController> {
 
 enum Types { normal, special }
 
-Widget get(Widget x, String title) {
+Widget get(Widget x, String title, [TextStyle? textStyle]) {
   return Container(
     width: MediaQuery.of(Get.context!).size.width,
     color: Theme.of(Get.context!).primaryColor,
@@ -246,7 +252,12 @@ Widget get(Widget x, String title) {
         children: [
           Text(
             title,
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(
+              fontSize: 20,
+              color: Theme.of(Get.context!).primaryColor == Colors.black
+                  ? Colors.white
+                  : Colors.black,
+            ),
           ),
           SizedBox(height: 16),
           x
@@ -269,7 +280,7 @@ class _ChoseTypeState extends State<ChoseType> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Theme.of(context).primaryColor,
+        // color: Theme.of(context).primaryColor,
       ),
       child: Row(
         children: [
@@ -306,7 +317,12 @@ class _ChoseTypeState extends State<ChoseType> {
                     child: Center(
                       child: Text(
                         'type-ad1'.tr,
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).primaryColor == Colors.black
+                                    ? Colors.white
+                                    : Colors.black,
+                            fontSize: 24),
                       ),
                     ),
                   ),
@@ -316,7 +332,14 @@ class _ChoseTypeState extends State<ChoseType> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("type-ad3".tr),
+                    Text(
+                      "type-ad3".tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                     Obx(
                       () => Get.find<AddNameController>().loadingMyType.value
                           ? Text("?")
@@ -332,13 +355,27 @@ class _ChoseTypeState extends State<ChoseType> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                     ),
-                    Text("type-ad4".tr),
+                    Text(
+                      "type-ad4".tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("type-ad5".tr),
+                    Text(
+                      "type-ad5".tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                     Obx(() => Get.find<AddNameController>().loadingMyType.value
                         ? Text("?")
                         : Get.find<AddNameController>().myAdTypelist.isEmpty
@@ -352,7 +389,14 @@ class _ChoseTypeState extends State<ChoseType> {
                                     " ",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               )),
-                    Text('type-ad6'.tr),
+                    Text(
+                      'type-ad6'.tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -388,7 +432,12 @@ class _ChoseTypeState extends State<ChoseType> {
                     child: Center(
                       child: Text(
                         'type-ad2'.tr,
-                        style: TextStyle(fontSize: 24),
+                        style: TextStyle(
+                            color:
+                                Theme.of(context).primaryColor == Colors.black
+                                    ? Colors.white
+                                    : Colors.black,
+                            fontSize: 24),
                       ),
                     ),
                   ),
@@ -397,7 +446,14 @@ class _ChoseTypeState extends State<ChoseType> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("type-ad3".tr),
+                    Text(
+                      "type-ad3".tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                     Obx(
                       () => Get.find<AddNameController>().loadingMyType.value
                           ? Text("?")
@@ -413,13 +469,27 @@ class _ChoseTypeState extends State<ChoseType> {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 ),
                     ),
-                    Text("type-ad4".tr),
+                    Text(
+                      "type-ad4".tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text("type-ad5".tr),
+                    Text(
+                      "type-ad5".tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                     Obx(() => Get.find<AddNameController>().loadingMyType.value
                         ? Text("?")
                         : Get.find<AddNameController>().myAdTypelist.isEmpty
@@ -433,7 +503,14 @@ class _ChoseTypeState extends State<ChoseType> {
                                     " ",
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               )),
-                    Text('type-ad6'.tr),
+                    Text(
+                      'type-ad6'.tr,
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor == Colors.black
+                            ? Colors.white
+                            : Colors.black,
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -807,7 +884,11 @@ class _DetailsAddState extends State<DetailsAdd> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: [Text("upload"), Text("details-ad3".tr)],
+                children: [
+                  Text("upload", style: TextStyle(color: Colors.grey.shade500)),
+                  Text("details-ad3".tr,
+                      style: TextStyle(color: Colors.grey.shade500))
+                ],
               ),
             ),
           ));
@@ -819,7 +900,7 @@ class _DetailsAddState extends State<DetailsAdd> {
       width: size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Colors.white,
+        color: Theme.of(Get.context!).primaryColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.18),
@@ -835,7 +916,11 @@ class _DetailsAddState extends State<DetailsAdd> {
             padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
             child: Text(
               "details-ad1".tr,
-              style: TextStyle(fontSize: 20),
+              style: TextStyle(
+                  color: Theme.of(context).primaryColor == Colors.black
+                      ? Colors.white
+                      : Colors.black,
+                  fontSize: 20),
             ),
           ),
           SizedBox(
@@ -849,7 +934,9 @@ class _DetailsAddState extends State<DetailsAdd> {
                 child: Text(
                   "details-ad2".tr,
                   style: TextStyle(
-                    color: Color(0xFF333333).withOpacity(0.7),
+                    color: Theme.of(Get.context!).primaryColor == Colors.black
+                        ? Colors.white
+                        : Colors.grey.shade700,
                   ),
                 ),
               ),
@@ -869,7 +956,9 @@ class _DetailsAddState extends State<DetailsAdd> {
                 child: Text(
                   "details-ad4".tr,
                   style: TextStyle(
-                    color: Color(0xFF333333).withOpacity(0.7),
+                    color: Theme.of(Get.context!).primaryColor == Colors.black
+                        ? Colors.white
+                        : Colors.grey.shade700,
                   ),
                 ),
               ),
@@ -878,11 +967,13 @@ class _DetailsAddState extends State<DetailsAdd> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   validator: (txt) => txt!.isEmpty ? "details-ad5".tr : null,
+                  style: TextStyle(color: Colors.grey.shade500),
                   onSaved: (t) {
                     c.myform.value.adName = t!;
                   },
                   decoration: InputDecoration(
                       hintText: "details-ad5".tr,
+                      hintStyle: TextStyle(color: Colors.grey.shade500),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: const BorderSide(
                             color: Color(0x59707070), width: 0.0),
@@ -907,7 +998,9 @@ class _DetailsAddState extends State<DetailsAdd> {
                 child: Text(
                   "details-ad6".tr,
                   style: TextStyle(
-                    color: Color(0xFF333333).withOpacity(0.7),
+                    color: Theme.of(Get.context!).primaryColor == Colors.black
+                        ? Colors.white
+                        : Colors.grey.shade700,
                   ),
                 ),
               ),
@@ -916,6 +1009,10 @@ class _DetailsAddState extends State<DetailsAdd> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   validator: (text) => text!.isEmpty ? "details-ad6".tr : null,
+                  style: TextStyle(
+                      color: Theme.of(context).primaryColor == Colors.black
+                          ? Colors.white
+                          : Colors.grey.shade600),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onSaved: (s) {
@@ -923,6 +1020,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                   },
                   decoration: InputDecoration(
                     hintText: "details-ad7".tr,
+                    hintStyle: TextStyle(color: Colors.grey.shade500),
                     // prefix: Text("د.ك"),
                     // prefixIcon: Text("data"),
                     suffixIcon: Padding(
@@ -930,7 +1028,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                       child: Text(
                         "details-ad8".tr,
                         style: TextStyle(
-                            color: Colors.grey.shade800,
+                            color: Colors.grey.shade500,
                             fontWeight: FontWeight.bold),
                       ),
                     ),
@@ -960,7 +1058,9 @@ class _DetailsAddState extends State<DetailsAdd> {
                 child: Text(
                   "details-ad9".tr,
                   style: TextStyle(
-                    color: Color(0xFF333333).withOpacity(0.7),
+                    color: Theme.of(Get.context!).primaryColor == Colors.black
+                        ? Colors.white
+                        : Colors.grey.shade700,
                   ),
                 ),
               ),
@@ -969,6 +1069,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   validator: (f) => f!.isEmpty ? "details-ad10".tr : null,
+                  style: TextStyle(color: Colors.grey.shade500),
                   onSaved: (d) {
                     c.myform.value.adDescription = d;
                     print("On Saved");
@@ -980,6 +1081,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                       // contentPadding: new EdgeInsets.symmetric(
                       //     vertical: 50.0, horizontal: 10.0),
                       hintText: "details-ad10".tr,
+                      hintStyle: TextStyle(color: Colors.grey.shade500),
                       // prefix: Text("د.ك"),
                       // prefixIcon: Text("data"),
 
@@ -1105,7 +1207,7 @@ Widget communicate(Myform phone) {
   return Container(
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(5.0),
-      color: Colors.white,
+      color: Theme.of(Get.context!).primaryColor,
       boxShadow: [
         BoxShadow(
           color: Colors.grey.withOpacity(0.18),
@@ -1121,7 +1223,11 @@ Widget communicate(Myform phone) {
           padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
           child: Text(
             "details-ad11".tr,
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(
+                color: Theme.of(Get.context!).primaryColor == Colors.black
+                    ? Colors.white
+                    : Colors.black,
+                fontSize: 20),
           ),
         ),
         SizedBox(height: 16),
@@ -1133,7 +1239,9 @@ Widget communicate(Myform phone) {
               child: Text(
                 "details-ad12".tr,
                 style: TextStyle(
-                  color: Color(0xFF333333).withOpacity(0.7),
+                  color: Theme.of(Get.context!).primaryColor == Colors.black
+                      ? Colors.white
+                      : Colors.grey.shade700,
                 ),
               ),
             ),
@@ -1142,28 +1250,34 @@ Widget communicate(Myform phone) {
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: SizedBox(
                 // height: 40,
-                child: TextFormField(
-                  keyboardType: TextInputType.number,
-                  inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                  validator: (text) => text!.isEmpty ? "details-ad13".tr : null,
-                  onSaved: (value) {
-                    phone.adPhoneNumber = int.parse(value!);
-                  },
-                  decoration: InputDecoration(
-                    hintText: "details-ad13".tr,
-                    // contentPadding: EdgeInsets.only(bottom: 25),
-                    contentPadding: EdgeInsets.all(10.0),
-                    // errorText: "ادخل رقم التواصل",
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color(0x59707070), width: 0.0),
-                    ),
-                    filled: true,
-                    fillColor: Color(0xFFF2F2F2),
-                    border: OutlineInputBorder(
-                      borderSide: BorderSide(
-                        width: 1,
-                        color: Color(0xFF707070).withOpacity(0.09),
+                child: Container(
+                  color: Theme.of(Get.context!).primaryColor,
+                  child: TextFormField(
+                    keyboardType: TextInputType.number,
+                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                    validator: (text) =>
+                        text!.isEmpty ? "details-ad13".tr : null,
+                    style: TextStyle(color: Colors.grey.shade500),
+                    onSaved: (value) {
+                      phone.adPhoneNumber = int.parse(value!);
+                    },
+                    decoration: InputDecoration(
+                      hintText: "details-ad13".tr,
+                      hintStyle: TextStyle(color: Colors.grey.shade500),
+                      // contentPadding: EdgeInsets.only(bottom: 25),
+                      contentPadding: EdgeInsets.all(10.0),
+                      // errorText: "ادخل رقم التواصل",
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0x59707070), width: 0.0),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFF2F2F2),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Color(0xFF707070).withOpacity(0.09),
+                        ),
                       ),
                     ),
                   ),
