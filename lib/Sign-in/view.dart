@@ -15,12 +15,11 @@ class Signin extends StatelessWidget {
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),
-        title: Center(
-          child: Text(
-            //'تسجيل الدخول',
-            'Signin_Appbar'.tr,
-            style: klabelAppbarStyle,
-          ),
+        centerTitle: true,
+        title: Text(
+          //'تسجيل الدخول',
+          'Signin_Appbar'.tr,
+          style: klabelAppbarStyle,
         ),
       ),
       body: Container(
