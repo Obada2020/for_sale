@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -22,24 +24,24 @@ class AdsController extends GetxController {
     this.addescriptionsid,
   });
   //
-  var ads = <Ads>[].obs;
+  var ads = <AdsHomeModel>[].obs;
   RxBool isLoadingAds = false.obs;
   //
-  var fullads = <Ads>[].obs;
+  var fullads = <AdsHomeModel>[].obs;
   //
   var scrl = <String>[].obs;
   //
   var myads = <MyAdsModel>[].obs;
   RxBool isLoadingMyAds = false.obs;
   //
-  var favad = <FavoriteModel>[].obs;
+  RxList<FavoriteModel> favad = <FavoriteModel>[].obs;
   RxBool isLoadingFavorite = false.obs;
   //
   var allAds = <AdsHomeModel>[].obs;
   //
   RxBool isLoadingAllAds = false.obs;
   //
-  List<Ads>? dummysearch;
+  List<AdsHomeModel>? dummysearch;
   //
   List<AdsHomeModel>? dummysearchHome;
   // bool isFirst = true;
@@ -54,15 +56,15 @@ class AdsController extends GetxController {
   }
 
   //
-  addFavorite() async {
-    bool res = await ApiService.fdatacdfav();
+  addFavorite(adId) async {
+    var res = await ApiService.fdatacdfav(adId);
     result.value = res;
     // print('result ctrl==  $res');
     return res;
   }
 
   //
-  void getAdType(List<Ads> list) {
+  void getAdType(List<AdsHomeModel> list) {
     List<String>? temp = <String>[];
     temp = list.map<String>((e) => e.adtypename!.adTypeName!).toList();
     scrl.value = temp.toSet().toList();
@@ -72,22 +74,22 @@ class AdsController extends GetxController {
   fdatadsbynamescrl(a, c, d) async {
     // print(a.toString() + " " + c.toString() + " " + d.toString());
     isLoadingAds = true.obs;
-    List<Ads> adby = await ApiService.fdataAdsNameScrl(
+    List<AdsHomeModel> adby = await ApiService.fdataAdsNameScrl(
       a.toString(),
       c.toString(),
       d.toString(),
     );
     if (adby.isNotEmpty) ads.value = adby;
-    isLoadingAds = false.obs;
     fullads.value = adby;
     getAdType(adby);
     dummysearch = ads.toList();
+    isLoadingAds = false.obs;
   }
 
   //==================================search========================
 
   fileserch(String query) async {
-    List<Ads> dummylistdata = <Ads>[];
+    List<AdsHomeModel> dummylistdata = <AdsHomeModel>[];
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         var service = item;
@@ -116,7 +118,7 @@ class AdsController extends GetxController {
   //==================================filter========================
 
   filter(String query) async {
-    List<Ads> dummylistdata = <Ads>[];
+    List<AdsHomeModel> dummylistdata = <AdsHomeModel>[];
     if (query.isNotEmpty && dummysearch!.isNotEmpty) {
       dummysearch!.forEach((item) {
         if (item.adtypename!.adTypeName!.contains(query)) {
@@ -144,8 +146,7 @@ class AdsController extends GetxController {
 
   fetchFavoriteAdds() async {
     isLoadingFavorite.value = true;
-    List<FavoriteModel> fav = await ApiService.myfavorite();
-    favad.value = fav;
+    favad.value = await ApiService.myfavorite();
     isLoadingFavorite.value = false;
   }
 

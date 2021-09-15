@@ -1,8 +1,10 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -60,25 +62,54 @@ class FavoriteAds extends GetView<AdsController> {
                           // print(controller.favad[1].ad![0].adname);
                           return InkWell(
                             onTap: () {
-                              Map details = {
-                                'adId': controller.favad[index].adId,
-                                'accountId': controller.favad[index].accountId,
-                                'adName': controller.favad[index].ad![0].adname,
-                                'adphone': controller
-                                    .favad[index].ad![0].adPhoneNumber,
-                                'addescr': controller
-                                    .favad[index].ad![0].adDescription,
-                                'adpicture':
-                                    controller.favad[index].ad![0].adPicture,
-                                'adprice':
-                                    controller.favad[index].ad![0].adPrice,
-                                'created':
-                                    controller.favad[index].ad![0].createdAt,
-                                'updated':
-                                    controller.favad[index].ad![0].updatedAt,
-                              };
+                              // inspect(controller.favad.value);
+                              // Map details = {
+                              //   'adId': controller.favad[index].adId,
+                              //   'accountId': controller.favad[index].accountId,
+                              //   'adName': controller.favad[index].ad![0].adname,
+                              //   'adphone': controller
+                              //       .favad[index].ad![0].adPhoneNumber,
+                              //   'addescr': controller
+                              //       .favad[index].ad![0].adDescription,
+                              //   'adpicture':
+                              //       controller.favad[index].ad![0].adPicture,
+                              //   'adprice':
+                              //       controller.favad[index].ad![0].adPrice,
+                              //   'created':
+                              //       controller.favad[index].ad![0].createdAt,
+                              //   'updated':
+                              //       controller.favad[index].ad![0].updatedAt,
+                              // };
                               Get.to(() => Adsdetails(
-                                    details: details,
+                                    temp: AdsHomeModel(
+                                      accountId:
+                                          controller.favad[index].accountId,
+                                      adCatogaryId: controller
+                                          .favad[index].ad![0]!.adCatogaryId,
+                                      adDescription: controller
+                                          .favad[index].ad![0]!.adDescription,
+                                      adDescriptionsId: controller.favad[index]
+                                          .ad![0]!.adDescriptionsId,
+                                      adId: controller.favad[index].adId,
+                                      adInfo: controller
+                                          .favad[index].ad![0]!.adInfo,
+                                      adName: controller
+                                          .favad[index].ad![0]!.adName,
+                                      adPhoneNumber: controller
+                                          .favad[index].ad![0]!.adPhoneNumber,
+                                      adpicture:
+                                          controller.favad[index].adpicture,
+                                      adPrice: controller
+                                          .favad[index].ad![0]!.adPrice,
+                                      adTypeId: controller
+                                          .favad[index].ad![0]!.adTypeId,
+                                      adTypeNameId: controller
+                                          .favad[index].ad![0]!.adTypeNameId,
+                                      createdAt:
+                                          controller.favad[index].createdAt,
+                                      isSpecial: controller
+                                          .favad[index].ad![0]!.isSpecial,
+                                    ),
                                   ));
                             },
                             child: Container(
@@ -94,23 +125,30 @@ class FavoriteAds extends GetView<AdsController> {
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  //----------card grid-----------
-                                  Container(
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(4),
-                                          topLeft: Radius.circular(4),
-                                        ),
-                                        child: Image.network(
-                                          controller
-                                              .favad[index].ad![0].adPicture!
-                                              .toString(),
-                                          fit: BoxFit.cover,
-                                        )),
+                                  Expanded(
+                                    child: Image.network(
+                                      controller
+                                          .favad[index].adpicture![0].adPicture
+                                          .toString(),
+                                      loadingBuilder: (BuildContext? ctx,
+                                          Widget? child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child!;
+                                        } else {
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Colors.green),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                    ),
                                   ),
-
                                   Padding(
                                     padding: EdgeInsets.only(
                                       left: 5,
@@ -118,7 +156,7 @@ class FavoriteAds extends GetView<AdsController> {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      controller.favad[index].ad![0].adname!,
+                                      controller.favad[index].ad![0]!.adName!,
                                       style: klabelStyleBold12,
                                       maxLines: 2,
                                     ),
@@ -139,7 +177,8 @@ class FavoriteAds extends GetView<AdsController> {
                                                 BorderRadius.circular(4),
                                             gradient: kGColor),
                                         child: Text(
-                                          controller.favad[index].ad![0].adPrice
+                                          controller
+                                              .favad[index].ad![0]!.adPrice
                                               .toString(),
                                           style: klabelStyleBold11light,
                                         ),

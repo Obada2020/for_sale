@@ -92,8 +92,10 @@ class HomePage extends GetView<HomeController> {
                                                   itemBuilder:
                                                       (context, index) =>
                                                           Container(
-                                                    padding: EdgeInsets.only(
-                                                        right: 8),
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal: 15,
+                                                    ),
                                                     child: containerOffer(
                                                         context, size,
                                                         disc: controller
@@ -111,6 +113,7 @@ class HomePage extends GetView<HomeController> {
                                                             .adsHome![controller
                                                                 .homeList[indexF]
                                                                 .adCatogaryId!][index]
+                                                            .adpicture![0]
                                                             .adPicture,
                                                         time: 'قبل : ${(DateTime.now().difference(DateTime(
                                                               int.parse(controller
@@ -153,7 +156,9 @@ class HomePage extends GetView<HomeController> {
                                                                   .createdAt!
                                                                   .substring(
                                                                       11, 13)),
-                                                            )).inDays)}  يوم  '),
+                                                            )).inDays)}  يوم  ',
+                                                        indexC: indexF,
+                                                        indexA: index),
                                                   ),
                                                   itemCount: controller
                                                       .adsHome![indexF + 1]
@@ -222,6 +227,19 @@ class HomePage extends GetView<HomeController> {
                       img.toString(),
                       // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
                       fit: BoxFit.cover,
+                      loadingBuilder: (BuildContext? ctx, Widget? child,
+                          ImageChunkEvent? loadingProgress) {
+                        if (loadingProgress == null) {
+                          return child!;
+                        } else {
+                          return Center(
+                            child: CircularProgressIndicator(
+                              valueColor:
+                                  AlwaysStoppedAnimation<Color>(Colors.green),
+                            ),
+                          );
+                        }
+                      },
                     )),
               ),
               SizedBox(height: 11.2),
@@ -249,25 +267,49 @@ class HomePage extends GetView<HomeController> {
     );
   }
 
-  Widget containerOffer(context, size, {disc, price, String? time, image}) {
+  Widget containerOffer(context, size,
+      {disc, price, String? time, image, indexC, indexA}) {
     return InkWell(
       onTap: () {
-        Get.to(Adsdetails());
+        Get.to(
+          Adsdetails(
+            temp: controller.adsHome![controller.homeList[indexC].adCatogaryId!]
+                [indexA],
+          ),
+        );
       },
       child: Container(
         width: 210,
         height: 218,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            5,
+          ),
+        ),
         child: Column(
           children: [
             //image
-            Image.network(
-              "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+            Expanded(
+              child: Image.network(
+                // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
 
-              // image,
-              fit: BoxFit.cover,
+                image,
+                loadingBuilder: (BuildContext? ctx, Widget? child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child!;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                      ),
+                    );
+                  }
+                },
+                // fit: BoxFit.cover,
+              ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8, right: 8, left: 8),

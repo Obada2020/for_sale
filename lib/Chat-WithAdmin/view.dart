@@ -35,7 +35,6 @@ class ChatUI extends StatelessWidget {
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),
-        leading: Icon(Icons.arrow_back_rounded),
       ),
       body: Container(
         // color: Color(0xFFF2F2F2),

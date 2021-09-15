@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,7 @@ import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Myform {
   List<Asset>? images = [];
@@ -19,6 +21,7 @@ class Myform {
       catogaryDetailsId,
       adDescriptionId,
       adTypeNameId;
+  int? isSpecial = 0;
 }
 
 class AddUI extends GetView<AddNameController> {
@@ -83,21 +86,21 @@ class AddUI extends GetView<AddNameController> {
           title: Text('Alert Dialog Title Text.'),
           content: Text("Are You Sure Want To Proceed ?"),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text("YES"),
               onPressed: () {
                 //Put your code here which you want to execute on Yes button click.
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text("NO"),
               onPressed: () {
                 //Put your code here which you want to execute on No button click.
                 Navigator.of(context).pop();
               },
             ),
-            FlatButton(
+            TextButton(
               child: Text("CANCEL"),
               onPressed: () {
                 //Put your code here which you want to execute on Cancel button click.
@@ -166,24 +169,42 @@ class AddUI extends GetView<AddNameController> {
                                 backgroundColor: MaterialStateProperty.all(
                                     Colors.transparent)),
                             onPressed: () async {
-                              // FocusScope.of(context).unfocus();
-                              // if (check() && validate()) {
-                              //   // inspect(c.myform.value);
-                              //   if (await controller.postAdd()) {
-                              //     // _formKey.currentState!.reset();
-                              //     print("SUCCESS");
-                              //     // print("SUCCESSS");
-                              // } else
-                              //     print("ERROR");
-                              // print(c.myform.value.adName);
-                              // print(c.myform.value.adDescription);
-                              // print(c.myform.value.adPhoneNumber);
-                              // print(c.myform.value.adPrice);
-                              // print(c.myform.value.adTypeId);
-                              // print(adName);
-                              // print(adName);
-                              // }
-                              await controller.postAdd();
+                              FocusScope.of(context).unfocus();
+                              if (check() && validate()) {
+                                inspect(controller.myform.value);
+                                if (await controller.postAdd()) {
+                                  AwesomeDialog(
+                                    context: Get.context!,
+                                    animType: AnimType.SCALE,
+                                    dialogType: DialogType.SUCCES,
+                                    body: Text(
+                                      'تم إضافة الإعلان بنجاح',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 20),
+                                    ),
+                                    title: 'This is Ignored',
+                                    desc: 'This is also Ignored',
+                                    btnOkOnPress: () {},
+                                  )..show();
+                                  _formKey.currentState!.reset();
+                                  print("SUCCESS");
+                                } else
+                                  AwesomeDialog(
+                                    btnOkColor: Colors.red,
+                                    context: Get.context!,
+                                    animType: AnimType.SCALE,
+                                    dialogType: DialogType.ERROR,
+                                    body: Text(
+                                      'تأكد من الاتصال من الانترنت وحاول مجدداً',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(fontSize: 17),
+                                    ),
+                                    title: 'This is Ignored',
+                                    desc: 'This is also Ignored',
+                                    btnOkOnPress: () {},
+                                  )..show();
+                                print("ERROR");
+                              }
                             },
                             child: Center(
                               child: Text(
@@ -198,35 +219,40 @@ class AddUI extends GetView<AddNameController> {
               ),
             ),
           ),
-          Obx(() => Visibility(
+          Obx(
+            () => Visibility(
               visible:
                   controller.loading.value || controller.loadingMyType.value,
               child: BackdropFilter(
                 filter: new ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
                 child: Center(
-                    child: Container(
-                  margin: EdgeInsets.symmetric(horizontal: 80, vertical: 150),
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade400,
-                      borderRadius: BorderRadius.all(Radius.circular(15))),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        CircularProgressIndicator(
-                          color: Colors.black,
-                          backgroundColor: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 25,
-                        ),
-                        Text(".... Loading"),
-                      ],
+                  child: Container(
+                    margin: EdgeInsets.symmetric(horizontal: 80, vertical: 150),
+                    decoration: BoxDecoration(
+                        color: Colors.grey.shade400,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          CircularProgressIndicator(
+                            color: Colors.black,
+                            backgroundColor: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 25,
+                          ),
+                          Text(".... Loading"),
+                        ],
+                      ),
                     ),
                   ),
-                )),
-              )))
+                ),
+              ),
+            ),
+          )
         ],
       ),
     );
@@ -281,7 +307,8 @@ class _ChoseTypeState extends State<ChoseType> {
                   onTap: () {
                     setState(() {
                       type = Types.normal;
-                      Get.find<AddNameController>().myform.value.adTypeId = 0;
+                      //is_special ==> normal 0 ==> special 1
+                      Get.find<AddNameController>().myform.value.isSpecial = 0;
                     });
                   },
                   child: Container(
@@ -365,10 +392,13 @@ class _ChoseTypeState extends State<ChoseType> {
               children: [
                 InkWell(
                   onTap: () {
-                    setState(() {
-                      type = Types.special;
-                      Get.find<AddNameController>().myform.value.adTypeId = 1;
-                    });
+                    setState(
+                      () {
+                        type = Types.special;
+                        Get.find<AddNameController>().myform.value.isSpecial =
+                            1;
+                      },
+                    );
                   },
                   child: Container(
                     height: size.height * 0.125,
@@ -763,8 +793,8 @@ class _DetailsAddState extends State<DetailsAdd> {
     setState(
       () {
         c.myform.value.images = resultList;
-
         _error = error;
+        // resultList = [];
       },
     );
   }
@@ -1024,80 +1054,81 @@ class Specifications extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
 
     return Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(5.0),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.18),
-              offset: Offset(0.0, -1), //(x,y)
-              blurRadius: 6.0,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(5.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.18),
+            offset: Offset(0.0, -1), //(x,y)
+            blurRadius: 6.0,
+          ),
+        ],
+      ),
+      width: size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 25, top: 19, right: 16),
+            child: Text(
+              "تفاصيل الإعلان",
+              style: TextStyle(fontSize: 20),
             ),
-          ],
-        ),
-        width: size.width,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 25, top: 19, right: 16),
-              child: Text(
-                "تفاصيل الإعلان",
-                style: TextStyle(fontSize: 20),
+          ),
+          SizedBox(height: 12),
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            width: size.width,
+            // height: 500,
+            child: GridView.builder(
+              shrinkWrap: true,
+              physics: new NeverScrollableScrollPhysics(),
+              itemCount: c.addsInfoKey.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                // maxCrossAxisExtent: 200,
+                childAspectRatio: 6 / 2,
+                // mainAxisExtent: 40,
+                crossAxisSpacing: 9,
+                mainAxisSpacing: 9,
+                crossAxisCount: 2,
               ),
-            ),
-            SizedBox(height: 12),
-            Container(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              width: size.width,
-              // height: 500,
-              child: GridView.builder(
-                shrinkWrap: true,
-                physics: new NeverScrollableScrollPhysics(),
-                itemCount: c.addsInfoKey.length,
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  // maxCrossAxisExtent: 200,
-                  childAspectRatio: 6 / 2,
-                  // mainAxisExtent: 40,
-                  crossAxisSpacing: 9,
-                  mainAxisSpacing: 9,
-                  crossAxisCount: 2,
-                ),
-                itemBuilder: (ctx, index) {
-                  return SizedBox(
-                    height: 25,
-                    width: 25,
-                    child: TextFormField(
-                      onSaved: (t) {
-                        Map<String, String>? tempp = Map<String, String>();
-                        tempp[c.addsInfoKey[index].adInfo!] = t!;
-                        c.myform.value.adInfo!.add(tempp);
-                      },
-                      validator: (h) => h!.isEmpty ? "" : null,
-                      decoration: InputDecoration(
-                        contentPadding: EdgeInsets.all(10.0),
-                        hintText: c.addsInfoKey[index].adInfo,
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: const BorderSide(
-                              color: Color(0x59707070), width: 0.0),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xFFF2F2F2),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide(
-                            width: 1,
-                            color: Color(0xFF707070).withOpacity(0.09),
-                          ),
+              itemBuilder: (ctx, index) {
+                return SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: TextFormField(
+                    onSaved: (t) {
+                      Map<String, String>? tempp = Map<String, String>();
+                      tempp[c.addsInfoKey[index].adInfo!] = t!;
+                      c.myform.value.adInfo!.add(tempp);
+                    },
+                    validator: (h) => h!.isEmpty ? "" : null,
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.all(10.0),
+                      hintText: c.addsInfoKey[index].adInfo,
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color(0x59707070), width: 0.0),
+                      ),
+                      filled: true,
+                      fillColor: Color(0xFFF2F2F2),
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 1,
+                          color: Color(0xFF707070).withOpacity(0.09),
                         ),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                );
+              },
             ),
-            SizedBox(height: 18),
-          ],
-        ));
+          ),
+          SizedBox(height: 18),
+        ],
+      ),
+    );
   }
 }
 

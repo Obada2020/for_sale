@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
+
 import 'package:for_sale/Add-ad/model.dart';
 import 'package:for_sale/Ads-page/model.dart';
 import 'package:for_sale/Category-page/model.dart';
@@ -26,7 +26,7 @@ class ApiService {
   //
   static fdataAdsNameScrl(
       adcatogaryid, catogarydetailsid, addescriptionsid) async {
-    List<Ads> ads = [];
+    List<AdsHomeModel> ads = [];
     http.Response res = await http.post(
       Uri.parse(uri + "BringAdsInName"),
       body: {
@@ -45,7 +45,7 @@ class ApiService {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        ads.add(Ads.fromJson(item));
+        ads.add(AdsHomeModel.fromJson(item));
       }
       return ads;
     } else {
@@ -126,15 +126,14 @@ class ApiService {
 
   //==============================================================
   //==========================AddDeletFaveAds Api=================
-  static fdatacdfav() async {
+  static fdatacdfav(adId) async {
     http.Response res = await http.post(
       Uri.parse(uri + "FavoriteControleItem"),
-      body: {'account_id': '31', 'ad_id': '5'},
-
-      //  headers: {
-      //   HttpHeaders.authorizationHeader:
-      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
-      // }
+      body: {
+        'account_id': Get.find<UserController>().accountId.toString(),
+        'ad_id': adId.toString()
+      },
+      headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
@@ -192,7 +191,6 @@ class ApiService {
       Uri.parse(uri + "getAdInfoKey"),
       body: {'ad_catogary_id': '$id'},
       headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
-
     );
 
     if (response.statusCode == 200) {

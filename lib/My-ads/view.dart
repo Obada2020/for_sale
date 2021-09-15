@@ -63,25 +63,25 @@ class MyAds extends GetView<AdsController> {
                           // print(controller.favad[1].ad![0].adname);
                           return InkWell(
                             onTap: () {
-                              Map details = {
-                                'adId': controller.favad[index].adId,
-                                'accountId': controller.favad[index].accountId,
-                                'adName': controller.favad[index].ad![0].adname,
-                                'adphone': controller
-                                    .favad[index].ad![0].adPhoneNumber,
-                                'addescr': controller
-                                    .favad[index].ad![0].adDescription,
-                                'adpicture':
-                                    controller.favad[index].ad![0].adPicture,
-                                'adprice':
-                                    controller.favad[index].ad![0].adPrice,
-                                'created':
-                                    controller.favad[index].ad![0].createdAt,
-                                'updated':
-                                    controller.favad[index].ad![0].updatedAt,
-                              };
+                              // Map details = {
+                              //   'adId': controller.favad[index].adId,
+                              //   'accountId': controller.favad[index].accountId,
+                              //   'adName': controller.favad[index].ad![0].adname,
+                              //   'adphone': controller
+                              //       .favad[index].ad![0].adPhoneNumber,
+                              //   'addescr': controller
+                              //       .favad[index].ad![0].adDescription,
+                              //   'adpicture':
+                              //       controller.favad[index].ad![0].adPicture,
+                              //   'adprice':
+                              //       controller.favad[index].ad![0].adPrice,
+                              //   'created':
+                              //       controller.favad[index].ad![0].createdAt,
+                              //   'updated':
+                              //       controller.favad[index].ad![0].updatedAt,
+                              // };
                               Get.to(() => Adsdetails(
-                                    details: details,
+                                    // temp: controller.favad[index].ad![0]
                                   ));
                             },
                             child: Container(
@@ -108,7 +108,7 @@ class MyAds extends GetView<AdsController> {
                                         ),
                                         child: Image.network(
                                           controller
-                                              .favad[index].ad![0].adPicture!
+                                              .myads[index].adPicture!
                                               .toString(),
                                           fit: BoxFit.cover,
                                         )),
@@ -121,7 +121,7 @@ class MyAds extends GetView<AdsController> {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      controller.favad[index].ad![0].adname!,
+                                      controller.favad[index].ad![0]!.adName!,
                                       style: klabelStyleBold12,
                                       maxLines: 2,
                                     ),
@@ -142,7 +142,7 @@ class MyAds extends GetView<AdsController> {
                                                 BorderRadius.circular(4),
                                             gradient: kGColor),
                                         child: Text(
-                                          controller.favad[index].ad![0].adPrice
+                                          controller.favad[index].ad![0]!.adPrice
                                               .toString(),
                                           style: klabelStyleBold11light,
                                         ),

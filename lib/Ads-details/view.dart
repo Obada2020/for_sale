@@ -1,31 +1,18 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Home/model.dart';
+import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
-import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class Adsdetails extends StatefulWidget {
-  AdsController c = Get.find();
+class Adsdetails extends GetView<HomeController> {
+  final AdsHomeModel? temp;
+  Adsdetails({this.temp});
 
-  @override
-  _AdsdetailsState createState() => _AdsdetailsState();
-  var details;
-  Adsdetails({this.details});
-}
-
-class _AdsdetailsState extends State<Adsdetails> {
-
-  List imgList = [
-    'img/image.jpg',
-    'img/image2.jpg',
-    'img/image3.jpg',
-  ];
-  // IconData icon = Icons.favorite_border;
-
-  int _current = 0;
-
+  final int _current = 0;
+  //
   List<T> map<T>(List list, Function handler) {
     List<T> result = [];
     for (var i = 0; i < list.length; i++) {
@@ -34,12 +21,12 @@ class _AdsdetailsState extends State<Adsdetails> {
     return result;
   }
 
-  // final AdsController c = Get.put(AdsController());
-
+  //
+  final AdsController c = Get.put(AdsController());
+  //
   @override
   Widget build(BuildContext context) {
     // print(widget.details);
-    Size size = MediaQuery.of(context).size;
     // IconData icon = Icons.favorite_border;
     return Scaffold(
       backgroundColor: kbodyColor,
@@ -49,35 +36,34 @@ class _AdsdetailsState extends State<Adsdetails> {
         ),
         actions: [
           Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: 
-                   GestureDetector(
-                    onTap: () async {
-                      // await c.favoriteAdd();
-                      // print('view ${c.result.value}');
-                    },
-                    // child: c.result.value == true
-                        // ? Icon(Icons.check)
-                        // : Icon(Icons.favorite_border),
-                    //  Icon(icon),
-                  ))
-               
-          
+            padding: const EdgeInsets.all(15.0),
+            child: InkWell(
+                onTap: () async {
+                  await c.addFavorite(temp!.adId);
+                  print('view ${c.result.value}');
+                },
+                child: Obx(
+                  () => c.result.value == true
+                      ? Icon(Icons.check)
+                      : Icon(Icons.favorite_border),
+                )
+                //  Icon(icon),
+                ),
+          )
         ],
-        title: Center(
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20),
-            child: Text(
-              'عرض الإعلان',
-              style: klabelAppbarStyle,
-            ),
-          ),
+        centerTitle: true,
+        title: Text(
+          'عرض الإعلان',
+          style: klabelAppbarStyle,
         ),
       ),
       body: ListView(
         children: [
-          adDetail(size),
-          specifications(),
+          Details(
+            temp: temp,
+            current_index: _current,
+          ),
+          temp!.adInfo!.isNotEmpty ? specifications() : Container(),
           description(),
           social(),
           sggestedAds(),
@@ -87,7 +73,7 @@ class _AdsdetailsState extends State<Adsdetails> {
   }
 
   calling() async {
-    var url = 'tel:+963${widget.details['adphone']}';
+    var url = 'tel:+963${temp!.adPhoneNumber}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -96,7 +82,7 @@ class _AdsdetailsState extends State<Adsdetails> {
   }
 
   whatsapp() async {
-    var url = "whatsapp://send?phone=+963${widget.details['adphone']}";
+    var url = "whatsapp://send?phone=+963${temp!.adPhoneNumber}";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -114,6 +100,7 @@ class _AdsdetailsState extends State<Adsdetails> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
                   child: SocialCard(
@@ -161,8 +148,8 @@ class _AdsdetailsState extends State<Adsdetails> {
                     coloricon: Colors.black,
                     border: Border.all(color: Color(0xff333333)),
                     ontap: () {
-                      Share.share(
-                          '${widget.details['addescr']}\n\n http://hyperurl.co/4buy');
+                      // Share.share(
+                      //     '${widget.details['addescr']}\n\n http://hyperurl.co/4buy');
                     },
                   ),
                 ),
@@ -170,119 +157,6 @@ class _AdsdetailsState extends State<Adsdetails> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget adDetail(Size size) {
-    return Container(
-      decoration: BoxDecoration(color: Colors.white),
-      child: Column(
-        children: [
-          Stack(
-            children: [
-              CarouselSlider(
-                options: CarouselOptions(
-                    onPageChanged: (index, _) {
-                      setState(() {
-                        _current = index;
-                      });
-                    },
-                    // height: size.height * 0.33333,
-                    enlargeCenterPage: true,
-                    enableInfiniteScroll: false,
-                    autoPlay: false,
-                    viewportFraction: 1),
-                items: imgList
-                    .map((e) => ClipRRect(
-                          child: Stack(
-                            fit: StackFit.expand,
-                            children: <Widget>[
-                              Image.asset(
-                                e,
-                                width: size.width,
-                                height: 450,
-                                fit: BoxFit.cover,
-                              )
-                            ],
-                          ),
-                        ))
-                    .toList(),
-              ),
-              Positioned(
-                bottom: 1,
-                right: size.width * 0.42,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: map<Widget>(imgList, (index, url) {
-                    return Container(
-                      width: 10.0,
-                      height: 10.0,
-                      margin:
-                          EdgeInsets.symmetric(vertical: 10.0, horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: _current == index
-                            ? Color(0xff4D5977)
-                            : Colors.white,
-                      ),
-                    );
-                  }),
-                ),
-              ),
-            ],
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 12, right: 16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    widget.details['adName'],
-                    style: klabelStyleBold12card,
-                    maxLines: 2,
-                  ),
-                ),
-                Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 5, bottom: 5, left: 10),
-                      padding: EdgeInsets.only(
-                        left: 5,
-                        right: 6,
-                        top: 3,
-                        bottom: 4,
-                      ),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(4),
-                          gradient: kGColor),
-                      child: Text(
-                        widget.details['adprice'],
-                        style: klabelStyleBold11light,
-                      ),
-                    ),
-                    Icon(
-                      Icons.timelapse_sharp,
-                      size: 12,
-                    ),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      widget.details['created'],
-                      style: TextStyle(
-                          fontFamily: 'FairuzBold',
-                          fontSize: 10,
-                          color: Color(0xFF5E5E5E)),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -304,7 +178,7 @@ class _AdsdetailsState extends State<Adsdetails> {
               style: klabelStyleBlack16,
             ),
             Text(
-              widget.details['addescr'],
+              temp!.adDescription!,
               style: TextStyle(
                   fontFamily: 'FairuzBlack', fontSize: 12, color: Colors.black),
             ),
@@ -405,7 +279,7 @@ class _AdsdetailsState extends State<Adsdetails> {
             height: 200,
             child: GetX<AdsController>(
               builder: (controller) {
-                if (controller.ads != null) {
+                if (controller.ads.isNotEmpty) {
                   return GridView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -420,24 +294,24 @@ class _AdsdetailsState extends State<Adsdetails> {
                       ),
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () {
-                            Get.back();
-                            Map details = {
-                              'adId': widget.c.ads[index].adId,
-                              'accountId': widget.c.ads[index].accountId,
-                              'adName': widget.c.ads[index].adName,
-                              'adphone': widget.c.ads[index].adPhoneNumber,
-                              'addescr': widget.c.ads[index].adDescription,
-                              'adpicture': widget.c.ads[index].adPicture,
-                              'adprice': widget.c.ads[index].adPrice,
-                              'adinfo': widget.c.ads[index].adInfo,
-                              'created': widget.c.ads[index].createdAt,
-                              'updated': widget.c.ads[index].updatedAt,
-                            };
-                            Get.to(() => Adsdetails(
-                                  details: details,
-                                ));
-                          },
+                          // onTap: () {
+                          //   Get.back();
+                          //   Map details = {
+                          //   //   'adId': widget.c.ads[index].adId,
+                          //   //   'accountId': widget.c.ads[index].accountId,
+                          //   //   'adName': widget.c.ads[index].adName,
+                          //   //   'adphone': widget.c.ads[index].adPhoneNumber,
+                          //   //   'addescr': widget.c.ads[index].adDescription,
+                          //   //   'adpicture': widget.c.ads[index].adPicture,
+                          //   //   'adprice': widget.c.ads[index].adPrice,
+                          //   //   'adinfo': widget.c.ads[index].adInfo,
+                          //   //   'created': widget.c.ads[index].createdAt,
+                          //   //   'updated': widget.c.ads[index].updatedAt,
+                          //   // };
+                          //   // Get.to(() => Adsdetails(
+                          //   //       details: details,
+                          //   //     ));
+                          // },
                           child: Container(
                             decoration: BoxDecoration(
                               boxShadow: [
@@ -466,6 +340,21 @@ class _AdsdetailsState extends State<Adsdetails> {
                                         controller.ads[index].adPicture
                                             .toString(),
                                         fit: BoxFit.cover,
+                                        loadingBuilder: (BuildContext? ctx,
+                                            Widget? child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null) {
+                                            return child!;
+                                          } else {
+                                            return Center(
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(Colors.green),
+                                              ),
+                                            );
+                                          }
+                                        },
                                       )),
                                 ),
 
@@ -546,6 +435,125 @@ class _AdsdetailsState extends State<Adsdetails> {
   }
 }
 
+class Details extends StatefulWidget {
+  Details({this.temp, this.current_index});
+  AdsHomeModel? temp;
+  int? current_index;
+  @override
+  _DetailsState createState() => _DetailsState();
+}
+
+class _DetailsState extends State<Details> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(color: Colors.white),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              CarouselSlider(
+                options: CarouselOptions(
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      widget.current_index = index;
+                    });
+                  },
+                  // height: size.height * 0.33333,
+                  enlargeCenterPage: true,
+                  enableInfiniteScroll: false,
+                  autoPlay: false,
+                  viewportFraction: 1,
+                ),
+                items: widget.temp!.adpicture!
+                    .map(
+                      (e) => ClipRRect(
+                        child: Stack(
+                          fit: StackFit.expand,
+                          children: <Widget>[
+                            Image.network(
+                              e.adPicture!,
+                              loadingBuilder: (BuildContext? ctx, Widget? child,
+                                  ImageChunkEvent? loadingProgress) {
+                                if (loadingProgress == null) {
+                                  return child!;
+                                } else {
+                                  return Center(
+                                    child: CircularProgressIndicator(
+                                      valueColor: AlwaysStoppedAnimation<Color>(
+                                          Colors.green),
+                                    ),
+                                  );
+                                }
+                              },
+                              width: Get.width,
+                              height: 450,
+                              fit: BoxFit.cover,
+                            )
+                          ],
+                        ),
+                      ),
+                    )
+                    .toList(),
+              ),
+            ],
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 12, right: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.temp!.adName!,
+                    style: klabelStyleBold12card,
+                    maxLines: 2,
+                  ),
+                ),
+                Row(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.only(right: 5, bottom: 5, left: 10),
+                      padding: EdgeInsets.only(
+                        left: 5,
+                        right: 6,
+                        top: 3,
+                        bottom: 4,
+                      ),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          gradient: kGColor),
+                      child: Text(
+                        widget.temp!.adPrice.toString(),
+                        style: klabelStyleBold11light,
+                      ),
+                    ),
+                    Icon(
+                      Icons.timelapse_sharp,
+                      size: 12,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      widget.temp!.createdAt!,
+                      style: TextStyle(
+                          fontFamily: 'FairuzBold',
+                          fontSize: 10,
+                          color: Color(0xFF5E5E5E)),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 //==========================Card Call & Whatsapp =============
 class SocialCard extends StatelessWidget {
   void Function()? ontap;
@@ -581,7 +589,8 @@ class SocialCard extends StatelessWidget {
             color: color,
             gradient: lg),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               '$text',
@@ -589,7 +598,7 @@ class SocialCard extends StatelessWidget {
                   fontFamily: 'FairuzBold', fontSize: 16, color: colortext),
             ),
             SizedBox(
-              width: 10,
+              width: 15,
             ),
             Icon(
               icon,

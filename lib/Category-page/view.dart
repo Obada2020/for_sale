@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Ads-page/view.dart';
@@ -26,11 +28,10 @@ class CategoryPage extends GetView<AdsController> {
           decoration: BoxDecoration(gradient: kGColor),
         ),
       ),
-      body: GetX<AdsController>(
-        // init: controller.fetchCatogaryList(
-        //     parameter['ad_catogary_id'], parameter['catogary_details_id']),
-        builder: (controller) {
-          return controller.isLoadingCL.value
+      body: Obx(
+          // init: controller.fetchCatogaryList(
+          //     parameter['ad_catogary_id'], parameter['catogary_details_id']),
+          () => controller.isLoadingCL.value
               ? Center(
                   child: CircularProgressIndicator(),
                 )
@@ -63,13 +64,12 @@ class CategoryPage extends GetView<AdsController> {
                               categ: controller.categoryList[index]),
                         );
                       },
-                    );
-        },
-      ),
+                    )),
     );
   }
 
   Widget containerCategory({CategoryModel? categ}) {
+    inspect(categ);
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(5)),

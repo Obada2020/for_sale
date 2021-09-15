@@ -95,20 +95,20 @@ class AdsAll extends GetView<AdsController> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Map details = {
-                              'adId': controller.allAds[index].adId,
-                              'accountId': controller.allAds[index].accountId,
-                              'adName': controller.allAds[index].adName,
-                              'adphone': controller.allAds[index].adPhoneNumber,
-                              'addescr': controller.allAds[index].adDescription,
-                              'adpicture': controller.allAds[index].adPicture,
-                              'adprice': controller.allAds[index].adPrice,
-                              'adinfo': controller.allAds[index].adInfo,
-                              'created': controller.allAds[index].createdAt,
-                              'updated': controller.allAds[index].updatedAt,
-                            };
+                            // Map details = {
+                            //   // 'adId': controller.allAds[index].adId,
+                            //   // 'accountId': controller.allAds[index].accountId,
+                            //   // 'adName': controller.allAds[index].adName,
+                            //   // 'adphone': controller.allAds[index].adPhoneNumber,
+                            //   // 'addescr': controller.allAds[index].adDescription,
+                            //   // 'adpicture': controller.allAds[index].adPicture,
+                            //   // 'adprice': controller.allAds[index].adPrice,
+                            //   // 'adinfo': controller.allAds[index].adInfo,
+                            //   // 'created': controller.allAds[index].createdAt,
+                            //   // 'updated': controller.allAds[index].updatedAt,
+                            // };
                             Get.to(() => Adsdetails(
-                                  details: details,
+                                  temp: controller.allAds[index]
                                 ));
                           },
                           child: Container(

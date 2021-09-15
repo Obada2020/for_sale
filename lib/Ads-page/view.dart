@@ -91,7 +91,7 @@ class Ads extends StatelessWidget {
                     ? Center(
                         child: CircularProgressIndicator(),
                       )
-                    : c.allAds.isEmpty
+                    : c.ads.isEmpty
                         ? Center(
                             child: Text("empty".tr),
                           )
@@ -272,21 +272,23 @@ class Ads extends StatelessWidget {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          Map details = {
-                            'adId': c.ads[index].adId,
-                            'accountId': c.ads[index].accountId,
-                            'adName': c.ads[index].adName,
-                            'adphone': c.ads[index].adPhoneNumber,
-                            'addescr': c.ads[index].adDescription,
-                            'adpicture': c.ads[index].adPicture,
-                            'adprice': c.ads[index].adPrice,
-                            'adinfo': c.ads[index].adInfo,
-                            'created': c.ads[index].createdAt,
-                            'updated': c.ads[index].updatedAt,
-                          };
-                          Get.to(() => Adsdetails(
-                                details: details,
-                              ));
+                          // Map details = {
+                          //   'adId': c.ads[index].adId,
+                          //   'accountId': c.ads[index].accountId,
+                          //   'adName': c.ads[index].adName,
+                          //   'adphone': c.ads[index].adPhoneNumber,
+                          //   'addescr': c.ads[index].adDescription,
+                          //   'adpicture': c.ads[index].adPicture,
+                          //   'adprice': c.ads[index].adPrice,
+                          //   'adinfo': c.ads[index].adInfo,
+                          //   'created': c.ads[index].createdAt,
+                          //   'updated': c.ads[index].updatedAt,
+                          // };
+                          Get.to(
+                            () => Adsdetails(
+                              temp: c.ads[index],
+                            ),
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(
