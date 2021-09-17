@@ -87,8 +87,8 @@ class Adsdetails extends GetView<HomeController> {
 
   Widget social() {
     return Container(
+      color: Theme.of(Get.context!).primaryColor,
       margin: EdgeInsets.only(bottom: 14, top: 14),
-      color: Colors.white,
       child: Container(
         margin: EdgeInsets.only(right: 16, top: 15, left: 16),
         child: Column(
@@ -160,7 +160,7 @@ class Adsdetails extends GetView<HomeController> {
   Widget description() {
     return Container(
       margin: EdgeInsets.only(bottom: 14, top: 14),
-      color: Colors.white,
+      color: Theme.of(Get.context!).primaryColor,
       // height: size.height * 0.34196,
       child: Container(
         padding: EdgeInsets.only(right: 16, bottom: 69, left: 16),
@@ -170,12 +170,19 @@ class Adsdetails extends GetView<HomeController> {
           children: [
             Text(
               'الوصف',
-              style: klabelStyleBlack16,
+              style: klabelStyleBlack16.copyWith(
+                  color: Theme.of(Get.context!).primaryColor == Colors.black
+                      ? Colors.white
+                      : Colors.black),
             ),
             Text(
               temp!.adDescription!,
               style: TextStyle(
-                  fontFamily: 'FairuzBlack', fontSize: 12, color: Colors.black),
+                  fontFamily: 'FairuzBlack',
+                  fontSize: 12,
+                  color: Theme.of(Get.context!).primaryColor == Colors.black
+                      ? Colors.white
+                      : Colors.black),
             ),
           ],
         ),
@@ -191,15 +198,18 @@ class Adsdetails extends GetView<HomeController> {
         Padding(
           padding: const EdgeInsets.only(bottom: 17, top: 19),
           child: Container(
-            color: Colors.white,
+            color: Theme.of(Get.context!).primaryColor,
             child: ExpansionTile(
               title: Text(
                 'المواصفات',
-                style: klabelStyleBlack16,
+                style: klabelStyleBlack16.copyWith(
+                    color: Theme.of(Get.context!).primaryColor == Colors.black
+                        ? Colors.white
+                        : Colors.black),
               ),
               children: [
                 Container(
-                  color: Colors.white,
+                  color: Theme.of(Get.context!).primaryColor,
                   padding: EdgeInsets.only(top: 20),
                   child: GridView.builder(
                       shrinkWrap: true,
@@ -216,7 +226,7 @@ class Adsdetails extends GetView<HomeController> {
                         return Container(
                           margin: EdgeInsets.only(right: 9, left: 9),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(Get.context!).primaryColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
                           child: Column(
@@ -235,7 +245,9 @@ class Adsdetails extends GetView<HomeController> {
                                     child: Row(
                                       children: [
                                         Text(
-                                            'تاريخ الانتاج\t\t\t\t\t\t\t\t 2017 '),
+                                          'تاريخ الانتاج\t\t\t\t\t\t\t\t 2017 ',
+                                          style: TextStyle(color: Colors.black),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -258,7 +270,7 @@ class Adsdetails extends GetView<HomeController> {
   Widget sggestedAds() {
     return Container(
       margin: EdgeInsets.only(bottom: 14, top: 14),
-      color: Colors.white,
+      color: Theme.of(Get.context!).primaryColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -266,7 +278,10 @@ class Adsdetails extends GetView<HomeController> {
             margin: EdgeInsets.only(right: 16, top: 13),
             child: Text(
               'إعلانات مقترحة',
-              style: klabelStyleBlack16,
+              style: klabelStyleBlack16.copyWith(
+                  color: Theme.of(Get.context!).primaryColor == Colors.black
+                      ? Colors.white
+                      : Colors.black),
             ),
           ),
           // Container(
@@ -440,7 +455,7 @@ class _DetailsState extends State<Details> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(color: Colors.white),
+      decoration: BoxDecoration(color: Theme.of(Get.context!).primaryColor),
       child: Column(
         children: [
           Stack(
@@ -499,7 +514,11 @@ class _DetailsState extends State<Details> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     widget.temp!.adName!,
-                    style: klabelStyleBold12card,
+                    style: klabelStyleBold12card.copyWith(
+                        color:
+                            Theme.of(Get.context!).primaryColor == Colors.black
+                                ? Colors.white
+                                : Colors.black),
                     maxLines: 2,
                   ),
                 ),
@@ -533,7 +552,10 @@ class _DetailsState extends State<Details> {
                       style: TextStyle(
                           fontFamily: 'FairuzBold',
                           fontSize: 10,
-                          color: Color(0xFF5E5E5E)),
+                          color: Theme.of(Get.context!).primaryColor ==
+                                  Colors.black
+                              ? Colors.white
+                              : Colors.black),
                     ),
                   ],
                 ),
