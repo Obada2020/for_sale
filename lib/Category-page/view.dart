@@ -62,7 +62,8 @@ class CategoryPage extends GetView<AdsController> {
                           );
                         },
                         child: containerCategory(
-                            categ: controller.categoryList[index]),
+                          categ: controller.categoryList[index],
+                        ),
                       );
                     },
                   ),
@@ -71,7 +72,7 @@ class CategoryPage extends GetView<AdsController> {
   }
 
   Widget containerCategory({CategoryModel? categ}) {
-    inspect(categ);
+    // inspect(categ);
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(5)),

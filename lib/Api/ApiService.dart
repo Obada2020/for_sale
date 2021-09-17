@@ -82,7 +82,7 @@ class ApiService {
       body: {'account_id': '${Get.find<UserController>().accountId}'},
       headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
-    
+
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
       for (var item in body) {
@@ -209,6 +209,7 @@ class ApiService {
     print(Get.find<UserController>().token);
     // print(token);
     print("ffffffffffffffffffffffffffffffffffffffffff");
+    print(response.body);
     List data = jsonDecode(response.body);
     return data.map((a) => new AddName.fromJson(a)).toList();
   }

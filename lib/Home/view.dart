@@ -14,7 +14,9 @@ class HomePage extends GetView<HomeController> {
   //
   @override
   Widget build(BuildContext context) {
+    //
     final Size size = MediaQuery.of(context).size;
+    //
     return Scaffold(
       appBar: AppBar(
         title: Center(child: Text("الصفحة الرئيسة", style: klabelAppbarStyle)),

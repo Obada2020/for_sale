@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Home/view.dart';
@@ -10,12 +8,12 @@ import 'package:for_sale/Sign-in/view.dart';
 import 'package:get/get.dart';
 
 class Home extends StatefulWidget {
-  final String? token;
-  final String? number;
-  Home({this.token, this.number}) {
-    // Get.find<UserController>().number.value = number!;
-    // Get.find<UserController>().token.value = token!;
-  }
+  // final String? token;
+  // final String? number;
+  // Home({this.token, this.number}) {
+  //   // Get.find<UserController>().number.value = number!;
+  //   // Get.find<UserController>().token.value = token!;
+  // }
   @override
   _HomeState createState() => _HomeState();
 }

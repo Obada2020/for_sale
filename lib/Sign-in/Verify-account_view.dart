@@ -94,23 +94,23 @@ class VerifyAccount extends StatelessWidget {
                               enabledBorderColor: Colors.white,
                             ),
                             onChanged: (k) {},
-                            onCompleted: (n) async {
+                            onCompleted: (n) {
                               serial = n;
                               print(n);
-                              var z = await c.login(number, serial);
-                              if (z == "Login Error") {
-                                showAlertDialog(context);
-                              } else {
-                                c.user.value = z;
-                                Get.find<AddNameController>().fetchData();
-                                Get.offAll(
-                                  () => Home(
-                                    number:
-                                        c.user.value.info!.accountPhoneNumber,
-                                    token: c.user.value.token,
-                                  ),
-                                );
-                              }
+                              // var z = await c.login(number, serial);
+                              // if (z == "Login Error") {
+                              //   showAlertDialog(context);
+                              // } else {
+                              //   c.user.value = z;
+                              //   Get.find<AddNameController>().fetchData();
+                              //   Get.offAll(
+                              //     () => Home(
+                              //       number:
+                              //           c.user.value.info!.accountPhoneNumber,
+                              //       token: c.user.value.token,
+                              //     ),
+                              //   );
+                              // }
                               // c.login(n);
                             },
                           ),

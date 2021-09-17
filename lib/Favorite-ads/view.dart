@@ -19,7 +19,7 @@ class FavoriteAds extends GetView<AdsController> {
           style: klabelAppbarStyle,
         ),
       ),
-      body: gridview(),
+      body: SingleChildScrollView(child: gridview()),
     );
   }
 
@@ -77,10 +77,10 @@ class FavoriteAds extends GetView<AdsController> {
                               //   'updated':
                               //       controller.favad[index].ad![0].updatedAt,
                               // };
-                              Get.to(() => Adsdetails(
-                                    temp: controller.favad[index].ad![0]
-                                    ),
-                                  );
+                              Get.to(
+                                () => Adsdetails(
+                                    temp: controller.favad[index].ad![0]),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -99,8 +99,8 @@ class FavoriteAds extends GetView<AdsController> {
                                 children: [
                                   Expanded(
                                     child: Image.network(
-                                      controller
-                                          .favad[index].ad![0].adpicture![0].adPicture
+                                      controller.favad[index].ad![0]
+                                          .adpicture![0].adPicture
                                           .toString(),
                                       loadingBuilder: (BuildContext? ctx,
                                           Widget? child,
@@ -147,8 +147,7 @@ class FavoriteAds extends GetView<AdsController> {
                                                 BorderRadius.circular(4),
                                             gradient: kGColor),
                                         child: Text(
-                                          controller
-                                              .favad[index].ad![0].adPrice
+                                          controller.favad[index].ad![0].adPrice
                                               .toString(),
                                           style: klabelStyleBold11light,
                                         ),

@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/Model/Add_ad.dart';
 import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
@@ -42,7 +43,7 @@ class AddUI extends GetView<AddNameController> {
     return false;
   }
 
-  ////////////////////////////////
+  ///
   bool check() {
     if (controller.myAdTypelist[0].adCount == 0 ||
         controller.myAdTypelist[1].adCount == 0) {
@@ -81,6 +82,7 @@ class AddUI extends GetView<AddNameController> {
     return true;
   }
 
+  ///
   showAlert(BuildContext context) {
     showDialog(
       context: context,
@@ -119,7 +121,9 @@ class AddUI extends GetView<AddNameController> {
   ////////////////////////////////
   @override
   Widget build(BuildContext context) {
+    //
     Size size = MediaQuery.of(context).size;
+    //
     return Scaffold(
       appBar: AppBar(
         title: Text("add-ad".tr, style: klabelAppbarStyle),
@@ -185,7 +189,6 @@ class AddUI extends GetView<AddNameController> {
                               onPressed: () async {
                                 // await Get.delete<AddNameController>();
                                 // Get.put(AddNameController());
-
                                 FocusScope.of(context).unfocus();
                                 if (check() && validate()) {
                                   inspect(controller.myform.value);
@@ -204,6 +207,9 @@ class AddUI extends GetView<AddNameController> {
                                       btnOkOnPress: () {},
                                     )..show();
                                     _formKey.currentState!.reset();
+                                    Get.delete<AddNameController>();
+                                    Get.off(Home());
+                                    Get.put(AddNameController());
                                     print("SUCCESS");
                                   } else
                                     AwesomeDialog(

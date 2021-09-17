@@ -37,8 +37,8 @@ void main() async {
     RestartWidget(
       child: MyApp(
         l ?? "",
-        c.token.value,
-        c.number.value,
+        // c.token.value,
+        // c.number.value,
       ),
     ),
   );
@@ -80,12 +80,8 @@ class _RestartWidgetState extends State<RestartWidget> {
 //
 class MyApp extends StatefulWidget {
   final String? lan;
-  final String? t;
-  final String? n;
   MyApp(
     this.lan,
-    this.t,
-    this.n,
   );
   @override
   _MyAppState createState() => _MyAppState();
@@ -97,7 +93,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       initialBinding: HomeBinding(),
-      home: Home(number: widget.n!, token: widget.t!),
+      home: Home(),
       debugShowCheckedModeBanner: false,
       theme: Themes().lightTheme,
       darkTheme: Themes().darkTheme,
