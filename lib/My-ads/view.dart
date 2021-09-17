@@ -42,16 +42,17 @@ class MyAds extends GetView<AdsController> {
                       child: CircularProgressIndicator(),
                     ),
                   )
-                : controller.favad.isEmpty
+                : controller.myads.isEmpty
                     ? Center(
                         child: Text(
-                        "emptymyad".tr,
-                        style: TextStyle(fontSize: 20),
-                      ))
+                          "emptymyad".tr,
+                          style: TextStyle(fontSize: 20),
+                        ),
+                      )
                     : GridView.builder(
                         // physics: NeverScrollableScrollPhysics(),
                         shrinkWrap: true,
-                        itemCount: controller.favad.length,
+                        itemCount: controller.myads.length,
                         gridDelegate:
                             new SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
@@ -80,9 +81,11 @@ class MyAds extends GetView<AdsController> {
                               //   'updated':
                               //       controller.favad[index].ad![0].updatedAt,
                               // };
-                              Get.to(() => Adsdetails(
-                                    // temp: controller.favad[index].ad![0]
-                                  ));
+                              Get.to(
+                                () => Adsdetails(
+                                  temp: controller.favad[index].ad![0],
+                                ),
+                              );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -107,8 +110,7 @@ class MyAds extends GetView<AdsController> {
                                           topLeft: Radius.circular(4),
                                         ),
                                         child: Image.network(
-                                          controller
-                                              .myads[index].adpicture![0]
+                                          controller.myads[index].adpicture![0]
                                               .toString(),
                                           fit: BoxFit.cover,
                                         )),
@@ -121,7 +123,7 @@ class MyAds extends GetView<AdsController> {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      controller.favad[index].ad![0].adName!,
+                                      controller.myads[index].adName!,
                                       style: klabelStyleBold12,
                                       maxLines: 2,
                                     ),
@@ -142,7 +144,7 @@ class MyAds extends GetView<AdsController> {
                                                 BorderRadius.circular(4),
                                             gradient: kGColor),
                                         child: Text(
-                                          controller.favad[index].ad![0].adPrice
+                                          controller.myads[index].adPrice
                                               .toString(),
                                           style: klabelStyleBold11light,
                                         ),
@@ -150,16 +152,16 @@ class MyAds extends GetView<AdsController> {
                                       Text(
                                         ('قبل : ${(DateTime.now().difference(DateTime(
                                               int.parse(controller
-                                                  .favad[index].createdAt!
+                                                  .myads[index].createdAt!
                                                   .substring(0, 4)),
                                               int.parse(controller
-                                                  .favad[index].createdAt!
+                                                  .myads[index].createdAt!
                                                   .substring(5, 7)),
                                               int.parse(controller
-                                                  .favad[index].createdAt!
+                                                  .myads[index].createdAt!
                                                   .substring(8, 10)),
                                               int.parse(controller
-                                                  .favad[index].createdAt!
+                                                  .myads[index].createdAt!
                                                   .substring(11, 13)),
                                             )).inDays)}  يوم  '),
                                         maxLines: 2,

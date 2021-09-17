@@ -183,45 +183,45 @@ class AddUI extends GetView<AddNameController> {
                                 ),
                               ),
                               onPressed: () async {
-                                await Get.delete<AddNameController>();
-                                Get.put(AddNameController());
+                                // await Get.delete<AddNameController>();
+                                // Get.put(AddNameController());
 
-                                // FocusScope.of(context).unfocus();
-                                // if (check() && validate()) {
-                                //   inspect(controller.myform.value);
-                                //   if (await controller.postAdd()) {
-                                //     AwesomeDialog(
-                                //       context: Get.context!,
-                                //       animType: AnimType.SCALE,
-                                //       dialogType: DialogType.SUCCES,
-                                //       body: Text(
-                                //         'تم إضافة الإعلان بنجاح',
-                                //         textAlign: TextAlign.center,
-                                //         style: TextStyle(fontSize: 20),
-                                //       ),
-                                //       title: 'This is Ignored',
-                                //       desc: 'This is also Ignored',
-                                //       btnOkOnPress: () {},
-                                //     )..show();
-                                //     _formKey.currentState!.reset();
-                                //     print("SUCCESS");
-                                //   } else
-                                //     AwesomeDialog(
-                                //       btnOkColor: Colors.red,
-                                //       context: Get.context!,
-                                //       animType: AnimType.SCALE,
-                                //       dialogType: DialogType.ERROR,
-                                //       body: Text(
-                                //         'تأكد من الاتصال من الانترنت وحاول مجدداً',
-                                //         textAlign: TextAlign.center,
-                                //         style: TextStyle(fontSize: 17),
-                                //       ),
-                                //       title: 'This is Ignored',
-                                //       desc: 'This is also Ignored',
-                                //       btnOkOnPress: () {},
-                                //     )..show();
-                                //   print("ERROR");
-                                // }
+                                FocusScope.of(context).unfocus();
+                                if (check() && validate()) {
+                                  inspect(controller.myform.value);
+                                  if (await controller.postAdd()) {
+                                    AwesomeDialog(
+                                      context: Get.context!,
+                                      animType: AnimType.SCALE,
+                                      dialogType: DialogType.SUCCES,
+                                      body: Text(
+                                        'تم إضافة الإعلان بنجاح',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 20),
+                                      ),
+                                      title: 'This is Ignored',
+                                      desc: 'This is also Ignored',
+                                      btnOkOnPress: () {},
+                                    )..show();
+                                    _formKey.currentState!.reset();
+                                    print("SUCCESS");
+                                  } else
+                                    AwesomeDialog(
+                                      btnOkColor: Colors.red,
+                                      context: Get.context!,
+                                      animType: AnimType.SCALE,
+                                      dialogType: DialogType.ERROR,
+                                      body: Text(
+                                        'تأكد من الاتصال من الانترنت وحاول مجدداً',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(fontSize: 17),
+                                      ),
+                                      title: 'This is Ignored',
+                                      desc: 'This is also Ignored',
+                                      btnOkOnPress: () {},
+                                    )..show();
+                                  print("ERROR");
+                                }
                               },
                               child: Center(
                                 child: Text(
