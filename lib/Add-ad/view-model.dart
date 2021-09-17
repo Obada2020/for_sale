@@ -1,6 +1,7 @@
+import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
-import 'package:for_sale/Add-ad/model.dart';
+import 'package:for_sale/Model/Add_ad.dart';
 import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
@@ -48,7 +49,7 @@ class AddNameController extends GetxController {
   }
 
   //
-  fetchData() async {
+  void fetchData() async {
     loading.value = true;
     loadingMyType.value = true;
     var f = await ApiService.fetchAddName();
@@ -97,11 +98,18 @@ class AddNameController extends GetxController {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
   Future postAdd() async {
     //
+    int px = myAdTypelist
+        .where((s) => s.isSpecial == myform.value.adTypeId)
+        .first
+        .adTypeId!;
+    //
     loading.value = true;
     //
     Dio dio = Dio();
     //
     List<MultipartFile> allMultiFiles = [];
+    //
+    inspect(myform.value);
     //
     for (Asset asset in myform.value.images!) {
       ByteData byteData = await asset.getByteData();
@@ -122,7 +130,7 @@ class AddNameController extends GetxController {
         "ad_price": myform.value.adPrice.toString(),
         "ad_info": "null",
         "account_id": Get.find<UserController>().accountId.toString(),
-        "ad_type_id": myform.value.adTypeId.toString(),
+        "ad_type_id": px,
         "ad_catogary_id": myform.value.adCatogaryId.toString(),
         "catogary_details_id": myform.value.catogaryDetailsId.toString(),
         "ad_descriptions_id": myform.value.adDescriptionId.toString(),
@@ -146,9 +154,12 @@ class AddNameController extends GetxController {
       if (response.statusCode == 200 || response.statusCode == 201) {
         print('Success Publish the Ad');
         loading.value = false;
+        update();
         return true;
       } else {
         loading.value = false;
+        update();
+
         print(response.data);
         print(response.statusCode);
         print(response.statusMessage);

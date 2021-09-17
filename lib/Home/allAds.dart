@@ -135,7 +135,7 @@ class AdsAll extends GetView<AdsController> {
                                         topLeft: Radius.circular(4),
                                       ),
                                       child: Image.network(
-                                        controller.allAds[index].adPicture
+                                        controller.allAds[index].adpicture![0]
                                             .toString(),
                                         fit: BoxFit.cover,
                                       )),

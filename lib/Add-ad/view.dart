@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:for_sale/Add-ad/model.dart';
+import 'package:for_sale/Model/Add_ad.dart';
 import 'package:for_sale/Add-ad/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart' hide FormData;
@@ -11,9 +11,13 @@ import 'package:multi_image_picker2/multi_image_picker2.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Myform {
+  //
   List<Asset>? images = [];
+  //
   String? adName = "", adDescription = "";
+  //
   List<Map<String, String>>? adInfo = <Map<String, String>>[];
+  //
   int? adPhoneNumber = 0,
       adPrice = 0,
       adTypeId = 0,
@@ -27,7 +31,7 @@ class Myform {
 class AddUI extends GetView<AddNameController> {
   // final c = Get.put(AddNameController());
   final _formKey = GlobalKey<FormState>();
-  ////////////////////////////////////////
+
   ///
   ///
   validate() {
@@ -40,6 +44,18 @@ class AddUI extends GetView<AddNameController> {
 
   ////////////////////////////////
   bool check() {
+    if (controller.myAdTypelist[0].adCount == 0 ||
+        controller.myAdTypelist[1].adCount == 0) {
+      Get.defaultDialog(
+        title: "لم يتبقى لديك عدد اعلانات كافية ",
+        middleText: "قم بالتواصل مع الادارة لتفاصيل اكثر",
+        backgroundColor: Colors.grey.shade400,
+        titleStyle: TextStyle(color: Colors.black),
+        middleTextStyle: TextStyle(color: Colors.black54),
+      );
+      return false;
+    }
+
     if (!controller.showLastCat.value) {
       Get.defaultDialog(
         title: "الرجاء قم باختيار قسم الاعلان",
@@ -64,19 +80,6 @@ class AddUI extends GetView<AddNameController> {
 
     return true;
   }
-
-  ////////////////////////////////
-  // getNumber() async {
-  //   String t = "";
-  //   SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-  //   t = sharedPreferences.getString("number")!.toString();
-  //   if (t == "") {
-  //     print("==================Null1==================");
-  //     // Get.to(() => Signin());
-  //     showAlert(Get.context!);
-  //   } else
-  //     print("==================GOOOOOOOO==================");
-  // }
 
   showAlert(BuildContext context) {
     showDialog(
@@ -129,101 +132,108 @@ class AddUI extends GetView<AddNameController> {
         children: [
           SingleChildScrollView(
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxHeight: size.height * 3),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(height: 12),
-                    get(
-                      ChoseType(),
-                      "type-ad".tr,
-                    ),
-                    SizedBox(height: 12),
-                    get(
-                      WAddName(),
-                      "section-ad".tr,
-                    ),
-                    SizedBox(height: 12),
-                    Obx(() => Visibility(
-                          visible: controller.showLastCat.value,
-                          child: TypesTypes(),
-                        )),
-                    SizedBox(height: 12),
-                    DetailsAdd(),
-                    SizedBox(height: 12),
-                    Obx(() => Visibility(
-                          child: Specifications(),
-                          visible: controller.showAddInfoKey.value,
-                        )),
-                    SizedBox(height: 12),
-                    communicate(controller.myform.value),
-                    SizedBox(height: 8),
-                    Padding(
-                      padding: const EdgeInsets.all(9),
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
-                          gradient: kGColor,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: ElevatedButton(
-                            style: ButtonStyle(
-                                padding: MaterialStateProperty.all(
-                                    EdgeInsets.symmetric(
-                                        vertical: 13, horizontal: 140)),
-                                backgroundColor: MaterialStateProperty.all(
-                                    Colors.transparent)),
-                            onPressed: () async {
-                              FocusScope.of(context).unfocus();
-                              if (check() && validate()) {
-                                inspect(controller.myform.value);
-                                if (await controller.postAdd()) {
-                                  AwesomeDialog(
-                                    context: Get.context!,
-                                    animType: AnimType.SCALE,
-                                    dialogType: DialogType.SUCCES,
-                                    body: Text(
-                                      'تم إضافة الإعلان بنجاح',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    title: 'This is Ignored',
-                                    desc: 'This is also Ignored',
-                                    btnOkOnPress: () {},
-                                  )..show();
-                                  _formKey.currentState!.reset();
-                                  print("SUCCESS");
-                                } else
-                                  AwesomeDialog(
-                                    btnOkColor: Colors.red,
-                                    context: Get.context!,
-                                    animType: AnimType.SCALE,
-                                    dialogType: DialogType.ERROR,
-                                    body: Text(
-                                      'تأكد من الاتصال من الانترنت وحاول مجدداً',
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(fontSize: 17),
-                                    ),
-                                    title: 'This is Ignored',
-                                    desc: 'This is also Ignored',
-                                    btnOkOnPress: () {},
-                                  )..show();
-                                print("ERROR");
-                              }
-                            },
-                            child: Center(
-                              child: Text(
-                                "details-ad14".tr,
-                              ),
-                            )),
+                constraints: BoxConstraints(maxHeight: size.height * 3),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SizedBox(height: 12),
+                      get(
+                        ChoseType(),
+                        "type-ad".tr,
                       ),
-                    ),
-                    SizedBox(height: 18),
-                  ],
-                ),
-              ),
-            ),
+                      SizedBox(height: 12),
+                      get(
+                        WAddName(),
+                        "section-ad".tr,
+                      ),
+                      SizedBox(height: 12),
+                      Obx(() => Visibility(
+                            visible: controller.showLastCat.value,
+                            child: TypesTypes(),
+                          )),
+                      SizedBox(height: 12),
+                      DetailsAdd(),
+                      SizedBox(height: 12),
+                      Obx(() => Visibility(
+                            child: Specifications(),
+                            visible: controller.showAddInfoKey.value,
+                          )),
+                      SizedBox(height: 12),
+                      communicate(controller.myform.value),
+                      SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.all(9),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            gradient: kGColor,
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                padding: MaterialStateProperty.all(
+                                  EdgeInsets.symmetric(
+                                    vertical: 13,
+                                    horizontal: 140,
+                                  ),
+                                ),
+                                backgroundColor: MaterialStateProperty.all(
+                                  Colors.transparent,
+                                ),
+                              ),
+                              onPressed: () async {
+                                await Get.delete<AddNameController>();
+                                Get.put(AddNameController());
+
+                                // FocusScope.of(context).unfocus();
+                                // if (check() && validate()) {
+                                //   inspect(controller.myform.value);
+                                //   if (await controller.postAdd()) {
+                                //     AwesomeDialog(
+                                //       context: Get.context!,
+                                //       animType: AnimType.SCALE,
+                                //       dialogType: DialogType.SUCCES,
+                                //       body: Text(
+                                //         'تم إضافة الإعلان بنجاح',
+                                //         textAlign: TextAlign.center,
+                                //         style: TextStyle(fontSize: 20),
+                                //       ),
+                                //       title: 'This is Ignored',
+                                //       desc: 'This is also Ignored',
+                                //       btnOkOnPress: () {},
+                                //     )..show();
+                                //     _formKey.currentState!.reset();
+                                //     print("SUCCESS");
+                                //   } else
+                                //     AwesomeDialog(
+                                //       btnOkColor: Colors.red,
+                                //       context: Get.context!,
+                                //       animType: AnimType.SCALE,
+                                //       dialogType: DialogType.ERROR,
+                                //       body: Text(
+                                //         'تأكد من الاتصال من الانترنت وحاول مجدداً',
+                                //         textAlign: TextAlign.center,
+                                //         style: TextStyle(fontSize: 17),
+                                //       ),
+                                //       title: 'This is Ignored',
+                                //       desc: 'This is also Ignored',
+                                //       btnOkOnPress: () {},
+                                //     )..show();
+                                //   print("ERROR");
+                                // }
+                              },
+                              child: Center(
+                                child: Text(
+                                  "details-ad14".tr,
+                                ),
+                              )),
+                        ),
+                      ),
+                      SizedBox(height: 18),
+                    ],
+                  ),
+                )),
           ),
           Obx(
             () => Visibility(
@@ -1148,7 +1158,7 @@ class Specifications extends StatelessWidget {
   //   "تاريخ الإنتاج",
   //   "الماتور"
   // ];
-  var c = Get.find<AddNameController>();
+  final c = Get.find<AddNameController>();
   // List<Map<String, String>>? temp = [];
 
   @override

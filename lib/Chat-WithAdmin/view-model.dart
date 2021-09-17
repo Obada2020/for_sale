@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:for_sale/Api/ApiService.dart';
-import 'package:for_sale/Chat-WithAdmin/model.dart';
+import 'package:for_sale/Model/chat.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
@@ -12,7 +12,7 @@ class ChatController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   //
   Timer? _timer;
-  
+
   //
   @override
   void dispose() {
@@ -27,6 +27,7 @@ class ChatController extends GetxController {
   void onInit() {
     super.onInit();
     _timer = Timer.periodic(Duration(seconds: 2), (timer) async {
+      print("fetch Messages");
       await fetchMessages();
     });
   }
@@ -55,7 +56,7 @@ class ChatController extends GetxController {
   //
 
   //
-  Future postMessage(int? account, String? message) async {
-    await ApiService.postMessage(account, message);
+  Future postMessage(String? message) async {
+    await ApiService.postMessage(message);
   }
 }

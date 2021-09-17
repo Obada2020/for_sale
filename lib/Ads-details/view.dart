@@ -1,25 +1,25 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
-import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/Home/view-model.dart';
+import 'package:for_sale/Model/home.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Adsdetails extends GetView<HomeController> {
-  final AdsHomeModel? temp;
+  final Ads? temp;
   Adsdetails({this.temp});
 
   final int _current = 0;
   //
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
-    for (var i = 0; i < list.length; i++) {
-      result.add(handler(i, list[i]));
-    }
-    return result;
-  }
+  // List<T> map<T>(List list, Function handler) {
+  //   List<T> result = [];
+  //   for (var i = 0; i < list.length; i++) {
+  //     result.add(handler(i, list[i]));
+  //   }
+  //   return result;
+  // }
 
   //
   final AdsController c = Get.put(AdsController());
@@ -28,6 +28,10 @@ class Adsdetails extends GetView<HomeController> {
   Widget build(BuildContext context) {
     // print(widget.details);
     // IconData icon = Icons.favorite_border;
+    temp!.adpicture!.forEach((element) {
+      print(element.adPicture);
+    });
+    print("GG");
     return Scaffold(
       backgroundColor: kbodyColor,
       appBar: AppBar(
@@ -61,7 +65,7 @@ class Adsdetails extends GetView<HomeController> {
         children: [
           Details(
             temp: temp,
-            current_index: _current,
+            currentIndex: _current,
           ),
           temp!.adInfo!.isNotEmpty ? specifications() : Container(),
           description(),
@@ -274,161 +278,159 @@ class Adsdetails extends GetView<HomeController> {
               style: klabelStyleBlack16,
             ),
           ),
-          Container(
-            margin: EdgeInsets.only(top: 14, right: 16),
-            height: 200,
-            child: GetX<AdsController>(
-              builder: (controller) {
-                if (controller.ads.isNotEmpty) {
-                  return GridView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount:
-                          controller.ads.length < 8 ? controller.ads.length : 8,
-                      gridDelegate:
-                          new SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 1,
-                        childAspectRatio: 1,
-                        crossAxisSpacing: 9,
-                        mainAxisSpacing: 9,
-                      ),
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          // onTap: () {
-                          //   Get.back();
-                          //   Map details = {
-                          //   //   'adId': widget.c.ads[index].adId,
-                          //   //   'accountId': widget.c.ads[index].accountId,
-                          //   //   'adName': widget.c.ads[index].adName,
-                          //   //   'adphone': widget.c.ads[index].adPhoneNumber,
-                          //   //   'addescr': widget.c.ads[index].adDescription,
-                          //   //   'adpicture': widget.c.ads[index].adPicture,
-                          //   //   'adprice': widget.c.ads[index].adPrice,
-                          //   //   'adinfo': widget.c.ads[index].adInfo,
-                          //   //   'created': widget.c.ads[index].createdAt,
-                          //   //   'updated': widget.c.ads[index].updatedAt,
-                          //   // };
-                          //   // Get.to(() => Adsdetails(
-                          //   //       details: details,
-                          //   //     ));
-                          // },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              boxShadow: [
-                                BoxShadow(
-                                  spreadRadius: 1,
-                                  blurRadius: 5,
-                                  color: Colors.grey.withOpacity(0.2),
-                                )
-                              ],
-                              color: controller.ads[index].adTypeId == '2'
-                                  ? Color(0x79667590)
-                                  : Colors.white,
-                              borderRadius: BorderRadius.circular(4),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                //----------card grid-----------
-                                Container(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(4),
-                                        topLeft: Radius.circular(4),
-                                      ),
-                                      child: Image.network(
-                                        controller.ads[index].adPicture
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                        loadingBuilder: (BuildContext? ctx,
-                                            Widget? child,
-                                            ImageChunkEvent? loadingProgress) {
-                                          if (loadingProgress == null) {
-                                            return child!;
-                                          } else {
-                                            return Center(
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(Colors.green),
-                                              ),
-                                            );
-                                          }
-                                        },
-                                      )),
-                                ),
+          // Container(
+          //   margin: EdgeInsets.only(top: 14, right: 16),
+          //   height: 200,
+          //   child: GetX<HomeController>(
+          //     builder: (controller) {
+          //       if (controller.homeList.isNotEmpty) {
+          //         return GridView.builder(
+          //             scrollDirection: Axis.horizontal,
+          //             shrinkWrap: true,
+          //             itemCount: controller
+          //                         .homeList[temp!.adCatogaryId!].ads!.length <
+          //                     8
+          //                 ? controller.homeList[temp!.adCatogaryId!].ads!.length
+          //                 : 8,
+          //             gridDelegate:
+          //                 new SliverGridDelegateWithFixedCrossAxisCount(
+          //               crossAxisCount: 1,
+          //               childAspectRatio: 1,
+          //               crossAxisSpacing: 9,
+          //               mainAxisSpacing: 9,
+          //             ),
+          //             itemBuilder: (context, index) {
+          //               return InkWell(
+          //                 // onTap: () {
+          //                 //   Get.back();
+          //                 //   Map details = {
+          //                 //   //   'adId': widget.c.ads[index].adId,
+          //                 //   //   'accountId': widget.c.ads[index].accountId,
+          //                 //   //   'adName': widget.c.ads[index].adName,
+          //                 //   //   'adphone': widget.c.ads[index].adPhoneNumber,
+          //                 //   //   'addescr': widget.c.ads[index].adDescription,
+          //                 //   //   'adpicture': widget.c.ads[index].adPicture,
+          //                 //   //   'adprice': widget.c.ads[index].adPrice,
+          //                 //   //   'adinfo': widget.c.ads[index].adInfo,
+          //                 //   //   'created': widget.c.ads[index].createdAt,
+          //                 //   //   'updated': widget.c.ads[index].updatedAt,
+          //                 //   // };
+          //                 //   // Get.to(() => Adsdetails(
+          //                 //   //       details: details,
+          //                 //   //     ));
+          //                 // },
+          //                 child: Container(
+          //                   decoration: BoxDecoration(
+          //                     boxShadow: [
+          //                       BoxShadow(
+          //                         spreadRadius: 1,
+          //                         blurRadius: 5,
+          //                         color: Colors.grey.withOpacity(0.2),
+          //                       )
+          //                     ],
+          //                     // color: controller.ads[index].adTypeId == '2'
+          //                     //     ? Color(0x79667590)
+          //                     //     : Colors.white,
+          //                     borderRadius: BorderRadius.circular(4),
+          //                   ),
+          //                   child: Column(
+          //                     crossAxisAlignment: CrossAxisAlignment.start,
+          //                     children: [
+          //                       //----------card grid-----------
+          //                       Container(
+          //                         child: ClipRRect(
+          //                             borderRadius: BorderRadius.only(
+          //                               topRight: Radius.circular(4),
+          //                               topLeft: Radius.circular(4),
+          //                             ),
+          //                             child: Image.network(
+          //                               controller.homeList[temp!.adCatogaryId!].ads![index].adpicture![0].adPicture.toString(),
+          //                               fit: BoxFit.cover,
+          //                               loadingBuilder: (BuildContext? ctx,
+          //                                   Widget? child,
+          //                                   ImageChunkEvent? loadingProgress) {
+          //                                 if (loadingProgress == null) {
+          //                                   return child!;
+          //                                 } else {
+          //                                   return Center(
+          //                                     child: CircularProgressIndicator(
+          //                                       valueColor:
+          //                                           AlwaysStoppedAnimation<
+          //                                               Color>(Colors.green),
+          //                                     ),
+          //                                   );
+          //                                 }
+          //                               },
+          //                             )),
+          //                       ),
 
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: 5,
-                                    right: 7,
-                                    top: 3,
-                                  ),
-                                  child: Text(
-                                    controller.ads[index].adName!,
-                                    style: klabelStyleBold12card,
-                                    maxLines: 1,
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Container(
-                                        margin: EdgeInsets.only(
-                                            right: 5, bottom: 5, left: 10),
-                                        padding: EdgeInsets.only(
-                                          left: 5,
-                                          right: 6,
-                                          top: 3,
-                                          bottom: 4,
-                                        ),
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(4),
-                                            gradient: kGColor),
-                                        child: Text(
-                                          controller.ads[index].adPrice
-                                              .toString(),
-                                          style: klabelStyleBold11light,
-                                        )),
-                                    Text(
-                                      ('قبل : ${(DateTime.now().difference(DateTime(
-                                            int.parse(controller
-                                                .ads[index].createdAt!
-                                                .substring(0, 4)),
-                                            int.parse(controller
-                                                .ads[index].createdAt!
-                                                .substring(5, 7)),
-                                            int.parse(controller
-                                                .ads[index].createdAt!
-                                                .substring(8, 10)),
-                                            int.parse(controller
-                                                .ads[index].createdAt!
-                                                .substring(11, 13)),
-                                          )).inDays)}  يوم  '),
-                                      maxLines: 2,
-                                      style: TextStyle(
-                                          fontFamily: 'FairuzBold',
-                                          fontSize: 10,
-                                          color: Color(0xFF5E5E5E)),
-                                    ),
-                                    // Text(controller.ads[index].createdAt!
-                                    //     .substring(11, 13))
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        );
-                      });
-                } else {
-                  return Center(
-                      child: Container(
-                    child: CircularProgressIndicator(),
-                  ));
-                }
-              },
-            ),
-          ),
+          //                       Padding(
+          //                         padding: EdgeInsets.only(
+          //                           left: 5,
+          //                           right: 7,
+          //                           top: 3,
+          //                         ),
+          //                         child: Text(
+          //                           controller.homeList[temp!.adCatogaryId!].ads![index].adName!,
+          //                           style: klabelStyleBold12card,
+          //                           maxLines: 1,
+          //                         ),
+          //                       ),
+          //                       Row(
+          //                         children: [
+          //                           Container(
+          //                               margin: EdgeInsets.only(
+          //                                   right: 5, bottom: 5, left: 10),
+          //                               padding: EdgeInsets.only(
+          //                                 left: 5,
+          //                                 right: 6,
+          //                                 top: 3,
+          //                                 bottom: 4,
+          //                               ),
+          //                               decoration: BoxDecoration(
+          //                                   borderRadius:
+          //                                       BorderRadius.circular(4),
+          //                                   gradient: kGColor),
+          //                               child: Text(
+          //                                 controller.homeList[temp!.adCatogaryId!].ads![index].adPrice
+          //                                     .toString(),
+          //                                 style: klabelStyleBold11light,
+          //                               )),
+          //                           Text(
+          //                             ('قبل : ${(DateTime.now().difference(DateTime(
+          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
+          //                                       .substring(0, 4)),
+          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
+          //                                       .substring(5, 7)),
+          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
+          //                                       .substring(8, 10)),
+          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
+          //                                       .substring(11, 13)),
+          //                                 )).inDays)}  يوم  '),
+          //                             maxLines: 2,
+          //                             style: TextStyle(
+          //                                 fontFamily: 'FairuzBold',
+          //                                 fontSize: 10,
+          //                                 color: Color(0xFF5E5E5E)),
+          //                           ),
+          //                           // Text(controller.ads[index].createdAt!
+          //                           //     .substring(11, 13))
+          //                         ],
+          //                       ),
+          //                     ],
+          //                   ),
+          //                 ),
+          //               );
+          //             });
+          //       } else {
+          //         return Center(
+          //             child: Container(
+          //           child: CircularProgressIndicator(),
+          //         ));
+          //       }
+          //     },
+          //   ),
+          // ),
         ],
       ),
     );
@@ -436,9 +438,9 @@ class Adsdetails extends GetView<HomeController> {
 }
 
 class Details extends StatefulWidget {
-  Details({this.temp, this.current_index});
-  AdsHomeModel? temp;
-  int? current_index;
+  Details({this.temp, this.currentIndex});
+  Ads? temp;
+  int? currentIndex;
   @override
   _DetailsState createState() => _DetailsState();
 }
@@ -456,13 +458,12 @@ class _DetailsState extends State<Details> {
                 options: CarouselOptions(
                   onPageChanged: (index, _) {
                     setState(() {
-                      widget.current_index = index;
+                      widget.currentIndex = index;
                     });
                   },
-                  // height: size.height * 0.33333,
                   enlargeCenterPage: true,
                   enableInfiniteScroll: false,
-                  autoPlay: false,
+                  autoPlay: true,
                   viewportFraction: 1,
                 ),
                 items: widget.temp!.adpicture!

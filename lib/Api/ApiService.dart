@@ -1,14 +1,10 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:for_sale/Add-ad/model.dart';
-import 'package:for_sale/Ads-page/model.dart';
-import 'package:for_sale/Category-page/model.dart';
-import 'package:for_sale/Chat-WithAdmin/model.dart';
-import 'package:for_sale/Favorite-ads/model.dart';
-import 'package:for_sale/Home/model.dart';
-import 'package:for_sale/My-ads/model.dart';
-import 'package:for_sale/Sign-in/model.dart';
+import 'package:for_sale/Model/catogary_page.dart';
+import 'package:for_sale/Model/chat.dart';
+import 'package:for_sale/Model/favorite_ads.dart';
+import 'package:for_sale/Model/home.dart';
+import 'package:for_sale/Model/Add_ad.dart';
+import 'package:for_sale/Model/user.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:get/get.dart' hide Response;
 import 'package:http/http.dart' as http;
@@ -26,7 +22,7 @@ class ApiService {
   //
   static fdataAdsNameScrl(
       adcatogaryid, catogarydetailsid, addescriptionsid) async {
-    List<AdsHomeModel> ads = [];
+    List<Ads> ads = [];
     http.Response res = await http.post(
       Uri.parse(uri + "BringAdsInName"),
       body: {
@@ -45,7 +41,7 @@ class ApiService {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        ads.add(AdsHomeModel.fromJson(item));
+        ads.add(Ads.fromJson(item));
       }
       return ads;
     } else {
@@ -54,7 +50,7 @@ class ApiService {
   }
 
   static fdatahomeads(adcatogaryid) async {
-    List<AdsHomeModel> ads = [];
+    List<Ads> ads = [];
     http.Response res = await http.post(
       Uri.parse(uri + "BringAdsInName"),
       body: {
@@ -63,7 +59,7 @@ class ApiService {
 
       // headers: {
       //   HttpHeaders.authorizationHeader:
-      //       'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
+      // 'Bearer 3|likuthd1UP5bpfHTnepNHFk1oKHCGTNKJTXEodVI'
       // }
     );
     if (res.statusCode == 200) {
@@ -71,7 +67,7 @@ class ApiService {
 
       var body = jsonDecode(res.body);
       for (var item in body) {
-        ads.add(AdsHomeModel.fromJson(item));
+        ads.add(Ads.fromJson(item));
       }
       return ads;
     } else {
@@ -80,7 +76,7 @@ class ApiService {
   }
 
   static fdataMyad() async {
-    List<MyAdsModel> myads = [];
+    List<Ads> myads = [];
     http.Response res = await http.post(
       Uri.parse(uri + "myad"),
       body: {'account_id': '${Get.find<UserController>().accountId}'},
@@ -90,7 +86,7 @@ class ApiService {
       var body = jsonDecode(res.body);
 
       for (var item in body) {
-        myads.add(MyAdsModel.fromJson(item));
+        myads.add(Ads.fromJson(item));
       }
       return myads;
     } else {
@@ -266,9 +262,6 @@ class ApiService {
   }
 
   static login(phone, serialnumber) async {
-    print(phone);
-    print(serialnumber);
-
     http.Response res = await http.post(Uri.parse(uri + "login"), body: {
       'account_phone_number': '$phone',
       'serial_number': '$serialnumber'
@@ -294,6 +287,7 @@ class ApiService {
     });
     if (response.statusCode == 200) {
       List data = jsonDecode(response.body);
+      print(data);
       RxList<Message> temp = <Message>[].obs;
       temp.value =
           data.map((message) => new Message.fromJson(message)).toList();
@@ -303,17 +297,24 @@ class ApiService {
   }
 
   //***************************************************************************** */
-  static Future postMessage(int? accountid, String? message) async {
+  static Future postMessage(String? message) async {
     http.Response response =
         await http.post(Uri.parse(uri + "sendMessage"), body: {
-      'account_id': '$accountid',
+      'account_id': '${Get.find<UserController>().accountId}',
       'message': '$message',
       'is_admin': '0',
       'read_state': '0'
+    }, headers: {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer ${Get.find<UserController>().token}'
     });
     if (response.statusCode == 200) {
       return true;
     }
+    print(response.statusCode);
+
+    print(response.body);
+    print("GG");
     return false;
   }
 

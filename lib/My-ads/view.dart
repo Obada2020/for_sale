@@ -108,7 +108,7 @@ class MyAds extends GetView<AdsController> {
                                         ),
                                         child: Image.network(
                                           controller
-                                              .myads[index].adPicture!
+                                              .myads[index].adpicture![0]
                                               .toString(),
                                           fit: BoxFit.cover,
                                         )),
@@ -121,7 +121,7 @@ class MyAds extends GetView<AdsController> {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      controller.favad[index].ad![0]!.adName!,
+                                      controller.favad[index].ad![0].adName!,
                                       style: klabelStyleBold12,
                                       maxLines: 2,
                                     ),
@@ -142,7 +142,7 @@ class MyAds extends GetView<AdsController> {
                                                 BorderRadius.circular(4),
                                             gradient: kGColor),
                                         child: Text(
-                                          controller.favad[index].ad![0]!.adPrice
+                                          controller.favad[index].ad![0].adPrice
                                               .toString(),
                                           style: klabelStyleBold11light,
                                         ),

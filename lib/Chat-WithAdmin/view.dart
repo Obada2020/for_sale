@@ -82,7 +82,7 @@ class ChatUI extends StatelessWidget {
                         //     MessageWidget(false, text.text, DateTime.now()),
                         //   );
                         // });
-                        c.postMessage(1, text.text);
+                        await c.postMessage(text.text);
                         print("HERE");
                         text.clear();
                         c.scrollController.value.animateTo(

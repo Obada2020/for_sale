@@ -1,10 +1,7 @@
-import 'dart:developer';
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
-import 'package:for_sale/Home/model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 
@@ -81,36 +78,9 @@ class FavoriteAds extends GetView<AdsController> {
                               //       controller.favad[index].ad![0].updatedAt,
                               // };
                               Get.to(() => Adsdetails(
-                                    temp: AdsHomeModel(
-                                      accountId:
-                                          controller.favad[index].accountId,
-                                      adCatogaryId: controller
-                                          .favad[index].ad![0]!.adCatogaryId,
-                                      adDescription: controller
-                                          .favad[index].ad![0]!.adDescription,
-                                      adDescriptionsId: controller.favad[index]
-                                          .ad![0]!.adDescriptionsId,
-                                      adId: controller.favad[index].adId,
-                                      adInfo: controller
-                                          .favad[index].ad![0]!.adInfo,
-                                      adName: controller
-                                          .favad[index].ad![0]!.adName,
-                                      adPhoneNumber: controller
-                                          .favad[index].ad![0]!.adPhoneNumber,
-                                      adpicture:
-                                          controller.favad[index].adpicture,
-                                      adPrice: controller
-                                          .favad[index].ad![0]!.adPrice,
-                                      adTypeId: controller
-                                          .favad[index].ad![0]!.adTypeId,
-                                      adTypeNameId: controller
-                                          .favad[index].ad![0]!.adTypeNameId,
-                                      createdAt:
-                                          controller.favad[index].createdAt,
-                                      isSpecial: controller
-                                          .favad[index].ad![0]!.isSpecial,
+                                    temp: controller.favad[index].ad![0]
                                     ),
-                                  ));
+                                  );
                             },
                             child: Container(
                               decoration: BoxDecoration(
@@ -130,7 +100,7 @@ class FavoriteAds extends GetView<AdsController> {
                                   Expanded(
                                     child: Image.network(
                                       controller
-                                          .favad[index].adpicture![0].adPicture
+                                          .favad[index].ad![0].adpicture![0].adPicture
                                           .toString(),
                                       loadingBuilder: (BuildContext? ctx,
                                           Widget? child,
@@ -156,7 +126,7 @@ class FavoriteAds extends GetView<AdsController> {
                                       top: 3,
                                     ),
                                     child: Text(
-                                      controller.favad[index].ad![0]!.adName!,
+                                      controller.favad[index].ad![0].adName!,
                                       style: klabelStyleBold12,
                                       maxLines: 2,
                                     ),
@@ -178,7 +148,7 @@ class FavoriteAds extends GetView<AdsController> {
                                             gradient: kGColor),
                                         child: Text(
                                           controller
-                                              .favad[index].ad![0]!.adPrice
+                                              .favad[index].ad![0].adPrice
                                               .toString(),
                                           style: klabelStyleBold11light,
                                         ),

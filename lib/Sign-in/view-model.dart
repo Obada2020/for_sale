@@ -4,7 +4,7 @@ import 'package:for_sale/Api/ApiService.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'model.dart';
+import '../Model/user.dart';
 
 class UserController extends GetxController {
   //
@@ -20,7 +20,7 @@ class UserController extends GetxController {
   Rx<String> token = "".obs;
   //
   Rx<String> accountId = "".obs;
-
+  //
   Rx<UserModel> user = UserModel().obs; // for sharedPreferences
   //
   setPreferences(numb, tok, cid) async {

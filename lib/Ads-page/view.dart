@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
@@ -110,20 +112,22 @@ class Ads extends StatelessWidget {
                             itemBuilder: (context, index) {
                               return InkWell(
                                 onTap: () {
-                                  Map details = {
-                                    'adId': c.allAds[index].adId,
-                                    'accountId': c.allAds[index].accountId,
-                                    'adName': c.allAds[index].adName,
-                                    'adphone': c.allAds[index].adPhoneNumber,
-                                    'addescr': c.allAds[index].adDescription,
-                                    'adpicture': c.allAds[index].adPicture,
-                                    'adprice': c.allAds[index].adPrice,
-                                    'adinfo': c.allAds[index].adInfo,
-                                    'created': c.allAds[index].createdAt,
-                                    'updated': c.allAds[index].updatedAt,
-                                  };
+                                  // inspect(c.ads[index].);
+                                  // Map details = {
+                                  //   'adId': c.allAds[index].adId,
+                                  //   'accountId': c.allAds[index].accountId,
+                                  //   'adName': c.allAds[index].adName,
+                                  //   'adphone': c.allAds[index].adPhoneNumber,
+                                  //   'addescr': c.allAds[index].adDescription,
+                                  //   'adpicture': c.allAds[index].adpicture,
+                                  //   'adprice': c.allAds[index].adPrice,
+                                  //   'adinfo': c.allAds[index].adInfo,
+                                  //   'created': c.allAds[index].createdAt,
+                                  //   'updated': c.allAds[index].updatedAt,
+                                  // };
                                   Get.to(() => Adsdetails(
-                                      // details: details,
+                                        // details: details,
+                                        temp: c.allAds[index],
                                       ));
                                 },
                                 child: Container(
@@ -142,19 +146,12 @@ class Ads extends StatelessWidget {
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     children: [
-                                      //----------card grid-----------
-                                      Container(
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.only(
-                                            topRight: Radius.circular(4),
-                                            topLeft: Radius.circular(4),
-                                          ),
-                                          // child: Image.network(
-                                          //   c.ads[index].adPicture.toString(),
-                                          //   fit: BoxFit.cover,
-                                          // ),
+                                      Expanded(
+                                        child: Image.network(
+                                          c.ads[index].adpicture![0].adPicture
+                                              .toString(),
                                         ),
                                       ),
                                       Padding(
@@ -315,7 +312,8 @@ class Ads extends StatelessWidget {
                                     topLeft: Radius.circular(4),
                                   ),
                                   child: Image.network(
-                                    c.ads[index].adPicture.toString(),
+                                    c.ads[index].adpicture![0].adPicture
+                                        .toString(),
                                     fit: BoxFit.cover,
                                   ),
                                 ),

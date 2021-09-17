@@ -1,12 +1,13 @@
+import 'dart:developer';
 import 'package:for_sale/Api/ApiService.dart';
-import 'package:for_sale/Home/model.dart';
+import 'package:for_sale/Model/home.dart';
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   //
   RxList<HomeModel> homeList = <HomeModel>[].obs;
   //
-  RxList<List<AdsHomeModel>>?   adsHome = [<AdsHomeModel>[]].obs;
+  RxList<List<Ads>>? adsHome = [<Ads>[]].obs;
   //
   RxString terms = "".obs;
   //
@@ -26,15 +27,23 @@ class HomeController extends GetxController {
   //
   fetchHomeList() async {
     //
-    homeList.value = await ApiService.fetchAddHome();
+    var temp = await ApiService.fetchAddHome();
+    if (homeList.length < temp.length) {
+      homeList.value = temp;
+      update();
+    }
+    print("GG");
+    update();
     //
-    if (homeList.isNotEmpty)
+    if (homeList.isNotEmpty) {
       await Future.forEach<HomeModel>(
         homeList,
         (element) async {
           await fetchAdsHome(element.adCatogaryId);
         },
       );
+      update();
+    }
     //
     isLoading1.value = true;
   }
@@ -43,6 +52,7 @@ class HomeController extends GetxController {
   fetchAdsHome(id) async {
     var t = await ApiService.fdatahomeads(id);
     adsHome!..add(t);
+    inspect(t);
     // inspect(adsHome);
     // print("the length" + adsHome!.length.toString());
     // print("the length" + adsHome!.length.toString());
