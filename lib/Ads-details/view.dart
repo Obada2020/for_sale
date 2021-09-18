@@ -24,7 +24,7 @@ class Adsdetails extends GetView<HomeController> {
     });
     print("GG");
     return Scaffold(
-      backgroundColor: kbodyColor,
+      //backgroundColor: kbodyColor,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
@@ -182,7 +182,7 @@ class Adsdetails extends GetView<HomeController> {
                   fontSize: 12,
                   color: Theme.of(Get.context!).primaryColor == Colors.black
                       ? Colors.white
-                      : Colors.black),
+                      : Colors.grey.shade700),
             ),
           ],
         ),
@@ -555,7 +555,7 @@ class _DetailsState extends State<Details> {
                           color: Theme.of(Get.context!).primaryColor ==
                                   Colors.black
                               ? Colors.white
-                              : Colors.black),
+                              : Colors.grey.shade700),
                     ),
                   ],
                 ),

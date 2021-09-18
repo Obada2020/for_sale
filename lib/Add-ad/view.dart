@@ -466,7 +466,10 @@ class _ChoseTypeState extends State<ChoseType> {
                       color: Color(0xFFE8CECE),
                       border: type == Types.special
                           ? Border.all(
-                              color: Theme.of(context).disabledColor,
+                              color:
+                                  Theme.of(context).primaryColor == Colors.black
+                                      ? Colors.yellowAccent
+                                      : Theme.of(context).disabledColor,
                             )
                           : null,
                       borderRadius: BorderRadius.all(
@@ -613,13 +616,19 @@ class _WAddNameState extends State<WAddName> {
                                   c.fetchAddInfoKey(value.adCatogaryId);
                                 }
                               : null,
-                          hint: Text(c.addsName[0].adCatogaryName.toString()),
+                          hint: Text(
+                            c.addsName[0].adCatogaryName.toString(),
+                            style: TextStyle(color: Colors.black),
+                          ),
                           // disabledHint: Text("Disabled"),
                           elevation: 8,
                           items: c.addsName
                               .map(
                                 (e) => DropdownMenuItem<AddName>(
-                                  child: Text(e.adCatogaryName.toString()),
+                                  child: Text(
+                                    e.adCatogaryName.toString(),
+                                    style: TextStyle(color: Colors.black),
+                                  ),
                                   value: e,
                                 ),
                               )
@@ -675,16 +684,21 @@ class _WAddNameState extends State<WAddName> {
                                             value.catogaryDetailsId!, 2);
                                       }
                                     : null,
-                                hint: Text(c
-                                    .addsCat1.value.list![0].catogaryName
-                                    .toString()
-                                    .trim()),
+                                hint: Text(
+                                  c.addsCat1.value.list![0].catogaryName
+                                      .toString()
+                                      .trim(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
                                 // disabledHint: Text("Disabled"),
                                 elevation: 8,
                                 items: c.addsCat1.value.list!
                                     .map(
                                       (e) => DropdownMenuItem<Catogary>(
-                                        child: Text(e.catogaryName.toString()),
+                                        child: Text(
+                                          e.catogaryName.toString(),
+                                          style: TextStyle(color: Colors.black),
+                                        ),
                                         value: e,
                                       ),
                                     )
@@ -741,13 +755,17 @@ class _WAddNameState extends State<WAddName> {
                                   c.addsCat2.value.list![0].adDetailsDescription
                                       .toString()
                                       .trim(),
+                                  style: TextStyle(color: Colors.black),
                                 ),
                                 elevation: 8,
                                 items: c.addsCat2.value.list!
                                     .map(
                                       (e) => DropdownMenuItem<Addescription>(
-                                          child: Text(e.adDetailsDescription
-                                              .toString()),
+                                          child: Text(
+                                            e.adDetailsDescription.toString(),
+                                            style:
+                                                TextStyle(color: Colors.black),
+                                          ),
                                           value: e),
                                     )
                                     .toList(),
@@ -788,7 +806,9 @@ class _TypesTypesState extends State<TypesTypes> {
       padding: EdgeInsets.symmetric(vertical: 16, horizontal: 15),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Colors.white,
+        color: Theme.of(context).primaryColor == Colors.black
+            ? Colors.black
+            : Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.18),
@@ -1174,7 +1194,9 @@ class Specifications extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Colors.white,
+        color: Theme.of(context).primaryColor == Colors.black
+            ? Colors.black
+            : Colors.white,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.18),
@@ -1221,10 +1243,12 @@ class Specifications extends StatelessWidget {
                       tempp[c.addsInfoKey[index].adInfo!] = t!;
                       c.myform.value.adInfo!.add(tempp);
                     },
+                    style: TextStyle(color: Colors.black),
                     validator: (h) => h!.isEmpty ? "" : null,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(10.0),
                       hintText: c.addsInfoKey[index].adInfo,
+                      hintStyle: TextStyle(color: Colors.grey.shade700),
                       enabledBorder: const OutlineInputBorder(
                         borderSide: const BorderSide(
                             color: Color(0x59707070), width: 0.0),

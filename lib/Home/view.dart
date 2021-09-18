@@ -227,7 +227,11 @@ class HomePage extends GetView<HomeController> {
         height: 140.0,
         width: 110.0,
         decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(5)),
+          color: Theme.of(Get.context!).primaryColor == Colors.black
+              ? Colors.black
+              : Colors.white,
+          borderRadius: BorderRadius.circular(5),
+        ),
         child: Center(
           child: Column(
             children: [
@@ -239,6 +243,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                     child: Image.network(
                       img.toString(),
+                      //width: double.infinity,
                       // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
                       loadingBuilder: (BuildContext? ctx, Widget? child,
                           ImageChunkEvent? loadingProgress) {
@@ -296,7 +301,9 @@ class HomePage extends GetView<HomeController> {
         height: 218,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(context).primaryColor == Colors.black
+              ? Colors.black
+              : Colors.white,
           borderRadius: BorderRadius.circular(
             5,
           ),
