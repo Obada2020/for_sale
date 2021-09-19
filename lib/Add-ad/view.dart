@@ -30,7 +30,7 @@ class Myform {
 }
 
 class AddUI extends GetView<AddNameController> {
-  // final c = Get.put(AddNameController());
+  
   final _formKey = GlobalKey<FormState>();
 
   ///
@@ -43,10 +43,13 @@ class AddUI extends GetView<AddNameController> {
     return false;
   }
 
-  ///
+  //
   bool check() {
-    if (controller.myAdTypelist[0].adCount == 0 ||
-        controller.myAdTypelist[1].adCount == 0) {
+    //
+    print(controller.myAdTypelist[controller.myform.value.isSpecial!].adCount);
+    // inspect(controller.myAdTypelist);
+    if (controller.myAdTypelist[controller.myform.value.isSpecial!].adCount ==
+        0) {
       Get.defaultDialog(
         title: "لم يتبقى لديك عدد اعلانات كافية ",
         middleText: "قم بالتواصل مع الادارة لتفاصيل اكثر",
@@ -391,7 +394,7 @@ class _ChoseTypeState extends State<ChoseType> {
                               : Text(
                                   " " +
                                       Get.find<AddNameController>()
-                                          .myAdTypelist[1]
+                                          .myAdTypelist[0]
                                           .adCount
                                           .toString() +
                                       " ",
@@ -426,7 +429,7 @@ class _ChoseTypeState extends State<ChoseType> {
                             : Text(
                                 " " +
                                     Get.find<AddNameController>()
-                                        .myAdTypelist[1]
+                                        .myAdTypelist[0]
                                         .adTime
                                         .toString() +
                                     " ",
@@ -508,7 +511,7 @@ class _ChoseTypeState extends State<ChoseType> {
                               : Text(
                                   " " +
                                       Get.find<AddNameController>()
-                                          .myAdTypelist[0]
+                                          .myAdTypelist[1]
                                           .adCount
                                           .toString() +
                                       " ",
@@ -543,7 +546,7 @@ class _ChoseTypeState extends State<ChoseType> {
                             : Text(
                                 " " +
                                     Get.find<AddNameController>()
-                                        .myAdTypelist[0]
+                                        .myAdTypelist[1]
                                         .adTime
                                         .toString() +
                                     " ",

@@ -10,7 +10,6 @@ import 'package:get/get.dart';
 
 class HomePage extends GetView<HomeController> {
   //
-  final c = Get.find<AdsController>();
   //
   @override
   Widget build(BuildContext context) {
@@ -30,100 +29,98 @@ class HomePage extends GetView<HomeController> {
         },
         child: SingleChildScrollView(
           physics: AlwaysScrollableScrollPhysics(),
-          child: GetBuilder<HomeController>(builder: (x) {
-            return Obx(
-              () => Column(
-                children: [
-                  controller.isLoading1.value
-                      ? controller.homeList.isEmpty
-                          ? Text("empty".tr)
-                          : ListView.builder(
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: x.homeList.length,
-                              itemBuilder: (context, indexF) {
-                                return Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.only(
-                                        start: 16,
-                                        end: 16,
-                                        top: 20,
-                                      ),
-                                      child: containerTitle(
-                                        controller
+          child: Obx(
+            () => Column(
+              children: [
+                controller.isLoading1.value
+                    ? controller.homeList.isEmpty
+                        ? Text("empty".tr)
+                        : ListView.builder( 
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: controller.homeList.length,
+                            itemBuilder: (context, indexF) {
+                              return Column(
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.only(
+                                      start: 16,
+                                      end: 16,
+                                      top: 20,
+                                    ),
+                                    child: containerTitle(
+                                      controller.homeList[indexF].adCatogaryName
+                                          .toString(),
+                                      controller.homeList[indexF].adCatogaryId!,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 140,
+                                    child: ListView.separated(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, indexL) =>
+                                          containerCategory(
+                                        name: controller.homeList[indexF]
+                                            .catogaryDetails![indexL],
+                                        title: controller
                                             .homeList[indexF].adCatogaryName
                                             .toString(),
-                                        controller
-                                            .homeList[indexF].adCatogaryId!,
+                                        img: controller.homeList[indexF]
+                                            .catogaryDetails![indexL].picture,
                                       ),
+                                      separatorBuilder: (context, index) =>
+                                          SizedBox(width: 5),
+                                      itemCount: controller.homeList[indexF]
+                                          .catogaryDetails!.length,
                                     ),
-                                    Container(
-                                      height: 140,
-                                      child: ListView.separated(
-                                        scrollDirection: Axis.horizontal,
-                                        itemBuilder: (context, indexL) =>
-                                            containerCategory(
-                                          name: controller.homeList[indexF]
-                                              .catogaryDetails![indexL],
-                                          title: controller
-                                              .homeList[indexF].adCatogaryName
-                                              .toString(),
-                                          img: controller.homeList[indexF]
-                                              .catogaryDetails![indexL].picture,
-                                        ),
-                                        separatorBuilder: (context, index) =>
-                                            SizedBox(width: 5),
-                                        itemCount: controller.homeList[indexF]
-                                            .catogaryDetails!.length,
-                                      ),
-                                    ),
-                                    Obx(
-                                      () => controller.isLoading2.value
-                                          ? controller
-                                                  .adsHome![controller
-                                                      .homeList[indexF]
-                                                      .adCatogaryId!]
-                                                  .isEmpty
-                                              ? Text("empty".tr)
-                                              : Container(
-                                                  height: 270.0,
-                                                  child: ListView.separated(
-                                                    scrollDirection:
-                                                        Axis.horizontal,
-                                                    itemBuilder:
-                                                        (context, index) =>
-                                                            Container(
-                                                      padding:
-                                                          EdgeInsets.symmetric(
-                                                        horizontal: 15,
-                                                      ),
-                                                      child: containerOffer(
-                                                        context,
-                                                        size,
-                                                        disc: controller
-                                                            .adsHome![controller
-                                                                    .homeList[
-                                                                        indexF]
-                                                                    .adCatogaryId!]
-                                                                [index]
-                                                            .adName,
-                                                        price: controller
-                                                            .adsHome![controller
-                                                                    .homeList[
-                                                                        indexF]
-                                                                    .adCatogaryId!]
-                                                                [index]
-                                                            .adPrice,
-                                                        image: controller
-                                                            .adsHome![controller
-                                                                    .homeList[
-                                                                        indexF]
-                                                                    .adCatogaryId!]
-                                                                [index]
-                                                            .adpicture![0]
-                                                            .adPicture,
-                                                        time: 'قبل : ${(DateTime.now().difference(
+                                  ),
+                                  controller.isLoading2.value
+                                      ? controller
+                                              .adsHome![controller
+                                                  .homeList[indexF]
+                                                  .adCatogaryId!]
+                                              .isEmpty
+                                          ? Text("empty".tr)
+                                          : Container(
+                                              height: 270.0,
+                                              child: ListView.separated(
+                                                scrollDirection:
+                                                    Axis.horizontal,
+                                                itemBuilder: (context, index) =>
+                                                    Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: 15,
+                                                  ),
+                                                  child: containerOffer(
+                                                    context,
+                                                    size,
+                                                    disc: controller
+                                                        .adsHome![
+                                                            controller
+                                                                .homeList[
+                                                                    indexF]
+                                                                .adCatogaryId!]
+                                                            [index]
+                                                        .adName,
+                                                    price: controller
+                                                        .adsHome![
+                                                            controller
+                                                                .homeList[
+                                                                    indexF]
+                                                                .adCatogaryId!]
+                                                            [index]
+                                                        .adPrice,
+                                                    image: controller
+                                                        .adsHome![
+                                                            controller
+                                                                .homeList[
+                                                                    indexF]
+                                                                .adCatogaryId!]
+                                                            [index]
+                                                        .adpicture![0]
+                                                        .adPicture,
+                                                    time:
+                                                        'قبل : ${(DateTime.now().difference(
                                                               DateTime(
                                                                 int.parse(controller
                                                                     .adsHome![
@@ -168,32 +165,30 @@ class HomePage extends GetView<HomeController> {
                                                                         13)),
                                                               ),
                                                             ).inDays)}  يوم  ',
-                                                        indexC: indexF,
-                                                        indexA: index,
-                                                      ),
-                                                    ),
-                                                    itemCount: controller
-                                                        .adsHome![indexF + 1]
-                                                        // .adDescription!
-                                                        .length,
-                                                    separatorBuilder:
-                                                        (context, index) =>
-                                                            SizedBox(width: 4),
+                                                    indexC: indexF,
+                                                    indexA: index,
                                                   ),
-                                                )
-                                          : CircularProgressIndicator(),
-                                    )
-                                  ],
-                                );
-                              },
-                            )
-                      : Center(
-                          child: CircularProgressIndicator(),
-                        ),
-                ],
-              ),
-            );
-          }),
+                                                ),
+                                                itemCount: controller
+                                                    .adsHome![indexF + 1]
+                                                    // .adDescription!
+                                                    .length,
+                                                separatorBuilder:
+                                                    (context, index) =>
+                                                        SizedBox(width: 4),
+                                              ),
+                                            )
+                                      : CircularProgressIndicator(),
+                                ],
+                              );
+                            },
+                          )
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -210,7 +205,7 @@ class HomePage extends GetView<HomeController> {
                 child: Text("view all".tr, style: klabelStyleShowAll),
                 onTap: () {
                   print('idcathome $id');
-                  c.fetchAllCategoryById(id);
+                  Get.find<AdsController>().fetchAllCategoryById(id);
                   Get.to(() => AdsAll());
                 }),
             Icon(Icons.chevron_right_sharp, color: Colors.blue, size: 15),
@@ -239,6 +234,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                     child: Image.network(
                       img.toString(),
+                      
                       // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
                       loadingBuilder: (BuildContext? ctx, Widget? child,
                           ImageChunkEvent? loadingProgress) {

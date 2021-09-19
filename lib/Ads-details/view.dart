@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
@@ -17,14 +20,12 @@ class Adsdetails extends GetView<HomeController> {
   //
   @override
   Widget build(BuildContext context) {
-    // print(widget.details);
-    // IconData icon = Icons.favorite_border;
     temp!.adpicture!.forEach((element) {
       print(element.adPicture);
     });
     print("GG");
     return Scaffold(
-      backgroundColor: kbodyColor,
+      // backgroundColor: kbodyColor,
       appBar: AppBar(
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
@@ -56,7 +57,6 @@ class Adsdetails extends GetView<HomeController> {
         children: [
           Details(
             temp: temp,
-            currentIndex: _current,
           ),
           temp!.adInfo!.isNotEmpty ? specifications() : Container(),
           description(),
@@ -185,6 +185,24 @@ class Adsdetails extends GetView<HomeController> {
 
 //===========================مواصفات======================
   Widget specifications() {
+    // List t = jsonDecode(temp!.adInfo!);
+    String s = temp!.adInfo!.substring(2, temp!.adInfo!.length - 2);
+    // print(s);
+    List<String> x = s.split(",");
+    List<String> keys = [];
+    List<String> values = [];
+
+    x.forEach(
+      (element) {
+        values.add(element.split(":")[1]);
+        keys.add(element.split(":")[0]);
+      },
+    );
+
+    // List t = jsonDecode("[{"date": "1/1/2002","sale": 500, "fax": "fdfd","ss": "sasasa" }]");
+    // t.forEach((element) {
+    //   print(element);
+    // });
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -203,7 +221,7 @@ class Adsdetails extends GetView<HomeController> {
                   padding: EdgeInsets.only(top: 20),
                   child: GridView.builder(
                       shrinkWrap: true,
-                      itemCount: 8,
+                      itemCount: keys.length,
                       gridDelegate:
                           new SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisExtent: 50,
@@ -214,34 +232,39 @@ class Adsdetails extends GetView<HomeController> {
                       ),
                       itemBuilder: (context, index) {
                         return Container(
-                          margin: EdgeInsets.only(right: 9, left: 9),
+                          // decoration: BoxDecoration(
+                          //   color: Colors.white,
+                          //   borderRadius: BorderRadius.circular(4),
+                          // ),
+                          margin: EdgeInsets.all(5),
+                          padding: EdgeInsets.only(right: 9),
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: kbodyColor,
                             borderRadius: BorderRadius.circular(4),
                           ),
-                          child: Column(
-                            children: [
-                              //----------card grid-----------
-                              Column(
-                                children: [
-                                  Container(
-                                    padding: EdgeInsets.only(right: 9),
-                                    decoration: BoxDecoration(
-                                      color: kbodyColor,
-                                      borderRadius: BorderRadius.circular(4),
-                                    ),
-                                    width: 180,
-                                    height: 40,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                            'تاريخ الانتاج\t\t\t\t\t\t\t\t 2017 '),
-                                      ],
-                                    ),
+                          // width: 180,
+                          // height: 40,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  keys[index].substring(
+                                          1, keys[index].length - 1) +
+                                      " : ",
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
-                            ],
+                                ),
+                                Text(
+                                  values[index]
+                                      .substring(2, values[index].length - 1),
+                                  style: TextStyle(fontSize: 14),
+                                )
+                              ],
+                            ),
                           ),
                         );
                       }),
@@ -256,187 +279,158 @@ class Adsdetails extends GetView<HomeController> {
 
 //==========================مقترحة ===========================
   Widget sggestedAds() {
+    //
+
+    var list = controller.homeList
+        .where((s) => s.adCatogaryId == temp!.adCatogaryId)
+        .first
+        .ads;
     return Container(
+      // width: 200,
+      // height: 140,
       margin: EdgeInsets.only(bottom: 14, top: 14),
       color: Colors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
+            // width: 200,
+            // height: 200,
             margin: EdgeInsets.only(right: 16, top: 13),
             child: Text(
               'إعلانات مقترحة',
               style: klabelStyleBlack16,
             ),
           ),
-          // Container(
-          //   margin: EdgeInsets.only(top: 14, right: 16),
-          //   height: 200,
-          //   child: GetX<HomeController>(
-          //     builder: (controller) {
-          //       if (controller.homeList.isNotEmpty) {
-          //         return GridView.builder(
-          //             scrollDirection: Axis.horizontal,
-          //             shrinkWrap: true,
-          //             itemCount: controller
-          //                         .homeList[temp!.adCatogaryId!].ads!.length <
-          //                     8
-          //                 ? controller.homeList[temp!.adCatogaryId!].ads!.length
-          //                 : 8,
-          //             gridDelegate:
-          //                 new SliverGridDelegateWithFixedCrossAxisCount(
-          //               crossAxisCount: 1,
-          //               childAspectRatio: 1,
-          //               crossAxisSpacing: 9,
-          //               mainAxisSpacing: 9,
-          //             ),
-          //             itemBuilder: (context, index) {
-          //               return InkWell(
-          //                 // onTap: () {
-          //                 //   Get.back();
-          //                 //   Map details = {
-          //                 //   //   'adId': widget.c.ads[index].adId,
-          //                 //   //   'accountId': widget.c.ads[index].accountId,
-          //                 //   //   'adName': widget.c.ads[index].adName,
-          //                 //   //   'adphone': widget.c.ads[index].adPhoneNumber,
-          //                 //   //   'addescr': widget.c.ads[index].adDescription,
-          //                 //   //   'adpicture': widget.c.ads[index].adPicture,
-          //                 //   //   'adprice': widget.c.ads[index].adPrice,
-          //                 //   //   'adinfo': widget.c.ads[index].adInfo,
-          //                 //   //   'created': widget.c.ads[index].createdAt,
-          //                 //   //   'updated': widget.c.ads[index].updatedAt,
-          //                 //   // };
-          //                 //   // Get.to(() => Adsdetails(
-          //                 //   //       details: details,
-          //                 //   //     ));
-          //                 // },
-          //                 child: Container(
-          //                   decoration: BoxDecoration(
-          //                     boxShadow: [
-          //                       BoxShadow(
-          //                         spreadRadius: 1,
-          //                         blurRadius: 5,
-          //                         color: Colors.grey.withOpacity(0.2),
-          //                       )
-          //                     ],
-          //                     // color: controller.ads[index].adTypeId == '2'
-          //                     //     ? Color(0x79667590)
-          //                     //     : Colors.white,
-          //                     borderRadius: BorderRadius.circular(4),
-          //                   ),
-          //                   child: Column(
-          //                     crossAxisAlignment: CrossAxisAlignment.start,
-          //                     children: [
-          //                       //----------card grid-----------
-          //                       Container(
-          //                         child: ClipRRect(
-          //                             borderRadius: BorderRadius.only(
-          //                               topRight: Radius.circular(4),
-          //                               topLeft: Radius.circular(4),
-          //                             ),
-          //                             child: Image.network(
-          //                               controller.homeList[temp!.adCatogaryId!].ads![index].adpicture![0].adPicture.toString(),
-          //                               fit: BoxFit.cover,
-          //                               loadingBuilder: (BuildContext? ctx,
-          //                                   Widget? child,
-          //                                   ImageChunkEvent? loadingProgress) {
-          //                                 if (loadingProgress == null) {
-          //                                   return child!;
-          //                                 } else {
-          //                                   return Center(
-          //                                     child: CircularProgressIndicator(
-          //                                       valueColor:
-          //                                           AlwaysStoppedAnimation<
-          //                                               Color>(Colors.green),
-          //                                     ),
-          //                                   );
-          //                                 }
-          //                               },
-          //                             )),
-          //                       ),
-
-          //                       Padding(
-          //                         padding: EdgeInsets.only(
-          //                           left: 5,
-          //                           right: 7,
-          //                           top: 3,
-          //                         ),
-          //                         child: Text(
-          //                           controller.homeList[temp!.adCatogaryId!].ads![index].adName!,
-          //                           style: klabelStyleBold12card,
-          //                           maxLines: 1,
-          //                         ),
-          //                       ),
-          //                       Row(
-          //                         children: [
-          //                           Container(
-          //                               margin: EdgeInsets.only(
-          //                                   right: 5, bottom: 5, left: 10),
-          //                               padding: EdgeInsets.only(
-          //                                 left: 5,
-          //                                 right: 6,
-          //                                 top: 3,
-          //                                 bottom: 4,
-          //                               ),
-          //                               decoration: BoxDecoration(
-          //                                   borderRadius:
-          //                                       BorderRadius.circular(4),
-          //                                   gradient: kGColor),
-          //                               child: Text(
-          //                                 controller.homeList[temp!.adCatogaryId!].ads![index].adPrice
-          //                                     .toString(),
-          //                                 style: klabelStyleBold11light,
-          //                               )),
-          //                           Text(
-          //                             ('قبل : ${(DateTime.now().difference(DateTime(
-          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
-          //                                       .substring(0, 4)),
-          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
-          //                                       .substring(5, 7)),
-          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
-          //                                       .substring(8, 10)),
-          //                                   int.parse(controller.homeList[temp!.adCatogaryId!].ads![index].createdAt!
-          //                                       .substring(11, 13)),
-          //                                 )).inDays)}  يوم  '),
-          //                             maxLines: 2,
-          //                             style: TextStyle(
-          //                                 fontFamily: 'FairuzBold',
-          //                                 fontSize: 10,
-          //                                 color: Color(0xFF5E5E5E)),
-          //                           ),
-          //                           // Text(controller.ads[index].createdAt!
-          //                           //     .substring(11, 13))
-          //                         ],
-          //                       ),
-          //                     ],
-          //                   ),
-          //                 ),
-          //               );
-          //             });
-          //       } else {
-          //         return Center(
-          //             child: Container(
-          //           child: CircularProgressIndicator(),
-          //         ));
-          //       }
-          //     },
-          //   ),
-          // ),
+          list!.isNotEmpty
+              ? ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: list.length,
+                  itemBuilder: (context, index) {
+                    return containerOffer(context,
+                        image: list[index].adpicture![0].adPicture,
+                        disc: list[index].adName,
+                        price: list[index].adPrice,
+                        time: list[index].createdAt);
+                  })
+              : Center(
+                  child: Container(
+                    child: Text("لايوجد اعلانات مقترحة"),
+                  ),
+                ),
         ],
+      ),
+    );
+  }
+
+  Widget containerOffer(context,
+      {disc, price, String? time, image, indexC, indexA}) {
+    var list = controller.homeList
+        .where((s) => s.adCatogaryId == temp!.adCatogaryId)
+        .first
+        .ads;
+    return InkWell(
+      onTap: () {
+        Get.to(
+          () => Adsdetails(
+              temp: controller
+                  .adsHome![controller.homeList[indexC].adCatogaryId!][indexA]),
+        );
+      },
+      child: Container(
+        width: 210,
+        height: 218,
+        clipBehavior: Clip.antiAliasWithSaveLayer,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(
+            5,
+          ),
+        ),
+        child: Column(
+          children: [
+            //image
+            Expanded(
+              child: Image.network(
+                // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+
+                image,
+                loadingBuilder: (BuildContext? ctx, Widget? child,
+                    ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child!;
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                      ),
+                    );
+                  }
+                },
+                // fit: BoxFit.cover,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, right: 8, left: 8),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  //title
+                  Text(
+                    disc,
+                    style: klabelStyleTitleCategory,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 23),
+                  //button and timer
+                  Row(
+                    children: [
+                      Container(
+                          margin: EdgeInsetsDirectional.only(
+                              start: 5, bottom: 13, end: 10),
+                          padding: EdgeInsets.only(
+                            left: 5,
+                            right: 6,
+                            top: 3,
+                            bottom: 4,
+                          ),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(4),
+                              gradient: kGColor),
+                          child: Text(
+                            price.toString() + " ك د",
+                            style: klabelStyleBold11light,
+                          )),
+                      Text(
+                        time!.split("T")[0].toString(),
+                        style: TextStyle(
+                            fontFamily: 'FairuzBold',
+                            fontSize: 10,
+                            color: Color(0xFF5E5E5E)),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
 class Details extends StatefulWidget {
-  Details({this.temp, this.currentIndex});
+  Details({this.temp});
   Ads? temp;
-  int? currentIndex;
+
   @override
   _DetailsState createState() => _DetailsState();
 }
 
 class _DetailsState extends State<Details> {
+  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -449,7 +443,7 @@ class _DetailsState extends State<Details> {
                 options: CarouselOptions(
                   onPageChanged: (index, _) {
                     setState(() {
-                      widget.currentIndex = index;
+                      currentIndex = index;
                     });
                   },
                   enlargeCenterPage: true,
@@ -518,7 +512,8 @@ class _DetailsState extends State<Details> {
                           gradient: kGColor),
                       child: Text(
                         widget.temp!.adPrice.toString(),
-                        style: klabelStyleBold11light,
+                        style: klabelStyleBold11light.copyWith(
+                            fontWeight: FontWeight.bold),
                       ),
                     ),
                     Icon(
@@ -529,11 +524,25 @@ class _DetailsState extends State<Details> {
                       width: 10,
                     ),
                     Text(
-                      widget.temp!.createdAt!,
+                      'قبل : ${(DateTime.now().difference(
+                            DateTime(
+                              int.parse(
+                                  widget.temp!.createdAt!.substring(0, 4)),
+                              int.parse(
+                                  widget.temp!.createdAt!.substring(5, 7)),
+                              int.parse(
+                                  widget.temp!.createdAt!.substring(8, 10)),
+                              int.parse(
+                                  widget.temp!.createdAt!.substring(11, 13)),
+                            ),
+                          ).inDays)}  يوم  ',
                       style: TextStyle(
-                          fontFamily: 'FairuzBold',
-                          fontSize: 10,
-                          color: Color(0xFF5E5E5E)),
+                        fontFamily: 'FairuzBold',
+                        fontSize: 10,
+                        color: Color(
+                          0xFF5E5E5E,
+                        ),
+                      ),
                     ),
                   ],
                 ),

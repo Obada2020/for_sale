@@ -30,10 +30,9 @@ class HomeController extends GetxController {
     var temp = await ApiService.fetchAddHome();
     if (homeList.length < temp.length) {
       homeList.value = temp;
-      update();
     }
     print("GG");
-    update();
+
     //
     if (homeList.isNotEmpty) {
       await Future.forEach<HomeModel>(
@@ -42,7 +41,6 @@ class HomeController extends GetxController {
           await fetchAdsHome(element.adCatogaryId);
         },
       );
-      update();
     }
     //
     isLoading1.value = true;
