@@ -4,16 +4,20 @@ import 'dart:developer';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
+import 'package:for_sale/Chat-WithAdmin/view.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/Model/home.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Adsdetails extends GetView<HomeController> {
+  //
   final Ads? temp;
+  //
   Adsdetails({this.temp});
-
+  //
   final int _current = 0;
   //
   final AdsController c = Get.put(AdsController());
@@ -127,12 +131,15 @@ class Adsdetails extends GetView<HomeController> {
               children: [
                 Expanded(
                   child: SocialCard(
-                      colortext: Colors.white,
-                      color: Color(0xff333333),
-                      text: 'إبلاغ عن مشكلة',
-                      icon: Icons.report_gmailerrorred,
-                      coloricon: Colors.white,
-                      ontap: null),
+                    colortext: Colors.white,
+                    color: Color(0xff333333),
+                    text: 'إبلاغ عن مشكلة',
+                    icon: Icons.report_gmailerrorred,
+                    coloricon: Colors.white,
+                    ontap: () {
+                      Get.to(ChatUI());
+                    },
+                  ),
                 ),
                 Expanded(
                   child: SocialCard(
@@ -143,8 +150,8 @@ class Adsdetails extends GetView<HomeController> {
                     coloricon: Colors.black,
                     border: Border.all(color: Color(0xff333333)),
                     ontap: () {
-                      // Share.share(
-                      //     '${widget.details['addescr']}\n\n http://hyperurl.co/4buy');
+                      Share.share(
+                          '${temp!.adDescription}\n\n http://hyperurl.co/4buy');
                     },
                   ),
                 ),
@@ -192,24 +199,43 @@ class Adsdetails extends GetView<HomeController> {
 
 //===========================مواصفات======================
   Widget specifications() {
-    // List t = jsonDecode(temp!.adInfo!);
-    String s = temp!.adInfo!.substring(2, temp!.adInfo!.length - 2);
-    // print(s);
-    List<String> x = s.split(",");
-    List<String> keys = [];
-    List<String> values = [];
+    // List t = jsonDecode(temp!.adInfo!); // ERROR
+    String s = temp!.adInfo!.substring(0, temp!.adInfo!.length);
+    s = s.substring(1, s.length - 1);
 
+    // .substring(1, temp!.adInfo!.length - 1);
+    // print(s);
+    var x = s.split(",");
+    // x = x.map((element) => element.substring(1, element.length - 1)).toList();
+    var keys = [];
+    var values = [];
+    //
     x.forEach(
-      (element) {
-        values.add(element.split(":")[1]);
-        keys.add(element.split(":")[0]);
+      (e) {
+        var v = e.split(":");
+        // print(e);
+        values.add(v[1].replaceAll('\'', ' ').trim());
+        keys.add(v[0].replaceAll('\'', ' ').trim());
+        // // keys.add(e.substring(1, e.length - 1).split(":")[0]);
       },
     );
-
-    // List t = jsonDecode("[{"date": "1/1/2002","sale": 500, "fax": "fdfd","ss": "sasasa" }]");
-    // t.forEach((element) {
+    //
+    // x.forEach((element) {
     //   print(element);
     // });
+    //
+    // print("object");
+    //
+    keys.forEach((element) {
+      print(element);
+    });
+
+    // print("object");
+
+    values.forEach((element) {
+      print(element);
+    });
+    //
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -249,30 +275,30 @@ class Adsdetails extends GetView<HomeController> {
                           margin: EdgeInsets.all(5),
                           padding: EdgeInsets.only(right: 9),
                           decoration: BoxDecoration(
-                            color: kbodyColor,
+                            // color: kbodyColor,
+                            border: Border.all(
+                                color: Theme.of(Get.context!).accentColor),
                             borderRadius: BorderRadius.circular(4),
                           ),
                           // width: 180,
+                          alignment: Alignment.center,
                           // height: 40,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
                             child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              // mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Text(
-                                  keys[index].substring(
-                                          1, keys[index].length - 1) +
-                                      " : ",
+                                  values[index] + "  :  ",
+                                  style: TextStyle(fontSize: 14),
+                                ),
+                                Text(
+                                  keys[index],
                                   style: TextStyle(
                                     fontSize: 14,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                Text(
-                                  values[index]
-                                      .substring(2, values[index].length - 1),
-                                  style: TextStyle(fontSize: 14),
-                                )
                               ],
                             ),
                           ),
@@ -296,36 +322,50 @@ class Adsdetails extends GetView<HomeController> {
         .first
         .ads;
     return Container(
-      // width: 200,
-      // height: 140,
-      margin: EdgeInsets.only(bottom: 14, top: 14),
-      color: Theme.of(Get.context!).primaryColor,
+      margin: EdgeInsets.all(12),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            // width: 200,
-            // height: 200,
-            margin: EdgeInsets.only(right: 16, top: 13),
-            child: Text(
-              'إعلانات مقترحة',
-              style: klabelStyleBlack16.copyWith(
-                  color: Theme.of(Get.context!).primaryColor == Colors.black
-                      ? Colors.white
-                      : Colors.black),
+          Text(
+            'إعلانات مقترحة',
+            style: klabelStyleBlack16.copyWith(
+              color: Theme.of(Get.context!).primaryColor == Colors.black
+                  ? Colors.white
+                  : Colors.black,
             ),
           ),
           list!.isNotEmpty
-              ? ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: list.length,
-                  itemBuilder: (context, index) {
-                    return containerOffer(context,
-                        image: list[index].adpicture![0].adPicture,
-                        disc: list[index].adName,
-                        price: list[index].adPrice,
-                        time: list[index].createdAt);
-                  })
+              ? SingleChildScrollView(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 200, // <-- you should put some value here
+                        child: ListView.separated(
+                          separatorBuilder: (BuildContext context, int index) =>
+                              SizedBox(
+                            width: 15,
+                          ),
+                          scrollDirection: Axis.horizontal,
+                          // shrinkWrap: true,
+                          itemCount: list.length,
+                          itemBuilder: (context, index) {
+                            return containerOffer(
+                              context,
+                              image: list[index].adpicture![0].adPicture,
+                              disc: list[index].adName,
+                              price: list[index].adPrice,
+                              time: list[index].createdAt,
+                              indexA: index,
+                              indexC: list[index].adCatogaryId,
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               : Center(
                   child: Container(
                     child: Text("لايوجد اعلانات مقترحة"),
@@ -338,16 +378,22 @@ class Adsdetails extends GetView<HomeController> {
 
   Widget containerOffer(context,
       {disc, price, String? time, image, indexC, indexA}) {
-    var list = controller.homeList
-        .where((s) => s.adCatogaryId == temp!.adCatogaryId)
-        .first
-        .ads;
+    // var list = controller.homeList
+    //     .where((s) => s.adCatogaryId == temp!.adCatogaryId)
+    //     .first
+    //     .ads;
     return InkWell(
       onTap: () {
+        // print("Obadaaaaaaaaaaaaaaaaa");
+        var list = controller.homeList
+            .where((s) => s.adCatogaryId == temp!.adCatogaryId)
+            .first
+            .ads;
+        Get.back();
         Get.to(
           () => Adsdetails(
-              temp: controller
-                  .adsHome![controller.homeList[indexC].adCatogaryId!][indexA]),
+            temp: list![indexA],
+          ),
         );
       },
       child: Container(

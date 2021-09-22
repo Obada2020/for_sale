@@ -205,10 +205,10 @@ class ApiService {
       Uri.parse(uri + "adcatogary"),
       headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
-    print("ffffffffffffffffffffffffffffffffffffffffff");
-    print(Get.find<UserController>().token);
-    // print(token);
-    print("ffffffffffffffffffffffffffffffffffffffffff");
+    // print("ffffffffffffffffffffffffffffffffffffffffff");
+    // print(Get.find<UserController>().token);
+    // // print(token);
+    // print("ffffffffffffffffffffffffffffffffffffffffff");
     print(response.body);
     List data = jsonDecode(response.body);
     return data.map((a) => new AddName.fromJson(a)).toList();

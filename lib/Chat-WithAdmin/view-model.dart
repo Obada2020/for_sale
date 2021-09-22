@@ -12,6 +12,10 @@ class ChatController extends GetxController {
   Rx<ScrollController> scrollController = ScrollController().obs;
   //
   Timer? _timer;
+  //
+  RxBool isLoading = true.obs;
+  //
+  RxBool isEmpty = false.obs;
 
   //
   @override
@@ -43,8 +47,15 @@ class ChatController extends GetxController {
 
   //
   Future fetchMessages() async {
+    // isLoading.value = true;
     RxList<Message> temp = await ApiService.fetchMessage();
+    if (temp.length == 0) {
+      isEmpty.value = true;
+      isLoading.value = false;
+    }
+
     if (temp.length > message.length) {
+      isLoading.value = false;
       message.value = temp;
       scrollController.value.animateTo(
         scrollController.value.position.maxScrollExtent + 100,

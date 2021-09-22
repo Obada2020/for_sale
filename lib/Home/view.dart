@@ -25,17 +25,17 @@ class HomePage extends GetView<HomeController> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          return await controller.fetchHomeList();
+          return await Get.find<HomeController>().fetchHomeList();
         },
         child: SingleChildScrollView(
-          physics: AlwaysScrollableScrollPhysics(),
+          // physics: NeverScrollableScrollPhysics(),
           child: Obx(
             () => Column(
               children: [
                 controller.isLoading1.value
                     ? controller.homeList.isEmpty
                         ? Text("empty".tr)
-                        : ListView.builder( 
+                        : ListView.builder(
                             physics: NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
                             itemCount: controller.homeList.length,
@@ -74,12 +74,8 @@ class HomePage extends GetView<HomeController> {
                                           .catogaryDetails!.length,
                                     ),
                                   ),
-                                  controller.isLoading2.value
-                                      ? controller
-                                              .adsHome![controller
-                                                  .homeList[indexF]
-                                                  .adCatogaryId!]
-                                              .isEmpty
+                                  controller.isLoading1.value
+                                      ? controller.homeList[indexF].ads!.isEmpty
                                           ? Text("empty".tr)
                                           : Container(
                                               height: 270.0,
@@ -95,70 +91,46 @@ class HomePage extends GetView<HomeController> {
                                                     context,
                                                     size,
                                                     disc: controller
-                                                        .adsHome![
-                                                            controller
-                                                                .homeList[
-                                                                    indexF]
-                                                                .adCatogaryId!]
-                                                            [index]
+                                                        .homeList[indexF]
+                                                        .ads![index]
                                                         .adName,
                                                     price: controller
-                                                        .adsHome![
-                                                            controller
-                                                                .homeList[
-                                                                    indexF]
-                                                                .adCatogaryId!]
-                                                            [index]
+                                                        .homeList[indexF]
+                                                        .ads![index]
                                                         .adPrice,
                                                     image: controller
-                                                        .adsHome![
-                                                            controller
-                                                                .homeList[
-                                                                    indexF]
-                                                                .adCatogaryId!]
-                                                            [index]
+                                                        .homeList[indexF]
+                                                        .ads![index]
                                                         .adpicture![0]
                                                         .adPicture,
                                                     time:
                                                         'قبل : ${(DateTime.now().difference(
                                                               DateTime(
                                                                 int.parse(controller
-                                                                    .adsHome![
-                                                                        controller
-                                                                            .homeList[
-                                                                                indexF]
-                                                                            .adCatogaryId!]
-                                                                        [index]
+                                                                    .homeList[
+                                                                        indexF]
+                                                                    .ads![index]
                                                                     .createdAt!
                                                                     .substring(
                                                                         0, 4)),
                                                                 int.parse(controller
-                                                                    .adsHome![
-                                                                        controller
-                                                                            .homeList[
-                                                                                indexF]
-                                                                            .adCatogaryId!]
-                                                                        [index]
+                                                                    .homeList[
+                                                                        indexF]
+                                                                    .ads![index]
                                                                     .createdAt!
                                                                     .substring(
                                                                         5, 7)),
                                                                 int.parse(controller
-                                                                    .adsHome![
-                                                                        controller
-                                                                            .homeList[
-                                                                                indexF]
-                                                                            .adCatogaryId!]
-                                                                        [index]
+                                                                    .homeList[
+                                                                        indexF]
+                                                                    .ads![index]
                                                                     .createdAt!
                                                                     .substring(
                                                                         8, 10)),
                                                                 int.parse(controller
-                                                                    .adsHome![
-                                                                        controller
-                                                                            .homeList[
-                                                                                indexF]
-                                                                            .adCatogaryId!]
-                                                                        [index]
+                                                                    .homeList[
+                                                                        indexF]
+                                                                    .ads![index]
                                                                     .createdAt!
                                                                     .substring(
                                                                         11,
@@ -170,7 +142,8 @@ class HomePage extends GetView<HomeController> {
                                                   ),
                                                 ),
                                                 itemCount: controller
-                                                    .adsHome![indexF + 1]
+                                                    .homeList[indexF]
+                                                    .ads!
                                                     // .adDescription!
                                                     .length,
                                                 separatorBuilder:
@@ -238,7 +211,7 @@ class HomePage extends GetView<HomeController> {
                     ),
                     child: Image.network(
                       img.toString(),
-                      
+
                       //width: double.infinity,
                       // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
                       loadingBuilder: (BuildContext? ctx, Widget? child,
@@ -287,8 +260,7 @@ class HomePage extends GetView<HomeController> {
       onTap: () {
         Get.to(
           () => Adsdetails(
-            temp: controller.adsHome![controller.homeList[indexC].adCatogaryId!]
-                [indexA],
+            temp: Get.find<HomeController>().homeList[indexC].ads![indexA],
           ),
         );
       },

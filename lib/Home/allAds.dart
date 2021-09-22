@@ -107,9 +107,8 @@ class AdsAll extends GetView<AdsController> {
                             //   // 'created': controller.allAds[index].createdAt,
                             //   // 'updated': controller.allAds[index].updatedAt,
                             // };
-                            Get.to(() => Adsdetails(
-                                  temp: controller.allAds[index]
-                                ));
+                            Get.to(() =>
+                                Adsdetails(temp: controller.allAds[index]));
                           },
                           child: Container(
                             decoration: BoxDecoration(
@@ -126,19 +125,15 @@ class AdsAll extends GetView<AdsController> {
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                Container(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(4),
-                                        topLeft: Radius.circular(4),
-                                      ),
-                                      child: Image.network(
-                                        controller.allAds[index].adpicture![0]
-                                            .toString(),
-                                        fit: BoxFit.cover,
-                                      )),
+                                Expanded(
+                                  child: Image.network(
+                                    controller
+                                        .allAds[index].adpicture![0].adPicture
+                                        .toString(),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(

@@ -76,10 +76,10 @@ class AdsController extends GetxController {
       d.toString(),
     );
     if (adby.isNotEmpty) ads.value = adby;
+    isLoadingAds = false.obs;
     fullads.value = adby;
     getAdType(adby);
     dummysearch = ads.toList();
-    isLoadingAds = false.obs;
   }
 
   //==================================search========================

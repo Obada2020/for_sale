@@ -1,23 +1,23 @@
-import 'dart:developer';
 import 'dart:ui';
+
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:for_sale/Home/navbar.dart';
-import 'package:for_sale/Model/Add_ad.dart';
 import 'package:for_sale/Add-ad/view-model.dart';
+import 'package:for_sale/Home/view-model.dart';
+import 'package:for_sale/Model/Add_ad.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart' hide FormData;
 import 'package:multi_image_picker2/multi_image_picker2.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 
 class Myform {
   //
-  List<Asset>? images = [];
+  RxList<Asset>? images = <Asset>[].obs;
   //
   String? adName = "", adDescription = "";
   //
-  List<Map<String, String>>? adInfo = <Map<String, String>>[];
+  Map<String, String> adInfo = Map<String, String>();
   //
   int? adPhoneNumber = 0,
       adPrice = 0,
@@ -30,11 +30,9 @@ class Myform {
 }
 
 class AddUI extends GetView<AddNameController> {
-  
+  //
   final _formKey = GlobalKey<FormState>();
-
-  ///
-  ///
+  //
   validate() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
@@ -127,6 +125,8 @@ class AddUI extends GetView<AddNameController> {
     //
     Size size = MediaQuery.of(context).size;
     //
+    // print(Get.find<AddNameController>().myform.value.images!.value.toString());
+    //
     return Scaffold(
       appBar: AppBar(
         title: Text("add-ad".tr, style: klabelAppbarStyle),
@@ -137,8 +137,9 @@ class AddUI extends GetView<AddNameController> {
       ),
       body: Stack(
         children: [
-          SingleChildScrollView(
-            child: ConstrainedBox(
+          GetBuilder<AddNameController>(
+            builder: (ctx) => SingleChildScrollView(
+              child: ConstrainedBox(
                 constraints: BoxConstraints(maxHeight: size.height * 3),
                 child: Form(
                   key: _formKey,
@@ -194,8 +195,10 @@ class AddUI extends GetView<AddNameController> {
                                 // Get.put(AddNameController());
                                 FocusScope.of(context).unfocus();
                                 if (check() && validate()) {
-                                  inspect(controller.myform.value);
-                                  if (await controller.postAdd()) {
+                                  // inspect(controller.myform.value);
+                                  var t = await controller.postAdd();
+                                  // await Future.delayed(Duration(seconds: 5));
+                                  if (t) {
                                     AwesomeDialog(
                                       context: Get.context!,
                                       animType: AnimType.SCALE,
@@ -209,10 +212,11 @@ class AddUI extends GetView<AddNameController> {
                                       desc: 'This is also Ignored',
                                       btnOkOnPress: () {},
                                     )..show();
+
                                     _formKey.currentState!.reset();
-                                    Get.delete<AddNameController>();
-                                    Get.off(Home());
-                                    Get.put(AddNameController());
+                                    Get.find<HomeController>().fetchHomeList();
+                                    // controller.myform.refresh();
+                                    // Get.reload<AddNameController>();
                                     print("SUCCESS");
                                   } else
                                     AwesomeDialog(
@@ -242,7 +246,9 @@ class AddUI extends GetView<AddNameController> {
                       SizedBox(height: 18),
                     ],
                   ),
-                )),
+                ),
+              ),
+            ),
           ),
           Obx(
             () => Visibility(
@@ -343,7 +349,11 @@ class _ChoseTypeState extends State<ChoseType> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      border: type == Types.normal
+                      border: Get.find<AddNameController>()
+                                  .myform
+                                  .value
+                                  .isSpecial ==
+                              0
                           ? Border.all(
                               color: Theme.of(Get.context!).brightness ==
                                       Brightness.dark
@@ -467,7 +477,11 @@ class _ChoseTypeState extends State<ChoseType> {
                     height: size.height * 0.125,
                     decoration: BoxDecoration(
                       color: Color(0xFFE8CECE),
-                      border: type == Types.special
+                      border: Get.find<AddNameController>()
+                                  .myform
+                                  .value
+                                  .isSpecial ==
+                              1
                           ? Border.all(
                               color:
                                   Theme.of(context).primaryColor == Colors.black
@@ -869,25 +883,20 @@ class _TypesTypesState extends State<TypesTypes> {
   }
 }
 
-class DetailsAdd extends StatefulWidget {
-  @override
-  _DetailsAddState createState() => _DetailsAddState();
-}
-
-class _DetailsAddState extends State<DetailsAdd> {
-  var c = Get.find<AddNameController>();
+class DetailsAdd extends GetView<AddNameController> {
+  // var c = Get.find<AddNameController>();
   // List<Asset> images = [];
   Size size = MediaQuery.of(Get.context!).size;
   // ignore: unused_field
   String _error = 'No Error Dectected';
+  List<Asset> resultList = <Asset>[];
   Future<void> loadAssets() async {
-    List<Asset> resultList = <Asset>[];
     String error = 'No Error Detected';
     try {
       resultList = await MultiImagePicker.pickImages(
         maxImages: 10,
         enableCamera: true,
-        selectedAssets: c.myform.value.images!,
+        selectedAssets: controller.myform.value.images!,
         cupertinoOptions: CupertinoOptions(
           takePhotoIcon: "chat",
           doneButtonTitle: "Fatto",
@@ -904,67 +913,26 @@ class _DetailsAddState extends State<DetailsAdd> {
       error = e.toString();
       print(error);
     }
-    if (!mounted) return;
+    // if (!mounted) return;
 
-    setState(
-      () {
-        c.myform.value.images = resultList;
-        _error = error;
-        // resultList = [];
-      },
-    );
+    // setState(
+    // () {
+    controller.myform.value.images!.value = resultList;
+    _error = error;
+    resultList = [];
+    // },
+    // );
   }
 
-  Widget buildGridView() {
-    return Obx(() => c.myform.value.images!.isNotEmpty
-        ? Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2),
-              border: Border.all(
-                  width: 1, color: Color(0xFF707070).withOpacity(0.09)),
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            width: size.width - 20,
-            height: 100,
-            child: GridView.count(
-              crossAxisCount: 3,
-              children: List.generate(c.myform.value.images!.length, (index) {
-                Asset asset = c.myform.value.images![index];
-                return AssetThumb(
-                  asset: asset,
-                  width: 300,
-                  height: 300,
-                );
-              }),
-            ),
-          )
-        : Container(
-            decoration: BoxDecoration(
-              color: Color(0xFFF2F2F2),
-              border: Border.all(
-                  width: 1, color: Color(0xFF707070).withOpacity(0.09)),
-              borderRadius: BorderRadius.all(Radius.circular(4)),
-            ),
-            margin: EdgeInsets.symmetric(horizontal: 16),
-            width: size.width - 20,
-            height: 100,
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("upload", style: TextStyle(color: Colors.grey.shade500)),
-                  Text("details-ad3".tr,
-                      style: TextStyle(color: Colors.grey.shade500))
-                ],
-              ),
-            ),
-          ));
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   print("Hellow");
+  // }
 
   @override
   Widget build(BuildContext context) {
+    print(resultList.length);
     return Container(
       width: size.width,
       decoration: BoxDecoration(
@@ -1011,9 +979,61 @@ class _DetailsAddState extends State<DetailsAdd> {
               ),
               SizedBox(height: 10),
               InkWell(
-                onTap: loadAssets,
-                child: buildGridView(),
-              )
+                  onTap: loadAssets,
+                  child: Obx(() => controller.myform.value.images!.isNotEmpty
+                      ? Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF2F2F2),
+                            border: Border.all(
+                                width: 1,
+                                color: Color(0xFF707070).withOpacity(0.09)),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          width: size.width - 20,
+                          height: 100,
+                          child: GridView.count(
+                            crossAxisCount: 3,
+                            children: List.generate(
+                              controller.myform.value.images!.length,
+                              (index) {
+                                var asset =
+                                    controller.myform.value.images![index];
+                                return AssetThumb(
+                                  asset: asset,
+                                  width: 300,
+                                  height: 300,
+                                );
+                              },
+                            ),
+                          ),
+                        )
+                      : Container(
+                          decoration: BoxDecoration(
+                            color: Color(0xFFF2F2F2),
+                            border: Border.all(
+                                width: 1,
+                                color: Color(0xFF707070).withOpacity(0.09)),
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                          ),
+                          margin: EdgeInsets.symmetric(horizontal: 16),
+                          width: size.width - 20,
+                          height: 100,
+                          child: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text("upload",
+                                    style:
+                                        TextStyle(color: Colors.grey.shade500)),
+                                Text("details-ad3".tr,
+                                    style:
+                                        TextStyle(color: Colors.grey.shade500))
+                              ],
+                            ),
+                          ),
+                        )))
             ],
           ),
           SizedBox(height: 16),
@@ -1038,7 +1058,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                   validator: (txt) => txt!.isEmpty ? "details-ad5".tr : null,
                   style: TextStyle(color: Colors.grey.shade500),
                   onSaved: (t) {
-                    c.myform.value.adName = t!;
+                    controller.myform.value.adName = t!;
                   },
                   decoration: InputDecoration(
                       hintText: "details-ad5".tr,
@@ -1085,7 +1105,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onSaved: (s) {
-                    c.myform.value.adPrice = int.parse(s!);
+                    controller.myform.value.adPrice = int.parse(s!);
                   },
                   decoration: InputDecoration(
                     hintText: "details-ad7".tr,
@@ -1140,7 +1160,7 @@ class _DetailsAddState extends State<DetailsAdd> {
                   validator: (f) => f!.isEmpty ? "details-ad10".tr : null,
                   style: TextStyle(color: Colors.grey.shade500),
                   onSaved: (d) {
-                    c.myform.value.adDescription = d;
+                    controller.myform.value.adDescription = d;
                     print("On Saved");
                   },
                   // expands: true,
@@ -1242,9 +1262,13 @@ class Specifications extends StatelessWidget {
                   width: 25,
                   child: TextFormField(
                     onSaved: (t) {
-                      Map<String, String>? tempp = Map<String, String>();
-                      tempp[c.addsInfoKey[index].adInfo!] = t!;
-                      c.myform.value.adInfo!.add(tempp);
+                      // Map<String, String>? tempp = Map<String, String>();
+                      // tempp["\'${c.addsInfoKey[index].adInfo!}\'"] =
+                      //     "\'${t!}\'";
+                      // print(tempp);
+                      c.myform.value
+                              .adInfo["\'${c.addsInfoKey[index].adInfo!}\'"] =
+                          "\'${t!}\'";
                     },
                     style: TextStyle(color: Colors.black),
                     validator: (h) => h!.isEmpty ? "" : null,

@@ -4,7 +4,7 @@ class HomeModel {
   String? createdAt;
   String? updatedAt;
   List<CatogaryDetails>? catogaryDetails;
-  List<Ads> ?ads;
+  List<Ads>? ads;
 
   HomeModel(
       {this.adCatogaryId,
@@ -55,8 +55,8 @@ class CatogaryDetails {
   String? catogaryName;
   String? picture;
   int? adCatogaryId;
-  String ?createdAt;
-  String ?updatedAt;
+  String? createdAt;
+  String? updatedAt;
 
   CatogaryDetails(
       {this.catogaryDetailsId,
@@ -86,13 +86,14 @@ class CatogaryDetails {
     return data;
   }
 }
+
 class Ads {
   int? adId;
   String? adName;
   String? adPhoneNumber;
   String? adDescription;
   int? mangerAccept;
-  int? adPrice;
+  var adPrice;
   String? adInfo;
   int? accountId;
   int? adTypeId;
@@ -184,7 +185,7 @@ class Ads {
 
 class Adtypename {
   int? adTypeNameId;
-  String ?adTypeName;
+  String? adTypeName;
   int? adCatogaryId;
   int? catogaryDetailsId;
   int? adDescriptionsId;
@@ -224,7 +225,7 @@ class Adtypename {
 }
 
 class Adpicture {
-  int ?adPicturesId;
+  int? adPicturesId;
   String? adPicture;
   int? adId;
   String? createdAt;

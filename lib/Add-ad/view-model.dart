@@ -40,8 +40,8 @@ class AddNameController extends GetxController {
   RxBool loadingMyType = false.obs;
   //
   @override
-  void onInit() async {
-    super.onInit();
+  void onReady() async {
+    super.onReady();
     print("here init the addNameController ");
     Get.find<UserController>().number.isNotEmpty
         ? fetchData()
@@ -96,7 +96,7 @@ class AddNameController extends GetxController {
   }
 
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
-  Future postAdd() async {
+  Future<bool> postAdd() async {
     //
     loading.value = true;
     //
@@ -107,75 +107,84 @@ class AddNameController extends GetxController {
         .first
         .adTypeId!;
     //
-    print(myform.value.isSpecial);
+    // print(Get.find<UserController>().accountId);
+    // //
+    // print(myform.value.adTypeId);
     //
-    print(myform.value.adTypeId);
+    Dio dio = Dio();
     //
-    //   Dio dio = Dio();
-    //   //
-    //   List<MultipartFile> allMultiFiles = [];
-    //   //
-    //   inspect(myform.value);
-    //   //
-    //   for (Asset asset in myform.value.images!) {
-    //     ByteData byteData = await asset.getByteData();
-    //     List<int> imageData = byteData.buffer.asUint8List();
-    //     var multipartFile = new MultipartFile.fromBytes(
-    //       imageData,
-    //       filename: asset.name,
-    //     );
-    //     allMultiFiles.add(multipartFile);
-    //   }
-    //   //
-    //   FormData formData = new FormData.fromMap(
-    //     {
-    //       "images[]": allMultiFiles,
-    //       "ad_name": myform.value.adName.toString(),
-    //       "ad_phone_number": myform.value.adPhoneNumber.toString(),
-    //       "ad_description": myform.value.adDescription,
-    //       "ad_price": myform.value.adPrice.toString(),
-    //       "ad_info": myform.value.adInfo.toString(),
-    //       "account_id": Get.find<UserController>().accountId.toString(),
-    //       "ad_type_id": myform.value.adTypeId.toString(),
-    //       "ad_catogary_id": myform.value.adCatogaryId.toString(),
-    //       "catogary_details_id": myform.value.catogaryDetailsId.toString(),
-    //       "ad_descriptions_id": myform.value.adDescriptionId.toString(),
-    //       "ad_type_name_id": myform.value.adTypeNameId.toString(),
-    //       "is_special": myform.value.adTypeId.toString(),
-    //       "manger_accept": "1",
-    //     },
-    //   );
-    //   //
-    //   try {
-    //     var response = await dio.post(
-    //       "https://www.forsaleq8.com/public/api/ad",
-    //       data: formData,
-    //       options: Options(
-    //         headers: {
-    //           'Authorization': 'Bearer ${Get.find<UserController>().token}',
-    //         },
-    //       ),
-    //     );
-    //     //
-    //     if (response.statusCode == 200 || response.statusCode == 201) {
-    //       print('Success Publish the Ad');
-    //       loading.value = false;
-    //       update();
-    //       return true;
-    //     } else {
-    //       loading.value = false;
-    //       update();
+    List<MultipartFile> allMultiFiles = [];
+    //
+    // inspect(myform.value);
+    //
+    for (Asset asset in myform.value.images!) {
+      ByteData byteData = await asset.getByteData();
+      List<int> imageData = byteData.buffer.asUint8List();
+      var multipartFile = new MultipartFile.fromBytes(
+        imageData,
+        filename: asset.name,
+      );
+      allMultiFiles.add(multipartFile);
+    }
+    //
+    FormData formData = new FormData.fromMap(
+      {
+        "images[]": allMultiFiles,
+        "ad_name": myform.value.adName.toString(),
+        "ad_phone_number": myform.value.adPhoneNumber.toString(),
+        "ad_description": myform.value.adDescription.toString(),
+        "ad_price": myform.value.adPrice.toString(),
+        "ad_info": myform.value.adInfo.toString(),
+        "account_id": Get.find<UserController>().accountId.value.toString(),
+        "ad_type_id": myform.value.adTypeId.toString(),
+        "ad_catogary_id": myform.value.adCatogaryId.toString(),
+        "catogary_details_id": myform.value.catogaryDetailsId.toString(),
+        "ad_descriptions_id": myform.value.adDescriptionId.toString(),
+        "ad_type_name_id": myform.value.adTypeNameId.toString(),
+        "is_special": myform.value.isSpecial.toString(),
+        "manger_accept": "1",
+      },
+    );
+    //
+    // formData.fields.forEach((element) {
+    //   print(element);
+    // });
+    //
+    try {
+      var response = await dio.post(
+        "https://www.forsaleq8.com/public/api/ad",
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${Get.find<UserController>().token}'
+          },
+        ),
+      );
+      //
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        print('Success Publish the Ad');
+        await Get.delete<AddNameController>();
+        Get.put(AddNameController());
+        update();
+        // update();
+        // this.dispose();
+        // this.onInit();
+        loading.value = false;
+        return true;
+      } else {
+        loading.value = false;
+        // update();
 
-    //       print(response.data);
-    //       print(response.statusCode);
-    //       print(response.statusMessage);
+        print(response.data);
+        print(response.statusCode);
+        print(response.statusMessage);
 
-    //       return false;
-    //     }
-    //   } catch (e) {
-    //     loading.value = false;
-    //     print(e);
-    //     return false;
-    //   }
+        return false;
+      }
+    } catch (e) {
+      loading.value = false;
+      print(e);
+      return false;
+    }
   }
 }

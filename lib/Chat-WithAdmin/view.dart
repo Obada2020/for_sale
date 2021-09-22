@@ -46,19 +46,24 @@ class ChatUI extends StatelessWidget {
               child: SingleChildScrollView(
                 controller: c!.scrollController.value,
                 child: Obx(() {
-                  return c.message.isNotEmpty
-                      ? Column(
-                          children: c.message
-                              .map(
-                                (e) => MessageWidget(
-                                  e.isAdmin == 0 ? false : true,
-                                  e.message,
-                                  e.updatedAt,
-                                ),
-                              )
-                              .toList(),
-                        )
-                      : Text("ليس هنا رسائل بعد");
+                  return c.isLoading.value
+                      ? Center(
+                          child: CircularProgressIndicator(
+                          color: Colors.black,
+                        ),)
+                      : c.isEmpty.value
+                          ? Text("ليس هنا رسائل بعد")
+                          : Column(
+                              children: c.message
+                                  .map(
+                                    (e) => MessageWidget(
+                                      e.isAdmin == 0 ? false : true,
+                                      e.message,
+                                      e.updatedAt,
+                                    ),
+                                  )
+                                  .toList(),
+                            );
                 }),
 
                 // : Text("No Messages found")),
