@@ -15,7 +15,7 @@ class FavoriteAds extends GetView<AdsController> {
         ),
         centerTitle: true,
         title: Text(
-          'الإعلانات المفضلة',
+          'MyAccount_Label3'.tr,
           style: klabelAppbarStyle,
         ),
       ),
@@ -91,7 +91,10 @@ class FavoriteAds extends GetView<AdsController> {
                                     color: Colors.grey.withOpacity(0.2),
                                   )
                                 ],
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor ==
+                                        Colors.black
+                                    ? Colors.black
+                                    : Colors.white,
                                 borderRadius: BorderRadius.circular(4),
                               ),
                               child: Column(

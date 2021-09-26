@@ -18,7 +18,7 @@ class HomePage extends GetView<HomeController> {
     //
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text("الصفحة الرئيسة", style: klabelAppbarStyle)),
+        title: Center(child: Text("Home_Page".tr, style: klabelAppbarStyle)),
         flexibleSpace: Container(
           decoration: BoxDecoration(gradient: kGColor),
         ),

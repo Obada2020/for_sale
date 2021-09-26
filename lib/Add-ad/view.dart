@@ -1056,7 +1056,7 @@ class DetailsAdd extends GetView<AddNameController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   validator: (txt) => txt!.isEmpty ? "details-ad5".tr : null,
-                  style: TextStyle(color: Colors.grey.shade500),
+                  style: TextStyle(color: Colors.black),
                   onSaved: (t) {
                     controller.myform.value.adName = t!;
                   },
@@ -1098,10 +1098,7 @@ class DetailsAdd extends GetView<AddNameController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   validator: (text) => text!.isEmpty ? "details-ad6".tr : null,
-                  style: TextStyle(
-                      color: Theme.of(context).primaryColor == Colors.black
-                          ? Colors.white
-                          : Colors.grey.shade600),
+                  style: TextStyle(color: Colors.black),
                   keyboardType: TextInputType.number,
                   inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                   onSaved: (s) {
@@ -1158,7 +1155,7 @@ class DetailsAdd extends GetView<AddNameController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: TextFormField(
                   validator: (f) => f!.isEmpty ? "details-ad10".tr : null,
-                  style: TextStyle(color: Colors.grey.shade500),
+                  style: TextStyle(color: Colors.black),
                   onSaved: (d) {
                     controller.myform.value.adDescription = d;
                     print("On Saved");
@@ -1355,7 +1352,7 @@ Widget communicate(Myform phone) {
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     validator: (text) =>
                         text!.isEmpty ? "details-ad13".tr : null,
-                    style: TextStyle(color: Colors.grey.shade500),
+                    style: TextStyle(color: Colors.black),
                     onSaved: (value) {
                       phone.adPhoneNumber = int.parse(value!);
                     },
