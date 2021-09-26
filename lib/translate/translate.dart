@@ -72,6 +72,7 @@ class Translate extends Translations {
           'empty': 'لايوجد إعلانات هنا',
           'emptyfav': 'ليس لديك إعلانات مفضلة',
           'emptymyad': 'لم تقم بنشر إعلانات بعد',
+          'Home_Page': 'الصفحة الرئيسية',
         },
         'en': {
           'Signin_Appbar': 'Sign in',
@@ -142,6 +143,7 @@ class Translate extends Translations {
           'empty': 'no ads found',
           'emptyfav': 'no favorite adds',
           'emptymyad': 'You haven\'t posted ads yet',
+          'Home_Page': 'Home Page',
         },
       };
 }
