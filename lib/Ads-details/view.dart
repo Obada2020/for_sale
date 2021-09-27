@@ -327,7 +327,7 @@ class Adsdetails extends GetView<HomeController> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'إعلانات مقترحة',
+            'Ads_details_suggest'.tr,
             style: klabelStyleBlack16.copyWith(
               color: Theme.of(Get.context!).primaryColor == Colors.black
                   ? Colors.white
@@ -368,7 +368,7 @@ class Adsdetails extends GetView<HomeController> {
                 )
               : Center(
                   child: Container(
-                    child: Text("لايوجد اعلانات مقترحة"),
+                    child: Text("Ads_details_No_suggest".tr),
                   ),
                 ),
         ],
@@ -401,7 +401,9 @@ class Adsdetails extends GetView<HomeController> {
         height: 218,
         clipBehavior: Clip.antiAliasWithSaveLayer,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Theme.of(Get.context!).primaryColor == Colors.black
+              ? Colors.black
+              : Colors.white,
           borderRadius: BorderRadius.circular(
             5,
           ),

@@ -73,6 +73,8 @@ class Translate extends Translations {
           'emptyfav': 'ليس لديك إعلانات مفضلة',
           'emptymyad': 'لم تقم بنشر إعلانات بعد',
           'Home_Page': 'الصفحة الرئيسية',
+          'Ads_details_suggest': 'الإعلانات المقترحة',
+          'Ads_details_No_suggest': 'لا يوجد إعلانات مقترحة',
         },
         'en': {
           'Signin_Appbar': 'Sign in',
@@ -144,6 +146,8 @@ class Translate extends Translations {
           'emptyfav': 'no favorite adds',
           'emptymyad': 'You haven\'t posted ads yet',
           'Home_Page': 'Home Page',
+          'Ads_details_suggest': 'Suggested ads',
+          'Ads_details_No_suggest': 'There are no suggested ads',
         },
       };
 }

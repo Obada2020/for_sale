@@ -294,9 +294,15 @@ enum Types { normal, special }
 
 Widget get(Widget x, String title, [TextStyle? textStyle]) {
   return Container(
+    color: Theme.of(Get.context!).primaryColor == Colors.black
+        ? Colors.black
+        : Colors.white,
     width: MediaQuery.of(Get.context!).size.width,
-    color: Theme.of(Get.context!).primaryColor,
+    //color: Theme.of(Get.context!).primaryColor,
     child: Container(
+      color: Theme.of(Get.context!).primaryColor == Colors.black
+          ? Colors.black
+          : Colors.white,
       padding: EdgeInsets.only(right: 16, top: 16, left: 16, bottom: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -331,7 +337,9 @@ class _ChoseTypeState extends State<ChoseType> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        // color: Theme.of(context).primaryColor,
+        color: Theme.of(Get.context!).primaryColor == Colors.black
+            ? Colors.black
+            : Colors.white,
       ),
       child: Row(
         children: [
