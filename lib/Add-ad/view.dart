@@ -33,7 +33,7 @@ class AddUI extends GetView<AddNameController> {
   //
   final _formKey = GlobalKey<FormState>();
   //
-  validate() {
+  bool validate() {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       return true;
@@ -193,6 +193,7 @@ class AddUI extends GetView<AddNameController> {
                               onPressed: () async {
                                 // await Get.delete<AddNameController>();
                                 // Get.put(AddNameController());
+
                                 FocusScope.of(context).unfocus();
                                 if (check() && validate()) {
                                   // inspect(controller.myform.value);
@@ -1267,13 +1268,16 @@ class Specifications extends StatelessWidget {
                   width: 25,
                   child: TextFormField(
                     onSaved: (t) {
+                      //
                       // Map<String, String>? tempp = Map<String, String>();
                       // tempp["\'${c.addsInfoKey[index].adInfo!}\'"] =
                       //     "\'${t!}\'";
                       // print(tempp);
-                      c.myform.value
-                              .adInfo["\'${c.addsInfoKey[index].adInfo!}\'"] =
-                          "\'${t!}\'";
+                      //
+                      c.myform.value.adInfo["${c.addsInfoKey[index].adInfo!}"] =
+                          "${t!}";
+                      //
+                      //
                     },
                     style: TextStyle(color: Colors.black),
                     validator: (h) => h!.isEmpty ? "" : null,

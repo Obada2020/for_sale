@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
@@ -98,6 +99,7 @@ class AddNameController extends GetxController {
   ////////////////////////////////////////////////////////////////////////////////////////////////////////
   Future<bool> postAdd() async {
     //
+    //
     loading.value = true;
     //
     myform.value.adTypeId = myAdTypelist
@@ -115,7 +117,8 @@ class AddNameController extends GetxController {
     //
     List<MultipartFile> allMultiFiles = [];
     //
-    // inspect(myform.value);
+    List<Map<String, String>> x = [];
+    x.add(myform.value.adInfo);
     //
     for (Asset asset in myform.value.images!) {
       ByteData byteData = await asset.getByteData();
@@ -134,7 +137,7 @@ class AddNameController extends GetxController {
         "ad_phone_number": myform.value.adPhoneNumber.toString(),
         "ad_description": myform.value.adDescription.toString(),
         "ad_price": myform.value.adPrice.toString(),
-        "ad_info": myform.value.adInfo.toString(),
+        "ad_info": x,
         "account_id": Get.find<UserController>().accountId.value.toString(),
         "ad_type_id": myform.value.adTypeId.toString(),
         "ad_catogary_id": myform.value.adCatogaryId.toString(),

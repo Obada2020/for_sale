@@ -27,10 +27,8 @@ void main() async {
   if (l == null) {
     if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
       sharedPreferences.setString("lang", "ar");
-      return;
     } else if (Get.deviceLocale!.languageCode == Locale('en').toString()) {
       sharedPreferences.setString("lang", "en");
-      return;
     }
   }
   runApp(

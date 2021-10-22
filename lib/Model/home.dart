@@ -50,6 +50,25 @@ class HomeModel {
   }
 }
 
+// class AdInfo {
+//   String? ttt;
+//   String? sss;
+
+//   AdInfo({this.ttt, this.sss});
+
+//   AdInfo.fromJson(Map<String, dynamic> json) {
+//     ttt = json['ttt'];
+//     sss = json['Sss'];
+//   }
+
+//   Map<String, dynamic> toJson() {
+//     final Map<String, dynamic> data = new Map<String, dynamic>();
+//     data['ttt'] = this.ttt;
+//     data['Sss'] = this.sss;
+//     return data;
+//   }
+// }
+
 class CatogaryDetails {
   int? catogaryDetailsId;
   String? catogaryName;
@@ -94,7 +113,7 @@ class Ads {
   String? adDescription;
   int? mangerAccept;
   var adPrice;
-  String? adInfo;
+  List<Map<String, dynamic>>? adInfo;
   int? accountId;
   int? adTypeId;
   int? adCatogaryId;
@@ -106,7 +125,7 @@ class Ads {
   String? updatedAt;
   Adtypename? adtypename;
   List<Adpicture>? adpicture;
-
+  //
   Ads(
       {this.adId,
       this.adName,
@@ -134,7 +153,12 @@ class Ads {
     adDescription = json['ad_description'];
     mangerAccept = json['manger_accept'];
     adPrice = json['ad_price'];
-    adInfo = json['ad_info'];
+    if (json['ad_info'] != null) {
+      adInfo = [];
+      json['ad_info'].forEach((v) {
+        adInfo!.add(v);
+      });
+    }
     accountId = json['account_id'];
     adTypeId = json['ad_type_id'];
     adCatogaryId = json['ad_catogary_id'];

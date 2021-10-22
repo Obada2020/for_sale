@@ -54,6 +54,7 @@ class AdsController extends GetxController {
   //
   addFavorite(adId) async {
     var res = await ApiService.fdatacdfav(adId);
+
     result.value = res;
     // print('result ctrl==  $res');
     return res;

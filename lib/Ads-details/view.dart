@@ -1,18 +1,18 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/Chat-WithAdmin/view.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/Model/home.dart';
+import 'package:for_sale/Sign-in/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Adsdetails extends GetView<HomeController> {
+  //
+  // String? x;
   //
   final Ads? temp;
   //
@@ -32,24 +32,46 @@ class Adsdetails extends GetView<HomeController> {
       //backgroundColor: kbodyColor,
       appBar: AppBar(
         flexibleSpace: Container(
-          decoration: BoxDecoration(gradient: kGColor),
+          decoration: BoxDecoration(
+            gradient: kGColor,
+          ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: InkWell(
-                onTap: () async {
-                  await c.addFavorite(temp!.adId);
-                  print('view ${c.result.value}');
-                },
-                child: Obx(
-                  () => c.result.value == true
-                      ? Icon(Icons.check)
-                      : Icon(Icons.favorite_border),
-                )
-                //  Icon(icon),
-                ),
-          )
+          Obx(() => Get.find<UserController>().accountId.value.isEmpty
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: InkWell(
+                      onTap: () async {
+                        Get.defaultDialog(
+                          title: "",
+                          titlePadding: EdgeInsets.all(0),
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                "Loading...",
+                                style: TextStyle(
+                                  fontSize: 18,
+                                ),
+                              ),
+                              CircularProgressIndicator(),
+                            ],
+                          ),
+                        );
+                        await c.addFavorite(temp!.adId);
+                        Get.back();
+
+                        print('view ${c.result.value}');
+                      },
+                      child: Obx(
+                        () => c.result.value == true
+                            ? Icon(Icons.check)
+                            : Icon(Icons.favorite_border),
+                      )
+                      //  Icon(icon),
+                      ),
+                ))
         ],
         centerTitle: true,
         title: Text(
@@ -62,7 +84,7 @@ class Adsdetails extends GetView<HomeController> {
           Details(
             temp: temp,
           ),
-          temp!.adInfo!.isNotEmpty ? specifications() : Container(),
+          temp!.adInfo?.isNotEmpty ?? true ? specifications() : Container(),
           description(),
           social(),
           sggestedAds(),
@@ -81,7 +103,7 @@ class Adsdetails extends GetView<HomeController> {
   }
 
   whatsapp() async {
-    var url = "whatsapp://send?phone=+963${temp!.adPhoneNumber}";
+    var url = "https://wa.me/${temp!.adPhoneNumber}/?text=${temp!.adName}}";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -178,18 +200,20 @@ class Adsdetails extends GetView<HomeController> {
             Text(
               'الوصف',
               style: klabelStyleBlack16.copyWith(
-                  color: Theme.of(Get.context!).primaryColor == Colors.black
-                      ? Colors.white
-                      : Colors.black),
+                color: Theme.of(Get.context!).primaryColor == Colors.black
+                    ? Colors.white
+                    : Colors.black,
+              ),
             ),
             Text(
               temp!.adDescription!,
               style: TextStyle(
-                  fontFamily: 'FairuzBlack',
-                  fontSize: 12,
-                  color: Theme.of(Get.context!).primaryColor == Colors.black
-                      ? Colors.white
-                      : Colors.grey.shade700),
+                fontFamily: 'FairuzBlack',
+                fontSize: 12,
+                color: Theme.of(Get.context!).primaryColor == Colors.black
+                    ? Colors.white
+                    : Colors.grey.shade700,
+              ),
             ),
           ],
         ),
@@ -200,41 +224,60 @@ class Adsdetails extends GetView<HomeController> {
 //===========================مواصفات======================
   Widget specifications() {
     // List t = jsonDecode(temp!.adInfo!); // ERROR
-    String s = temp!.adInfo!.substring(0, temp!.adInfo!.length);
-    s = s.substring(1, s.length - 1);
+    // String s = temp!.adInfo!.substring(0, temp!.adInfo!.length);
+    // String s = "";
+    // s = s.substring(1, s.length - 1);
 
-    // .substring(1, temp!.adInfo!.length - 1);
-    // print(s);
-    var x = s.split(",");
-    // x = x.map((element) => element.substring(1, element.length - 1)).toList();
+    // // .substring(1, temp!.adInfo!.length - 1);
+    // // print(s);
+    // var x = s.split(",");
+    // // x = x.map((element) => element.substring(1, element.length - 1)).toList();
     var keys = [];
     var values = [];
-    //
-    x.forEach(
-      (e) {
-        var v = e.split(":");
-        // print(e);
-        values.add(v[1].replaceAll('\'', ' ').trim());
-        keys.add(v[0].replaceAll('\'', ' ').trim());
-        // // keys.add(e.substring(1, e.length - 1).split(":")[0]);
-      },
-    );
-    //
-    // x.forEach((element) {
+    temp!.adInfo![0].forEach((key, value) {
+      keys.add(key);
+      values.add(value);
+    });
+    // // //
+    // x.forEach(
+    //   (e) {
+    //     var v = e.split(":");
+    //     // print(e);
+    //     values.add(v[1].replaceAll('\'', ' ').trim());
+    //     keys.add(v[0].replaceAll('\'', ' ').trim());
+    //     // // keys.add(e.substring(1, e.length - 1).split(":")[0]);
+    //   },
+    // );
+    // //
+    // // x.forEach((element) {
+    // //   print(element);
+    // // });
+    // //
+    // // print("object");
+    // //
+    // keys.forEach((element) {
+    //   print(element);
+    // });
+
+    // // print("object");
+
+    // values.forEach((element) {
     //   print(element);
     // });
     //
-    // print("object");
+    // var r = jsonDecode(temp!.adInfo.toString());
+    // print(temp!.adInfo);
+    // print(temp!.adInfo);
     //
-    keys.forEach((element) {
-      print(element);
-    });
-
-    // print("object");
-
-    values.forEach((element) {
-      print(element);
-    });
+    //
+    // var r = temp!.adInfo![0][1];
+    // print(r);
+    // temp!.adInfo!.forEach((element) {
+    //   element.forEach((key, value) {
+    //     print(key + " == > " + value);
+    //   });
+    // });
+    //
     //
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

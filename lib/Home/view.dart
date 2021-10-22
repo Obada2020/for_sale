@@ -25,7 +25,7 @@ class HomePage extends GetView<HomeController> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          return await Get.find<HomeController>().fetchHomeList();
+          return await controller.fetchHomeList();
         },
         child: SingleChildScrollView(
           // physics: NeverScrollableScrollPhysics(),

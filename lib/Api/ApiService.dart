@@ -122,7 +122,7 @@ class ApiService {
 
   //==============================================================
   //==========================AddDeletFaveAds Api=================
-  static fdatacdfav(adId) async {
+  static fdatacdfav(int adId) async {
     http.Response res = await http.post(
       Uri.parse(uri + "FavoriteControleItem"),
       body: {
@@ -131,9 +131,9 @@ class ApiService {
       },
       headers: {'Authorization': 'Bearer ${Get.find<UserController>().token}'},
     );
+    print(res.body);
     if (res.statusCode == 200) {
       var body = jsonDecode(res.body);
-
       print('==========>${body['resualt']}');
       return body['resualt'] == 'true' ? true : false;
     } else {
