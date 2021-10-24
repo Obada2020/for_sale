@@ -102,25 +102,35 @@ class FavoriteAds extends GetView<AdsController> {
                                 children: [
                                   Expanded(
                                     child: Image.network(
-                                      controller.favad[index].ad![0]
-                                          .adpicture![0].adPicture
-                                          .toString(),
-                                      loadingBuilder: (BuildContext? ctx,
-                                          Widget? child,
-                                          ImageChunkEvent? loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child!;
-                                        } else {
-                                          return Center(
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Colors.green),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                    ),
+                                        controller.favad[index].ad![0]
+                                            .adpicture![0].adPicture
+                                            .toString(),
+                                        errorBuilder: (BuildContext context,
+                                            Object exception,
+                                            StackTrace? stackTrace) {
+                                      return Center(
+                                        child: const Text(
+                                          'Empty',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    }, loadingBuilder: (BuildContext? ctx,
+                                            Widget? child,
+                                            ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child!;
+                                      } else {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.green),
+                                          ),
+                                        );
+                                      }
+                                    }),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(

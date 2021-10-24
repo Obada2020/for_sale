@@ -459,6 +459,18 @@ class Adsdetails extends GetView<HomeController> {
                 // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
 
                 image,
+                errorBuilder: (BuildContext context, Object exception,
+                    StackTrace? stackTrace) {
+                  return Center(
+                    child: const Text(
+                      'Empty',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  );
+                },
+                //
                 loadingBuilder: (BuildContext? ctx, Widget? child,
                     ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) {
@@ -562,7 +574,19 @@ class _DetailsState extends State<Details> {
                           fit: StackFit.expand,
                           children: <Widget>[
                             Image.network(
-                              e.adPicture!,
+                              e.adPicture ?? "",
+                              errorBuilder: (BuildContext context,
+                                  Object exception, StackTrace? stackTrace) {
+                                return Center(
+                                  child: const Text(
+                                    'Empty',
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                );
+                              },
+                              //
                               loadingBuilder: (BuildContext? ctx, Widget? child,
                                   ImageChunkEvent? loadingProgress) {
                                 if (loadingProgress == null) {
@@ -571,7 +595,8 @@ class _DetailsState extends State<Details> {
                                   return Center(
                                     child: CircularProgressIndicator(
                                       valueColor: AlwaysStoppedAnimation<Color>(
-                                          Colors.green),
+                                        Colors.green,
+                                      ),
                                     ),
                                   );
                                 }

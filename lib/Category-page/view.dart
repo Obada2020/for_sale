@@ -86,8 +86,18 @@ class CategoryPage extends GetView<AdsController> {
                   topLeft: Radius.circular(4),
                 ),
                 child: Image.network(categ!.picture.toString(),
-                    fit: BoxFit.cover, loadingBuilder: (BuildContext? ctx,
-                        Widget? child, ImageChunkEvent? loadingProgress) {
+                    fit: BoxFit.cover, errorBuilder: (BuildContext context,
+                        Object exception, StackTrace? stackTrace) {
+                  return Center(
+                    child: const Text(
+                      'Empty',
+                      style: TextStyle(
+                        color: Colors.black,
+                      ),
+                    ),
+                  );
+                }, loadingBuilder: (BuildContext? ctx, Widget? child,
+                        ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) {
                     return child!;
                   } else {

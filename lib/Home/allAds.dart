@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+    import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
@@ -133,7 +133,32 @@ class AdsAll extends GetView<AdsController> {
                                         .allAds[index].adpicture![0].adPicture
                                         .toString(),
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
+                              return Center(
+                                child: const Text(
+                                  'Empty',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            },
+                            //width: double.infinity,
+                            // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+                            loadingBuilder: (BuildContext? ctx, Widget? child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child!;
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.green),
                                   ),
+                                );
+                              }
+                            },
+                                  ),
+                                  
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(

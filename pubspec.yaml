@@ -38,16 +38,26 @@ dependencies:
   share: ^2.0.4
   shared_preferences: ^2.0.6
   url_launcher: ^6.0.9
-dev_dependencies:
   awesome_dialog: ^2.1.1
+  flutter_native_splash: ^1.2.4
   flutter_localizations:
     sdk: flutter
+dev_dependencies:
   flutter_test:
     sdk: flutter
-# mhd
+  #
+
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
+flutter_native_splash:
+  color: "#667590"
+  image: "images/forsale.png"
+  fill: false
+  fullscreen: true
+  #
+
+  
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

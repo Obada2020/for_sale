@@ -209,25 +209,35 @@ class HomePage extends GetView<HomeController> {
                       topRight: Radius.circular(4),
                       topLeft: Radius.circular(4),
                     ),
-                    child: Image.network(
-                      img.toString(),
-
-                      //width: double.infinity,
-                      // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
-                      loadingBuilder: (BuildContext? ctx, Widget? child,
-                          ImageChunkEvent? loadingProgress) {
-                        if (loadingProgress == null) {
-                          return child!;
-                        } else {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(Colors.green),
-                            ),
-                          );
-                        }
-                      },
-                    )),
+                    child: img != null
+                        ? Image.network(
+                            img,
+                            errorBuilder: (BuildContext context,
+                                Object exception, StackTrace? stackTrace) {
+                              return Center(
+                                child: const Text(
+                                  'Empty',
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            },
+                            //width: double.infinity,
+                            // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+                            loadingBuilder: (BuildContext? ctx, Widget? child,
+                                ImageChunkEvent? loadingProgress) {
+                              if (loadingProgress == null) {
+                                return child!;
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.green),
+                                  ),
+                                );
+                              }
+                            },
+                          )
+                        : Container()),
               ),
               SizedBox(height: 11.2),
               Text(
@@ -281,23 +291,34 @@ class HomePage extends GetView<HomeController> {
             //image
             Expanded(
               child: Image.network(
-                // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+                  // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
 
-                image,
-                loadingBuilder: (BuildContext? ctx, Widget? child,
-                    ImageChunkEvent? loadingProgress) {
-                  if (loadingProgress == null) {
-                    return child!;
-                  } else {
-                    return Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
-                      ),
-                    );
-                  }
-                },
-                // fit: BoxFit.cover,
-              ),
+                  image, errorBuilder: (BuildContext context, Object exception,
+                      StackTrace? stackTrace) {
+                return Center(
+                  child: const Text(
+                    'Empty',
+                    style: TextStyle(
+                      color: Colors.black,
+                    ),
+                  ),
+                );
+              },
+                  //
+                  loadingBuilder: (BuildContext? ctx, Widget? child,
+                      ImageChunkEvent? loadingProgress) {
+                if (loadingProgress == null) {
+                  return child!;
+                } else {
+                  return Center(
+                    child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                    ),
+                  );
+                }
+              }
+                  // fit: BoxFit.cover,
+                  ),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8, right: 8, left: 8),

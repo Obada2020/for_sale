@@ -134,8 +134,39 @@ class Ads extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Image.network(
-                                          c.ads[index].adpicture![0].adPicture
-                                              .toString(),
+                                          c.ads[index].adpicture![0]
+                                                  .adPicture ??
+                                              "",
+                                          errorBuilder: (BuildContext context,
+                                              Object exception,
+                                              StackTrace? stackTrace) {
+                                            return Center(
+                                              child: const Text(
+                                                'Empty',
+                                                style: TextStyle(
+                                                  color: Colors.black,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          //
+                                          loadingBuilder: (BuildContext? ctx,
+                                              Widget? child,
+                                              ImageChunkEvent?
+                                                  loadingProgress) {
+                                            if (loadingProgress == null) {
+                                              return child!;
+                                            } else {
+                                              return Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  valueColor:
+                                                      AlwaysStoppedAnimation<
+                                                          Color>(Colors.green),
+                                                ),
+                                              );
+                                            }
+                                          },
                                         ),
                                       ),
                                       Padding(
@@ -299,6 +330,34 @@ class Ads extends StatelessWidget {
                                     c.ads[index].adpicture![0].adPicture
                                         .toString(),
                                     fit: BoxFit.cover,
+                                    errorBuilder: (BuildContext context,
+                                        Object exception,
+                                        StackTrace? stackTrace) {
+                                      return Center(
+                                        child: const Text(
+                                          'Empty',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    //
+                                    loadingBuilder: (BuildContext? ctx,
+                                        Widget? child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child!;
+                                      } else {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.green),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
                                 ),
                               ),

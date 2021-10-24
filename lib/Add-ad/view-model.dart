@@ -145,7 +145,7 @@ class AddNameController extends GetxController {
         "ad_descriptions_id": myform.value.adDescriptionId.toString(),
         "ad_type_name_id": myform.value.adTypeNameId.toString(),
         "is_special": myform.value.isSpecial.toString(),
-        "manger_accept": "1",
+        "manger_accept": "0",
       },
     );
     //
