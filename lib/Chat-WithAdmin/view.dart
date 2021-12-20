@@ -33,7 +33,9 @@ class ChatUI extends StatelessWidget {
         title: Text("التواصل المباشر مع الإدارة"),
         centerTitle: true,
         flexibleSpace: Container(
-          decoration: BoxDecoration(gradient: kGColor),
+          decoration: BoxDecoration(
+            gradient: kGColor,
+          ),
         ),
       ),
       body: Container(
@@ -49,8 +51,9 @@ class ChatUI extends StatelessWidget {
                   return c.isLoading.value
                       ? Center(
                           child: CircularProgressIndicator(
-                          color: Colors.black,
-                        ),)
+                            color: Colors.black,
+                          ),
+                        )
                       : c.isEmpty.value
                           ? Text("ليس هنا رسائل بعد")
                           : Column(
@@ -107,6 +110,7 @@ class ChatUI extends StatelessWidget {
                           left: 14, top: 18, bottom: 18, right: 24),
                       child: TextFormField(
                         controller: text,
+                        style: Get.theme.textTheme.bodyText1,
                         decoration: InputDecoration(
                             // hintText: "اكتب رسالة",
                             labelText: "اكتب رسالة",
@@ -156,7 +160,8 @@ class MessageWidget extends StatelessWidget {
         ),
         SizedBox(width: 6),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment:
+              isAdmin! ? CrossAxisAlignment.end : CrossAxisAlignment.start,
           children: [
             Container(
               padding: EdgeInsets.all(10),
@@ -181,7 +186,11 @@ class MessageWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6),
               ),
             ),
-            Text(date!.split(".")[0].split("T")[1])
+            Text(
+              date!.split(".")[0].split("T")[1],
+              style: Get.theme.textTheme.bodyText1!.copyWith(fontSize: 10),
+              // textAlign: isAdmin! ? TextAlign.left : TextAlign.left,
+            )
           ],
         ),
         SizedBox(

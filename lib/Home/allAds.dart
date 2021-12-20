@@ -1,4 +1,4 @@
-    import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:for_sale/Ads-details/view.dart';
 import 'package:for_sale/Ads-page/view-model.dart';
 import 'package:for_sale/constant/constant.dart';
@@ -13,7 +13,7 @@ class AdsAll extends GetView<AdsController> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kbodyColor,
+      // backgroundColor: kbodyColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(120),
         child: AppBar(
@@ -22,7 +22,7 @@ class AdsAll extends GetView<AdsController> {
               padding: const EdgeInsets.only(left: 60),
               child: Text(
                 title != null ? title.toString() + " " + title2.toString() : '',
-                style: klabelAppbarStyle,
+                style: Get.textTheme.headline1!,
               ),
             ),
           ),
@@ -55,6 +55,7 @@ class AdsAll extends GetView<AdsController> {
         onChanged: (txt) {
           controller.fileserchHome(txt);
         },
+        style : Get.theme.textTheme.bodyText1,
         decoration: InputDecoration(
           hintText: title != null ? " ابحث عن   ${title2!.toString()}" : 'ابحث',
           hintStyle: TextStyle(
@@ -71,7 +72,7 @@ class AdsAll extends GetView<AdsController> {
   //================================grid view=========================
   Widget gridview() {
     return Container(
-      margin: EdgeInsets.only(top: 5, right: 16, left: 16),
+      margin: EdgeInsets.only(top: 20, right: 16, left: 16),
       child: Obx(
         () => Container(
           child: controller.isLoadingAllAds.value
@@ -80,7 +81,8 @@ class AdsAll extends GetView<AdsController> {
                 )
               : controller.allAds.isEmpty
                   ? Center(
-                      child: Text('empty'.tr),
+                      child: Text('empty'.tr,
+                          style: Get.theme.textTheme.bodyText1),
                     )
                   : GridView.builder(
                       shrinkWrap: true,
@@ -119,9 +121,7 @@ class AdsAll extends GetView<AdsController> {
                                   color: Colors.grey.withOpacity(0.2),
                                 )
                               ],
-                              color: controller.allAds[index].adTypeId == 2
-                                  ? Color(0x79667590)
-                                  : Colors.white,
+                              color: Get.theme.primaryColor,
                               borderRadius: BorderRadius.circular(4),
                             ),
                             child: Column(
@@ -134,31 +134,32 @@ class AdsAll extends GetView<AdsController> {
                                         .toString(),
                                     fit: BoxFit.cover,
                                     errorBuilder: (BuildContext context,
-                                Object exception, StackTrace? stackTrace) {
-                              return Center(
-                                child: const Text(
-                                  'Empty',
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              );
-                            },
-                            //width: double.infinity,
-                            // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
-                            loadingBuilder: (BuildContext? ctx, Widget? child,
-                                ImageChunkEvent? loadingProgress) {
-                              if (loadingProgress == null) {
-                                return child!;
-                              } else {
-                                return Center(
-                                  child: CircularProgressIndicator(
-                                    valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.green),
+                                        Object exception,
+                                        StackTrace? stackTrace) {
+                                      return Center(
+                                        child: Text('Empty',
+                                            style:
+                                                Get.theme.textTheme.bodyText1),
+                                      );
+                                    },
+                                    //width: double.infinity,
+                                    // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+                                    loadingBuilder: (BuildContext? ctx,
+                                        Widget? child,
+                                        ImageChunkEvent? loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child!;
+                                      } else {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                AlwaysStoppedAnimation<Color>(
+                                                    Colors.green),
+                                          ),
+                                        );
+                                      }
+                                    },
                                   ),
-                                );
-                              }
-                            },
-                                  ),
-                                  
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(
@@ -168,7 +169,7 @@ class AdsAll extends GetView<AdsController> {
                                   ),
                                   child: Text(
                                     controller.allAds[index].adName!,
-                                    style: klabelStyleBold12card,
+                                    style: Get.textTheme.bodyText1!,
                                     maxLines: 2,
                                   ),
                                 ),
@@ -190,7 +191,7 @@ class AdsAll extends GetView<AdsController> {
                                         child: Text(
                                           controller.allAds[index].adPrice
                                               .toString(),
-                                          style: klabelStyleBold11light,
+                                          style: Get.textTheme.bodyText1!,
                                         )),
                                     Text(
                                       ('قبل : ${(DateTime.now().difference(DateTime(
@@ -209,9 +210,12 @@ class AdsAll extends GetView<AdsController> {
                                           )).inDays)}  يوم  '),
                                       maxLines: 2,
                                       style: TextStyle(
-                                          fontFamily: 'FairuzBold',
-                                          fontSize: 10,
-                                          color: Color(0xFF5E5E5E)),
+                                        fontFamily: 'FairuzBold',
+                                        fontSize: 10,
+                                        color: Color(
+                                          0xFF5E5E5E,
+                                        ),
+                                      ),
                                     ),
                                   ],
                                 ),

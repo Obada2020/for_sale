@@ -29,7 +29,7 @@ class AddName {
 
 //========================================================================================================================
 class AddCat1 {
-  List<Catogary>? list;
+  List<Catogary>? list = [];
   String? isTheLast;
   // AddCat1();
 
@@ -98,7 +98,7 @@ class Catogary {
 
 //************************************************************************************************************* */
 class AdDescriptions {
-  List<Addescription>? list;
+  List<Addescription>? list = [];
   String? isTheLast;
 
   AdDescriptions({this.list, this.isTheLast});

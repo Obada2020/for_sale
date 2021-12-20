@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:for_sale/Api/ApiService.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,6 +16,12 @@ class UserController extends GetxController {
   }
 
   //
+  late TextEditingController numc;
+  String? num;
+  String? serial;
+  var keyN = GlobalKey<FormState>();
+
+  //
   Rx<String> number = "".obs;
   //
   Rx<String> token = "".obs;
@@ -23,7 +30,7 @@ class UserController extends GetxController {
   //
   Rx<UserModel> user = UserModel().obs; // for sharedPreferences
   //
-  setPreferences(numb, tok, cid) async {
+  setPreferences(String numb, String tok, String cid) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString("number", numb);
     sharedPreferences.setString("token", tok);
@@ -60,14 +67,14 @@ class UserController extends GetxController {
   }
 
   //
-  Future login(number, serialNumber) async {
-    var result = await ApiService.login(number, serialNumber);
+  Future login() async {
+    var result = await ApiService.login(num, serial);
     if (result != "Login Error") {
       user.value = result;
       // inspect(result);
       // print(result.info!.accountId.toString());
       await setPreferences(
-          number, result.token.toString(), result.info!.accountId.toString());
+          num!, result.token.toString(), result.info!.accountId.toString());
       print("Saved Successfuly");
     }
     return result;

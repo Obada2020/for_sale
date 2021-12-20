@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:for_sale/Binding/binding.dart';
 import 'package:for_sale/Home/navbar.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
+import 'package:for_sale/constant/constant.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:for_sale/theme/themes.dart';
 import 'package:for_sale/translate/translate.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:connectivity/connectivity.dart';
 
 void main() async {
   //
   WidgetsFlutterBinding.ensureInitialized();
+  //
+  var connectivityResult = await (Connectivity().checkConnectivity());
+  print(connectivityResult);
+  if (connectivityResult == ConnectivityResult.none) {
+    return runApp(MyAppo());
+  }
   //
   await GetStorage.init();
   //
@@ -24,6 +33,7 @@ void main() async {
   // var t = sharedPreferences.getString("token");
   // var n = sharedPreferences.getString("number");
   var l = sharedPreferences.getString("lang");
+  //
   if (l == null) {
     if (Get.deviceLocale!.languageCode == Locale('ar').toString()) {
       sharedPreferences.setString("lang", "ar");
@@ -40,6 +50,60 @@ void main() async {
       ),
     ),
   );
+}
+
+///
+
+class MyAppo extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        debugShowCheckedModeBanner: false, home: Scaffold(body: new MyHome()));
+  }
+}
+
+class MyHome extends StatelessWidget {
+  // Wrapper Widget
+  @override
+  Widget build(BuildContext context) {
+    Future.delayed(Duration.zero, () => showAlert(context));
+    return Container(
+      color: kGColor.colors.first,
+      child: Center(
+        child: Image.asset(
+          "imag/forsale.png",
+        ),
+      ),
+    );
+  }
+
+  void showAlert(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        content: Text(
+          "تأكد من وجود اتصال باللإنترنت",
+          style: TextStyle(fontSize: 18),
+          textAlign: TextAlign.right,
+        ),
+        contentPadding: EdgeInsets.all(15),
+        actionsAlignment: MainAxisAlignment.start,
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+            },
+            child: Text(
+              "موافق",
+            ),
+          )
+        ],
+      ),
+    );
+  }
+  //
+  //
 }
 
 ///
@@ -102,10 +166,12 @@ class _MyAppState extends State<MyApp> {
         GlobalWidgetsLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
       ],
+      //
       supportedLocales: [
         Locale('ar'),
         Locale('en'), // English, no country code
       ],
+      //
       localeResolutionCallback: (locale, supportedLocales) {
         for (var supportedLocale in supportedLocales) {
           if (supportedLocale.languageCode == locale!.languageCode &&
@@ -119,10 +185,7 @@ class _MyAppState extends State<MyApp> {
       locale: widget.lan == null || widget.lan == "ar"
           ? Locale("ar")
           : Locale("en"),
-      //locale: Locale("ar"),
-      //Locale('ar', 'AE'), // translations will be displayed in that locale
-      // //locale:
-      // Get.deviceLocale,
+
       fallbackLocale: Locale('ar'),
     );
   }

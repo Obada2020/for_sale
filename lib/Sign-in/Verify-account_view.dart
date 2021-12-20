@@ -12,35 +12,28 @@ import '../constant/constant.dart';
 //String? x = "";
 
 // ignore: must_be_immutable
-class VerifyAccount extends StatelessWidget {
+class VerifyAccount extends GetView<UserController> {
   //var c = Get.find<Login>();
-  final String number;
-  //TextEditingController Num = TextEditingController();
-  //c.user.value.info = Info();
-  // var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
-  final c = Get.find<UserController>();
+  // final String number;
+  // //TextEditingController Num = TextEditingController();
+  // //c.user.value.info = Info();
+  // // var number = Get.find<Login>().user.value.info!.accountPhoneNumber;
+  // final c = Get.find<UserController>();
 
-  //
-  String serial = "";
-  VerifyAccount(this.number);
+  // //
+  // String serial = "";
+  // VerifyAccount(this.number);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          leading: IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: Colors.white,
-            ),
-          ),
           flexibleSpace: Container(
             decoration: BoxDecoration(gradient: kGColor),
           ),
           centerTitle: true,
           title: Text(
             'VerifyAccount_Appbar'.tr,
-            style: klabelAppbarStyle,
+            style: Get.textTheme.headline1!,
           ),
         ),
         body: Container(
@@ -58,19 +51,17 @@ class VerifyAccount extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
-                      child: Text(
-                        'VerifyAccount_Label1'.tr,
-                        style: klabelStyleBlack14,
-                      ),
+                      child: Text('VerifyAccount_Label1'.tr,
+                          style: Get.textTheme.bodyText1!),
                       padding: EdgeInsets.only(bottom: 8),
                     ),
                     Padding(
                       child: Text(
                         //'لقد أرسلنا رمز إلى رقم جوالك $number يحتوي على رمز تفعيل من 6 خانات',
                         'VerifyAccount_Label2'.tr +
-                            '$number' +
+                            '${controller.num}' +
                             'VerifyAccount_Label3'.tr,
-                        style: klabelStyleBold11,
+                        style: Get.textTheme.bodyText1!,
                       ),
                       padding: EdgeInsets.only(bottom: 30),
                     ),
@@ -87,16 +78,22 @@ class VerifyAccount extends StatelessWidget {
                             outlineBorderRadius: 4,
                             fieldWidth: MediaQuery.of(context).size.width *
                                 0.1256684492,
-                            style: TextStyle(color: Colors.black),
+                            style: Get.theme.textTheme.bodyText1!,
                             otpFieldStyle: OtpFieldStyle(
-                              backgroundColor: Theme.of(context).accentColor,
-                              disabledBorderColor: Colors.white,
-                              enabledBorderColor: Colors.white,
+                              // borderColor: Colors.white,
+                              backgroundColor: Colors.grey[400]!,
+                              // disabledBorderColor: Colors.black,
+                              // enabledBorderColor: Colors.black,
+                              focusBorderColor: Colors.blue,
+                              errorBorderColor: Colors.red,
                             ),
-                            onChanged: (k) {},
+                            onChanged: (k) {
+                              print(k);
+                              controller.serial = k;
+                            },
                             onCompleted: (n) {
-                              serial = n;
-                              print(n);
+                              // controller.serial = n;
+                              print(controller.serial);
                               // var z = await c.login(number, serial);
                               // if (z == "Login Error") {
                               //   showAlertDialog(context);
@@ -122,16 +119,33 @@ class VerifyAccount extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(
-                            'VerifyAccount_Label4'.tr,
-                          ),
+                          Text('VerifyAccount_Label4'.tr,
+                              style: Get.theme.textTheme.bodyText1!),
                           TextButton(
                             onPressed: () async {
-                              await ApiService.register(number);
+                              Get.defaultDialog(
+                                title: "",
+                                titlePadding: EdgeInsets.all(0),
+                                content: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(
+                                      "Loading...",
+                                      style: Get.theme.textTheme.bodyText1,
+                                    ),
+                                    CircularProgressIndicator(),
+                                  ],
+                                ),
+                              );
+                              await ApiService.register(controller.num!);
+                              Get.back();
                             },
                             child: Text(
                               'VerifyAccount_Label5'.tr,
-                              style: klabelStyleBold11,
+                              style: Get.textTheme.bodyText1!.copyWith(
+                                decoration: TextDecoration.underline,
+                              ),
                             ),
                           )
                         ],
@@ -147,17 +161,15 @@ class VerifyAccount extends StatelessWidget {
                       //height: 41,
                       child: TextButton(
                           onPressed: () async {
-                            print(serial.length);
+                            print(controller.serial!.length);
                             // print(number);
-                            if (serial.length < 5) {
+                            if (controller.serial!.length < 5) {
                               Get.snackbar(
                                 "", "",
                                 titleText: Center(
                                   child: Text(
                                     'VerifyAccount_Snackbar'.tr,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold),
+                                    style: Get.theme.textTheme.bodyText1,
                                   ),
                                 ),
                                 //snackPosition: SnackPosition.BOTTOM,
@@ -167,7 +179,7 @@ class VerifyAccount extends StatelessWidget {
                               );
                               return;
                             }
-                            var z = await c.login(number, serial);
+                            var z = await controller.login();
                             if (z == "Login Error") {
                               showAlertDialog(context);
                             } else {
@@ -177,7 +189,7 @@ class VerifyAccount extends StatelessWidget {
                           },
                           child: Text(
                             'VerifyAccount_Button'.tr,
-                            style: kBottonSubmitStyleBold13,
+                            style: Get.textTheme.bodyText1!,
                           )),
                     ),
                   ]),
@@ -203,8 +215,14 @@ class VerifyAccount extends StatelessWidget {
 
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
-      title: Text('VerifyAccount_Check1'.tr),
-      content: Text('VerifyAccount_Check2'.tr),
+      title: Text(
+        'VerifyAccount_Check1'.tr,
+        style: Get.theme.textTheme.bodyText1,
+      ),
+      content: Text(
+        'VerifyAccount_Check2'.tr,
+        style: Get.theme.textTheme.bodyText1,
+      ),
       actions: [
         cancelButton,
         //continueButton,

@@ -9,8 +9,8 @@ class Translate extends Translations {
           'Signin_Label2':
               ' مرحبا بك مجددا , أدخل رقم هاتفك للدخول إلى التطبيق',
           'Signin_Label3': 'رقم الهاتف',
-          'Signin_Label4':
-              'بالنقر على متابعة ، فأنت توافق على شروط وسياسة المستخدم',
+          'Signin_Label4': 'بالنقر على متابعة ، فأنت توافق على ',
+          'Signin_Label5': 'شروط وسياسة المستخدم',
           'Signin_Button': 'تسجيل الدخول',
           'Signin_Validation': 'يرجى إدخال الرقم أولا',
           'VerifyAccount_Appbar': 'تفعيل الحساب',
@@ -68,6 +68,7 @@ class Translate extends Translations {
           'details-ad12': 'رقم التواصل (الهاتف)',
           'details-ad13': 'ادخل رقم التواصل',
           'details-ad14': 'نشر الإعلان',
+          'details-ad15': 'المواصفات',
           //
           'empty': 'لايوجد إعلانات هنا',
           'emptyfav': 'ليس لديك إعلانات مفضلة',
@@ -75,6 +76,9 @@ class Translate extends Translations {
           'Home_Page': 'الصفحة الرئيسية',
           'Ads_details_suggest': 'الإعلانات المقترحة',
           'Ads_details_No_suggest': 'لا يوجد إعلانات مقترحة',
+          //
+          'search': 'ابحث',
+          'search2': 'ابحث عن',
         },
         'en': {
           'Signin_Appbar': 'Sign in',
@@ -82,8 +86,8 @@ class Translate extends Translations {
           'Signin_Label2':
               'Welcome again , enter your phone number to enter the application ',
           'Signin_Label3': 'Phone number',
-          'Signin_Label4':
-              'By clicking Continue, you agree to our User Terms and Policy',
+          'Signin_Label4': 'By clicking Continue, you agree to our User',
+          'Signin_Label5': 'Terms and Policy',
           'Signin_Button': 'Sign in',
           'Signin_Validation': 'Please enter the number first',
           'VerifyAccount_Appbar': 'activate the account',
@@ -141,6 +145,8 @@ class Translate extends Translations {
           'details-ad12': 'Contact number (phone)',
           'details-ad13': 'Enter the contact number',
           'details-ad14': 'Publish the ad',
+          'details-ad15': 'Specifications',
+
           //
           'empty': 'no ads found',
           'emptyfav': 'no favorite adds',
@@ -148,6 +154,9 @@ class Translate extends Translations {
           'Home_Page': 'Home Page',
           'Ads_details_suggest': 'Suggested ads',
           'Ads_details_No_suggest': 'There are no suggested ads',
+          //
+          'search': 'search',
+          'search2': 'search for',
         },
       };
 }

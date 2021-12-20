@@ -15,7 +15,7 @@ class MyAds extends GetView<AdsController> {
         centerTitle: true,
         title: Text(
           'MyAccount_Label4'.tr,
-          style: klabelAppbarStyle,
+          style: Get.textTheme.headline1!,
         ),
       ),
       body: SingleChildScrollView(child: gridview()),
@@ -95,11 +95,9 @@ class MyAds extends GetView<AdsController> {
                                               Object exception,
                                               StackTrace? stackTrace) {
                                     return Center(
-                                      child: const Text(
+                                      child:  Text(
                                         'Empty',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                        ),
+                                        style: Get.theme.textTheme.bodyText1
                                       ),
                                     );
                                   },
@@ -129,7 +127,7 @@ class MyAds extends GetView<AdsController> {
                                   ),
                                   child: Text(
                                     controller.myads[index].adName!,
-                                    style: klabelStyleBold12,
+                                    style: Get.textTheme.bodyText1!,
                                     maxLines: 2,
                                   ),
                                 ),
@@ -151,7 +149,7 @@ class MyAds extends GetView<AdsController> {
                                       child: Text(
                                         controller.myads[index].adPrice
                                             .toString(),
-                                        style: klabelStyleBold11light,
+                                        style: Get.textTheme.bodyText1!,
                                       ),
                                     ),
                                     Text(

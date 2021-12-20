@@ -5,6 +5,7 @@ import 'package:for_sale/Chat-WithAdmin/view.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/Model/home.dart';
 import 'package:for_sale/Sign-in/view-model.dart';
+import 'package:for_sale/Sign-in/view.dart';
 import 'package:for_sale/constant/constant.dart';
 import 'package:get/get.dart';
 import 'package:share/share.dart';
@@ -42,41 +43,65 @@ class Adsdetails extends GetView<HomeController> {
               : Padding(
                   padding: const EdgeInsets.all(15.0),
                   child: InkWell(
-                      onTap: () async {
+                    onTap: () async {
+                      Get.defaultDialog(
+                        title: "",
+                        titlePadding: EdgeInsets.all(0),
+                        content: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text("Loading...",
+                                style: Get.theme.textTheme.bodyText1!),
+                            CircularProgressIndicator(),
+                          ],
+                        ),
+                      );
+                      c.result.value = await c.addFavorite(temp!.adId);
+                      Get.back();
+                      if (c.result.value) {
                         Get.defaultDialog(
                           title: "",
                           titlePadding: EdgeInsets.all(0),
                           content: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                "Loading...",
-                                style: TextStyle(
-                                  fontSize: 18,
-                                ),
-                              ),
-                              CircularProgressIndicator(),
+                              Text("تمت إضافته للمفضلة",
+                                  style: Get.theme.textTheme.bodyText1!),
+                              Icon(Icons.check)
                             ],
                           ),
                         );
-                        await c.addFavorite(temp!.adId);
+                        await Future.delayed(Duration(seconds: 1));
                         Get.back();
+                      } else {
+                        Get.defaultDialog(
+                          title: "",
+                          titlePadding: EdgeInsets.all(0),
+                          content: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("تمت إزالته من المفضلة",
+                                  style: Get.theme.textTheme.bodyText1!),
+                              Icon(Icons.dangerous_outlined)
+                            ],
+                          ),
+                        );
+                        await Future.delayed(Duration(seconds: 1));
+                        Get.back();
+                      }
 
-                        print('view ${c.result.value}');
-                      },
-                      child: Obx(
-                        () => c.result.value == true
-                            ? Icon(Icons.check)
-                            : Icon(Icons.favorite_border),
-                      )
-                      //  Icon(icon),
-                      ),
+                      // print('view ${c.result.value}');
+                    },
+                    child: Obx(() => Icon(
+                        c.result.value ? Icons.check : Icons.favorite_border)),
+                    //  Icon(icon),
+                  ),
                 ))
         ],
         centerTitle: true,
         title: Text(
           'عرض الإعلان',
-          style: klabelAppbarStyle,
+          style: Get.textTheme.headline1!,
         ),
       ),
       body: ListView(
@@ -94,7 +119,7 @@ class Adsdetails extends GetView<HomeController> {
   }
 
   calling() async {
-    var url = 'tel:+963${temp!.adPhoneNumber}';
+    var url = 'tel:${temp!.adPhoneNumber}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -103,7 +128,7 @@ class Adsdetails extends GetView<HomeController> {
   }
 
   whatsapp() async {
-    var url = "https://wa.me/${temp!.adPhoneNumber}/?text=${temp!.adName}}";
+    var url = "https://wa.me/${temp!.adPhoneNumber}/?text=${temp!.adName}";
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -159,7 +184,11 @@ class Adsdetails extends GetView<HomeController> {
                     icon: Icons.report_gmailerrorred,
                     coloricon: Colors.white,
                     ontap: () {
-                      Get.to(ChatUI());
+                      if (Get.find<UserController>().token.isNotEmpty) {
+                        Get.to(ChatUI());
+                        return;
+                      }
+                      Get.to(Signin());
                     },
                   ),
                 ),
@@ -173,7 +202,7 @@ class Adsdetails extends GetView<HomeController> {
                     border: Border.all(color: Color(0xff333333)),
                     ontap: () {
                       Share.share(
-                          '${temp!.adDescription}\n\n http://hyperurl.co/4buy');
+                          '${temp!.adDescription}\n https://www.forsaleq8.com/');
                     },
                   ),
                 ),
@@ -197,14 +226,7 @@ class Adsdetails extends GetView<HomeController> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'الوصف',
-              style: klabelStyleBlack16.copyWith(
-                color: Theme.of(Get.context!).primaryColor == Colors.black
-                    ? Colors.white
-                    : Colors.black,
-              ),
-            ),
+            Text('الوصف', style: Get.textTheme.bodyText1!),
             Text(
               temp!.adDescription!,
               style: TextStyle(
@@ -289,10 +311,7 @@ class Adsdetails extends GetView<HomeController> {
             child: ExpansionTile(
               title: Text(
                 'المواصفات',
-                style: klabelStyleBlack16.copyWith(
-                    color: Theme.of(Get.context!).primaryColor == Colors.black
-                        ? Colors.white
-                        : Colors.black),
+                style: Get.textTheme.bodyText1!,
               ),
               children: [
                 Container(
@@ -328,21 +347,21 @@ class Adsdetails extends GetView<HomeController> {
                           // height: 40,
                           child: SingleChildScrollView(
                             scrollDirection: Axis.horizontal,
-                            child: Row(
-                              // mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Text(
-                                  values[index] + "  :  ",
-                                  style: TextStyle(fontSize: 14),
-                                ),
-                                Text(
-                                  keys[index],
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.bold,
+                            child: Directionality(
+                              textDirection: TextDirection.rtl,
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    keys[index] + "  :  ",
+                                    style: Get.textTheme.bodyText1!,
                                   ),
-                                ),
-                              ],
+                                  Text(
+                                    values[index],
+                                    style: Get.textTheme.bodyText1!,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         );
@@ -369,14 +388,7 @@ class Adsdetails extends GetView<HomeController> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Ads_details_suggest'.tr,
-            style: klabelStyleBlack16.copyWith(
-              color: Theme.of(Get.context!).primaryColor == Colors.black
-                  ? Colors.white
-                  : Colors.black,
-            ),
-          ),
+          Text('Ads_details_suggest'.tr, style: Get.textTheme.bodyText1!),
           list!.isNotEmpty
               ? SingleChildScrollView(
                   child: Column(
@@ -462,12 +474,7 @@ class Adsdetails extends GetView<HomeController> {
                 errorBuilder: (BuildContext context, Object exception,
                     StackTrace? stackTrace) {
                   return Center(
-                    child: const Text(
-                      'Empty',
-                      style: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
+                    child: Text('Empty', style: Get.theme.textTheme.bodyText1),
                   );
                 },
                 //
@@ -494,7 +501,7 @@ class Adsdetails extends GetView<HomeController> {
                   //title
                   Text(
                     disc,
-                    style: klabelStyleTitleCategory,
+                    style: Get.textTheme.bodyText1!,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -516,7 +523,7 @@ class Adsdetails extends GetView<HomeController> {
                               gradient: kGColor),
                           child: Text(
                             price.toString() + " ك د",
-                            style: klabelStyleBold11light,
+                            style: Get.textTheme.bodyText1!,
                           )),
                       Text(
                         time!.split("T")[0].toString(),
@@ -569,43 +576,87 @@ class _DetailsState extends State<Details> {
                 ),
                 items: widget.temp!.adpicture!
                     .map(
-                      (e) => ClipRRect(
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: <Widget>[
-                            Image.network(
-                              e.adPicture ?? "",
-                              errorBuilder: (BuildContext context,
-                                  Object exception, StackTrace? stackTrace) {
-                                return Center(
-                                  child: const Text(
-                                    'Empty',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                    ),
-                                  ),
-                                );
-                              },
-                              //
-                              loadingBuilder: (BuildContext? ctx, Widget? child,
-                                  ImageChunkEvent? loadingProgress) {
-                                if (loadingProgress == null) {
-                                  return child!;
-                                } else {
+                      (e) => InkWell(
+                        onTap: () {
+                          Get.dialog(
+                            Container(
+                              width: Get.width - 100,
+                              height: Get.height - 100,
+                              child: Image.network(
+                                e.adPicture ?? "",
+                                // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
                                   return Center(
-                                    child: CircularProgressIndicator(
-                                      valueColor: AlwaysStoppedAnimation<Color>(
-                                        Colors.green,
-                                      ),
+                                    child: Text(
+                                      'Empty',
+                                      style: Get.theme.textTheme.bodyText1,
                                     ),
                                   );
-                                }
-                              },
-                              width: Get.width,
-                              height: 450,
-                              fit: BoxFit.cover,
-                            )
-                          ],
+                                },
+                                //
+                                loadingBuilder: (BuildContext? ctx,
+                                    Widget? child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child!;
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          Colors.green,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                // width: Get.width,
+                                // height: 450,
+                                // fit: BoxFit.cover,
+                              ),
+                            ),
+                            barrierDismissible: false,
+                            useSafeArea: false,
+                          );
+                        },
+                        child: ClipRRect(
+                          child: Stack(
+                            fit: StackFit.expand,
+                            children: <Widget>[
+                              Image.network(
+                                e.adPicture ?? "",
+                                // "https://www.wallpapertip.com/wmimgs/167-1679333_asus-rog-wallpaper-4k-asus-rog-gaming-4k.jpg",
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return Center(
+                                    child: Text('Empty',
+                                        style: Get.theme.textTheme.bodyText1),
+                                  );
+                                },
+                                //
+                                loadingBuilder: (BuildContext? ctx,
+                                    Widget? child,
+                                    ImageChunkEvent? loadingProgress) {
+                                  if (loadingProgress == null) {
+                                    return child!;
+                                  } else {
+                                    return Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                          Colors.green,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                },
+                                width: Get.width,
+                                height: 450,
+                                fit: BoxFit.cover,
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -622,11 +673,7 @@ class _DetailsState extends State<Details> {
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     widget.temp!.adName!,
-                    style: klabelStyleBold12card.copyWith(
-                        color:
-                            Theme.of(Get.context!).primaryColor == Colors.black
-                                ? Colors.white
-                                : Colors.black),
+                    style: Get.textTheme.bodyText1!,
                     maxLines: 2,
                   ),
                 ),
@@ -645,8 +692,8 @@ class _DetailsState extends State<Details> {
                           gradient: kGColor),
                       child: Text(
                         widget.temp!.adPrice.toString(),
-                        style: klabelStyleBold11light.copyWith(
-                            fontWeight: FontWeight.bold),
+                        style: Get.textTheme.bodyText1!
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
                     Icon(

@@ -1,5 +1,5 @@
+import 'dart:developer';
 import 'dart:ui';
-
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -26,16 +26,16 @@ class Myform {
       catogaryDetailsId,
       adDescriptionId,
       adTypeNameId;
+
   int? isSpecial = 0;
 }
 
 class AddUI extends GetView<AddNameController> {
   //
-  final _formKey = GlobalKey<FormState>();
   //
   bool validate() {
-    if (_formKey.currentState!.validate()) {
-      _formKey.currentState!.save();
+    if (controller.formKey.value.currentState!.validate()) {
+      controller.formKey.value.currentState!.save();
       return true;
     }
     return false;
@@ -89,25 +89,27 @@ class AddUI extends GetView<AddNameController> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Alert Dialog Title Text.'),
-          content: Text("Are You Sure Want To Proceed ?"),
+          title: Text('Alert Dialog Title Text.',
+              style: Get.theme.textTheme.bodyText1),
+          content: Text("Are You Sure Want To Proceed ?",
+              style: Get.theme.textTheme.bodyText1),
           actions: <Widget>[
             TextButton(
-              child: Text("YES"),
+              child: Text("YES", style: Get.theme.textTheme.bodyText1),
               onPressed: () {
                 //Put your code here which you want to execute on Yes button click.
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("NO"),
+              child: Text("NO", style: Get.theme.textTheme.bodyText1),
               onPressed: () {
                 //Put your code here which you want to execute on No button click.
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text("CANCEL"),
+              child: Text("CANCEL", style: Get.theme.textTheme.bodyText1),
               onPressed: () {
                 //Put your code here which you want to execute on Cancel button click.
                 Navigator.of(context).pop();
@@ -127,202 +129,206 @@ class AddUI extends GetView<AddNameController> {
     //
     // print(Get.find<AddNameController>().myform.value.images!.value.toString());
     //
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("add-ad".tr, style: klabelAppbarStyle),
-        centerTitle: true,
-        flexibleSpace: Container(
-          decoration: BoxDecoration(gradient: kGColor),
-        ),
-      ),
-      body: Stack(
-        children: [
-          GetBuilder<AddNameController>(
-            builder: (ctx) => SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(maxHeight: size.height * 3),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      SizedBox(height: 12),
-                      get(
-                        ChoseType(),
-                        "type-ad".tr,
+    return Stack(
+      children: [
+        GetBuilder<AddNameController>(
+          builder: (ctx) => SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxHeight: size.height * 3),
+              child: Form(
+                key: controller.formKey.value,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    SizedBox(height: 18),
+                    Geet(
+                      ChoseType(),
+                      "type-ad".tr,
+                    ),
+                    SizedBox(height: 18),
+                    Geet(
+                      WAddName(),
+                      "section-ad".tr,
+                    ),
+                    SizedBox(height: 8),
+                    Obx(() => Visibility(
+                          visible: controller.showLastCat.value,
+                          child: TypesTypes(),
+                        )),
+                    SizedBox(height: 18),
+                    DetailsAdd(),
+                    SizedBox(height: 18),
+                    Obx(
+                      () => Visibility(
+                        child: Specifications(),
+                        visible: controller.showAddInfoKey.value,
                       ),
-                      SizedBox(height: 12),
-                      get(
-                        WAddName(),
-                        "section-ad".tr,
-                      ),
-                      SizedBox(height: 12),
-                      Obx(() => Visibility(
-                            visible: controller.showLastCat.value,
-                            child: TypesTypes(),
-                          )),
-                      SizedBox(height: 12),
-                      DetailsAdd(),
-                      SizedBox(height: 12),
-                      Obx(() => Visibility(
-                            child: Specifications(),
-                            visible: controller.showAddInfoKey.value,
-                          )),
-                      SizedBox(height: 12),
-                      communicate(controller.myform.value),
-                      SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.all(9),
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: kGColor,
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all(
-                                  EdgeInsets.symmetric(
-                                    vertical: 13,
-                                    horizontal: 140,
-                                  ),
-                                ),
-                                backgroundColor: MaterialStateProperty.all(
-                                  Colors.transparent,
+                    ),
+                    SizedBox(height: 18),
+                    Communicate(controller.myform.value),
+                    SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.all(9),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: kGColor,
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                        child: ElevatedButton(
+                            style: ButtonStyle(
+                              padding: MaterialStateProperty.all(
+                                EdgeInsets.symmetric(
+                                  vertical: 13,
+                                  horizontal: 140,
                                 ),
                               ),
-                              onPressed: () async {
-                                // await Get.delete<AddNameController>();
-                                // Get.put(AddNameController());
-
-                                FocusScope.of(context).unfocus();
-                                if (check() && validate()) {
-                                  // inspect(controller.myform.value);
-                                  var t = await controller.postAdd();
-                                  // await Future.delayed(Duration(seconds: 5));
-                                  if (t) {
-                                    AwesomeDialog(
-                                      context: Get.context!,
-                                      animType: AnimType.SCALE,
-                                      dialogType: DialogType.SUCCES,
-                                      body: Text(
-                                        'تم إضافة الإعلان بنجاح',
+                              backgroundColor: MaterialStateProperty.all(
+                                Colors.transparent,
+                              ),
+                            ),
+                            onPressed: () async {
+                              // await Get.delete<AddNameController>();
+                              // Get.put(AddNameController());
+                              inspect(controller.myform);
+                              FocusScope.of(context).unfocus();
+                              if (check() && validate()) {
+                                // inspect(controller.myform.value);
+                                var t = await controller.postAdd();
+                                // await Future.delayed(Duration(seconds: 5));
+                                if (t) {
+                                  AwesomeDialog(
+                                    context: Get.context!,
+                                    animType: AnimType.SCALE,
+                                    dialogType: DialogType.SUCCES,
+                                    body: Text('تم إضافة الإعلان بنجاح',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 20),
-                                      ),
-                                      title: 'This is Ignored',
-                                      desc: 'This is also Ignored',
-                                      btnOkOnPress: () {},
-                                    )..show();
+                                        style: Get.theme.textTheme.bodyText1!
+                                            .copyWith(fontSize: 20)),
+                                    title: 'This is Ignored',
+                                    desc: 'This is also Ignored',
+                                    btnOkOnPress: () {},
+                                  )..show();
+                                  //
+                                  // controller.formKey.value.currentState!.reset();
+                                  //
+                                  Get.find<HomeController>().fetchHomeList();
+                                  //
+                                  // controller.myform.refresh();
+                                  // Get.reload<AddNameController>();
+                                  print("SUCCESS");
+                                  // controller.myform.value.adCatogaryId =
+                                  //     controller.addsName[0].adCatogaryId;
+                                  // controller.show1.value = false;
+                                  // controller.show2.value = false;
 
-                                    _formKey.currentState!.reset();
-                                    Get.find<HomeController>().fetchHomeList();
-                                    // controller.myform.refresh();
-                                    // Get.reload<AddNameController>();
-                                    print("SUCCESS");
-                                  } else
-                                    AwesomeDialog(
-                                      btnOkColor: Colors.red,
-                                      context: Get.context!,
-                                      animType: AnimType.SCALE,
-                                      dialogType: DialogType.ERROR,
-                                      body: Text(
+                                  controller.update(); //
+                                } else
+                                  AwesomeDialog(
+                                    btnOkColor: Colors.red,
+                                    context: Get.context!,
+                                    animType: AnimType.SCALE,
+                                    dialogType: DialogType.ERROR,
+                                    body: Text(
                                         'تأكد من الاتصال من الانترنت وحاول مجدداً',
                                         textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 17),
-                                      ),
-                                      title: 'This is Ignored',
-                                      desc: 'This is also Ignored',
-                                      btnOkOnPress: () {},
-                                    )..show();
-                                  print("ERROR");
-                                }
-                              },
-                              child: Center(
-                                child: Text(
-                                  "details-ad14".tr,
-                                ),
-                              )),
-                        ),
+                                        style: Get.theme.textTheme.bodyText1!
+                                            .copyWith(fontSize: 20)),
+                                    title: 'This is Ignored',
+                                    desc: 'This is also Ignored',
+                                    btnOkOnPress: () {},
+                                  )..show();
+                                print("ERROR");
+                              }
+                            },
+                            child: Center(
+                              child: Text("details-ad14".tr,
+                                  style: Get.theme.textTheme.bodyText1),
+                            )),
                       ),
-                      SizedBox(height: 18),
-                    ],
-                  ),
+                    ),
+                    SizedBox(height: 18),
+                  ],
                 ),
               ),
             ),
           ),
-          Obx(
-            () => Visibility(
-              visible:
-                  controller.loading.value || controller.loadingMyType.value,
-              child: BackdropFilter(
-                filter: new ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
-                child: Center(
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 80, vertical: 150),
-                    decoration: BoxDecoration(
-                        color: Colors.grey.shade400,
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    child: Padding(
-                      padding:
-                          EdgeInsets.symmetric(vertical: 20, horizontal: 20),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          CircularProgressIndicator(
-                            color: Colors.black,
-                            backgroundColor: Colors.white,
-                          ),
-                          SizedBox(
-                            width: 25,
-                          ),
-                          Text(".... Loading"),
-                        ],
+        ),
+        Obx(
+          () => Visibility(
+            visible: controller.loading.value || controller.loadingMyType.value,
+            child: BackdropFilter(
+              filter: new ImageFilter.blur(sigmaX: 2.0, sigmaY: 2.0),
+              child: Center(
+                child: Container(
+                  margin: EdgeInsets.symmetric(horizontal: 80, vertical: 150),
+                  decoration: BoxDecoration(
+                    color: Colors.grey.shade400,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        15,
                       ),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CircularProgressIndicator(
+                          color: Colors.black,
+                          backgroundColor: Colors.white,
+                        ),
+                        SizedBox(
+                          width: 25,
+                        ),
+                        Text(".... Loading",
+                            style: Get.theme.textTheme.bodyText1),
+                      ],
                     ),
                   ),
                 ),
               ),
             ),
-          )
-        ],
-      ),
+          ),
+        ),
+      ],
     );
   }
 }
 
 enum Types { normal, special }
 
-Widget get(Widget x, String title, [TextStyle? textStyle]) {
-  return Container(
-    color: Theme.of(Get.context!).primaryColor == Colors.black
-        ? Colors.black
-        : Colors.white,
-    width: MediaQuery.of(Get.context!).size.width,
-    //color: Theme.of(Get.context!).primaryColor,
-    child: Container(
-      color: Theme.of(Get.context!).primaryColor == Colors.black
-          ? Colors.black
-          : Colors.white,
-      padding: EdgeInsets.only(right: 16, top: 16, left: 16, bottom: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 20,
-              color: Theme.of(Get.context!).primaryColor == Colors.black
-                  ? Colors.white
-                  : Colors.black,
+class Geet extends StatelessWidget {
+  Geet(this.x, this.title, [this.textStyle]);
+  var x, title, textStyle;
+  @override
+  Widget build(BuildContext v) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Theme.of(v).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.18),
+              offset: Offset(0.0, -1), //(x,y)
+              blurRadius: 6.0,
             ),
-          ),
-          SizedBox(height: 16),
-          x
-        ],
-      ),
-    ),
-  );
+          ],
+        ),
+        width: MediaQuery.of(Get.context!).size.width,
+        // color: Get.theme.primaryColor,
+        padding: EdgeInsets.only(right: 16, top: 16, left: 16, bottom: 16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: Get.textTheme.button!.copyWith(fontSize: 20),
+            ),
+            SizedBox(height: 16),
+            x
+          ],
+        ),
+      );
 }
 
 class ChoseType extends StatefulWidget {
@@ -338,9 +344,7 @@ class _ChoseTypeState extends State<ChoseType> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Theme.of(Get.context!).primaryColor == Colors.black
-            ? Colors.black
-            : Colors.white,
+        color: Theme.of(Get.context!).primaryColor,
       ),
       child: Row(
         children: [
@@ -364,14 +368,9 @@ class _ChoseTypeState extends State<ChoseType> {
                                   .isSpecial ==
                               0
                           ? Border.all(
-                              color: Theme.of(Get.context!).brightness ==
-                                      Brightness.dark
-                                  ? Colors.yellow
-                                  : Colors.black)
+                              color: Get.theme.primaryColorDark, width: 3)
                           : null,
-                      color: Color(0xFF487485).withOpacity(
-                        0.2,
-                      ),
+                      color: Get.theme.cardColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(
                           13,
@@ -382,12 +381,9 @@ class _ChoseTypeState extends State<ChoseType> {
                     child: Center(
                       child: Text(
                         'type-ad1'.tr,
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).primaryColor == Colors.black
-                                    ? Colors.white
-                                    : Colors.black,
-                            fontSize: 24),
+                        style: Get.textTheme.button!.copyWith(
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),
@@ -397,14 +393,7 @@ class _ChoseTypeState extends State<ChoseType> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "type-ad3".tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
+                    Text("type-ad3".tr, style: Get.textTheme.button),
                     Obx(
                       () => Get.find<AddNameController>().loadingMyType.value
                           ? Text("?")
@@ -417,51 +406,44 @@ class _ChoseTypeState extends State<ChoseType> {
                                           .adCount
                                           .toString() +
                                       " ",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
                                 ),
                     ),
-                    Text(
-                      "type-ad4".tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
+                    Text("type-ad4".tr, style: Get.textTheme.button),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "type-ad5".tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
+                    Text("type-ad5".tr, style: Get.textTheme.button),
+                    Obx(
+                      () => Get.find<AddNameController>().loadingMyType.value
+                          ? Text("?")
+                          : Get.find<AddNameController>().myAdTypelist.isEmpty
+                              ? Text("?")
+                              : Text(
+                                  " " +
+                                      Get.find<AddNameController>()
+                                          .myAdTypelist[0]
+                                          .adTime
+                                          .toString() +
+                                      " ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                ),
                     ),
-                    Obx(() => Get.find<AddNameController>().loadingMyType.value
-                        ? Text("?")
-                        : Get.find<AddNameController>().myAdTypelist.isEmpty
-                            ? Text("?")
-                            : Text(
-                                " " +
-                                    Get.find<AddNameController>()
-                                        .myAdTypelist[0]
-                                        .adTime
-                                        .toString() +
-                                    " ",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
-                    Text(
-                      'type-ad6'.tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
+                    Text('type-ad6'.tr, style: Get.textTheme.button),
                   ],
                 ),
               ],
@@ -485,18 +467,14 @@ class _ChoseTypeState extends State<ChoseType> {
                   child: Container(
                     height: size.height * 0.125,
                     decoration: BoxDecoration(
-                      color: Color(0xFFE8CECE),
+                      color: Get.theme.hintColor,
                       border: Get.find<AddNameController>()
                                   .myform
                                   .value
                                   .isSpecial ==
                               1
                           ? Border.all(
-                              color:
-                                  Theme.of(context).primaryColor == Colors.black
-                                      ? Colors.yellowAccent
-                                      : Theme.of(context).disabledColor,
-                            )
+                              color: Get.theme.primaryColorDark, width: 3)
                           : null,
                       borderRadius: BorderRadius.all(
                         Radius.circular(
@@ -505,15 +483,8 @@ class _ChoseTypeState extends State<ChoseType> {
                       ),
                     ),
                     child: Center(
-                      child: Text(
-                        'type-ad2'.tr,
-                        style: TextStyle(
-                            color:
-                                Theme.of(context).primaryColor == Colors.black
-                                    ? Colors.white
-                                    : Colors.black,
-                            fontSize: 24),
-                      ),
+                      child: Text('type-ad2'.tr,
+                          style: Get.textTheme.button!.copyWith(fontSize: 18)),
                     ),
                   ),
                 ),
@@ -521,14 +492,7 @@ class _ChoseTypeState extends State<ChoseType> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "type-ad3".tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
+                    Text("type-ad3".tr, style: Get.textTheme.button),
                     Obx(
                       () => Get.find<AddNameController>().loadingMyType.value
                           ? Text("?")
@@ -541,51 +505,44 @@ class _ChoseTypeState extends State<ChoseType> {
                                           .adCount
                                           .toString() +
                                       " ",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
                                 ),
                     ),
-                    Text(
-                      "type-ad4".tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
+                    Text("type-ad4".tr, style: Get.textTheme.button),
                   ],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "type-ad5".tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
+                    Text("type-ad5".tr, style: Get.textTheme.button),
+                    Obx(
+                      () => Get.find<AddNameController>().loadingMyType.value
+                          ? Text("?")
+                          : Get.find<AddNameController>().myAdTypelist.isEmpty
+                              ? Text("?")
+                              : Text(
+                                  " " +
+                                      Get.find<AddNameController>()
+                                          .myAdTypelist[1]
+                                          .adTime
+                                          .toString() +
+                                      " ",
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1!
+                                        .color,
+                                  ),
+                                ),
                     ),
-                    Obx(() => Get.find<AddNameController>().loadingMyType.value
-                        ? Text("?")
-                        : Get.find<AddNameController>().myAdTypelist.isEmpty
-                            ? Text("?")
-                            : Text(
-                                " " +
-                                    Get.find<AddNameController>()
-                                        .myAdTypelist[1]
-                                        .adTime
-                                        .toString() +
-                                    " ",
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              )),
-                    Text(
-                      'type-ad6'.tr,
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor == Colors.black
-                            ? Colors.white
-                            : Colors.black,
-                      ),
-                    ),
+                    Text('type-ad6'.tr, style: Get.textTheme.button),
                   ],
                 ),
               ],
@@ -610,6 +567,7 @@ class _WAddNameState extends State<WAddName> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -628,49 +586,76 @@ class _WAddNameState extends State<WAddName> {
             width: size.width - 300,
             height: 41,
             padding: EdgeInsets.all(5),
-            child: Obx(() => Container(
-                  child: c.addsName.isNotEmpty
-                      ? DropdownButton<AddName>(
-                          underline: SizedBox(),
-                          // value: widget.adCatogaryId!.toString(),
-                          isExpanded: true,
-                          onChanged: !c.show1.value
-                              ? (value) {
-                                  c.myform.value.adCatogaryId =
-                                      value!.adCatogaryId;
-                                  c.fetchDataAddsCat(value.adCatogaryId, 1);
-                                  c.fetchAddInfoKey(value.adCatogaryId);
-                                }
-                              : null,
-                          hint: Text(
-                            c.addsName[0].adCatogaryName.toString(),
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          // disabledHint: Text("Disabled"),
-                          elevation: 8,
-                          items: c.addsName
-                              .map(
-                                (e) => DropdownMenuItem<AddName>(
-                                  child: Text(
-                                    e.adCatogaryName.toString(),
-                                    style: TextStyle(color: Colors.black),
+            child: GetBuilder<AddNameController>(
+              builder: (c) => Container(
+                child: c.addsName.isNotEmpty
+                    ? DropdownButton<AddName>(
+                        underline: SizedBox(),
+                        iconEnabledColor: Colors.black,
+
+                        // value: widget.adCatogaryId!.toString(),
+                        isExpanded: true,
+                        onChanged:
+                            //  !c.show1.value?
+                            (value) {
+                          inspect(c.addsName);
+                          c.myform.value.adCatogaryId = value!.adCatogaryId;
+                          c.myform.value.catogaryDetailsId = 0;
+                          c.myform.value.adDescriptionId = 0;
+                          c.show2.value = false;
+                          c.addsCat1.value = AddCat1();
+                          c.fetchDataAddsCat(value.adCatogaryId, 1);
+                          c.fetchAddInfoKey(value.adCatogaryId);
+                          c.update();
+                        },
+                        // : null,
+                        hint: Obx(
+                          () => c.myform.value.adCatogaryId != null
+                              ? Text(
+                                  c.addsName
+                                      .where(
+                                        (p0) =>
+                                            p0.adCatogaryId ==
+                                            c.myform.value.adCatogaryId,
+                                      )
+                                      .first
+                                      .adCatogaryName,
+                                  style: TextStyle(
+                                    color: Colors.black,
                                   ),
-                                  value: e,
+                                )
+                              : Text(
+                                  c.addsName[0].adCatogaryName,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                  ),
                                 ),
-                              )
-                              .toList(),
-                        )
-                      : Container(
-                          width: 150,
-                          height: 80,
-                          child: LinearProgressIndicator(),
                         ),
-                )),
+                        // disabledHint: Text("Disabled"),
+                        elevation: 8,
+                        items: c.addsName
+                            .map(
+                              (e) => DropdownMenuItem<AddName>(
+                                child: Text(
+                                  e.adCatogaryName.toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                                value: e,
+                              ),
+                            )
+                            .toList(),
+                      )
+                    : Container(
+                        width: 150,
+                        height: 80,
+                        child: LinearProgressIndicator(),
+                      ),
+              ),
+            ),
           ),
-          //*** */
           SizedBox(width: 7),
-          Obx(
-            () => c.show1.value
+          GetBuilder<AddNameController>(
+            builder: (c) => c.show1.value
                 ? Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -691,44 +676,64 @@ class _WAddNameState extends State<WAddName> {
                     padding: EdgeInsets.all(5),
                     child: Obx(
                       () => Container(
-                        child: c.addsCat1.value.list!.length != 0
+                        child: c.addsCat1.value.list?.length != 0
                             ? DropdownButton<Catogary>(
+                                iconEnabledColor: Colors.black,
+
                                 underline: SizedBox(),
                                 isExpanded: true,
-
                                 // isDense: true,
                                 // value: widget.catogaryDetailsId.toString(),
-                                onChanged: !c.show2.value
-                                    ? (value) {
-                                        c.myform.value.catogaryDetailsId =
-                                            value!.catogaryDetailsId;
-                                        // widget.form.catogaryDetailsId =
-                                        //     value!.catogaryDetailsId;
-                                        // widget.adDescriptionsId =
-                                        //     value!.catogaryDetailsId;
-                                        c.fetchDataAddsCat(
-                                            value.catogaryDetailsId!, 2);
-                                      }
-                                    : null,
+                                onChanged:
+                                    //  !c.show2.value ?
+                                    (value) {
+                                  //
+                                  c.myform.value.catogaryDetailsId =
+                                      value!.catogaryDetailsId;
+                                  //
+                                  // c.myform.value.adDescriptionId = 0;
+                                  //
+                                  // widget.form.catogaryDetailsId =
+                                  //     value!.catogaryDetailsId;
+                                  // widget.adDescriptionsId =
+                                  //     value!.catogaryDetailsId;
+                                  //
+                                  // c.myform.value.catogaryDetailsId = 0;
+                                  c.myform.value.adDescriptionId = 0;
+                                  // c.show2.value = false;
+                                  c.addsCat2.value = AdDescriptions();
+                                  c.show2.value = false;
+                                  //
+                                  c.fetchDataAddsCat(
+                                      value.catogaryDetailsId!, 2);
+                                  //
+                                  c.update();
+                                  //
+                                },
+                                // : null,
                                 hint: Text(
-                                  c.addsCat1.value.list![0].catogaryName
-                                      .toString()
-                                      .trim(),
+                                  c.addsCat1.value.list?[0].catogaryName
+                                          .toString()
+                                          .trim() ??
+                                      "",
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 // disabledHint: Text("Disabled"),
                                 elevation: 8,
-                                items: c.addsCat1.value.list!
-                                    .map(
-                                      (e) => DropdownMenuItem<Catogary>(
-                                        child: Text(
-                                          e.catogaryName.toString(),
-                                          style: TextStyle(color: Colors.black),
-                                        ),
-                                        value: e,
-                                      ),
-                                    )
-                                    .toList(),
+                                items: c.addsCat1.value.list != null
+                                    ? c.addsCat1.value.list!
+                                        .map(
+                                          (e) => DropdownMenuItem<Catogary>(
+                                            child: Text(
+                                              e.catogaryName.toString(),
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
+                                            value: e,
+                                          ),
+                                        )
+                                        .toList()
+                                    : [],
                               )
                             : Container(
                                 width: 150,
@@ -741,8 +746,8 @@ class _WAddNameState extends State<WAddName> {
                 : Container(),
           ),
           SizedBox(width: 7),
-          Obx(
-            () => c.show2.value
+          GetBuilder<AddNameController>(
+            builder: (c) => c.show2.value
                 ? Container(
                     decoration: BoxDecoration(
                       border: Border.all(
@@ -761,40 +766,52 @@ class _WAddNameState extends State<WAddName> {
                     width: size.width - 300,
                     height: 41,
                     padding: EdgeInsets.all(5),
-
                     // padding: EdgeInsets.all(5),
                     child: Obx(
                       () => Container(
-                        child: c.addsCat2.value.list!.length != 0
+                        child: c.addsCat2.value.list?.length != 0
                             ? DropdownButton<Addescription>(
                                 underline: SizedBox(),
+                                iconEnabledColor: Colors.black,
                                 isExpanded: true,
-                                onChanged: !c.showLastCat.value
-                                    ? (value) {
-                                        c.myform.value.adDescriptionId =
-                                            value!.adDescriptionsId;
-                                        c.fetchDataAddsCat(
-                                            value.adDescriptionsId, 3);
-                                      }
-                                    : null,
+
+                                onChanged:
+                                    //  !c.showLastCat.value?
+                                    (value) {
+                                  //
+                                  c.myform.value.adDescriptionId =
+                                      value!.adDescriptionsId;
+                                  //
+                                  c.fetchDataAddsCat(value.adDescriptionsId, 3);
+                                  //
+                                  c.update();
+                                  //
+                                },
+                                // : null,
                                 hint: Text(
-                                  c.addsCat2.value.list![0].adDetailsDescription
-                                      .toString()
-                                      .trim(),
+                                  c.addsCat2.value.list?[0].adDetailsDescription
+                                          .toString()
+                                          .trim() ??
+                                      "",
                                   style: TextStyle(color: Colors.black),
                                 ),
                                 elevation: 8,
-                                items: c.addsCat2.value.list!
-                                    .map(
-                                      (e) => DropdownMenuItem<Addescription>(
-                                          child: Text(
-                                            e.adDetailsDescription.toString(),
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ),
-                                          value: e),
-                                    )
-                                    .toList(),
+                                items: c.addsCat2.value.list?.isNotEmpty ??
+                                        false
+                                    ? c.addsCat2.value.list!
+                                        .map(
+                                          (e) =>
+                                              DropdownMenuItem<Addescription>(
+                                                  child: Text(
+                                                    e.adDetailsDescription
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        color: Colors.black),
+                                                  ),
+                                                  value: e),
+                                        )
+                                        .toList()
+                                    : [],
                               )
                             : Container(
                                 width: 150,
@@ -852,7 +869,6 @@ class _TypesTypesState extends State<TypesTypes> {
                   if (index == 0)
                     c.myform.value.adTypeNameId =
                         c.lastCat.value.list![0].adCatogaryId;
-
                   return InkWell(
                     onTap: () {
                       setState(() {
@@ -864,8 +880,10 @@ class _TypesTypesState extends State<TypesTypes> {
                     child: Container(
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black),
+                          border:
+                              Border.all(color: Get.theme.primaryColorLight),
                           gradient: selectedIndex == index ? kGColor : null,
+                          color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(4))),
                       // width: 56,
                       // height: 28,
@@ -946,7 +964,7 @@ class DetailsAdd extends GetView<AddNameController> {
       width: size.width,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5.0),
-        color: Theme.of(Get.context!).primaryColor,
+        color: Theme.of(context).primaryColor,
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.18),
@@ -960,14 +978,8 @@ class DetailsAdd extends GetView<AddNameController> {
         children: [
           Padding(
             padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
-            child: Text(
-              "details-ad1".tr,
-              style: TextStyle(
-                  color: Theme.of(context).primaryColor == Colors.black
-                      ? Colors.white
-                      : Colors.black,
-                  fontSize: 20),
-            ),
+            child: Text("details-ad1".tr,
+                style: Get.textTheme.button!.copyWith(fontSize: 20)),
           ),
           SizedBox(
             height: 25,
@@ -1239,11 +1251,10 @@ class Specifications extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsets.only(left: 25, top: 19, right: 16),
-            child: Text(
-              "تفاصيل الإعلان",
-              style: TextStyle(fontSize: 20),
-            ),
+            padding:
+                const EdgeInsets.only(left: 16, top: 19, right: 16, bottom: 8),
+            child: Text('details-ad15'.tr,
+                style: Get.textTheme.button!.copyWith(fontSize: 20)),
           ),
           SizedBox(height: 12),
           Container(
@@ -1274,13 +1285,15 @@ class Specifications extends StatelessWidget {
                       //     "\'${t!}\'";
                       // print(tempp);
                       //
-                      c.myform.value.adInfo["${c.addsInfoKey[index].adInfo!}"] =
-                          "${t!}";
+                      if (t != null) {
+                        c.myform.value
+                            .adInfo["${c.addsInfoKey[index].adInfo!}"] = "$t";
+                      }
                       //
                       //
                     },
                     style: TextStyle(color: Colors.black),
-                    validator: (h) => h!.isEmpty ? "" : null,
+                    // validator: (h) => h!.isEmpty ? "" : null,
                     decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(10.0),
                       hintText: c.addsInfoKey[index].adInfo,
@@ -1310,91 +1323,90 @@ class Specifications extends StatelessWidget {
   }
 }
 
-Widget communicate(Myform phone) {
-  return Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(5.0),
-      color: Theme.of(Get.context!).primaryColor,
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.18),
-          offset: Offset(0.0, -1), //(x,y)
-          blurRadius: 6.0,
+class Communicate extends StatelessWidget {
+  final phone;
+  Communicate(this.phone);
+  @override
+  Widget build(BuildContext x) => Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5.0),
+          color: Theme.of(x).primaryColor,
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.18),
+              offset: Offset(0.0, -1), //(x,y)
+              blurRadius: 6.0,
+            ),
+          ],
         ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
-          child: Text(
-            "details-ad11".tr,
-            style: TextStyle(
-                color: Theme.of(Get.context!).primaryColor == Colors.black
-                    ? Colors.white
-                    : Colors.black,
-                fontSize: 20),
-          ),
-        ),
-        SizedBox(height: 16),
-        Column(
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "details-ad12".tr,
-                style: TextStyle(
-                  color: Theme.of(Get.context!).primaryColor == Colors.black
-                      ? Colors.white
-                      : Colors.grey.shade700,
-                ),
-              ),
+              padding: const EdgeInsets.only(left: 16, top: 19, right: 16),
+              child: Text("details-ad11".tr,
+                  style: Get.textTheme.button!.copyWith(fontSize: 20)),
             ),
-            SizedBox(height: 10),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: SizedBox(
-                // height: 40,
-                child: Container(
-                  color: Theme.of(Get.context!).primaryColor,
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    validator: (text) =>
-                        text!.isEmpty ? "details-ad13".tr : null,
-                    style: TextStyle(color: Colors.black),
-                    onSaved: (value) {
-                      phone.adPhoneNumber = int.parse(value!);
-                    },
-                    decoration: InputDecoration(
-                      hintText: "details-ad13".tr,
-                      hintStyle: TextStyle(color: Colors.grey.shade500),
-                      // contentPadding: EdgeInsets.only(bottom: 25),
-                      contentPadding: EdgeInsets.all(10.0),
-                      // errorText: "ادخل رقم التواصل",
-                      enabledBorder: const OutlineInputBorder(
-                        borderSide: const BorderSide(
-                            color: Color(0x59707070), width: 0.0),
-                      ),
-                      filled: true,
-                      fillColor: Color(0xFFF2F2F2),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 1,
-                          color: Color(0xFF707070).withOpacity(0.09),
+            SizedBox(height: 16),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Text(
+                    "details-ad12".tr,
+                    style: TextStyle(
+                      color: Theme.of(Get.context!).primaryColor == Colors.black
+                          ? Colors.white
+                          : Colors.grey.shade700,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: SizedBox(
+                    // height: 40,
+                    child: Container(
+                      color: Theme.of(Get.context!).primaryColor,
+                      child: TextFormField(
+                        keyboardType: TextInputType.number,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.digitsOnly
+                        ],
+                        validator: (text) =>
+                            text!.isEmpty ? "details-ad13".tr : null,
+                        style: TextStyle(color: Colors.black),
+                        onSaved: (value) {
+                          phone.adPhoneNumber = int.parse(value!);
+                        },
+                        decoration: InputDecoration(
+                          hintText: "details-ad13".tr,
+                          hintStyle: TextStyle(color: Colors.grey.shade500),
+                          // contentPadding: EdgeInsets.only(bottom: 25),
+                          contentPadding: EdgeInsets.all(10.0),
+                          // errorText: "ادخل رقم التواصل",
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide: const BorderSide(
+                                color: Color(0x59707070), width: 0.0),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xFFF2F2F2),
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              width: 1,
+                              color: Color(0xFF707070).withOpacity(0.09),
+                            ),
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: 18),
+              ],
             ),
-            SizedBox(height: 18),
           ],
         ),
-      ],
-    ),
-  );
+      );
 }

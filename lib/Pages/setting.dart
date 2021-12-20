@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:for_sale/Add-ad/view-model.dart';
+import 'package:for_sale/Home/view-model.dart';
 import 'package:for_sale/theme/theme_service.dart';
 import 'package:get/get.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constant/constant.dart';
 
 class Settings extends StatefulWidget {
-  const Settings({Key? key}) : super(key: key);
-
   @override
   _SettingsState createState() => _SettingsState();
 }
@@ -30,7 +31,7 @@ class _SettingsState extends State<Settings> {
       });
       print(isSwitched.toString() + " 2 ");
       //return true;
-    } else if (v == "false") {
+    } else {
       setState(() {
         isSwitched = false;
       });
@@ -53,15 +54,20 @@ class _SettingsState extends State<Settings> {
         x = ['English', 'العربية'];
       });
       return "English";
-    } else if (t == "ar") {
+    } else {
       setState(() {
         _dropDownValue = "العربية";
         x = ['العربية', 'English'];
       });
       return "العربية";
     }
+    // print("dddddddddddddd");
+    // _dropDownValue = "العربية";
+    // x = ['العربية', 'English'];
+    // return "العربية";
+
     //isLoading = false;
-    setState(() {});
+    // setState(() {});
   }
 
   change(l) async {
@@ -90,7 +96,7 @@ class _SettingsState extends State<Settings> {
         title: Text(
           'Setting_Appbar'.tr,
           //'الإعدادات'.tr,
-          style: klabelAppbarStyle,
+          style: Get.textTheme.bodyText1!,
         ),
       ),
       body:
@@ -108,7 +114,7 @@ class _SettingsState extends State<Settings> {
               child: Text(
                 'Setting_Language'.tr,
                 //'اللغة'.tr,
-                style: klabelStyleBold12,
+                style: Get.textTheme.bodyText1!,
               ),
             ),
             Padding(
@@ -133,6 +139,7 @@ class _SettingsState extends State<Settings> {
                 width: double.infinity,
                 child: DropdownButton<String>(
                   isExpanded: true,
+                  style: Get.theme.textTheme.bodyText1,
                   value: _dropDownValue,
                   icon: const Icon(Icons.arrow_downward),
                   iconSize: 24,
@@ -158,59 +165,67 @@ class _SettingsState extends State<Settings> {
                       _dropDownValue = newValue!;
                     });
                   },
-                  items: x.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(
-                        value,
-                        style: klabelStyleBold12,
-                      ),
-                    );
-                  }).toList(),
+                  //
+                  items: x
+                      .map<DropdownMenuItem<String>>(
+                        (String value) => DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(
+                            value,
+                            style: Get.textTheme.bodyText1!,
+                          ),
+                        ),
+                      )
+                      .toList(),
+                  //
                 ),
               ),
             ),
             Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  boxShadow: [
-                    BoxShadow(
-                        color:
-                            Theme.of(Get.context!).brightness == Brightness.dark
-                                ? Colors.transparent
-                                : Colors.grey.withOpacity(0.5),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset: Offset(2, 2))
-                  ],
-                  //border: Border.all(color: Colors.grey),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                width: double.infinity,
-                height: 50,
-                padding: EdgeInsets.symmetric(horizontal: 12),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Setting_Theme'.tr,
-                      //'الوضع المظلم'.tr,
-                      style: klabelStyleBold12,
-                    ),
-                    Switch(
-                      value: isSwitched,
-                      onChanged: (value) {
-                        ThemeService().changeThemeMode();
-                        // Get.changeThemeMode(
-                        //     Get.isDarkMode ? lightTheme() : darkTheme());
-                        setState(() {
-                          isSwitched = value;
-                        });
-                        setSwitchValue(value);
-                      },
-                    ),
-                  ],
-                )),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                boxShadow: [
+                  BoxShadow(
+                      color:
+                          Theme.of(Get.context!).brightness == Brightness.dark
+                              ? Colors.transparent
+                              : Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 5,
+                      offset: Offset(2, 2))
+                ],
+                //border: Border.all(color: Colors.grey),
+                borderRadius: BorderRadius.circular(4),
+              ),
+              width: double.infinity,
+              height: 50,
+              padding: EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Setting_Theme'.tr,
+                    //'الوضع المظلم'.tr,
+                    style: Get.textTheme.bodyText1!,
+                  ),
+                  Switch(
+                    value: isSwitched,
+                    onChanged: (value) {
+                      ThemeService().changeThemeMode();
+                      // Get.changeThemeMode(
+                      //     Get.isDarkMode ? lightTheme() : darkTheme());
+                      setState(() {
+                        isSwitched = value;
+                      });
+                      setSwitchValue(value);
+                      Get.find<HomeController>().onInit();
+                      // Restart.restartApp();
+                      // Get.find<AddNameController>().update();
+                    },
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:for_sale/Home/view-model.dart';
 import 'package:get/get.dart';
-
 import '../constant/constant.dart';
 
 class PrivacyAndTerms extends GetView<HomeController> {
+  //
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +15,7 @@ class PrivacyAndTerms extends GetView<HomeController> {
         centerTitle: true,
         title: Text(
           'PrivacyAndTerms_Appbar'.tr,
-          style: klabelAppbarStyle,
+          style: Get.textTheme.headline1!,
         ),
       ),
       body: SingleChildScrollView(
@@ -31,7 +31,10 @@ class PrivacyAndTerms extends GetView<HomeController> {
                 child: Text(
                   'PrivacyAndTerms_Label1'.tr,
                   textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 16, fontFamily: 'FairuzBlack'),
+                  style: Get.theme.textTheme.bodyText1!.copyWith(
+                    fontSize: 16,
+                    fontFamily: 'FairuzBlack',
+                  ),
                 ),
               ),
               Align(
@@ -39,9 +42,7 @@ class PrivacyAndTerms extends GetView<HomeController> {
                 child: Obx(
                   () => Text(
                     controller.terms.value,
-                    style: TextStyle(
-                      fontSize: 13,
-                    ),
+                    style: Get.theme.textTheme.bodyText1,
                   ),
                 ),
               )

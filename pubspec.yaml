@@ -21,7 +21,7 @@ environment:
   sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
-  auto_size_text: 3.0.0-nullsafety.0
+  auto_size_text: ^3.0.0
   carousel_pro: ^1.0.0
   carousel_slider: ^4.0.0
   cupertino_icons: ^1.0.2
@@ -42,6 +42,8 @@ dependencies:
   flutter_native_splash: ^1.2.4
   flutter_localizations:
     sdk: flutter
+  double_back_to_close_app: ^2.0.1
+  connectivity: ^3.0.6
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -52,7 +54,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter_native_splash:
   color: "#667590"
-  image: "images/forsale.png"
+  image: "img/forsale.png"
   fill: false
   fullscreen: true
   #

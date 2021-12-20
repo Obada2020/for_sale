@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart';
 import 'package:for_sale/Model/Add_ad.dart';
 import 'package:for_sale/Add-ad/view.dart';
 import 'package:for_sale/Api/ApiService.dart';
@@ -40,6 +41,9 @@ class AddNameController extends GetxController {
   RxList<MyAdTypeModel> myAdTypelist = <MyAdTypeModel>[].obs;
   RxBool loadingMyType = false.obs;
   //
+  Rx<GlobalKey<FormState>> formKey = GlobalKey<FormState>().obs;
+
+  //
   @override
   void onReady() async {
     super.onReady();
@@ -56,9 +60,12 @@ class AddNameController extends GetxController {
     var f = await ApiService.fetchAddName();
     var m = await ApiService.fetchMyadtype();
     if (m.isNotEmpty) myAdTypelist.value = m;
-    if (f.isNotEmpty) addsName.value = f;
+    if (f?.isNotEmpty ?? false) {
+      addsName.value = f!;
+    }
     loading.value = false;
     loadingMyType.value = false;
+    update();
   }
 
   void fetchDataAddsCat(int? index, int t) async {
@@ -82,6 +89,7 @@ class AddNameController extends GetxController {
       showLastCat.value = false;
     }
     loading.value = false;
+    update();
   }
 
   void fetchAddInfoKey(int id) async {
@@ -111,6 +119,11 @@ class AddNameController extends GetxController {
     //
     // print(Get.find<UserController>().accountId);
     // //
+    // print("here");
+    // inspect(myform.value.adInfo);
+    myform.value.adInfo.removeWhere((k, v) => v.isEmpty);
+    // print("here");
+
     // print(myform.value.adTypeId);
     //
     Dio dio = Dio();
@@ -133,21 +146,39 @@ class AddNameController extends GetxController {
     FormData formData = new FormData.fromMap(
       {
         "images[]": allMultiFiles,
+        //
         "ad_name": myform.value.adName.toString(),
+        //
         "ad_phone_number": myform.value.adPhoneNumber.toString(),
+        //
         "ad_description": myform.value.adDescription.toString(),
+        //
         "ad_price": myform.value.adPrice.toString(),
+        //
         "ad_info": x,
+        //
         "account_id": Get.find<UserController>().accountId.value.toString(),
+        //
         "ad_type_id": myform.value.adTypeId.toString(),
+        //
         "ad_catogary_id": myform.value.adCatogaryId.toString(),
-        "catogary_details_id": myform.value.catogaryDetailsId.toString(),
-        "ad_descriptions_id": myform.value.adDescriptionId.toString(),
+        //
+        "catogary_details_id": myform.value.catogaryDetailsId == 0
+            ? null
+            : myform.value.catogaryDetailsId,
+        //
+        "ad_descriptions_id": myform.value.adDescriptionId == 0
+            ? null
+            : myform.value.adDescriptionId,
+        //
         "ad_type_name_id": myform.value.adTypeNameId.toString(),
+        //
         "is_special": myform.value.isSpecial.toString(),
+        //
         "manger_accept": "0",
       },
     );
+    inspect(formData.fields);
     //
     // formData.fields.forEach((element) {
     //   print(element);
@@ -187,6 +218,7 @@ class AddNameController extends GetxController {
     } catch (e) {
       loading.value = false;
       print(e);
+      print("ddddddddddddddddddddddddddddddddd");
       return false;
     }
   }

@@ -199,7 +199,7 @@ class ApiService {
     }
   }
 
-  static fetchAddName() async {
+  static Future<List<AddName>?> fetchAddName() async {
     // await Future.delayed(Duration(seconds: 5));
     var response = await http.get(
       Uri.parse(uri + "adcatogary"),
@@ -249,7 +249,7 @@ class ApiService {
 
   //============================== sign in ===========================
 
-  static Future register(var phone) async {
+  static Future register(String phone) async {
     http.Response res = await http.post(
       Uri.parse(uri + "register"),
       body: {'account_phone_number': '$phone', 'account_type_id': '3'},
